@@ -1,0 +1,122 @@
+import {WORDS} from '.words';
+
+const NUMBER_OF_GUESSES = 6;
+const WORD_LENGTH = 5;
+
+//const answer = WORDS[Math.floor(Math.random() * WORDS.length)];
+
+let guessesRemaining = NUMBER_OF_GUESSES;
+let currentGuess = '';
+
+function initBoard() {
+  const gameboard = document.getElementById('game-board');
+  for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
+    const row = document.createElement('div');
+    row.className = 'letter-row';
+    for (let j = 0; j < WORD_LENGTH; j++) {
+      const box = document.createElement('div');
+      box.className = 'letter-box';
+      row.appendChild(box);
+    }
+    gameboard?.appendChild(row);
+  }
+}
+
+const KEYBOARD_KEYS = [
+  ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+  ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+  ['Del', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Enter'],
+];
+
+function registerKey(key: HTMLButtonElement) {
+  key.addEventListener('click', () => {
+    let text = key.innerText;
+    if (text === 'DEL') {
+      text = 'Backspace';
+    }
+    document.dispatchEvent(new KeyboardEvent('keyup', {key: text}));
+  });
+}
+
+function initKeyboard() {
+  const keyboard = document.getElementById('keyboard');
+  for (let i = 0; i < KEYBOARD_KEYS.length; i++) {
+    const row = document.createElement('div');
+    row.className = 'keyboard-row';
+    for (let j = 0; j < KEYBOARD_KEYS[i].length; j++) {
+      const key = document.createElement('button');
+      key.className = 'keyboard-key';
+      key.innerText = KEYBOARD_KEYS[i][j].toUpperCase();
+      registerKey(key);
+      row.appendChild(key);
+    }
+    keyboard?.appendChild(row);
+  }
+}
+
+function UpdateBoard() {
+  const gameboard = document.getElementById('game-board');
+  const rows = gameboard.getElementsByClassName('letter-row');
+  const letters =
+    rows[NUMBER_OF_GUESSES - guessesRemaining].getElementsByClassName(
+      'letter-box'
+    );
+  for (let i = 0; i < WORD_LENGTH; i++) {
+    const letter = letters[i] as HTMLDivElement;
+    if (i > currentGuess.length) {
+      letter.innerText = '';
+    } else {
+      letter.innerText = currentGuess[i];
+    }
+  }
+}
+
+function AddChar(c: string) {
+  if (currentGuess.length < WORD_LENGTH) {
+    currentGuess += c;
+    UpdateBoard();
+  }
+}
+
+function Delete() {
+  if (currentGuess.length > 0) {
+    currentGuess = currentGuess.slice(0, -2);
+    UpdateBoard();
+  }
+}
+
+function Submit() {
+  if (currentGuess.length === WORD_LENGTH) {
+    guessesRemaining--;
+    currentGuess = '';
+    UpdateBoard();
+  }
+}
+
+function registerKeyboard() {
+  document.addEventListener('keyup', e => {
+    const key = String(e.key).toUpperCase();
+    if (key === 'BACKSPACE') {
+      Delete();
+      console.log(`Key pressed: ${key}`);
+      return;
+    }
+    if (key === 'ENTER') {
+      Submit();
+      console.log(`Key pressed: ${key}`);
+      return;
+    }
+    const keysPressed = key.match('[A-Z]');
+    if (!keysPressed || keysPressed.length > 1) {
+      return;
+    } else {
+      AddChar(key);
+      console.log(`Key pressed: ${key}`);
+      return;
+    }
+  });
+}
+
+initBoard();
+initKeyboard();
+registerKeyboard();

@@ -1,0 +1,48 @@
+#game-board {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid black;
+}
+.letter-row {
+    display: flex;
+    border: 2px solid gray;
+}
+.letter-box {
+    display: flex;
+    border: 4px solid green;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 3px;
+    margin: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+#keyboard {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid purple;
+}
+
+.keyboard-row {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border: 2px solid orange;
+    padding: 0.5rem 0rem;
+}
+
+.keyboard-key {
+    padding: 0.5rem;
+    display: flex;
+    border: 4px solid yellow;
+    align-items: center;
+    border-radius: 3px;
+    margin: 0 2px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+}
