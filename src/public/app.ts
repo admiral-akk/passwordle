@@ -1,19 +1,14 @@
-import {WORDS} from './words.js';
 import {InitKeyboard} from './keyboard.js';
-const NUMBER_OF_GUESSES = 6;
-const WORD_LENGTH = 5;
+import {Wordle} from './wordle.js';
 
-const answer = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
-
-let guessesRemaining = NUMBER_OF_GUESSES;
-let currentGuess = '';
+const wordle = new Wordle();
 
 function initBoard() {
   const gameboard = document.getElementById('game-board');
-  for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
+  for (let i = 0; i < wordle.TotalGuesses(); i++) {
     const row = document.createElement('div');
     row.className = 'letter-row';
-    for (let j = 0; j < WORD_LENGTH; j++) {
+    for (let j = 0; j < wordle.WordLength(); j++) {
       const box = document.createElement('div');
       box.className = 'letter-box';
       row.appendChild(box);
@@ -25,42 +20,25 @@ function initBoard() {
 function UpdateBoard() {
   const gameboard = document.getElementById('game-board');
   const rows = gameboard?.getElementsByClassName('letter-row');
-  const row = rows?.item(NUMBER_OF_GUESSES - guessesRemaining);
-  const letters = row?.getElementsByClassName('letter-box');
-  for (let i = 0; i < WORD_LENGTH; i++) {
-    const letter = letters?.item(i) as HTMLDivElement;
-    if (i >= currentGuess.length) {
-      letter.innerText = '';
-    } else {
-      letter.innerText = currentGuess[i];
+  for (let row_index = 0; row_index < wordle.TotalGuesses(); row_index++) {
+    const row = rows?.item(row_index);
+    const letters = row?.getElementsByClassName('letter-box');
+    for (
+      let letter_index = 0;
+      letter_index < wordle.WordLength();
+      letter_index++
+    ) {
+      const letter = letters?.item(letter_index) as HTMLDivElement;
+      if (row_index > wordle.guesses.length) {
+        letter.innerText = '';
+      } else if (row_index < wordle.guesses.length) {
+        letter.innerText = wordle.guesses[row_index][letter_index];
+      } else if (letter_index < wordle.currentGuess.length) {
+        letter.innerText = wordle.currentGuess[letter_index];
+      } else {
+        letter.innerText = '';
+      }
     }
-  }
-}
-
-function AddChar(c: string) {
-  if (currentGuess.length < WORD_LENGTH) {
-    currentGuess += c;
-    UpdateBoard();
-  }
-}
-
-function Delete() {
-  if (currentGuess.length > 0) {
-    currentGuess = currentGuess.slice(0, -1);
-    UpdateBoard();
-  }
-}
-
-function Submit() {
-  if (currentGuess.length === WORD_LENGTH) {
-    console.log(`answer is: ${answer}`);
-    console.log(`guess is: ${currentGuess}`);
-    if (answer === currentGuess) {
-      console.log('guess is correct!');
-    }
-    currentGuess = '';
-    guessesRemaining--;
-    UpdateBoard();
   }
 }
 
@@ -68,12 +46,14 @@ function registerKeyboard() {
   document.addEventListener('keyup', e => {
     const key = String(e.key).toUpperCase();
     if (key === 'BACKSPACE') {
-      Delete();
+      wordle.Delete();
+      UpdateBoard();
       console.log(`Key pressed: ${key}`);
       return;
     }
     if (key === 'ENTER') {
-      Submit();
+      wordle.Submit();
+      UpdateBoard();
       console.log(`Key pressed: ${key}`);
       return;
     }
@@ -81,7 +61,8 @@ function registerKeyboard() {
     if (!keysPressed || keysPressed[0].length > 1) {
       return;
     } else {
-      AddChar(key);
+      wordle.AddChar(key);
+      UpdateBoard();
       console.log(`Key pressed: ${key}`);
       return;
     }
