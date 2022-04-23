@@ -1,1 +1,4 @@
-export declare function InitKeyboard(): void;
+export declare class Keyboard {
+    private registerKey;
+    constructor();
+}

@@ -13,21 +13,28 @@ class Wordle {
     }
     AddChar(c) {
         if (this.currentGuess.length >= WORD_LENGTH) {
+            console.log(`Character limit: ${this.currentGuess}`);
             return;
         }
         this.currentGuess += c;
     }
     Delete() {
         if (this.currentGuess.length === 0) {
+            console.log(`Nothing to delete: ${this.currentGuess}`);
             return;
         }
         this.currentGuess = this.currentGuess.slice(0, -1);
     }
     Submit() {
         if (this.currentGuess.length !== WORD_LENGTH) {
+            console.log(`Too short: ${this.currentGuess}`);
             return;
         }
-        console.log(`answer is: ${this._answer}`);
+        if (!words_js_1.WORDS.includes(this.currentGuess.toLowerCase())) {
+            console.log(`Invalid word: ${this.currentGuess}`);
+            return;
+        }
+        console.log(`answer is: ${this.currentGuess}`);
         console.log(`guess is: ${this._answer}`);
         if (this._answer === this.currentGuess) {
             console.log('guess is correct!');
