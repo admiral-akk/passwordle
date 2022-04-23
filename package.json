@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/admiral-akk/wordle-clone#readme",
   "dependencies": {
+    "animate.css": "^4.1.1",
     "express": "^4.17.3"
   },
   "devDependencies": {

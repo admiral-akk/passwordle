@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const words_js_1 = require("./words.js");
+require("animate.css");
 const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
-const answer = words_js_1.WORDS[Math.floor(Math.random() * words_js_1.WORDS.length)];
+const answer = words_js_1.WORDS[Math.floor(Math.random() * words_js_1.WORDS.length)].toUpperCase();
 let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = '';
 function initBoard() {

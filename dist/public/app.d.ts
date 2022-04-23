@@ -1,1 +1,1 @@
-export {};
+import 'animate.css';
