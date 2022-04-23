@@ -1,9 +1,9 @@
-import {WORDS} from '.words';
+import {WORDS} from './words.js';
 
 const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
 
-//const answer = WORDS[Math.floor(Math.random() * WORDS.length)];
+const answer = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
 
 let guessesRemaining = NUMBER_OF_GUESSES;
 let currentGuess = '';
@@ -56,14 +56,12 @@ function initKeyboard() {
 
 function UpdateBoard() {
   const gameboard = document.getElementById('game-board');
-  const rows = gameboard.getElementsByClassName('letter-row');
-  const letters =
-    rows[NUMBER_OF_GUESSES - guessesRemaining].getElementsByClassName(
-      'letter-box'
-    );
+  const rows = gameboard?.getElementsByClassName('letter-row');
+  const row = rows?.item(NUMBER_OF_GUESSES - guessesRemaining);
+  const letters = row?.getElementsByClassName('letter-box');
   for (let i = 0; i < WORD_LENGTH; i++) {
-    const letter = letters[i] as HTMLDivElement;
-    if (i > currentGuess.length) {
+    const letter = letters?.item(i) as HTMLDivElement;
+    if (i >= currentGuess.length) {
       letter.innerText = '';
     } else {
       letter.innerText = currentGuess[i];
@@ -80,15 +78,20 @@ function AddChar(c: string) {
 
 function Delete() {
   if (currentGuess.length > 0) {
-    currentGuess = currentGuess.slice(0, -2);
+    currentGuess = currentGuess.slice(0, -1);
     UpdateBoard();
   }
 }
 
 function Submit() {
   if (currentGuess.length === WORD_LENGTH) {
-    guessesRemaining--;
+    console.log(`answer is: ${answer}`);
+    console.log(`guess is: ${currentGuess}`);
+    if (answer === currentGuess) {
+      console.log('guess is correct!');
+    }
     currentGuess = '';
+    guessesRemaining--;
     UpdateBoard();
   }
 }
@@ -106,8 +109,8 @@ function registerKeyboard() {
       console.log(`Key pressed: ${key}`);
       return;
     }
-    const keysPressed = key.match('[A-Z]');
-    if (!keysPressed || keysPressed.length > 1) {
+    const keysPressed = key.match('[A-Z]+');
+    if (!keysPressed || keysPressed[0].length > 1) {
       return;
     } else {
       AddChar(key);
