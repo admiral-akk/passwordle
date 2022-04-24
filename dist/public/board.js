@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Board = void 0;
+const letter_state_js_1 = require("./letter_state.js");
 class Board {
     constructor(guessCount, wordLength) {
         this._letterBoxes = [];
@@ -19,7 +20,7 @@ class Board {
             this._letterBoxes.push(rowArray);
         }
     }
-    Update(priorGuesses, currentGuess) {
+    Update(priorGuesses, currentGuess, knowledge) {
         for (let row_index = 0; row_index < this._letterBoxes.length; row_index++) {
             for (let letter_index = 0; letter_index < this._letterBoxes[row_index].length; letter_index++) {
                 const letter = this._letterBoxes[row_index][letter_index];
@@ -34,6 +35,20 @@ class Board {
                 }
                 else {
                     letter.innerText = '';
+                }
+                switch (knowledge[row_index][letter_index]) {
+                    case letter_state_js_1.LetterState.None:
+                        letter.style.backgroundColor = 'white';
+                        break;
+                    case letter_state_js_1.LetterState.Yellow:
+                        letter.style.backgroundColor = 'yellow';
+                        break;
+                    case letter_state_js_1.LetterState.Green:
+                        letter.style.backgroundColor = 'green';
+                        break;
+                    case letter_state_js_1.LetterState.Grey:
+                        letter.style.backgroundColor = 'grey';
+                        break;
                 }
             }
         }

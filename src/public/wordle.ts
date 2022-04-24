@@ -1,9 +1,8 @@
 import {WORDS} from './words.js';
-import { LetterState } from './letter_state.js';
+import {LetterState} from './letter_state.js';
 
 const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
-
 
 export class Wordle {
   public guesses: string[];
@@ -14,9 +13,21 @@ export class Wordle {
   constructor() {
     this.guesses = [];
     this.currentGuess = '';
-    this.states = [];
+    this.states = this.InitStates();
     this._answer =
       WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
+  }
+
+  InitStates() {
+    const states: LetterState[][] = [];
+    for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
+      const state: LetterState[] = [];
+      for (let j = 0; j < WORD_LENGTH; j++) {
+        state.push(LetterState.None);
+      }
+      states.push(state);
+    }
+    return states;
   }
 
   AddChar(c: string) {
@@ -44,7 +55,7 @@ export class Wordle {
       console.log(`Invalid word: ${this.currentGuess}`);
       return;
     }
-    let answer_state : LetterState[] = [];
+    const answer_state: LetterState[] = this.states[this.guesses.length];
     for (let i = 0; i < this.currentGuess.length; i++) {
       answer_state[i] = LetterState.None;
       if (this.currentGuess[i] === this._answer[i]) {
@@ -55,7 +66,7 @@ export class Wordle {
       }
     }
     for (let i = 0; i < this.currentGuess.length; i++) {
-      if (answer_state[i] !== LetterState.None){
+      if (answer_state[i] !== LetterState.None) {
         continue;
       }
       let matched = 0;
@@ -63,7 +74,10 @@ export class Wordle {
         if (i === j) {
           continue;
         }
-        if (answer_state[i] !== LetterState.Green && answer_state[i] !== LetterState.Yellow) {
+        if (
+          answer_state[i] !== LetterState.Green &&
+          answer_state[i] !== LetterState.Yellow
+        ) {
           continue;
         }
         if (this.currentGuess[j] !== this._answer[j]) {
@@ -77,14 +91,15 @@ export class Wordle {
       if (this.currentGuess[i] === this._answer[i]) {
         answer_state[i] = LetterState.Green;
       }
-      let charCount = (this._answer.match(new RegExp(this.currentGuess[i], "g")) || []).length;
+      const charCount = (
+        this._answer.match(new RegExp(this.currentGuess[i], 'g')) || []
+      ).length;
       if (charCount > matched) {
         answer_state[i] = LetterState.Yellow;
       } else {
         answer_state[i] = LetterState.Grey;
       }
     }
-    this.states.push(answer_state);
     this.guesses.push(this.currentGuess);
 
     console.log(`answer is: ${this.currentGuess}`);

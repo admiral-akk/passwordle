@@ -1,6 +1,6 @@
 export enum LetterState {
-    None,
-    Grey,
-    Yellow,
-    Green,
-  }
+  None,
+  Grey,
+  Yellow,
+  Green,
+}

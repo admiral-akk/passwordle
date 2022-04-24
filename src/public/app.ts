@@ -11,12 +11,12 @@ function registerKeyboard() {
     const key = String(e.key).toUpperCase();
     if (key === 'BACKSPACE') {
       wordle.Delete();
-      board.Update(wordle.guesses, wordle.currentGuess);
+      board.Update(wordle.guesses, wordle.currentGuess, wordle.states);
       return;
     }
     if (key === 'ENTER') {
       wordle.Submit();
-      board.Update(wordle.guesses, wordle.currentGuess);
+      board.Update(wordle.guesses, wordle.currentGuess, wordle.states);
       return;
     }
     const keysPressed = key.match('[A-Z]+');
@@ -24,7 +24,7 @@ function registerKeyboard() {
       return;
     } else {
       wordle.AddChar(key);
-      board.Update(wordle.guesses, wordle.currentGuess);
+      board.Update(wordle.guesses, wordle.currentGuess, wordle.states);
       return;
     }
   });
