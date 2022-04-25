@@ -1,8 +1,9 @@
-import { LetterState } from './letter_state';
 export declare class Keyboard {
     private registerKey;
-    colorKey(key: HTMLButtonElement, state: LetterState): void;
-    private keys;
+    private ColorKey;
+    private UpdateKey;
+    private _keys;
+    private _knowledge;
     constructor();
     registerKeyboardEvents(): void;
 }

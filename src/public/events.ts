@@ -1,10 +1,11 @@
-import {Wordle} from './wordle';
+import {WordKnowledge} from './knowledge';
 
-export class SubmitWordEvent extends CustomEvent<null> {
-  constructor() {
-    super('submit');
+export class SubmitWordEvent extends CustomEvent<string> {
+  constructor(guess: string) {
+    super('submit', {detail: guess});
   }
 }
+
 export class DeleteEvent extends CustomEvent<null> {
   constructor() {
     super('delete');
@@ -17,14 +18,8 @@ export class AddCharEvent extends CustomEvent<string> {
   }
 }
 
-export class BoardUpdatedEvent extends CustomEvent<Wordle> {
-  constructor(game: Wordle) {
-    super('update_board', {detail: game});
-  }
-}
-
-export class KeyboardUpdatedEvent extends CustomEvent<Wordle> {
-  constructor(game: Wordle) {
-    super('update_keyboard', {detail: game});
+export class KnowledgeUpdateEvent extends CustomEvent<WordKnowledge> {
+  constructor(knowledge: WordKnowledge) {
+    super('update_knowledge', {detail: knowledge});
   }
 }

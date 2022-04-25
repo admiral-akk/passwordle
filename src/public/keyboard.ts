@@ -1,5 +1,5 @@
 import {AddCharEvent, DeleteEvent, SubmitWordEvent} from './events';
-import {LetterState} from './letter_state';
+import {LetterState} from './knowledge';
 
 const KEYBOARD_KEYS = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -9,11 +9,12 @@ const KEYBOARD_KEYS = [
 
 export class Keyboard {
   private registerKey(key: HTMLButtonElement) {
-    this.keys.push(key);
+    this._keys[key.innerText] = key;
+    this._knowledge[key.innerText] = LetterState.None;
     key.addEventListener('click', () => {
       const text = key.innerText;
       if (text === 'ENTER') {
-        document.dispatchEvent(new SubmitWordEvent());
+        document.dispatchEvent(new SubmitWordEvent('hi'));
       } else if (text === 'DEL') {
         document.dispatchEvent(new DeleteEvent());
       } else {
@@ -22,7 +23,7 @@ export class Keyboard {
     });
   }
 
-  colorKey(key: HTMLButtonElement, state: LetterState) {
+  private ColorKey(key: HTMLButtonElement, state: LetterState) {
     switch (state) {
       case LetterState.None:
         key.style.backgroundColor = 'white';
@@ -39,11 +40,33 @@ export class Keyboard {
     }
   }
 
-  private keys: HTMLButtonElement[];
+  private UpdateKey(char: string, state: LetterState) {
+    const currentState = this._knowledge[char];
+    switch (state) {
+      case LetterState.None:
+      case LetterState.Grey:
+        this._knowledge[char] = state;
+        break;
+      case LetterState.Yellow:
+        if (currentState !== LetterState.Green) {
+          this._knowledge[char] = state;
+        }
+        break;
+      case LetterState.Green:
+        this._knowledge[char] = state;
+        break;
+    }
+
+    this.ColorKey(this._keys[char], this._knowledge[char]);
+  }
+
+  private _keys: Record<string, HTMLButtonElement>;
+  private _knowledge: Record<string, LetterState>;
 
   constructor() {
     const keyboard = document.getElementById('keyboard');
-    this.keys = [];
+    this._keys = {};
+    this._knowledge = {};
     for (let i = 0; i < KEYBOARD_KEYS.length; i++) {
       const row = document.createElement('div');
       row.className = 'keyboard-row';
@@ -57,10 +80,12 @@ export class Keyboard {
       keyboard?.appendChild(row);
     }
     this.registerKeyboardEvents();
-    document.addEventListener('update_keyboard', e => {
-      this.keys.forEach(b => {
-        this.colorKey(b, e.detail.keyboardStates[b.innerText]);
-      });
+    document.addEventListener('update_knowledge', e => {
+      const knowledge: LetterState[] = e.detail.letterKnowledge;
+      const guess: string = e.detail.guess;
+      for (let i = 0; i < guess.length; i++) {
+        this.UpdateKey(guess[i], knowledge[i]);
+      }
     });
   }
 
@@ -72,7 +97,7 @@ export class Keyboard {
         return;
       }
       if (key === 'ENTER') {
-        document.dispatchEvent(new SubmitWordEvent());
+        document.dispatchEvent(new SubmitWordEvent('hello'));
         return;
       }
       const keysPressed = key.match('[A-Z]+');

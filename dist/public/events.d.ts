@@ -1,6 +1,6 @@
-import { Wordle } from './wordle';
-export declare class SubmitWordEvent extends CustomEvent<null> {
-    constructor();
+import { WordKnowledge } from './knowledge';
+export declare class SubmitWordEvent extends CustomEvent<string> {
+    constructor(guess: string);
 }
 export declare class DeleteEvent extends CustomEvent<null> {
     constructor();
@@ -8,9 +8,6 @@ export declare class DeleteEvent extends CustomEvent<null> {
 export declare class AddCharEvent extends CustomEvent<string> {
     constructor(char: string);
 }
-export declare class BoardUpdatedEvent extends CustomEvent<Wordle> {
-    constructor(game: Wordle);
-}
-export declare class KeyboardUpdatedEvent extends CustomEvent<Wordle> {
-    constructor(game: Wordle);
+export declare class KnowledgeUpdateEvent extends CustomEvent<WordKnowledge> {
+    constructor(knowledge: WordKnowledge);
 }

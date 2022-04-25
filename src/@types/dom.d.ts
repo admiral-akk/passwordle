@@ -2,8 +2,7 @@ import {
   SubmitWordEvent,
   DeleteEvent,
   AddCharEvent,
-  BoardUpdatedEvent,
-  KeyboardUpdatedEvent,
+  KnowledgeUpdateEvent,
 } from '../public/events';
 
 // Courtsey of: https://stackoverflow.com/questions/43001679/how-do-you-create-custom-event-in-typescript
@@ -11,8 +10,7 @@ interface CustomEventMap {
   submit: SubmitWordEvent;
   delete: DeleteEvent;
   add_key: AddCharEvent;
-  update_board: BoardUpdatedEvent;
-  update_keyboard: KeyboardUpdatedEvent;
+  update_knowledge: KnowledgeUpdateEvent;
 }
 
 declare global {

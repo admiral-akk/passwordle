@@ -1,145 +1,57 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Wordle = void 0;
-const words_js_1 = require("./words.js");
-const letter_state_js_1 = require("./letter_state.js");
-const events_js_1 = require("./events.js");
-const NUMBER_OF_GUESSES = 6;
-const WORD_LENGTH = 5;
+const words_1 = require("./words");
+const knowledge_1 = require("./knowledge");
+const events_1 = require("./events");
 class Wordle {
     constructor() {
-        this.guesses = [];
-        this.currentGuess = '';
-        this.states = this.InitStates();
-        this.keyboardStates = this.InitKeyboardStates();
         this._answer =
-            words_js_1.WORDS[Math.floor(Math.random() * words_js_1.WORDS.length)].toUpperCase();
-        document.addEventListener('add_key', e => {
-            this.AddChar(e.detail);
-        });
-        document.addEventListener('delete', () => {
-            this.Delete();
-        });
-        document.addEventListener('submit', () => {
-            this.Submit();
+            words_1.WORDS[Math.floor(Math.random() * words_1.WORDS.length)].toUpperCase();
+        document.addEventListener('submit', e => {
+            this.Submit(e.detail);
         });
     }
-    InitStates() {
-        const states = [];
-        for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
-            const state = [];
-            for (let j = 0; j < WORD_LENGTH; j++) {
-                state.push(letter_state_js_1.LetterState.None);
-            }
-            states.push(state);
-        }
-        return states;
-    }
-    InitKeyboardStates() {
-        const keyboardStates = {};
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(element => {
-            keyboardStates[element] = letter_state_js_1.LetterState.None;
-        });
-        return keyboardStates;
-    }
-    AddChar(char) {
-        if (this.currentGuess.length >= WORD_LENGTH) {
-            console.log(`Character limit: ${this.currentGuess}`);
-            return;
-        }
-        this.currentGuess += char;
-        document.dispatchEvent(new events_js_1.BoardUpdatedEvent(this));
-    }
-    Delete() {
-        if (this.currentGuess.length === 0) {
-            console.log(`Nothing to delete: ${this.currentGuess}`);
-            return;
-        }
-        this.currentGuess = this.currentGuess.slice(0, -1);
-        document.dispatchEvent(new events_js_1.BoardUpdatedEvent(this));
-    }
-    UpdateKeyboardKnowledge(states, guess) {
+    Submit(guess) {
+        const answer_state = [];
         for (let i = 0; i < guess.length; i++) {
-            const char = guess[i];
-            if (this.keyboardStates[char] === letter_state_js_1.LetterState.Green) {
-                break;
+            answer_state[i] = knowledge_1.LetterState.None;
+            if (guess[i] === this._answer[i]) {
+                answer_state[i] = knowledge_1.LetterState.Green;
             }
-            switch (states[i]) {
-                case letter_state_js_1.LetterState.Green:
-                case letter_state_js_1.LetterState.Yellow:
-                    this.keyboardStates[char] = states[i];
-                    break;
-                case letter_state_js_1.LetterState.Grey:
-                    if (this.keyboardStates[char] === letter_state_js_1.LetterState.None) {
-                        this.keyboardStates[char] = letter_state_js_1.LetterState.Grey;
-                    }
-                    break;
-                default:
-                    break;
+            if (!this._answer.includes(guess[i])) {
+                answer_state[i] = knowledge_1.LetterState.Grey;
             }
         }
-        document.dispatchEvent(new events_js_1.KeyboardUpdatedEvent(this));
-    }
-    Submit() {
-        if (this.currentGuess.length !== WORD_LENGTH) {
-            console.log(`Too short: ${this.currentGuess}`);
-            return;
-        }
-        if (!words_js_1.WORDS.includes(this.currentGuess.toLowerCase())) {
-            console.log(`Invalid word: ${this.currentGuess}`);
-            return;
-        }
-        const answer_state = this.states[this.guesses.length];
-        for (let i = 0; i < this.currentGuess.length; i++) {
-            answer_state[i] = letter_state_js_1.LetterState.None;
-            if (this.currentGuess[i] === this._answer[i]) {
-                answer_state[i] = letter_state_js_1.LetterState.Green;
-            }
-            if (!this._answer.includes(this.currentGuess[i])) {
-                answer_state[i] = letter_state_js_1.LetterState.Grey;
-            }
-        }
-        for (let i = 0; i < this.currentGuess.length; i++) {
-            if (answer_state[i] !== letter_state_js_1.LetterState.None) {
+        for (let i = 0; i < guess.length; i++) {
+            if (answer_state[i] !== knowledge_1.LetterState.None) {
                 continue;
             }
             let matched = 0;
-            for (let j = 0; j < this.currentGuess.length; j++) {
+            for (let j = 0; j < guess.length; j++) {
                 if (i === j) {
                     continue;
                 }
-                if (answer_state[j] !== letter_state_js_1.LetterState.Green &&
-                    answer_state[j] !== letter_state_js_1.LetterState.Yellow) {
+                if (answer_state[j] !== knowledge_1.LetterState.Green &&
+                    answer_state[j] !== knowledge_1.LetterState.Yellow) {
                     continue;
                 }
-                if (this.currentGuess[j] !== this.currentGuess[i]) {
+                if (guess[j] !== guess[i]) {
                     continue;
                 }
                 matched++;
             }
-            const charCount = (this._answer.match(new RegExp(this.currentGuess[i], 'g')) || []).length;
+            const charCount = (this._answer.match(new RegExp(guess[i], 'g')) || [])
+                .length;
             if (charCount > matched) {
-                answer_state[i] = letter_state_js_1.LetterState.Yellow;
+                answer_state[i] = knowledge_1.LetterState.Yellow;
             }
             else {
-                answer_state[i] = letter_state_js_1.LetterState.Grey;
+                answer_state[i] = knowledge_1.LetterState.Grey;
             }
         }
-        this.UpdateKeyboardKnowledge(answer_state, this.currentGuess);
-        this.guesses.push(this.currentGuess);
-        console.log(`answer is: ${this._answer}`);
-        console.log(`guess is: ${this.currentGuess}`);
-        if (this._answer === this.currentGuess) {
-            console.log('guess is correct!');
-        }
-        this.currentGuess = '';
-        document.dispatchEvent(new events_js_1.BoardUpdatedEvent(this));
-    }
-    WordLength() {
-        return WORD_LENGTH;
-    }
-    TotalGuesses() {
-        return NUMBER_OF_GUESSES;
+        const knowledge = new knowledge_1.WordKnowledge(answer_state, guess);
+        document.dispatchEvent(new events_1.KnowledgeUpdateEvent(knowledge));
     }
 }
 exports.Wordle = Wordle;

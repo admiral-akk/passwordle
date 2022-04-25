@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Board = void 0;
-const letter_state_js_1 = require("./letter_state.js");
+const events_1 = require("./events");
+const knowledge_1 = require("./knowledge");
+const words_1 = require("./words");
 class Board {
     constructor(guessCount, wordLength) {
         this._letterBoxes = [];
@@ -19,40 +21,82 @@ class Board {
             gameboard === null || gameboard === void 0 ? void 0 : gameboard.appendChild(row);
             this._letterBoxes.push(rowArray);
         }
-        document.addEventListener('update_board', e => {
-            this.Update(e.detail.guesses, e.detail.currentGuess, e.detail.states);
+        document.addEventListener('update_knowledge', e => {
+            this.UpdateKnowledge(e.detail);
+        });
+        this._guesses = [];
+        this._knowledge = [];
+        this._currentGuess = '';
+        this._wordLength = wordLength;
+        document.addEventListener('add_key', e => {
+            this.AddChar(e.detail);
+        });
+        document.addEventListener('delete', () => {
+            this.Delete();
+        });
+        document.addEventListener('submit', () => {
+            this.Submit();
         });
     }
-    Update(priorGuesses, currentGuess, knowledge) {
-        for (let row_index = 0; row_index < this._letterBoxes.length; row_index++) {
-            for (let letter_index = 0; letter_index < this._letterBoxes[row_index].length; letter_index++) {
-                const letter = this._letterBoxes[row_index][letter_index];
-                if (row_index > priorGuesses.length) {
-                    letter.innerText = '';
-                }
-                else if (row_index < priorGuesses.length) {
-                    letter.innerText = priorGuesses[row_index][letter_index];
-                }
-                else if (letter_index < currentGuess.length) {
-                    letter.innerText = currentGuess[letter_index];
-                }
-                else {
-                    letter.innerText = '';
-                }
-                switch (knowledge[row_index][letter_index]) {
-                    case letter_state_js_1.LetterState.None:
-                        letter.style.backgroundColor = 'white';
-                        break;
-                    case letter_state_js_1.LetterState.Yellow:
-                        letter.style.backgroundColor = 'yellow';
-                        break;
-                    case letter_state_js_1.LetterState.Green:
-                        letter.style.backgroundColor = 'green';
-                        break;
-                    case letter_state_js_1.LetterState.Grey:
-                        letter.style.backgroundColor = 'grey';
-                        break;
-                }
+    CurrentRow() {
+        return this._letterBoxes[this._currentGuess.length];
+    }
+    CurrentLetter() {
+        const row = this.CurrentRow();
+        return row[this._currentGuess.length];
+    }
+    LastLetter() {
+        const row = this.CurrentRow();
+        return row[this._currentGuess.length - 1];
+    }
+    AddChar(char) {
+        if (this._currentGuess.length >= this._wordLength) {
+            console.log(`Character limit: ${this._currentGuess}`);
+            return;
+        }
+        const letter = this.CurrentLetter();
+        letter.innerText = char;
+        this._currentGuess += char;
+    }
+    Delete() {
+        if (this._currentGuess.length === 0) {
+            console.log(`Nothing to delete: ${this._currentGuess}`);
+            return;
+        }
+        const letter = this.LastLetter();
+        letter.innerText = '';
+        this._currentGuess = this._currentGuess.slice(0, -1);
+    }
+    Submit() {
+        if (this._currentGuess.length !== this._wordLength) {
+            console.log(`Too short: ${this._currentGuess}`);
+            return;
+        }
+        if (!words_1.WORDS.includes(this._currentGuess.toLowerCase())) {
+            console.log(`Invalid word: ${this._currentGuess}`);
+            return;
+        }
+        this._guesses.push(this._currentGuess);
+        document.dispatchEvent(new events_1.SubmitWordEvent(this._currentGuess));
+        this._currentGuess = '';
+    }
+    UpdateKnowledge(knowledge) {
+        const index = this._guesses.length - 1;
+        for (let letter_index = 0; letter_index < this._wordLength; letter_index++) {
+            const letter = this._letterBoxes[index][letter_index];
+            switch (knowledge.letterKnowledge[letter_index]) {
+                case knowledge_1.LetterState.None:
+                    letter.style.backgroundColor = 'white';
+                    break;
+                case knowledge_1.LetterState.Yellow:
+                    letter.style.backgroundColor = 'yellow';
+                    break;
+                case knowledge_1.LetterState.Green:
+                    letter.style.backgroundColor = 'green';
+                    break;
+                case knowledge_1.LetterState.Grey:
+                    letter.style.backgroundColor = 'grey';
+                    break;
             }
         }
     }
