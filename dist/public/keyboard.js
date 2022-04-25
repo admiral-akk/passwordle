@@ -33,6 +33,9 @@ class Keyboard {
                 this.UpdateKey(guess[i], knowledge[i]);
             }
         });
+        document.addEventListener('new_game', () => {
+            this.NewGame();
+        });
     }
     registerKey(key) {
         this._keys[key.innerText] = key;
@@ -40,7 +43,7 @@ class Keyboard {
         key.addEventListener('click', () => {
             const text = key.innerText;
             if (text === 'ENTER') {
-                document.dispatchEvent(new events_1.SubmitWordEvent('hi'));
+                document.dispatchEvent(new events_1.SubmitCommand());
             }
             else if (text === 'DEL') {
                 document.dispatchEvent(new events_1.DeleteEvent());
@@ -84,6 +87,12 @@ class Keyboard {
         }
         this.ColorKey(this._keys[char], this._knowledge[char]);
     }
+    NewGame() {
+        for (const key in this._knowledge) {
+            this._knowledge[key] = knowledge_1.LetterState.None;
+            this.ColorKey(this._keys[key], knowledge_1.LetterState.None);
+        }
+    }
     registerKeyboardEvents() {
         document.addEventListener('keyup', e => {
             const key = String(e.key).toUpperCase();
@@ -92,7 +101,7 @@ class Keyboard {
                 return;
             }
             if (key === 'ENTER') {
-                document.dispatchEvent(new events_1.SubmitWordEvent('hello'));
+                document.dispatchEvent(new events_1.SubmitCommand());
                 return;
             }
             const keysPressed = key.match('[A-Z]+');

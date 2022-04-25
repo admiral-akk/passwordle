@@ -6,6 +6,12 @@ export class SubmitWordEvent extends CustomEvent<string> {
   }
 }
 
+export class SubmitCommand extends CustomEvent<null> {
+  constructor() {
+    super('submit_command');
+  }
+}
+
 export class DeleteEvent extends CustomEvent<null> {
   constructor() {
     super('delete');
@@ -21,5 +27,11 @@ export class AddCharEvent extends CustomEvent<string> {
 export class KnowledgeUpdateEvent extends CustomEvent<WordKnowledge> {
   constructor(knowledge: WordKnowledge) {
     super('update_knowledge', {detail: knowledge});
+  }
+}
+
+export class NewGameEvent extends CustomEvent<null> {
+  constructor() {
+    super('new_game');
   }
 }

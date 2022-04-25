@@ -1,10 +1,14 @@
 // Handles events to/from the server.
 
+import {NewGameEvent} from './events';
+
 export class NetworkEventHandler {
   constructor() {
     document.addEventListener('submit', e => {
       Post('/event', {type: e.type, detail: e.detail, event: e});
     });
+
+    document.dispatchEvent(new NewGameEvent());
   }
 }
 

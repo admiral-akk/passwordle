@@ -34,12 +34,26 @@ class Board {
         document.addEventListener('delete', () => {
             this.Delete();
         });
-        document.addEventListener('submit', () => {
+        document.addEventListener('submit_command', () => {
             this.Submit();
         });
+        document.addEventListener('new_game', () => {
+            this.NewGame();
+        });
+    }
+    NewGame() {
+        this._letterBoxes.forEach(row => {
+            row.forEach(letter => {
+                letter.innerText = '';
+                this.UpdateColor(letter, knowledge_1.LetterState.None);
+            });
+        });
+    }
+    PreviousRow() {
+        return this._letterBoxes[this._guesses.length - 1];
     }
     CurrentRow() {
-        return this._letterBoxes[this._currentGuess.length];
+        return this._letterBoxes[this._guesses.length];
     }
     CurrentLetter() {
         const row = this.CurrentRow();
@@ -80,24 +94,28 @@ class Board {
         document.dispatchEvent(new events_1.SubmitWordEvent(this._currentGuess));
         this._currentGuess = '';
     }
+    UpdateColor(letter, knowledge) {
+        switch (knowledge) {
+            case knowledge_1.LetterState.None:
+                letter.style.backgroundColor = 'white';
+                break;
+            case knowledge_1.LetterState.Yellow:
+                letter.style.backgroundColor = 'yellow';
+                break;
+            case knowledge_1.LetterState.Green:
+                letter.style.backgroundColor = 'green';
+                break;
+            case knowledge_1.LetterState.Grey:
+                letter.style.backgroundColor = 'grey';
+                break;
+        }
+    }
     UpdateKnowledge(knowledge) {
-        const index = this._guesses.length - 1;
+        const row = this.PreviousRow();
         for (let letter_index = 0; letter_index < this._wordLength; letter_index++) {
-            const letter = this._letterBoxes[index][letter_index];
-            switch (knowledge.letterKnowledge[letter_index]) {
-                case knowledge_1.LetterState.None:
-                    letter.style.backgroundColor = 'white';
-                    break;
-                case knowledge_1.LetterState.Yellow:
-                    letter.style.backgroundColor = 'yellow';
-                    break;
-                case knowledge_1.LetterState.Green:
-                    letter.style.backgroundColor = 'green';
-                    break;
-                case knowledge_1.LetterState.Grey:
-                    letter.style.backgroundColor = 'grey';
-                    break;
-            }
+            const letter = row[letter_index];
+            const letterKnowledge = knowledge.letterKnowledge[letter_index];
+            this.UpdateColor(letter, letterKnowledge);
         }
     }
 }

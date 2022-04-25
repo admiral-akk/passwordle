@@ -6,11 +6,17 @@ const knowledge_1 = require("./knowledge");
 const events_1 = require("./events");
 class Wordle {
     constructor() {
-        this._answer =
-            words_1.WORDS[Math.floor(Math.random() * words_1.WORDS.length)].toUpperCase();
+        this._answer = '';
         document.addEventListener('submit', e => {
             this.Submit(e.detail);
         });
+        document.addEventListener('new_game', () => {
+            this.NewGame();
+        });
+    }
+    NewGame() {
+        this._answer =
+            words_1.WORDS[Math.floor(Math.random() * words_1.WORDS.length)].toUpperCase();
     }
     Submit(guess) {
         const answer_state = [];
@@ -50,6 +56,7 @@ class Wordle {
                 answer_state[i] = knowledge_1.LetterState.Grey;
             }
         }
+        console.log(`Answer: ${this._answer}`);
         const knowledge = new knowledge_1.WordKnowledge(answer_state, guess);
         document.dispatchEvent(new events_1.KnowledgeUpdateEvent(knowledge));
     }

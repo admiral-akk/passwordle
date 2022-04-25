@@ -4,15 +4,22 @@ import {KnowledgeUpdateEvent} from './events';
 
 export class Wordle {
   private _answer: string;
-
   constructor() {
-    this._answer =
-      WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
+    this._answer = '';
     document.addEventListener('submit', e => {
       this.Submit(e.detail);
     });
+    document.addEventListener('new_game', () => {
+      this.NewGame();
+    });
   }
-  Submit(guess: string) {
+
+  private NewGame() {
+    this._answer =
+      WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
+  }
+
+  private Submit(guess: string) {
     const answer_state: LetterState[] = [];
     for (let i = 0; i < guess.length; i++) {
       answer_state[i] = LetterState.None;
@@ -51,6 +58,8 @@ export class Wordle {
         answer_state[i] = LetterState.Grey;
       }
     }
+
+    console.log(`Answer: ${this._answer}`);
 
     const knowledge = new WordKnowledge(answer_state, guess);
     document.dispatchEvent(new KnowledgeUpdateEvent(knowledge));

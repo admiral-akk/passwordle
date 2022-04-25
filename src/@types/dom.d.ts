@@ -3,6 +3,8 @@ import {
   DeleteEvent,
   AddCharEvent,
   KnowledgeUpdateEvent,
+  NewGameEvent,
+  SubmitCommand,
 } from '../public/events';
 
 // Courtsey of: https://stackoverflow.com/questions/43001679/how-do-you-create-custom-event-in-typescript
@@ -11,6 +13,8 @@ interface CustomEventMap {
   delete: DeleteEvent;
   add_key: AddCharEvent;
   update_knowledge: KnowledgeUpdateEvent;
+  new_game: NewGameEvent;
+  submit_command: SubmitCommand;
 }
 
 declare global {

@@ -2,11 +2,13 @@
 // Handles events to/from the server.
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NetworkEventHandler = void 0;
+const events_1 = require("./events");
 class NetworkEventHandler {
     constructor() {
         document.addEventListener('submit', e => {
             Post('/event', { type: e.type, detail: e.detail, event: e });
         });
+        document.dispatchEvent(new events_1.NewGameEvent());
     }
 }
 exports.NetworkEventHandler = NetworkEventHandler;

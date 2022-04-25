@@ -1,4 +1,4 @@
-import {AddCharEvent, DeleteEvent, SubmitWordEvent} from './events';
+import {AddCharEvent, DeleteEvent, SubmitCommand} from './events';
 import {LetterState} from './knowledge';
 
 const KEYBOARD_KEYS = [
@@ -14,7 +14,7 @@ export class Keyboard {
     key.addEventListener('click', () => {
       const text = key.innerText;
       if (text === 'ENTER') {
-        document.dispatchEvent(new SubmitWordEvent('hi'));
+        document.dispatchEvent(new SubmitCommand());
       } else if (text === 'DEL') {
         document.dispatchEvent(new DeleteEvent());
       } else {
@@ -87,9 +87,19 @@ export class Keyboard {
         this.UpdateKey(guess[i], knowledge[i]);
       }
     });
+    document.addEventListener('new_game', () => {
+      this.NewGame();
+    });
   }
 
-  registerKeyboardEvents() {
+  private NewGame() {
+    for (const key in this._knowledge) {
+      this._knowledge[key] = LetterState.None;
+      this.ColorKey(this._keys[key], LetterState.None);
+    }
+  }
+
+  private registerKeyboardEvents() {
     document.addEventListener('keyup', e => {
       const key = String(e.key).toUpperCase();
       if (key === 'BACKSPACE') {
@@ -97,7 +107,7 @@ export class Keyboard {
         return;
       }
       if (key === 'ENTER') {
-        document.dispatchEvent(new SubmitWordEvent('hello'));
+        document.dispatchEvent(new SubmitCommand());
         return;
       }
       const keysPressed = key.match('[A-Z]+');

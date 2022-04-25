@@ -5,5 +5,6 @@ export declare class Keyboard {
     private _keys;
     private _knowledge;
     constructor();
-    registerKeyboardEvents(): void;
+    private NewGame;
+    private registerKeyboardEvents;
 }

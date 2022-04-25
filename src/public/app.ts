@@ -1,4 +1,5 @@
 import {Board} from './board';
+import {NewGameEvent} from './events';
 import {Keyboard} from './keyboard';
 import {NetworkEventHandler} from './network_event_handler';
 import {Wordle} from './wordle';
