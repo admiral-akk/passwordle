@@ -75,21 +75,15 @@ export class Wordle {
           continue;
         }
         if (
-          answer_state[i] !== LetterState.Green &&
-          answer_state[i] !== LetterState.Yellow
+          answer_state[j] !== LetterState.Green &&
+          answer_state[j] !== LetterState.Yellow
         ) {
           continue;
         }
-        if (this.currentGuess[j] !== this._answer[j]) {
+        if (this.currentGuess[j] !== this.currentGuess[i]) {
           continue;
         }
         matched++;
-      }
-      if (!this._answer.includes(this.currentGuess[i])) {
-        answer_state[i] = LetterState.Grey;
-      }
-      if (this.currentGuess[i] === this._answer[i]) {
-        answer_state[i] = LetterState.Green;
       }
       const charCount = (
         this._answer.match(new RegExp(this.currentGuess[i], 'g')) || []
@@ -102,8 +96,8 @@ export class Wordle {
     }
     this.guesses.push(this.currentGuess);
 
-    console.log(`answer is: ${this.currentGuess}`);
-    console.log(`guess is: ${this._answer}`);
+    console.log(`answer is: ${this._answer}`);
+    console.log(`guess is: ${this.currentGuess}`);
     if (this._answer === this.currentGuess) {
       console.log('guess is correct!');
     }

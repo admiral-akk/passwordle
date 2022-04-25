@@ -66,22 +66,19 @@ class Wordle {
                 if (i === j) {
                     continue;
                 }
-                if (answer_state[i] !== letter_state_js_1.LetterState.Green &&
-                    answer_state[i] !== letter_state_js_1.LetterState.Yellow) {
+                if (answer_state[j] !== letter_state_js_1.LetterState.Green &&
+                    answer_state[j] !== letter_state_js_1.LetterState.Yellow) {
                     continue;
                 }
-                if (this.currentGuess[j] !== this._answer[j]) {
+                if (this.currentGuess[j] !== this.currentGuess[i]) {
                     continue;
                 }
                 matched++;
             }
-            if (!this._answer.includes(this.currentGuess[i])) {
-                answer_state[i] = letter_state_js_1.LetterState.Grey;
-            }
-            if (this.currentGuess[i] === this._answer[i]) {
-                answer_state[i] = letter_state_js_1.LetterState.Green;
-            }
             const charCount = (this._answer.match(new RegExp(this.currentGuess[i], 'g')) || []).length;
+            console.log(`char ${this.currentGuess[i]}`);
+            console.log(`matched count: ${matched}`);
+            console.log(`char count: ${charCount}`);
             if (charCount > matched) {
                 answer_state[i] = letter_state_js_1.LetterState.Yellow;
             }
@@ -90,8 +87,8 @@ class Wordle {
             }
         }
         this.guesses.push(this.currentGuess);
-        console.log(`answer is: ${this.currentGuess}`);
-        console.log(`guess is: ${this._answer}`);
+        console.log(`answer is: ${this._answer}`);
+        console.log(`guess is: ${this.currentGuess}`);
         if (this._answer === this.currentGuess) {
             console.log('guess is correct!');
         }
