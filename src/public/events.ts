@@ -22,3 +22,9 @@ export class BoardUpdatedEvent extends CustomEvent<Wordle> {
     super('update_board', {detail: game});
   }
 }
+
+export class KeyboardUpdatedEvent extends CustomEvent<Wordle> {
+  constructor(game: Wordle) {
+    super('update_keyboard', {detail: game});
+  }
+}

@@ -11,6 +11,7 @@ class Wordle {
         this.guesses = [];
         this.currentGuess = '';
         this.states = this.InitStates();
+        this.keyboardStates = this.InitKeyboardStates();
         this._answer =
             words_js_1.WORDS[Math.floor(Math.random() * words_js_1.WORDS.length)].toUpperCase();
         document.addEventListener('add_key', e => {
@@ -34,6 +35,13 @@ class Wordle {
         }
         return states;
     }
+    InitKeyboardStates() {
+        const keyboardStates = {};
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(element => {
+            keyboardStates[element] = letter_state_js_1.LetterState.None;
+        });
+        return keyboardStates;
+    }
     AddChar(char) {
         if (this.currentGuess.length >= WORD_LENGTH) {
             console.log(`Character limit: ${this.currentGuess}`);
@@ -49,6 +57,28 @@ class Wordle {
         }
         this.currentGuess = this.currentGuess.slice(0, -1);
         document.dispatchEvent(new events_js_1.BoardUpdatedEvent(this));
+    }
+    UpdateKeyboardKnowledge(states, guess) {
+        for (let i = 0; i < guess.length; i++) {
+            const char = guess[i];
+            if (this.keyboardStates[char] === letter_state_js_1.LetterState.Green) {
+                break;
+            }
+            switch (states[i]) {
+                case letter_state_js_1.LetterState.Green:
+                case letter_state_js_1.LetterState.Yellow:
+                    this.keyboardStates[char] = states[i];
+                    break;
+                case letter_state_js_1.LetterState.Grey:
+                    if (this.keyboardStates[char] === letter_state_js_1.LetterState.None) {
+                        this.keyboardStates[char] = letter_state_js_1.LetterState.Grey;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        document.dispatchEvent(new events_js_1.KeyboardUpdatedEvent(this));
     }
     Submit() {
         if (this.currentGuess.length !== WORD_LENGTH) {
@@ -95,6 +125,7 @@ class Wordle {
                 answer_state[i] = letter_state_js_1.LetterState.Grey;
             }
         }
+        this.UpdateKeyboardKnowledge(answer_state, this.currentGuess);
         this.guesses.push(this.currentGuess);
         console.log(`answer is: ${this._answer}`);
         console.log(`guess is: ${this.currentGuess}`);

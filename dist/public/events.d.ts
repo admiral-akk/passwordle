@@ -11,3 +11,6 @@ export declare class AddCharEvent extends CustomEvent<string> {
 export declare class BoardUpdatedEvent extends CustomEvent<Wordle> {
     constructor(game: Wordle);
 }
+export declare class KeyboardUpdatedEvent extends CustomEvent<Wordle> {
+    constructor(game: Wordle);
+}

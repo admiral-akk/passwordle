@@ -1,6 +1,6 @@
 import {WORDS} from './words.js';
 import {LetterState} from './letter_state.js';
-import {BoardUpdatedEvent} from './events.js';
+import {BoardUpdatedEvent, KeyboardUpdatedEvent} from './events.js';
 
 const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
@@ -10,11 +10,13 @@ export class Wordle {
   public states: LetterState[][];
   public currentGuess: string;
   private _answer: string;
+  public keyboardStates: Record<string, LetterState>;
 
   constructor() {
     this.guesses = [];
     this.currentGuess = '';
     this.states = this.InitStates();
+    this.keyboardStates = this.InitKeyboardStates();
     this._answer =
       WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
     document.addEventListener('add_key', e => {
@@ -40,6 +42,14 @@ export class Wordle {
     return states;
   }
 
+  InitKeyboardStates(): Record<string, LetterState> {
+    const keyboardStates: Record<string, LetterState> = {};
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(element => {
+      keyboardStates[element] = LetterState.None;
+    });
+    return keyboardStates;
+  }
+
   AddChar(char: string): void {
     if (this.currentGuess.length >= WORD_LENGTH) {
       console.log(`Character limit: ${this.currentGuess}`);
@@ -56,6 +66,29 @@ export class Wordle {
     }
     this.currentGuess = this.currentGuess.slice(0, -1);
     document.dispatchEvent(new BoardUpdatedEvent(this));
+  }
+
+  UpdateKeyboardKnowledge(states: LetterState[], guess: string) {
+    for (let i = 0; i < guess.length; i++) {
+      const char = guess[i];
+      if (this.keyboardStates[char] === LetterState.Green) {
+        break;
+      }
+      switch (states[i]) {
+        case LetterState.Green:
+        case LetterState.Yellow:
+          this.keyboardStates[char] = states[i];
+          break;
+        case LetterState.Grey:
+          if (this.keyboardStates[char] === LetterState.None) {
+            this.keyboardStates[char] = LetterState.Grey;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    document.dispatchEvent(new KeyboardUpdatedEvent(this));
   }
 
   Submit() {
@@ -106,6 +139,9 @@ export class Wordle {
         answer_state[i] = LetterState.Grey;
       }
     }
+
+    this.UpdateKeyboardKnowledge(answer_state, this.currentGuess);
+
     this.guesses.push(this.currentGuess);
 
     console.log(`answer is: ${this._answer}`);

@@ -1,4 +1,5 @@
 import {AddCharEvent, DeleteEvent, SubmitWordEvent} from './events';
+import {LetterState} from './letter_state';
 
 const KEYBOARD_KEYS = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -8,6 +9,7 @@ const KEYBOARD_KEYS = [
 
 export class Keyboard {
   private registerKey(key: HTMLButtonElement) {
+    this.keys.push(key);
     key.addEventListener('click', () => {
       const text = key.innerText;
       if (text === 'ENTER') {
@@ -20,8 +22,28 @@ export class Keyboard {
     });
   }
 
+  colorKey(key: HTMLButtonElement, state: LetterState) {
+    switch (state) {
+      case LetterState.None:
+        key.style.backgroundColor = 'white';
+        break;
+      case LetterState.Yellow:
+        key.style.backgroundColor = 'yellow';
+        break;
+      case LetterState.Green:
+        key.style.backgroundColor = 'green';
+        break;
+      case LetterState.Grey:
+        key.style.backgroundColor = 'grey';
+        break;
+    }
+  }
+
+  private keys: HTMLButtonElement[];
+
   constructor() {
     const keyboard = document.getElementById('keyboard');
+    this.keys = [];
     for (let i = 0; i < KEYBOARD_KEYS.length; i++) {
       const row = document.createElement('div');
       row.className = 'keyboard-row';
@@ -34,10 +56,15 @@ export class Keyboard {
       }
       keyboard?.appendChild(row);
     }
-    this.registerKeyboard();
+    this.registerKeyboardEvents();
+    document.addEventListener('update_keyboard', e => {
+      this.keys.forEach(b => {
+        this.colorKey(b, e.detail.keyboardStates[b.innerText]);
+      });
+    });
   }
 
-  registerKeyboard() {
+  registerKeyboardEvents() {
     document.addEventListener('keyup', e => {
       const key = String(e.key).toUpperCase();
       if (key === 'BACKSPACE') {
