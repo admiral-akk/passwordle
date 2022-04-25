@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Wordle = void 0;
 const words_js_1 = require("./words.js");
 const letter_state_js_1 = require("./letter_state.js");
+const events_js_1 = require("./events.js");
 const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
 class Wordle {
@@ -12,6 +13,15 @@ class Wordle {
         this.states = this.InitStates();
         this._answer =
             words_js_1.WORDS[Math.floor(Math.random() * words_js_1.WORDS.length)].toUpperCase();
+        document.addEventListener('add_key', e => {
+            this.AddChar(e.detail);
+        });
+        document.addEventListener('delete', () => {
+            this.Delete();
+        });
+        document.addEventListener('submit', () => {
+            this.Submit();
+        });
     }
     InitStates() {
         const states = [];
@@ -24,12 +34,13 @@ class Wordle {
         }
         return states;
     }
-    AddChar(c) {
+    AddChar(char) {
         if (this.currentGuess.length >= WORD_LENGTH) {
             console.log(`Character limit: ${this.currentGuess}`);
             return;
         }
-        this.currentGuess += c;
+        this.currentGuess += char;
+        document.dispatchEvent(new events_js_1.BoardUpdatedEvent(this));
     }
     Delete() {
         if (this.currentGuess.length === 0) {
@@ -37,6 +48,7 @@ class Wordle {
             return;
         }
         this.currentGuess = this.currentGuess.slice(0, -1);
+        document.dispatchEvent(new events_js_1.BoardUpdatedEvent(this));
     }
     Submit() {
         if (this.currentGuess.length !== WORD_LENGTH) {
@@ -76,9 +88,6 @@ class Wordle {
                 matched++;
             }
             const charCount = (this._answer.match(new RegExp(this.currentGuess[i], 'g')) || []).length;
-            console.log(`char ${this.currentGuess[i]}`);
-            console.log(`matched count: ${matched}`);
-            console.log(`char count: ${charCount}`);
             if (charCount > matched) {
                 answer_state[i] = letter_state_js_1.LetterState.Yellow;
             }
@@ -93,6 +102,7 @@ class Wordle {
             console.log('guess is correct!');
         }
         this.currentGuess = '';
+        document.dispatchEvent(new events_js_1.BoardUpdatedEvent(this));
     }
     WordLength() {
         return WORD_LENGTH;

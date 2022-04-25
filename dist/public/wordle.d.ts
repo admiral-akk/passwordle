@@ -6,7 +6,7 @@ export declare class Wordle {
     private _answer;
     constructor();
     InitStates(): LetterState[][];
-    AddChar(c: string): void;
+    AddChar(char: string): void;
     Delete(): void;
     Submit(): void;
     WordLength(): number;

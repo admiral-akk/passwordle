@@ -4,4 +4,5 @@
       "build": true,
       "dist": true,
     }//, "files.exclude": {}
+    // Uncomment the above to see the generated files/node_modules. Useful for when you want to debug.
   }

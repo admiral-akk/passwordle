@@ -1,3 +1,5 @@
+import {AddCharEvent, DeleteEvent, SubmitWordEvent} from './events';
+
 const KEYBOARD_KEYS = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
   ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
@@ -7,13 +9,17 @@ const KEYBOARD_KEYS = [
 export class Keyboard {
   private registerKey(key: HTMLButtonElement) {
     key.addEventListener('click', () => {
-      let text = key.innerText;
-      if (text === 'DEL') {
-        text = 'Backspace';
+      const text = key.innerText;
+      if (text === 'ENTER') {
+        document.dispatchEvent(new SubmitWordEvent());
+      } else if (text === 'DEL') {
+        document.dispatchEvent(new DeleteEvent());
+      } else {
+        document.dispatchEvent(new AddCharEvent(text));
       }
-      document.dispatchEvent(new KeyboardEvent('keyup', {key: text}));
     });
   }
+
   constructor() {
     const keyboard = document.getElementById('keyboard');
     for (let i = 0; i < KEYBOARD_KEYS.length; i++) {
@@ -28,5 +34,27 @@ export class Keyboard {
       }
       keyboard?.appendChild(row);
     }
+    this.registerKeyboard();
+  }
+
+  registerKeyboard() {
+    document.addEventListener('keyup', e => {
+      const key = String(e.key).toUpperCase();
+      if (key === 'BACKSPACE') {
+        document.dispatchEvent(new DeleteEvent());
+        return;
+      }
+      if (key === 'ENTER') {
+        document.dispatchEvent(new SubmitWordEvent());
+        return;
+      }
+      const keysPressed = key.match('[A-Z]+');
+      if (!keysPressed || keysPressed[0].length > 1) {
+        return;
+      } else {
+        document.dispatchEvent(new AddCharEvent(key));
+        return;
+      }
+    });
   }
 }

@@ -2,7 +2,6 @@ import {LetterState} from './letter_state.js';
 
 export class Board {
   private _letterBoxes: HTMLDivElement[][];
-
   constructor(guessCount: number, wordLength: number) {
     this._letterBoxes = [];
     const gameboard = document.getElementById('game-board');
@@ -19,6 +18,10 @@ export class Board {
       gameboard?.appendChild(row);
       this._letterBoxes.push(rowArray);
     }
+
+    document.addEventListener('update_board', e => {
+      this.Update(e.detail.guesses, e.detail.currentGuess, e.detail.states);
+    });
   }
 
   Update(

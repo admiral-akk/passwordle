@@ -1,5 +1,6 @@
 import {WORDS} from './words.js';
 import {LetterState} from './letter_state.js';
+import {BoardUpdatedEvent} from './events.js';
 
 const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
@@ -16,6 +17,15 @@ export class Wordle {
     this.states = this.InitStates();
     this._answer =
       WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
+    document.addEventListener('add_key', e => {
+      this.AddChar(e.detail);
+    });
+    document.addEventListener('delete', () => {
+      this.Delete();
+    });
+    document.addEventListener('submit', () => {
+      this.Submit();
+    });
   }
 
   InitStates() {
@@ -30,12 +40,13 @@ export class Wordle {
     return states;
   }
 
-  AddChar(c: string) {
+  AddChar(char: string): void {
     if (this.currentGuess.length >= WORD_LENGTH) {
       console.log(`Character limit: ${this.currentGuess}`);
       return;
     }
-    this.currentGuess += c;
+    this.currentGuess += char;
+    document.dispatchEvent(new BoardUpdatedEvent(this));
   }
 
   Delete() {
@@ -44,6 +55,7 @@ export class Wordle {
       return;
     }
     this.currentGuess = this.currentGuess.slice(0, -1);
+    document.dispatchEvent(new BoardUpdatedEvent(this));
   }
 
   Submit() {
@@ -102,6 +114,7 @@ export class Wordle {
       console.log('guess is correct!');
     }
     this.currentGuess = '';
+    document.dispatchEvent(new BoardUpdatedEvent(this));
   }
 
   WordLength() {

@@ -19,6 +19,9 @@ class Board {
             gameboard === null || gameboard === void 0 ? void 0 : gameboard.appendChild(row);
             this._letterBoxes.push(rowArray);
         }
+        document.addEventListener('update_board', e => {
+            this.Update(e.detail.guesses, e.detail.currentGuess, e.detail.states);
+        });
     }
     Update(priorGuesses, currentGuess, knowledge) {
         for (let row_index = 0; row_index < this._letterBoxes.length; row_index++) {
