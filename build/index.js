@@ -20,16 +20,16 @@ const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.json());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
-app.post(`/event`, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post('/event', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(`Recieved request: ${JSON.stringify(req.body)}`);
-        server.HandleEvent(req.body).then((event) => {
+        server.HandleEvent(req.body).then(event => {
             res.json(event);
         });
     }
     catch (err) {
         console.error(err);
-        res.json({ error: `errors` });
+        res.json({ error: 'errors' });
     }
 }));
 app.listen(port, () => {

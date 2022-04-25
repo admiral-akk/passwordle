@@ -15,17 +15,15 @@ const wordle_logic_1 = require("./public/wordle_logic");
 const words_1 = require("./public/words");
 class WordleServer {
     constructor() {
-        this._answer = ``;
+        this._answer = '';
     }
     HandleEvent(body) {
         return __awaiter(this, void 0, void 0, function* () {
-            const event = body;
             switch (body.type) {
                 case 'new_game':
                     return this.NewGame();
-                case `submit`:
-                    const submit = body;
-                    return this.Guess(submit.detail);
+                case 'submit':
+                    return this.Guess(body.detail);
                 default:
                     console.log(`unknown event: ${JSON.stringify(body)}`);
                     break;
@@ -33,7 +31,8 @@ class WordleServer {
         });
     }
     NewGame() {
-        this._answer = words_1.WORDS[Math.floor(Math.random() * words_1.WORDS.length)].toUpperCase();
+        this._answer =
+            words_1.WORDS[Math.floor(Math.random() * words_1.WORDS.length)].toUpperCase();
         return Promise.resolve(new network_events_1.GameStartedMessage());
     }
     Guess(guess) {
