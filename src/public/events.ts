@@ -35,3 +35,9 @@ export class NewGameEvent extends CustomEvent<null> {
     super('new_game');
   }
 }
+
+export class GameStartedEvent extends CustomEvent<null> {
+  constructor() {
+    super('game_started');
+  }
+}

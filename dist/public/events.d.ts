@@ -17,3 +17,6 @@ export declare class KnowledgeUpdateEvent extends CustomEvent<WordKnowledge> {
 export declare class NewGameEvent extends CustomEvent<null> {
     constructor();
 }
+export declare class GameStartedEvent extends CustomEvent<null> {
+    constructor();
+}
