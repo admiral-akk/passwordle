@@ -55,7 +55,7 @@ class Board {
         }
         if (this._guessCount < serverCount) {
             for (let i = this._guessCount; i < serverCount; i++) {
-                this.UpdateKnowledge(history.history[i].knowledge);
+                document.dispatchEvent(new events_1.KnowledgeUpdateEvent(history.history[i].knowledge));
             }
         }
     }

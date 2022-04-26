@@ -1,5 +1,9 @@
 import {AnimateCSS, AnimationType} from './animate';
-import {GameHistoryEvent, SubmitWordEvent} from './events';
+import {
+  GameHistoryEvent,
+  KnowledgeUpdateEvent,
+  SubmitWordEvent,
+} from './events';
 import {History} from './game_history';
 import {LetterState, WordKnowledge} from './knowledge';
 import {WORDS} from './words';
@@ -65,7 +69,9 @@ export class Board {
     }
     if (this._guessCount < serverCount) {
       for (let i = this._guessCount; i < serverCount; i++) {
-        this.UpdateKnowledge(history.history[i].knowledge);
+        document.dispatchEvent(
+          new KnowledgeUpdateEvent(history.history[i].knowledge)
+        );
       }
     }
   }
