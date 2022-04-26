@@ -26,6 +26,10 @@ function Get(path, gameId) {
 class ClientNetworking {
     constructor() {
         this.id = '';
+        this.urlParams = new URLSearchParams(window.location.search);
+        for (const [key, value] of this.urlParams.entries()) {
+            console.log(`param k: ${key}, v: ${value}`);
+        }
         document.addEventListener('submit', e => {
             Post('/event', new network_events_1.SubmitWordMessage(e.detail, this.GetId()))
                 .then(response => response.json())

@@ -30,12 +30,14 @@ function Get(path: string, gameId: string) {
 
 export class ClientNetworking {
   private id: string;
+  private urlParams: URLSearchParams;
 
   private GetId(): string {
     return this.id;
   }
   constructor() {
     this.id = '';
+    this.urlParams = new URLSearchParams(window.location.search);
     document.addEventListener('submit', e => {
       Post('/event', new SubmitWordMessage(e.detail, this.GetId()))
         .then(response => response.json())
