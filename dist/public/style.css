@@ -1,10 +1,25 @@
-#game-board {
+
+#game {
+    display: flex;
+    justify-content: center;
+}
+
+.game-board {
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin: 20px;
 }
+
 .letter-row {
     display: flex;
+}
+
+.player-title {
+    display: flex;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem;
 }
 
 .letter-box {

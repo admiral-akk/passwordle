@@ -1,14 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Board = void 0;
+exports.Board = exports.MultiBoard = void 0;
 const animate_1 = require("./animate");
 const events_1 = require("./events");
 const knowledge_1 = require("./knowledge");
 const words_1 = require("./words");
-class Board {
+class MultiBoard {
     constructor(guessCount, wordLength) {
+        this._you = new Board(guessCount, wordLength, 'You');
+        this._opponent = new Board(guessCount, wordLength, 'Opponent');
+    }
+}
+exports.MultiBoard = MultiBoard;
+class Board {
+    constructor(guessCount, wordLength, playerName) {
         this._letterBoxes = [];
-        const gameboard = document.getElementById('game-board');
+        const top = document.getElementById('game');
+        const gameboard = document.createElement('div');
+        const title = document.createElement('div');
+        title.innerText = playerName;
+        title.className = 'player-title';
+        gameboard.appendChild(title);
+        gameboard.className = 'game-board';
         for (let i = 0; i < guessCount; i++) {
             const rowArray = [];
             const row = document.createElement('div');
@@ -22,6 +35,7 @@ class Board {
             gameboard === null || gameboard === void 0 ? void 0 : gameboard.appendChild(row);
             this._letterBoxes.push(rowArray);
         }
+        top === null || top === void 0 ? void 0 : top.appendChild(gameboard);
         document.addEventListener('update_knowledge', e => {
             this.UpdateKnowledge(e.detail);
         });

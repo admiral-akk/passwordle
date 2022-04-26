@@ -8,6 +8,15 @@ import {History} from './game_history';
 import {LetterState, WordKnowledge} from './knowledge';
 import {WORDS} from './words';
 
+export class MultiBoard {
+  private _you: Board;
+  private _opponent: Board;
+  constructor(guessCount: number, wordLength: number) {
+    this._you = new Board(guessCount, wordLength, 'You');
+    this._opponent = new Board(guessCount, wordLength, 'Opponent');
+  }
+}
+
 export class Board {
   private _letterBoxes: HTMLDivElement[][];
 
@@ -15,9 +24,15 @@ export class Board {
   private _currentGuess: string;
   private _wordLength: number;
 
-  constructor(guessCount: number, wordLength: number) {
+  constructor(guessCount: number, wordLength: number, playerName: string) {
     this._letterBoxes = [];
-    const gameboard = document.getElementById('game-board');
+    const top = document.getElementById('game');
+    const gameboard = document.createElement('div');
+    const title = document.createElement('div');
+    title.innerText = playerName;
+    title.className = 'player-title';
+    gameboard.appendChild(title);
+    gameboard.className = 'game-board';
     for (let i = 0; i < guessCount; i++) {
       const rowArray = [];
       const row = document.createElement('div');
@@ -31,6 +46,7 @@ export class Board {
       gameboard?.appendChild(row);
       this._letterBoxes.push(rowArray);
     }
+    top?.appendChild(gameboard);
 
     document.addEventListener('update_knowledge', e => {
       this.UpdateKnowledge(e.detail);
