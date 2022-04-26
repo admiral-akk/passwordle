@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PollingMessage = exports.GameStartedMessage = exports.NewGameMessage = exports.KnowledgeUpdateMessage = exports.SubmitWordMessage = exports.BaseNetworkMessage = void 0;
+exports.GameStateMessage = exports.PollingMessage = exports.GameStartedMessage = exports.NewGameMessage = exports.KnowledgeUpdateMessage = exports.SubmitWordMessage = exports.BaseNetworkMessage = void 0;
 class BaseNetworkMessage {
     constructor(type, id, detail) {
         this.type = type;
@@ -39,4 +39,10 @@ class PollingMessage extends BaseNetworkMessage {
     }
 }
 exports.PollingMessage = PollingMessage;
+class GameStateMessage extends BaseNetworkMessage {
+    constructor(id, gameHistory) {
+        super('polling', id, gameHistory);
+    }
+}
+exports.GameStateMessage = GameStateMessage;
 //# sourceMappingURL=network_events.js.map

@@ -1,9 +1,9 @@
 import {Game} from './game_data';
 import {
   GameStartedMessage,
+  GameStateMessage,
   INetworkMessage,
   KnowledgeUpdateMessage,
-  PollingMessage,
   SubmitWordMessage,
 } from './public/network_events';
 
@@ -22,16 +22,16 @@ export class WordleServer {
         return this.Guess(submit.detail, submit.id);
       }
       default:
-        throw `Unknown event: ${JSON.stringify(body)}`;
+        return Promise.reject(`Unknown event: ${JSON.stringify(body)}`);
     }
   }
 
-  async HandlePoll(body: INetworkMessage): Promise<PollingMessage> {
+  async HandlePoll(body: INetworkMessage): Promise<GameStateMessage> {
     const id = body.id as string;
     if (!(id in this._games)) {
-      throw `Game id ${id} doesn't exist!`;
+      return Promise.reject(`Game id ${id} doesn't exist!`);
     }
-    return Promise.resolve(new PollingMessage(id));
+    return Promise.resolve(new GameStateMessage(id, this._games[id].history));
   }
 
   private NewGame(): Promise<GameStartedMessage> {

@@ -1,3 +1,4 @@
+import {History} from './game_history';
 import {WordKnowledge} from './knowledge';
 
 export interface INetworkMessage {
@@ -43,5 +44,11 @@ export class GameStartedMessage extends BaseNetworkMessage<boolean> {
 export class PollingMessage extends BaseNetworkMessage<boolean> {
   constructor(id: string) {
     super('polling', id, true);
+  }
+}
+
+export class GameStateMessage extends BaseNetworkMessage<History> {
+  constructor(id: string, gameHistory: History) {
+    super('polling', id, gameHistory);
   }
 }

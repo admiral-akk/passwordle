@@ -60,7 +60,11 @@ class ClientNetworking {
             }
             Get('/poll', id)
                 .then(response => response.json())
-                .then(data => console.log(`Recieved polling response: ${JSON.stringify(data)}`));
+                .then(data => {
+                const message = data;
+                document.dispatchEvent(new events_1.GameHistoryEvent(message.detail));
+                console.log(`Recieved polling response: ${JSON.stringify(data)}`);
+            });
         }, 1000);
     }
     GetId() {

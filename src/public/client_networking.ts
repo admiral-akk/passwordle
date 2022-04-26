@@ -1,10 +1,16 @@
 // Handles events to/from the server.
-import {GameStartedEvent, KnowledgeUpdateEvent, NewGameEvent} from './events';
+import {
+  GameHistoryEvent,
+  GameStartedEvent,
+  KnowledgeUpdateEvent,
+  NewGameEvent,
+} from './events';
 import {
   NewGameMessage,
   SubmitWordMessage,
   KnowledgeUpdateMessage,
   INetworkMessage,
+  GameStateMessage,
 } from './network_events';
 
 function Post(path: string, data: INetworkMessage) {
@@ -71,9 +77,11 @@ export class ClientNetworking {
       }
       Get('/poll', id)
         .then(response => response.json())
-        .then(data =>
-          console.log(`Recieved polling response: ${JSON.stringify(data)}`)
-        );
+        .then(data => {
+          const message = data as GameStateMessage;
+          document.dispatchEvent(new GameHistoryEvent(message.detail));
+          console.log(`Recieved polling response: ${JSON.stringify(data)}`);
+        });
     }, 1000);
   }
 }

@@ -1,3 +1,4 @@
+import { History } from './game_history';
 import { WordKnowledge } from './knowledge';
 export interface INetworkMessage {
     type: string;
@@ -23,4 +24,7 @@ export declare class GameStartedMessage extends BaseNetworkMessage<boolean> {
 }
 export declare class PollingMessage extends BaseNetworkMessage<boolean> {
     constructor(id: string);
+}
+export declare class GameStateMessage extends BaseNetworkMessage<History> {
+    constructor(id: string, gameHistory: History);
 }

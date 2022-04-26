@@ -1,3 +1,4 @@
+import { History } from './game_history';
 import { WordKnowledge } from './knowledge';
 export declare class SubmitWordEvent extends CustomEvent<string> {
     constructor(guess: string);
@@ -19,4 +20,7 @@ export declare class NewGameEvent extends CustomEvent<null> {
 }
 export declare class GameStartedEvent extends CustomEvent<null> {
     constructor();
+}
+export declare class GameHistoryEvent extends CustomEvent<History> {
+    constructor(gameHistory: History);
 }

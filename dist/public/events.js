@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GameStartedEvent = exports.NewGameEvent = exports.KnowledgeUpdateEvent = exports.AddCharEvent = exports.DeleteEvent = exports.SubmitCommand = exports.SubmitWordEvent = void 0;
+exports.GameHistoryEvent = exports.GameStartedEvent = exports.NewGameEvent = exports.KnowledgeUpdateEvent = exports.AddCharEvent = exports.DeleteEvent = exports.SubmitCommand = exports.SubmitWordEvent = void 0;
 class SubmitWordEvent extends CustomEvent {
     constructor(guess) {
         super('submit', { detail: guess });
@@ -43,4 +43,10 @@ class GameStartedEvent extends CustomEvent {
     }
 }
 exports.GameStartedEvent = GameStartedEvent;
+class GameHistoryEvent extends CustomEvent {
+    constructor(gameHistory) {
+        super('game_history', { detail: gameHistory });
+    }
+}
+exports.GameHistoryEvent = GameHistoryEvent;
 //# sourceMappingURL=events.js.map

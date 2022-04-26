@@ -5,6 +5,7 @@ export declare class Board {
     private _currentGuess;
     private _wordLength;
     constructor(guessCount: number, wordLength: number);
+    private GameHistory;
     private NewGame;
     private PreviousRow;
     private CurrentRow;

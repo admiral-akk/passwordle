@@ -26,7 +26,7 @@ class WordleServer {
                     return this.Guess(submit.detail, submit.id);
                 }
                 default:
-                    throw `Unknown event: ${JSON.stringify(body)}`;
+                    return Promise.reject(`Unknown event: ${JSON.stringify(body)}`);
             }
         });
     }
@@ -34,9 +34,9 @@ class WordleServer {
         return __awaiter(this, void 0, void 0, function* () {
             const id = body.id;
             if (!(id in this._games)) {
-                throw `Game id ${id} doesn't exist!`;
+                return Promise.reject(`Game id ${id} doesn't exist!`);
             }
-            return Promise.resolve(new network_events_1.PollingMessage(id));
+            return Promise.resolve(new network_events_1.GameStateMessage(id, this._games[id].history));
         });
     }
     NewGame() {

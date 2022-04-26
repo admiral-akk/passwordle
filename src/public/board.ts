@@ -1,5 +1,6 @@
 import {AnimateCSS, AnimationType} from './animate';
-import {SubmitWordEvent} from './events';
+import {GameHistoryEvent, SubmitWordEvent} from './events';
+import {History} from './game_history';
 import {LetterState, WordKnowledge} from './knowledge';
 import {WORDS} from './words';
 
@@ -46,6 +47,27 @@ export class Board {
     document.addEventListener('new_game', () => {
       this.NewGame();
     });
+    document.addEventListener('game_history', e => {
+      this.GameHistory((e as GameHistoryEvent).detail);
+    });
+  }
+
+  private GameHistory(history: History) {
+    const serverCount = history.history.length;
+    console.log(
+      `Server has ${serverCount} guesses, client has ${this._guessCount}!`
+    );
+    if (this._guessCount > serverCount) {
+      throw `Server has ${serverCount} guesses, client has ${this._guessCount}!`;
+    }
+    if (this._guessCount === serverCount) {
+      return;
+    }
+    if (this._guessCount < serverCount) {
+      for (let i = this._guessCount; i < serverCount; i++) {
+        this.UpdateKnowledge(history.history[i].knowledge);
+      }
+    }
   }
 
   private NewGame() {
@@ -103,9 +125,7 @@ export class Board {
       console.log(`Invalid word: ${this._currentGuess}`);
       return;
     }
-    this._guessCount++;
     document.dispatchEvent(new SubmitWordEvent(this._currentGuess));
-    this._currentGuess = '';
   }
 
   private UpdateColor(letter: HTMLDivElement, knowledge: LetterState) {
@@ -126,6 +146,7 @@ export class Board {
   }
 
   UpdateKnowledge(knowledge: WordKnowledge) {
+    this._guessCount++;
     const row = this.PreviousRow();
     for (
       let letter_index = 0;
@@ -134,8 +155,10 @@ export class Board {
     ) {
       const letter = row[letter_index];
       const letterKnowledge = knowledge.letterKnowledge[letter_index];
+      letter.innerText = knowledge.guess[letter_index];
       this.UpdateColor(letter, letterKnowledge);
       AnimateCSS(letter, AnimationType.Pulse);
     }
+    this._currentGuess = '';
   }
 }
