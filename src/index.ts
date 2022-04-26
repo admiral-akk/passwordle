@@ -20,6 +20,18 @@ app.post('/event', async (req, res) => {
   }
 });
 
+app.get('/poll', async (req, res) => {
+  try {
+    console.log(`Recieved request: ${JSON.stringify(req.body)}`);
+    server.HandlePoll(req.body).then(event => {
+      res.json(event);
+    });
+  } catch (err) {
+    console.error(err);
+    res.json({error: 'errors'});
+  }
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });

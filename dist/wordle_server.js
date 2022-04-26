@@ -30,6 +30,15 @@ class WordleServer {
             }
         });
     }
+    HandlePoll(body) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const id = body.id;
+            if (!(id in this._games)) {
+                return { has_game: 2 };
+            }
+            return { has_game: 3 };
+        });
+    }
     NewGame() {
         let id = '1';
         while (id in this._games) {

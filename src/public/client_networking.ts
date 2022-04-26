@@ -7,40 +7,6 @@ import {
   KnowledgeUpdateMessage,
 } from './network_events';
 
-export class ClientNetworking {
-  private id: string;
-
-  private GetId(): string {
-    return this.id;
-  }
-  constructor() {
-    this.id = '';
-    document.addEventListener('submit', e => {
-      Post('/event', new SubmitWordMessage(e.detail, this.GetId()))
-        .then(response => {
-          console.log('Converting response to JSON');
-          return response.json();
-        })
-        .then(data => {
-          const message = data as KnowledgeUpdateMessage;
-          const knowledgeUpdate = new KnowledgeUpdateEvent(message.detail);
-          document.dispatchEvent(knowledgeUpdate);
-        });
-    });
-    document.addEventListener('new_game', e => {
-      console.log('sending new game message');
-      Post('/event', new NewGameMessage())
-        .then(response => response.json())
-        .then(data => {
-          this.id = data.id;
-          const gameStarted = new GameStartedEvent();
-          document.dispatchEvent(gameStarted);
-        });
-    });
-    document.dispatchEvent(new NewGameEvent());
-  }
-}
-
 function Post(path: string, data: any) {
   return window.fetch(path, {
     method: 'POST',
@@ -60,4 +26,43 @@ function Get(path: string, data: any) {
       'Content-Type': 'application/json',
     },
   });
+}
+
+export class ClientNetworking {
+  private id: string;
+
+  private GetId(): string {
+    return this.id;
+  }
+
+  private Poll() {
+    Get('/poll', this.id)
+      .then(response => response.json())
+      .then(data => console.log(`Recieved polling response: ${JSON.stringify(data)}`));
+  }
+
+  constructor() {
+    this.id = '';
+    document.addEventListener('submit', e => {
+      Post('/event', new SubmitWordMessage(e.detail, this.GetId()))
+        .then(response => response.json())
+        .then(data => {
+          const message = data as KnowledgeUpdateMessage;
+          const knowledgeUpdate = new KnowledgeUpdateEvent(message.detail);
+          document.dispatchEvent(knowledgeUpdate);
+        });
+    });
+    document.addEventListener('new_game', e => {
+      console.log('sending new game message');
+      Post('/event', new NewGameMessage())
+        .then(response => response.json())
+        .then(data => {
+          this.id = data.id;
+          const gameStarted = new GameStartedEvent();
+          document.dispatchEvent(gameStarted);
+        });
+    });
+    document.dispatchEvent(new NewGameEvent());
+    setInterval(this.Poll, 1000);
+  }
 }

@@ -4,6 +4,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientNetworking = void 0;
 const events_1 = require("./events");
 const network_events_1 = require("./network_events");
+function Post(path, data) {
+    return window.fetch(path, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+}
+function Get(path, data) {
+    return window.fetch(path, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    });
+}
 class ClientNetworking {
     constructor() {
         this.id = '';
@@ -30,29 +49,16 @@ class ClientNetworking {
             });
         });
         document.dispatchEvent(new events_1.NewGameEvent());
+        setInterval(this.Poll, 1000);
     }
     GetId() {
         return this.id;
     }
+    Poll() {
+        Get('/poll', this.id)
+            .then(response => response.json())
+            .then(data => console.log(`Recieved polling response: ${JSON.stringify(data)}`));
+    }
 }
 exports.ClientNetworking = ClientNetworking;
-function Post(path, data) {
-    return window.fetch(path, {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-}
-function Get(path, data) {
-    return window.fetch(path, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-    });
-}
 //# sourceMappingURL=client_networking.js.map

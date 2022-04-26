@@ -23,6 +23,14 @@ export class WordleServer {
     }
   }
 
+  async HandlePoll(body: any): Promise<any> {
+    const id = body.id as string;
+    if (!(id in this._games)) {
+      return {has_game: 2};
+    }
+    return {has_game: 3};
+  }
+
   private NewGame(): Promise<any> {
     let id = '1';
     while (id in this._games) {
