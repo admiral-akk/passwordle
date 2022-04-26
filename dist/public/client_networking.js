@@ -25,13 +25,13 @@ function Get(path, gameId) {
 }
 class ClientNetworking {
     constructor() {
-        this.id = '';
         this.urlParams = new URLSearchParams(window.location.search);
-        for (const [key, value] of this.urlParams.entries()) {
-            console.log(`param k: ${key}, v: ${value}`);
-        }
         document.addEventListener('submit', e => {
-            Post('/event', new network_events_1.SubmitWordMessage(e.detail, this.GetId()))
+            const id = this.GetId();
+            if (id === null) {
+                return;
+            }
+            Post('/event', new network_events_1.SubmitWordMessage(e.detail, id))
                 .then(response => response.json())
                 .then(data => {
                 const message = data;
@@ -43,23 +43,28 @@ class ClientNetworking {
             Post('/event', new network_events_1.NewGameMessage())
                 .then(response => response.json())
                 .then(data => {
-                this.id = data.id;
+                const searchParams = new URLSearchParams(window.location.search);
+                searchParams.set('id', data.id);
+                window.location.search = searchParams.toString();
                 const gameStarted = new events_1.GameStartedEvent();
                 document.dispatchEvent(gameStarted);
             });
         });
-        document.dispatchEvent(new events_1.NewGameEvent());
+        if (this.urlParams.get('id') === null) {
+            document.dispatchEvent(new events_1.NewGameEvent());
+        }
         setInterval(() => {
-            if (this.GetId() === undefined) {
+            const id = this.GetId();
+            if (id === null) {
                 return;
             }
-            Get('/poll', this.GetId())
+            Get('/poll', id)
                 .then(response => response.json())
                 .then(data => console.log(`Recieved polling response: ${JSON.stringify(data)}`));
         }, 1000);
     }
     GetId() {
-        return this.id;
+        return this.urlParams.get('id');
     }
 }
 exports.ClientNetworking = ClientNetworking;

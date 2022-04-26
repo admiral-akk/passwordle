@@ -29,17 +29,20 @@ function Get(path: string, gameId: string) {
 }
 
 export class ClientNetworking {
-  private id: string;
   private urlParams: URLSearchParams;
 
-  private GetId(): string {
-    return this.id;
+  private GetId(): string | null {
+    return this.urlParams.get('id');
   }
+
   constructor() {
-    this.id = '';
     this.urlParams = new URLSearchParams(window.location.search);
     document.addEventListener('submit', e => {
-      Post('/event', new SubmitWordMessage(e.detail, this.GetId()))
+      const id = this.GetId();
+      if (id === null) {
+        return;
+      }
+      Post('/event', new SubmitWordMessage(e.detail, id))
         .then(response => response.json())
         .then(data => {
           const message = data as KnowledgeUpdateMessage;
@@ -51,17 +54,22 @@ export class ClientNetworking {
       Post('/event', new NewGameMessage())
         .then(response => response.json())
         .then(data => {
-          this.id = data.id;
+          const searchParams = new URLSearchParams(window.location.search);
+          searchParams.set('id', data.id);
+          window.location.search = searchParams.toString();
           const gameStarted = new GameStartedEvent();
           document.dispatchEvent(gameStarted);
         });
     });
-    document.dispatchEvent(new NewGameEvent());
+    if (this.urlParams.get('id') === null) {
+      document.dispatchEvent(new NewGameEvent());
+    }
     setInterval(() => {
-      if (this.GetId() === undefined) {
+      const id = this.GetId();
+      if (id === null) {
         return;
       }
-      Get('/poll', this.GetId())
+      Get('/poll', id)
         .then(response => response.json())
         .then(data =>
           console.log(`Recieved polling response: ${JSON.stringify(data)}`)
