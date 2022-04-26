@@ -1,4 +1,4 @@
-import {LetterState, WordKnowledge} from './knowledge';
+import {LetterState, WordKnowledge} from './public/knowledge';
 
 export function GetKnowledge(guess: string, answer: string): WordKnowledge {
   const answer_state: LetterState[] = [];

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Game = void 0;
-const wordle_logic_1 = require("./public/wordle_logic");
+const wordle_logic_1 = require("./wordle_logic");
 const words_1 = require("./public/words");
 const game_history_1 = require("./public/game_history");
 class Game {
