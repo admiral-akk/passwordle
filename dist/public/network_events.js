@@ -1,36 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GameStartedMessage = exports.NewGameMessage = exports.KnowledgeUpdateMessage = exports.SubmitWordMessage = exports.NetworkMessage = void 0;
-class NetworkMessage {
+exports.PollingMessage = exports.GameStartedMessage = exports.NewGameMessage = exports.KnowledgeUpdateMessage = exports.SubmitWordMessage = exports.BaseNetworkMessage = void 0;
+class BaseNetworkMessage {
     constructor(type, id, detail) {
         this.type = type;
         this.detail = detail;
         this.id = id;
     }
 }
-exports.NetworkMessage = NetworkMessage;
-class SubmitWordMessage extends NetworkMessage {
+exports.BaseNetworkMessage = BaseNetworkMessage;
+class SubmitWordMessage extends BaseNetworkMessage {
     constructor(guess, id) {
         super('submit', id, guess);
     }
 }
 exports.SubmitWordMessage = SubmitWordMessage;
-class KnowledgeUpdateMessage extends NetworkMessage {
+class KnowledgeUpdateMessage extends BaseNetworkMessage {
     constructor(knowledge, id) {
         super('update_knowledge', id, knowledge);
     }
 }
 exports.KnowledgeUpdateMessage = KnowledgeUpdateMessage;
-class NewGameMessage extends NetworkMessage {
+class NewGameMessage extends BaseNetworkMessage {
     constructor() {
         super('new_game', '0', true);
     }
 }
 exports.NewGameMessage = NewGameMessage;
-class GameStartedMessage extends NetworkMessage {
+class GameStartedMessage extends BaseNetworkMessage {
     constructor(id) {
         super('game_started', id, true);
     }
 }
 exports.GameStartedMessage = GameStartedMessage;
+class PollingMessage extends BaseNetworkMessage {
+    constructor(id) {
+        super('polling', id, true);
+    }
+}
+exports.PollingMessage = PollingMessage;
 //# sourceMappingURL=network_events.js.map

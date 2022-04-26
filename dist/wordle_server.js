@@ -22,11 +22,12 @@ class WordleServer {
             switch (body.type) {
                 case 'new_game':
                     return this.NewGame();
-                case 'submit':
-                    return this.Guess(body.detail, body.id);
+                case 'submit': {
+                    const submit = body;
+                    return this.Guess(submit.detail, submit.id);
+                }
                 default:
-                    console.log(`unknown event: ${JSON.stringify(body)}`);
-                    break;
+                    throw `Unknown event: ${JSON.stringify(body)}`;
             }
         });
     }
@@ -34,9 +35,9 @@ class WordleServer {
         return __awaiter(this, void 0, void 0, function* () {
             const id = body.id;
             if (!(id in this._games)) {
-                return { has_game: 2 };
+                return Promise.resolve(new network_events_1.PollingMessage(''));
             }
-            return { has_game: 3 };
+            return Promise.resolve(new network_events_1.PollingMessage(id));
         });
     }
     NewGame() {

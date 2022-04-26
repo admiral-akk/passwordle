@@ -1,13 +1,13 @@
 // Handles events to/from the server.
-
 import {GameStartedEvent, KnowledgeUpdateEvent, NewGameEvent} from './events';
 import {
   NewGameMessage,
   SubmitWordMessage,
   KnowledgeUpdateMessage,
+  INetworkMessage,
 } from './network_events';
 
-function Post(path: string, data: any) {
+function Post(path: string, data: INetworkMessage) {
   return window.fetch(path, {
     method: 'POST',
     headers: {
@@ -18,8 +18,8 @@ function Post(path: string, data: any) {
   });
 }
 
-function Get(path: string, data: any) {
-  return window.fetch(path, {
+function Get(path: string, gameId: string) {
+  return window.fetch(`${path}/:${gameId}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -34,13 +34,6 @@ export class ClientNetworking {
   private GetId(): string {
     return this.id;
   }
-
-  private Poll() {
-    Get('/poll', this.id)
-      .then(response => response.json())
-      .then(data => console.log(`Recieved polling response: ${JSON.stringify(data)}`));
-  }
-
   constructor() {
     this.id = '';
     document.addEventListener('submit', e => {
@@ -52,8 +45,7 @@ export class ClientNetworking {
           document.dispatchEvent(knowledgeUpdate);
         });
     });
-    document.addEventListener('new_game', e => {
-      console.log('sending new game message');
+    document.addEventListener('new_game', () => {
       Post('/event', new NewGameMessage())
         .then(response => response.json())
         .then(data => {
@@ -63,6 +55,15 @@ export class ClientNetworking {
         });
     });
     document.dispatchEvent(new NewGameEvent());
-    setInterval(this.Poll, 1000);
+    setInterval(() => {
+      if (this.GetId() === undefined) {
+        return;
+      }
+      Get('/poll', this.GetId())
+        .then(response => response.json())
+        .then(data =>
+          console.log(`Recieved polling response: ${JSON.stringify(data)}`)
+        );
+    }, 1000);
   }
 }

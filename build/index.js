@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
+const network_events_1 = require("./public/network_events");
 const wordle_server_1 = require("./wordle_server");
 const server = new wordle_server_1.WordleServer();
 const app = (0, express_1.default)();
@@ -32,10 +33,11 @@ app.post('/event', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.json({ error: 'errors' });
     }
 }));
-app.get('/poll', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/poll/:gameId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(`Recieved request: ${JSON.stringify(req.body)}`);
-        server.HandlePoll(req.body).then(event => {
+        console.log(`Recieved request: ${JSON.stringify(req.params)}`);
+        const request = new network_events_1.PollingMessage(req.params.gameId);
+        server.HandlePoll(request).then(event => {
             res.json(event);
         });
     }

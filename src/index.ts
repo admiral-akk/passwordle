@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import {PollingMessage} from './public/network_events';
 import {WordleServer} from './wordle_server';
 
 const server = new WordleServer();
@@ -20,10 +21,11 @@ app.post('/event', async (req, res) => {
   }
 });
 
-app.get('/poll', async (req, res) => {
+app.get('/poll/:gameId', async (req, res) => {
   try {
-    console.log(`Recieved request: ${JSON.stringify(req.body)}`);
-    server.HandlePoll(req.body).then(event => {
+    console.log(`Recieved request: ${JSON.stringify(req.params)}`);
+    const request = new PollingMessage(req.params.gameId);
+    server.HandlePoll(request).then(event => {
       res.json(event);
     });
   } catch (err) {
