@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "gts lint ./src/**/*.ts",
+    "lint": "gts lint ./src/{,**/}*.ts",
     "clean": "gts clean",
     "compile": "tsc --incremental",
-    "fix": "gts fix ./src/**/*.ts",
+    "fix": "gts fix ./src/{,**/}*.ts",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
     "posttest": "npm run lint",

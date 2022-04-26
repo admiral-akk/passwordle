@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Board = void 0;
+const animate_1 = require("./animate");
 const events_1 = require("./events");
 const knowledge_1 = require("./knowledge");
 const words_1 = require("./words");
@@ -73,7 +74,7 @@ class Board {
     }
     Delete() {
         if (this._currentGuess.length === 0) {
-            console.log(`Nothing to delete: ${this._currentGuess}`);
+            console.log(`Nothing to dlete: ${this._currentGuess}`);
             return;
         }
         const letter = this.LastLetter();
@@ -115,6 +116,7 @@ class Board {
             const letter = row[letter_index];
             const letterKnowledge = knowledge.letterKnowledge[letter_index];
             this.UpdateColor(letter, letterKnowledge);
+            (0, animate_1.AnimateCSS)(letter, animate_1.AnimationType.Pulse);
         }
     }
 }

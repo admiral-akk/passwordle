@@ -1,3 +1,4 @@
+import {AnimateCSS, AnimationType} from './animate';
 import {SubmitWordEvent} from './events';
 import {LetterState, WordKnowledge} from './knowledge';
 import {WORDS} from './words';
@@ -85,7 +86,7 @@ export class Board {
 
   Delete() {
     if (this._currentGuess.length === 0) {
-      console.log(`Nothing to delete: ${this._currentGuess}`);
+      console.log(`Nothing to dlete: ${this._currentGuess}`);
       return;
     }
     const letter = this.LastLetter();
@@ -134,6 +135,7 @@ export class Board {
       const letter = row[letter_index];
       const letterKnowledge = knowledge.letterKnowledge[letter_index];
       this.UpdateColor(letter, letterKnowledge);
+      AnimateCSS(letter, AnimationType.Pulse);
     }
   }
 }

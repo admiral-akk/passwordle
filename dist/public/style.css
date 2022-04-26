@@ -42,7 +42,7 @@
     background-color: lightgray;
     padding: 0.5rem;
     display: flex;
-    min-width: 2rem;
+    min-width: 1rem;
     align-items: center;
     justify-content: center;
     border-radius: 3px;
