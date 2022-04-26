@@ -1,19 +1,22 @@
 // Handles events to/from the server.
 
-import {response} from 'express';
-import {resolve} from 'path';
 import {GameStartedEvent, KnowledgeUpdateEvent, NewGameEvent} from './events';
 import {
-  GameStartedMessage,
   NewGameMessage,
   SubmitWordMessage,
   KnowledgeUpdateMessage,
 } from './network_events';
 
 export class ClientNetworking {
+  private id: string;
+
+  private GetId(): string {
+    return this.id;
+  }
   constructor() {
+    this.id = '';
     document.addEventListener('submit', e => {
-      Post('/event', new SubmitWordMessage(e.detail))
+      Post('/event', new SubmitWordMessage(e.detail, this.GetId()))
         .then(response => {
           console.log('Converting response to JSON');
           return response.json();
@@ -25,12 +28,11 @@ export class ClientNetworking {
         });
     });
     document.addEventListener('new_game', e => {
+      console.log('sending new game message');
       Post('/event', new NewGameMessage())
-        .then(response => {
-          console.log('Converting response to JSON');
-          return response.json();
-        })
-        .then(() => {
+        .then(response => response.json())
+        .then(data => {
+          this.id = data.id;
           const gameStarted = new GameStartedEvent();
           document.dispatchEvent(gameStarted);
         });

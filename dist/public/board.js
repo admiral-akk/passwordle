@@ -24,8 +24,7 @@ class Board {
         document.addEventListener('update_knowledge', e => {
             this.UpdateKnowledge(e.detail);
         });
-        this._guesses = [];
-        this._knowledge = [];
+        this._guessCount = 0;
         this._currentGuess = '';
         this._wordLength = wordLength;
         document.addEventListener('add_key', e => {
@@ -50,10 +49,10 @@ class Board {
         });
     }
     PreviousRow() {
-        return this._letterBoxes[this._guesses.length - 1];
+        return this._letterBoxes[this._guessCount - 1];
     }
     CurrentRow() {
-        return this._letterBoxes[this._guesses.length];
+        return this._letterBoxes[this._guessCount];
     }
     CurrentLetter() {
         const row = this.CurrentRow();
@@ -90,7 +89,7 @@ class Board {
             console.log(`Invalid word: ${this._currentGuess}`);
             return;
         }
-        this._guesses.push(this._currentGuess);
+        this._guessCount++;
         document.dispatchEvent(new events_1.SubmitWordEvent(this._currentGuess));
         this._currentGuess = '';
     }

@@ -56,7 +56,7 @@ class Keyboard {
     ColorKey(key, state) {
         switch (state) {
             case knowledge_1.LetterState.None:
-                key.style.backgroundColor = 'white';
+                key.style.backgroundColor = 'lightgrey';
                 break;
             case knowledge_1.LetterState.Yellow:
                 key.style.backgroundColor = 'yellow';
@@ -105,7 +105,7 @@ class Keyboard {
                 return;
             }
             const keysPressed = key.match('[A-Z]+');
-            if (!keysPressed || keysPressed[0].length > 1) {
+            if (!keysPressed || key.length > 1) {
                 return;
             }
             else {

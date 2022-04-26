@@ -6,8 +6,9 @@ const events_1 = require("./events");
 const network_events_1 = require("./network_events");
 class ClientNetworking {
     constructor() {
+        this.id = '';
         document.addEventListener('submit', e => {
-            Post('/event', new network_events_1.SubmitWordMessage(e.detail))
+            Post('/event', new network_events_1.SubmitWordMessage(e.detail, this.GetId()))
                 .then(response => {
                 console.log('Converting response to JSON');
                 return response.json();
@@ -19,17 +20,19 @@ class ClientNetworking {
             });
         });
         document.addEventListener('new_game', e => {
+            console.log('sending new game message');
             Post('/event', new network_events_1.NewGameMessage())
-                .then(response => {
-                console.log('Converting response to JSON');
-                return response.json();
-            })
-                .then(() => {
+                .then(response => response.json())
+                .then(data => {
+                this.id = data.id;
                 const gameStarted = new events_1.GameStartedEvent();
                 document.dispatchEvent(gameStarted);
             });
         });
         document.dispatchEvent(new events_1.NewGameEvent());
+    }
+    GetId() {
+        return this.id;
     }
 }
 exports.ClientNetworking = ClientNetworking;

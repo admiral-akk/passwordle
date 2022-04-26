@@ -2,45 +2,47 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    border: 2px solid black;
 }
 .letter-row {
     display: flex;
-    border: 2px solid gray;
 }
 
 .letter-box {
-    border: 4px solid green;
-    height: 2rem;
-    width: 2rem;
+    border: 2px solid gray;
+    height: 3rem;
+    width: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 3px;
     margin: 2px;
+    font-size: 2.5rem;
     font-weight: 700;
     text-transform: uppercase;
+}
+
+.filled-box {
+  border: 2px solid black;
 }
 
 #keyboard {
     display: flex;
     align-items: center;
     flex-direction: column;
-    border: 2px solid purple;
 }
 
 .keyboard-row {
     display: flex;
     align-items: center;
     flex-direction: row;
-    border: 2px solid orange;
     padding: 0.5rem 0rem;
 }
 
 .keyboard-key {
+    background-color: lightgray;
     padding: 0.5rem;
     display: flex;
-    border: 4px solid yellow;
+    min-width: 1rem;
     align-items: center;
     justify-content: center;
     border-radius: 3px;

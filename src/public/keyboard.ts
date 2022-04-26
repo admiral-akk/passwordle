@@ -26,7 +26,7 @@ export class Keyboard {
   private ColorKey(key: HTMLButtonElement, state: LetterState) {
     switch (state) {
       case LetterState.None:
-        key.style.backgroundColor = 'white';
+        key.style.backgroundColor = 'lightgrey';
         break;
       case LetterState.Yellow:
         key.style.backgroundColor = 'yellow';
@@ -111,7 +111,7 @@ export class Keyboard {
         return;
       }
       const keysPressed = key.match('[A-Z]+');
-      if (!keysPressed || keysPressed[0].length > 1) {
+      if (!keysPressed || key.length > 1) {
         return;
       } else {
         document.dispatchEvent(new AddCharEvent(key));

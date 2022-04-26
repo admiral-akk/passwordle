@@ -15,7 +15,7 @@ const wordle_logic_1 = require("./public/wordle_logic");
 const words_1 = require("./public/words");
 class WordleServer {
     constructor() {
-        this._answer = '';
+        this._games = {};
     }
     HandleEvent(body) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -23,7 +23,7 @@ class WordleServer {
                 case 'new_game':
                     return this.NewGame();
                 case 'submit':
-                    return this.Guess(body.detail);
+                    return this.Guess(body.detail, body.id);
                 default:
                     console.log(`unknown event: ${JSON.stringify(body)}`);
                     break;
@@ -31,13 +31,19 @@ class WordleServer {
         });
     }
     NewGame() {
-        this._answer =
-            words_1.WORDS[Math.floor(Math.random() * words_1.WORDS.length)].toUpperCase();
-        return Promise.resolve(new network_events_1.GameStartedMessage());
+        let id = '1';
+        while (id in this._games) {
+            console.log(`id taken: ${id}, answer: ${this._games[id]}`);
+            id = Math.floor(Math.random() * 10000).toString();
+        }
+        const answer = words_1.WORDS[Math.floor(Math.random() * words_1.WORDS.length)].toUpperCase();
+        this._games[id] = answer;
+        console.log(`id is: ${id}`);
+        return Promise.resolve(new network_events_1.GameStartedMessage(id));
     }
-    Guess(guess) {
-        const knowledge = (0, wordle_logic_1.GetKnowledge)(guess, this._answer);
-        return Promise.resolve(new network_events_1.KnowledgeUpdateMessage(knowledge));
+    Guess(guess, id) {
+        const knowledge = (0, wordle_logic_1.GetKnowledge)(guess, this._games[id]);
+        return Promise.resolve(new network_events_1.KnowledgeUpdateMessage(knowledge, id));
     }
 }
 exports.WordleServer = WordleServer;

@@ -1,8 +1,7 @@
 import { WordKnowledge } from './knowledge';
 export declare class Board {
     private _letterBoxes;
-    private _guesses;
-    private _knowledge;
+    private _guessCount;
     private _currentGuess;
     private _wordLength;
     constructor(guessCount: number, wordLength: number);

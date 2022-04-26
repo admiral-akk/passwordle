@@ -5,8 +5,7 @@ import {WORDS} from './words';
 export class Board {
   private _letterBoxes: HTMLDivElement[][];
 
-  private _guesses: string[];
-  private _knowledge: WordKnowledge[];
+  private _guessCount: number;
   private _currentGuess: string;
   private _wordLength: number;
 
@@ -31,8 +30,7 @@ export class Board {
       this.UpdateKnowledge(e.detail);
     });
 
-    this._guesses = [];
-    this._knowledge = [];
+    this._guessCount = 0;
     this._currentGuess = '';
     this._wordLength = wordLength;
     document.addEventListener('add_key', e => {
@@ -59,10 +57,10 @@ export class Board {
   }
 
   private PreviousRow(): HTMLDivElement[] {
-    return this._letterBoxes[this._guesses.length - 1];
+    return this._letterBoxes[this._guessCount - 1];
   }
   private CurrentRow(): HTMLDivElement[] {
-    return this._letterBoxes[this._guesses.length];
+    return this._letterBoxes[this._guessCount];
   }
 
   private CurrentLetter(): HTMLDivElement {
@@ -104,7 +102,7 @@ export class Board {
       console.log(`Invalid word: ${this._currentGuess}`);
       return;
     }
-    this._guesses.push(this._currentGuess);
+    this._guessCount++;
     document.dispatchEvent(new SubmitWordEvent(this._currentGuess));
     this._currentGuess = '';
   }
