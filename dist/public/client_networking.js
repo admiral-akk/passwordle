@@ -15,7 +15,7 @@ function Post(path, data) {
     });
 }
 function Get(path, gameId) {
-    return window.fetch(`${path}/:${gameId}`, {
+    return window.fetch(`${path}/${gameId}`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',

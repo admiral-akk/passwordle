@@ -19,7 +19,7 @@ function Post(path: string, data: INetworkMessage) {
 }
 
 function Get(path: string, gameId: string) {
-  return window.fetch(`${path}/:${gameId}`, {
+  return window.fetch(`${path}/${gameId}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',

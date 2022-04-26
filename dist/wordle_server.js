@@ -10,9 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.WordleServer = void 0;
+const game_data_1 = require("./game_data");
 const network_events_1 = require("./public/network_events");
-const wordle_logic_1 = require("./public/wordle_logic");
-const words_1 = require("./public/words");
 class WordleServer {
     constructor() {
         this._games = {};
@@ -35,7 +34,7 @@ class WordleServer {
         return __awaiter(this, void 0, void 0, function* () {
             const id = body.id;
             if (!(id in this._games)) {
-                return Promise.resolve(new network_events_1.PollingMessage(''));
+                throw `Game id ${id} doesn't exist!`;
             }
             return Promise.resolve(new network_events_1.PollingMessage(id));
         });
@@ -46,13 +45,12 @@ class WordleServer {
             console.log(`id taken: ${id}, answer: ${this._games[id]}`);
             id = Math.floor(Math.random() * 10000).toString();
         }
-        const answer = words_1.WORDS[Math.floor(Math.random() * words_1.WORDS.length)].toUpperCase();
-        this._games[id] = answer;
+        this._games[id] = new game_data_1.Game(id);
         console.log(`id is: ${id}`);
         return Promise.resolve(new network_events_1.GameStartedMessage(id));
     }
     Guess(guess, id) {
-        const knowledge = (0, wordle_logic_1.GetKnowledge)(guess, this._games[id]);
+        const knowledge = this._games[id].Guess(guess);
         return Promise.resolve(new network_events_1.KnowledgeUpdateMessage(knowledge, id));
     }
 }

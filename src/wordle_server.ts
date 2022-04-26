@@ -1,3 +1,4 @@
+import {Game} from './game_data';
 import {
   GameStartedMessage,
   INetworkMessage,
@@ -5,11 +6,9 @@ import {
   PollingMessage,
   SubmitWordMessage,
 } from './public/network_events';
-import {GetKnowledge} from './public/wordle_logic';
-import {WORDS} from './public/words';
 
 export class WordleServer {
-  private _games: Record<string, string>;
+  private _games: Record<string, Game>;
   constructor() {
     this._games = {};
   }
@@ -27,29 +26,27 @@ export class WordleServer {
     }
   }
 
-  async HandlePoll(body: INetworkMessage): Promise<INetworkMessage> {
+  async HandlePoll(body: INetworkMessage): Promise<PollingMessage> {
     const id = body.id as string;
     if (!(id in this._games)) {
-      return Promise.resolve(new PollingMessage(''));
+      throw `Game id ${id} doesn't exist!`;
     }
     return Promise.resolve(new PollingMessage(id));
   }
 
-  private NewGame(): Promise<INetworkMessage> {
+  private NewGame(): Promise<GameStartedMessage> {
     let id = '1';
     while (id in this._games) {
       console.log(`id taken: ${id}, answer: ${this._games[id]}`);
       id = Math.floor(Math.random() * 10000).toString();
     }
-    const answer =
-      WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
-    this._games[id] = answer;
+    this._games[id] = new Game(id);
     console.log(`id is: ${id}`);
     return Promise.resolve(new GameStartedMessage(id));
   }
 
-  private Guess(guess: string, id: string): Promise<INetworkMessage> {
-    const knowledge = GetKnowledge(guess, this._games[id]);
+  private Guess(guess: string, id: string): Promise<KnowledgeUpdateMessage> {
+    const knowledge = this._games[id].Guess(guess);
     return Promise.resolve(new KnowledgeUpdateMessage(knowledge, id));
   }
 }
