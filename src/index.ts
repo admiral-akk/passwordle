@@ -1,39 +1,53 @@
+import {Request, Response} from 'express';
 import express from 'express';
 import path from 'path';
-import {PollingMessage} from './public/network_events';
-import {WordleServer} from './wordle_server';
+import {ToLobbyId} from './public/structs/LobbyId';
+import {Move} from './public/structs/Move';
+import {ToPlayerId} from './public/structs/PlayerId';
+import {ServerManager} from './ServerManager';
 
-const server = new WordleServer();
 const app = express();
 const port = 3000;
+const server = new ServerManager();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/event', async (req, res) => {
+AddGetEndpoint(app, '/start_lobby', (req, res) =>
+  res.json(server.StartLobby())
+);
+AddGetEndpoint(app, '/join_lobby/:lobbyId', (req, res) => {
+  const lobbyId = req.params.lobbyId;
+  res.json(server.JoinLobby(ToLobbyId(lobbyId)));
+});
+AddGetEndpoint(app, '/get_state/:lobbyId/:playerId', (req, res) => {
+  const lobbyId = req.params.lobbyId;
+  const playerId = req.params.playerId;
+  res.json(server.GetState(ToLobbyId(lobbyId), ToPlayerId(playerId)));
+});
+
+app.post('/submit_move/:lobbyId', async (req: Request, res: Response) => {
   try {
-    console.log(`Recieved request: ${JSON.stringify(req.body)}`);
-    server.HandleEvent(req.body).then(event => {
-      res.json(event);
-    });
+    const lobbyId = req.params.lobbyId;
+    const move = req.body as Move;
+    server.SubmitMove(lobbyId, move);
+    res.sendStatus(200);
   } catch (err) {
     console.error(err);
-    res.json({error: 'errors'});
   }
 });
 
-app.get('/poll/:gameId', async (req, res) => {
-  try {
-    console.log(`Recieved request: ${JSON.stringify(req.params)}`);
-    const request = new PollingMessage(req.params.gameId);
-    server.HandlePoll(request).then(event => {
-      res.json(event);
-    });
-  } catch (err) {
-    console.error(err);
-    res.json({error: 'errors'});
-  }
-});
+app.listen(port, () => console.log(`Listening on port ${port}`));
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
+function AddGetEndpoint(
+  app: express.Express,
+  path: string,
+  handler: (req: Request, res: Response) => void
+) {
+  app.get(path, async (req: Request, res: Response) => {
+    try {
+      handler(req, res);
+    } catch (err) {
+      console.error(err);
+    }
+  });
+}

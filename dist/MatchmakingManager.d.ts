@@ -6,6 +6,8 @@ export declare class MatchmakingManager {
     private lobbyIds;
     constructor();
     private GenerateId;
+    private GeneratePlayerId;
+    private GenerateLobbyId;
     StartLobby(): ClientId;
     JoinLobby(lobbyId: LobbyId): [ClientId, PlayerId[]];
 }

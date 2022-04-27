@@ -17,10 +17,24 @@ class MatchmakingManager {
         } while (id in existingIds);
         return id;
     }
+    GeneratePlayerId(players) {
+        let id;
+        do {
+            id = (0, PlayerId_1.GenerateRandomPlayerId)();
+        } while (id in players);
+        return id;
+    }
+    GenerateLobbyId() {
+        let id;
+        do {
+            id = (0, LobbyId_1.GenerateRandomLobbyId)();
+        } while (id in Object.keys(this.lobbyIds));
+        return id;
+    }
     StartLobby() {
-        const lobbyId = (0, LobbyId_1.ToLobbyId)(this.GenerateId(Object.keys(this.lobbyIds)));
+        const lobbyId = this.GenerateLobbyId();
         const lobbyState = new LobbyState_1.LobbyState(lobbyId);
-        const playerId = (0, PlayerId_1.ToPlayerId)(this.GenerateId(lobbyState.players));
+        const playerId = this.GeneratePlayerId(lobbyState.players);
         lobbyState.AddPlayer(playerId);
         this.openLobbyIds[lobbyId] = lobbyState;
         this.lobbyIds[lobbyId] = lobbyState;
@@ -31,7 +45,7 @@ class MatchmakingManager {
             throw "Lobby doesn't exist!";
         }
         const lobbyState = this.openLobbyIds[lobbyId];
-        const playerId = (0, PlayerId_1.ToPlayerId)(this.GenerateId(lobbyState.players));
+        const playerId = this.GeneratePlayerId(lobbyState.players);
         lobbyState.AddPlayer(playerId);
         delete this.openLobbyIds[lobbyId];
         this.lobbyIds[lobbyId] = lobbyState;

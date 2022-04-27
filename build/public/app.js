@@ -1,11 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const board_1 = require("./board");
-const keyboard_1 = require("./keyboard");
-const client_networking_1 = require("./client_networking");
-const NUMBER_OF_GUESSES = 6;
-const WORD_LENGTH = 5;
-new board_1.MultiBoard(NUMBER_OF_GUESSES, WORD_LENGTH);
-new keyboard_1.Keyboard();
-new client_networking_1.ClientNetworking();
+const GameManager_1 = require("./GameManager");
+new GameManager_1.GameManager();
 //# sourceMappingURL=app.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewMove = void 0;
-class NewMove {
+exports.Move = void 0;
+class Move {
     constructor(player, guess) {
         this.player = player;
         this.guess = guess;
     }
 }
-exports.NewMove = NewMove;
+exports.Move = Move;
 //# sourceMappingURL=Move.js.map

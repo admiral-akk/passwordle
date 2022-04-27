@@ -1,5 +1,5 @@
 import { GameState } from './public/structs/GameState';
-import { NewMove } from './public/structs/Move';
+import { Move } from './public/structs/Move';
 import { PlayerId } from './public/structs/PlayerId';
 export declare class GameStateManager {
     private gameState;
@@ -10,7 +10,7 @@ export declare class GameStateManager {
     private state;
     private GenerateAnswer;
     constructor(players: PlayerId[]);
-    SubmitMove(move: NewMove): void;
+    SubmitMove(move: Move): void;
     GetState(player: string): GameState;
 }
 export declare enum PlayerActions {
@@ -27,5 +27,5 @@ export declare enum GameActions {
     SendResults = 2,
     RequestState = 3
 }
-import { WordKnowledge } from './public/knowledge';
+import { WordKnowledge } from './public/structs/Knowledge';
 export declare function GetKnowledge(guess: string, answer: string): WordKnowledge;

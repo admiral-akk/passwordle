@@ -1,7 +1,7 @@
 import {ClientId} from './structs/ClientId';
 import {GameState} from './structs/GameState';
 import {LobbyId} from './structs/LobbyId';
-import {NewMove} from './structs/Move';
+import {Move} from './structs/Move';
 
 export class ClientManager {
   private lobbyId: string;
@@ -49,11 +49,11 @@ export class ClientManager {
     );
   }
 
-  SubmitMove(move: NewMove) {
+  SubmitMove(guess: string) {
     if (this.state !== State.LoggedIn) {
       throw 'Not connected to server!';
     }
-    Post<NewMove>(`/submit_move/${this.lobbyId}`, move);
+    Post<Move>(`/submit_move/${this.lobbyId}`, new Move(guess, this.playerId));
   }
 }
 

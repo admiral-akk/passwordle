@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Keyboard = void 0;
-const events_1 = require("./events");
-const knowledge_1 = require("./knowledge");
+const Events_1 = require("./Events");
+const Knowledge_1 = require("./structs/Knowledge");
 const KEYBOARD_KEYS = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
@@ -26,45 +26,38 @@ class Keyboard {
             keyboard === null || keyboard === void 0 ? void 0 : keyboard.appendChild(row);
         }
         this.registerKeyboardEvents();
-        document.addEventListener('update_knowledge', e => {
-            const knowledge = e.detail.letterKnowledge;
-            const guess = e.detail.guess;
-            for (let i = 0; i < guess.length; i++) {
-                this.UpdateKey(guess[i], knowledge[i]);
-            }
-        });
         document.addEventListener('new_game', () => {
             this.NewGame();
         });
     }
     registerKey(key) {
         this._keys[key.innerText] = key;
-        this._knowledge[key.innerText] = knowledge_1.LetterState.None;
+        this._knowledge[key.innerText] = Knowledge_1.LetterState.None;
         key.addEventListener('click', () => {
             const text = key.innerText;
             if (text === 'ENTER') {
-                document.dispatchEvent(new events_1.SubmitCommand());
+                document.dispatchEvent(new Events_1.SubmitCommand());
             }
             else if (text === 'DEL') {
-                document.dispatchEvent(new events_1.DeleteEvent());
+                document.dispatchEvent(new Events_1.DeleteCommand());
             }
             else {
-                document.dispatchEvent(new events_1.AddCharEvent(text));
+                document.dispatchEvent(new Events_1.AddCharCommand(text));
             }
         });
     }
     ColorKey(key, state) {
         switch (state) {
-            case knowledge_1.LetterState.None:
+            case Knowledge_1.LetterState.None:
                 key.style.backgroundColor = 'lightgrey';
                 break;
-            case knowledge_1.LetterState.Yellow:
+            case Knowledge_1.LetterState.Yellow:
                 key.style.backgroundColor = 'yellow';
                 break;
-            case knowledge_1.LetterState.Green:
+            case Knowledge_1.LetterState.Green:
                 key.style.backgroundColor = 'green';
                 break;
-            case knowledge_1.LetterState.Grey:
+            case Knowledge_1.LetterState.Grey:
                 key.style.backgroundColor = 'grey';
                 break;
         }
@@ -72,16 +65,16 @@ class Keyboard {
     UpdateKey(char, state) {
         const currentState = this._knowledge[char];
         switch (state) {
-            case knowledge_1.LetterState.None:
-            case knowledge_1.LetterState.Grey:
+            case Knowledge_1.LetterState.None:
+            case Knowledge_1.LetterState.Grey:
                 this._knowledge[char] = state;
                 break;
-            case knowledge_1.LetterState.Yellow:
-                if (currentState !== knowledge_1.LetterState.Green) {
+            case Knowledge_1.LetterState.Yellow:
+                if (currentState !== Knowledge_1.LetterState.Green) {
                     this._knowledge[char] = state;
                 }
                 break;
-            case knowledge_1.LetterState.Green:
+            case Knowledge_1.LetterState.Green:
                 this._knowledge[char] = state;
                 break;
         }
@@ -89,19 +82,19 @@ class Keyboard {
     }
     NewGame() {
         for (const key in this._knowledge) {
-            this._knowledge[key] = knowledge_1.LetterState.None;
-            this.ColorKey(this._keys[key], knowledge_1.LetterState.None);
+            this._knowledge[key] = Knowledge_1.LetterState.None;
+            this.ColorKey(this._keys[key], Knowledge_1.LetterState.None);
         }
     }
     registerKeyboardEvents() {
         document.addEventListener('keyup', e => {
             const key = String(e.key).toUpperCase();
             if (key === 'BACKSPACE') {
-                document.dispatchEvent(new events_1.DeleteEvent());
+                document.dispatchEvent(new Events_1.DeleteCommand());
                 return;
             }
             if (key === 'ENTER') {
-                document.dispatchEvent(new events_1.SubmitCommand());
+                document.dispatchEvent(new Events_1.SubmitCommand());
                 return;
             }
             const keysPressed = key.match('[A-Z]+');
@@ -109,7 +102,7 @@ class Keyboard {
                 return;
             }
             else {
-                document.dispatchEvent(new events_1.AddCharEvent(key));
+                document.dispatchEvent(new Events_1.AddCharCommand(key));
                 return;
             }
         });

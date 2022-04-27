@@ -1,21 +1,31 @@
-import {BoardManager} from './BoardManager';
-import {ClientManager} from './ClientManager';
+import {
+  BoardManager,
+  OpponentBoardManager,
+  PlayerBoardManager,
+} from './BoardManager';
+import {InputManager} from './InputManager';
+import {NetworkInterface} from './NetworkInterface';
 
 export class GameManager {
   private state: GameState;
-  private network: ClientManager;
-  private board: BoardManager;
+  private network: NetworkInterface;
+  private playerBoard: PlayerBoardManager;
+  private opponentBoard: OpponentBoardManager;
+  private input: InputManager;
 
   constructor() {
-    this.state = GameState.None;
-    this.network = new ClientManager();
-    this.board = new BoardManager();
+    this.state = GameState.WaitingForGame;
+    this.network = new NetworkInterface();
+    this.playerBoard = new PlayerBoardManager();
+    this.opponentBoard = new OpponentBoardManager();
+    this.input = new InputManager();
+    this.network.Connect();
   }
 }
 
 enum GameState {
   None,
-  InLobby,
+  WaitingForGame,
   WaitingForMove,
   PlayerToMove,
 }

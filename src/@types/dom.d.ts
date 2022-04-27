@@ -1,20 +1,20 @@
 import {
-  SubmitWordEvent,
-  DeleteEvent,
-  AddCharEvent,
-  KnowledgeUpdateEvent,
+  AddCharCommand,
+  DeleteCommand,
+  GameStateEvent,
+  PlayerToMoveEvent,
   SubmitCommand,
-  GameStartedEvent,
-} from '../public/events';
+  SubmitGuessEvent,
+} from '../public/Events';
 
 // Courtsey of: https://stackoverflow.com/questions/43001679/how-do-you-create-custom-event-in-typescript
 interface CustomEventMap {
-  submit: SubmitWordEvent;
-  delete: DeleteEvent;
-  add_key: AddCharEvent;
-  update_knowledge: KnowledgeUpdateEvent;
-  submit_command: SubmitCommand;
-  game_started: GameStartedEvent;
+  GameStateEvent: GameStateEvent;
+  SubmitCommand: SubmitCommand;
+  DeleteCommand: DeleteCommand;
+  AddCharCommand: AddCharCommand;
+  SubmitWordEvent: SubmitGuessEvent;
+  PlayerToMoveEvent: PlayerToMoveEvent;
 }
 
 declare global {

@@ -1,7 +1,7 @@
-import { WordKnowledge } from '../knowledge';
-import { NewMove } from './Move';
+import { WordKnowledge } from './Knowledge';
+import { Move } from './Move';
 export declare class AnnotatedMove {
-    move: NewMove;
+    move: Move;
     knowledge: WordKnowledge;
-    constructor(move: NewMove, knowledge: WordKnowledge);
+    constructor(move: Move, knowledge: WordKnowledge);
 }

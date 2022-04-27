@@ -1,50 +1,33 @@
-import {History} from './game_history';
-import {WordKnowledge} from './knowledge';
-
-export class SubmitWordEvent extends CustomEvent<string> {
-  constructor(guess: string) {
-    super('submit', {detail: guess});
-  }
-}
+import {PlayerStates} from './structs/PlayerStates';
 
 export class SubmitCommand extends CustomEvent<null> {
   constructor() {
-    super('submit_command');
+    super(SubmitCommand.name);
   }
 }
-
-export class DeleteEvent extends CustomEvent<null> {
+export class DeleteCommand extends CustomEvent<null> {
   constructor() {
-    super('delete');
+    super(DeleteCommand.name);
   }
 }
-
-export class AddCharEvent extends CustomEvent<string> {
+export class AddCharCommand extends CustomEvent<string> {
   constructor(char: string) {
-    super('add_key', {detail: char});
+    super(AddCharCommand.name, {detail: char});
   }
 }
-
-export class KnowledgeUpdateEvent extends CustomEvent<WordKnowledge> {
-  constructor(knowledge: WordKnowledge) {
-    super('update_knowledge', {detail: knowledge});
+export class SubmitGuessEvent extends CustomEvent<string> {
+  constructor(guess: string) {
+    super(SubmitGuessEvent.name, {detail: guess});
   }
 }
-
-export class NewGameEvent extends CustomEvent<null> {
+export class PlayerToMoveEvent extends CustomEvent<null> {
   constructor() {
-    super('new_game');
+    super(PlayerToMoveEvent.name);
   }
 }
 
-export class GameStartedEvent extends CustomEvent<null> {
-  constructor() {
-    super('game_started');
-  }
-}
-
-export class GameHistoryEvent extends CustomEvent<History> {
-  constructor(gameHistory: History) {
-    super('game_history', {detail: gameHistory});
+export class GameStateEvent extends CustomEvent<PlayerStates> {
+  constructor(state: PlayerStates) {
+    super(GameStateEvent.name, {detail: state});
   }
 }

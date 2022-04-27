@@ -1,6 +1,6 @@
 import {AnnotatedMove} from './public/structs/AnnotatedMove';
 import {GameState} from './public/structs/GameState';
-import {NewMove} from './public/structs/Move';
+import {Move} from './public/structs/Move';
 import {PlayerId} from './public/structs/PlayerId';
 
 export class GameStateManager {
@@ -29,7 +29,7 @@ export class GameStateManager {
   }
 
   // We assume the move is legal.
-  SubmitMove(move: NewMove) {
+  SubmitMove(move: Move) {
     if (move.player !== this.gameState.playerToMove) {
       throw "Not player's turn!";
     }
@@ -79,8 +79,8 @@ export enum GameActions {
   RequestState, // send id + player
 }
 
-import {LetterState, WordKnowledge} from './public/knowledge';
-import {WORDS} from './public/words';
+import {LetterState, WordKnowledge} from './public/structs/Knowledge';
+import {WORDS} from './public/Words';
 
 export function GetKnowledge(guess: string, answer: string): WordKnowledge {
   const answer_state: LetterState[] = [];

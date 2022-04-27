@@ -3,7 +3,7 @@ import {MatchmakingManager} from './MatchmakingManager';
 import {ClientId} from './public/structs/ClientId';
 import {GameState} from './public/structs/GameState';
 import {LobbyId} from './public/structs/LobbyId';
-import {NewMove} from './public/structs/Move';
+import {Move} from './public/structs/Move';
 import {PlayerId} from './public/structs/PlayerId';
 
 export class ServerManager {
@@ -30,7 +30,7 @@ export class ServerManager {
     return this.activeGames[lobbyId].GetState(player);
   }
 
-  SubmitMove(lobbyId: string, move: NewMove) {
+  SubmitMove(lobbyId: string, move: Move) {
     this.activeGames[lobbyId].SubmitMove(move);
   }
 }

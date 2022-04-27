@@ -1,7 +1,7 @@
 import { ClientId } from './public/structs/ClientId';
 import { GameState } from './public/structs/GameState';
 import { LobbyId } from './public/structs/LobbyId';
-import { NewMove } from './public/structs/Move';
+import { Move } from './public/structs/Move';
 import { PlayerId } from './public/structs/PlayerId';
 export declare class ServerManager {
     private matchmaking;
@@ -10,5 +10,5 @@ export declare class ServerManager {
     StartLobby(): ClientId;
     JoinLobby(lobbyId: LobbyId): ClientId;
     GetState(lobbyId: LobbyId, player: PlayerId): GameState;
-    SubmitMove(lobbyId: string, move: NewMove): void;
+    SubmitMove(lobbyId: string, move: Move): void;
 }

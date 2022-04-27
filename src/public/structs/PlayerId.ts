@@ -12,3 +12,7 @@ export function ToPlayerId(id: string): PlayerId {
   assertValidPlayerId(id);
   return id;
 }
+
+export function GenerateRandomPlayerId(): PlayerId {
+  return ToPlayerId(Math.floor(Math.random() * 100000).toString());
+}

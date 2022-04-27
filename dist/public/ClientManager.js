@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientManager = void 0;
+const Move_1 = require("./structs/Move");
 class ClientManager {
     constructor() {
         this.lobbyId = '';
@@ -37,11 +38,11 @@ class ClientManager {
             console.log(`game state: ${gameState}`);
         });
     }
-    SubmitMove(move) {
+    SubmitMove(guess) {
         if (this.state !== State.LoggedIn) {
             throw 'Not connected to server!';
         }
-        Post(`/submit_move/${this.lobbyId}`, move);
+        Post(`/submit_move/${this.lobbyId}`, new Move_1.Move(guess, this.playerId));
     }
 }
 exports.ClientManager = ClientManager;

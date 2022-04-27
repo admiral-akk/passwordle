@@ -1,52 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GameHistoryEvent = exports.GameStartedEvent = exports.NewGameEvent = exports.KnowledgeUpdateEvent = exports.AddCharEvent = exports.DeleteEvent = exports.SubmitCommand = exports.SubmitWordEvent = void 0;
-class SubmitWordEvent extends CustomEvent {
-    constructor(guess) {
-        super('submit', { detail: guess });
-    }
-}
-exports.SubmitWordEvent = SubmitWordEvent;
+exports.GameStateEvent = exports.PlayerToMoveEvent = exports.SubmitGuessEvent = exports.AddCharCommand = exports.DeleteCommand = exports.SubmitCommand = void 0;
 class SubmitCommand extends CustomEvent {
     constructor() {
-        super('submit_command');
+        super(SubmitCommand.name);
     }
 }
 exports.SubmitCommand = SubmitCommand;
-class DeleteEvent extends CustomEvent {
+class DeleteCommand extends CustomEvent {
     constructor() {
-        super('delete');
+        super(DeleteCommand.name);
     }
 }
-exports.DeleteEvent = DeleteEvent;
-class AddCharEvent extends CustomEvent {
+exports.DeleteCommand = DeleteCommand;
+class AddCharCommand extends CustomEvent {
     constructor(char) {
-        super('add_key', { detail: char });
+        super(AddCharCommand.name, { detail: char });
     }
 }
-exports.AddCharEvent = AddCharEvent;
-class KnowledgeUpdateEvent extends CustomEvent {
-    constructor(knowledge) {
-        super('update_knowledge', { detail: knowledge });
+exports.AddCharCommand = AddCharCommand;
+class SubmitGuessEvent extends CustomEvent {
+    constructor(guess) {
+        super(SubmitGuessEvent.name, { detail: guess });
     }
 }
-exports.KnowledgeUpdateEvent = KnowledgeUpdateEvent;
-class NewGameEvent extends CustomEvent {
+exports.SubmitGuessEvent = SubmitGuessEvent;
+class PlayerToMoveEvent extends CustomEvent {
     constructor() {
-        super('new_game');
+        super(PlayerToMoveEvent.name);
     }
 }
-exports.NewGameEvent = NewGameEvent;
-class GameStartedEvent extends CustomEvent {
-    constructor() {
-        super('game_started');
+exports.PlayerToMoveEvent = PlayerToMoveEvent;
+class GameStateEvent extends CustomEvent {
+    constructor(state) {
+        super(GameStateEvent.name, { detail: state });
     }
 }
-exports.GameStartedEvent = GameStartedEvent;
-class GameHistoryEvent extends CustomEvent {
-    constructor(gameHistory) {
-        super('game_history', { detail: gameHistory });
-    }
-}
-exports.GameHistoryEvent = GameHistoryEvent;
-//# sourceMappingURL=events.js.map
+exports.GameStateEvent = GameStateEvent;
+//# sourceMappingURL=Events.js.map

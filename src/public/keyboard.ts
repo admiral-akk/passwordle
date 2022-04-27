@@ -1,5 +1,5 @@
-import {AddCharEvent, DeleteEvent, SubmitCommand} from './events';
-import {LetterState} from './knowledge';
+import {AddCharCommand, DeleteCommand, SubmitCommand} from './Events';
+import {LetterState} from './structs/Knowledge';
 
 const KEYBOARD_KEYS = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -16,9 +16,9 @@ export class Keyboard {
       if (text === 'ENTER') {
         document.dispatchEvent(new SubmitCommand());
       } else if (text === 'DEL') {
-        document.dispatchEvent(new DeleteEvent());
+        document.dispatchEvent(new DeleteCommand());
       } else {
-        document.dispatchEvent(new AddCharEvent(text));
+        document.dispatchEvent(new AddCharCommand(text));
       }
     });
   }
@@ -80,13 +80,6 @@ export class Keyboard {
       keyboard?.appendChild(row);
     }
     this.registerKeyboardEvents();
-    document.addEventListener('update_knowledge', e => {
-      const knowledge: LetterState[] = e.detail.letterKnowledge;
-      const guess: string = e.detail.guess;
-      for (let i = 0; i < guess.length; i++) {
-        this.UpdateKey(guess[i], knowledge[i]);
-      }
-    });
     document.addEventListener('new_game', () => {
       this.NewGame();
     });
@@ -103,7 +96,7 @@ export class Keyboard {
     document.addEventListener('keyup', e => {
       const key = String(e.key).toUpperCase();
       if (key === 'BACKSPACE') {
-        document.dispatchEvent(new DeleteEvent());
+        document.dispatchEvent(new DeleteCommand());
         return;
       }
       if (key === 'ENTER') {
@@ -114,7 +107,7 @@ export class Keyboard {
       if (!keysPressed || key.length > 1) {
         return;
       } else {
-        document.dispatchEvent(new AddCharEvent(key));
+        document.dispatchEvent(new AddCharCommand(key));
         return;
       }
     });

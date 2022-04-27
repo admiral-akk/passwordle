@@ -14,39 +14,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
-const network_events_1 = require("./public/network_events");
-const wordle_server_1 = require("./wordle_server");
-const server = new wordle_server_1.WordleServer();
+const LobbyId_1 = require("./public/structs/LobbyId");
+const PlayerId_1 = require("./public/structs/PlayerId");
+const ServerManager_1 = require("./ServerManager");
 const app = (0, express_1.default)();
 const port = 3000;
+const server = new ServerManager_1.ServerManager();
 app.use(express_1.default.json());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
-app.post('/event', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        console.log(`Recieved request: ${JSON.stringify(req.body)}`);
-        server.HandleEvent(req.body).then(event => {
-            res.json(event);
-        });
-    }
-    catch (err) {
-        console.error(err);
-        res.json({ error: 'errors' });
-    }
-}));
-app.get('/poll/:gameId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        console.log(`Recieved request: ${JSON.stringify(req.params)}`);
-        const request = new network_events_1.PollingMessage(req.params.gameId);
-        server.HandlePoll(request).then(event => {
-            res.json(event);
-        });
-    }
-    catch (err) {
-        console.error(err);
-        res.json({ error: 'errors' });
-    }
-}));
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+AddGetEndpoint(app, '/start_lobby', (req, res) => res.json(server.StartLobby()));
+AddGetEndpoint(app, '/join_lobby/:lobbyId', (req, res) => {
+    const lobbyId = req.params.lobbyId;
+    res.json(server.JoinLobby((0, LobbyId_1.ToLobbyId)(lobbyId)));
 });
+AddGetEndpoint(app, '/get_state/:lobbyId/:playerId', (req, res) => {
+    const lobbyId = req.params.lobbyId;
+    const playerId = req.params.playerId;
+    res.json(server.GetState((0, LobbyId_1.ToLobbyId)(lobbyId), (0, PlayerId_1.ToPlayerId)(playerId)));
+});
+app.post('/submit_move/:lobbyId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const lobbyId = req.params.lobbyId;
+        const move = req.body;
+        server.SubmitMove(lobbyId, move);
+        res.sendStatus(200);
+    }
+    catch (err) {
+        console.error(err);
+    }
+}));
+app.listen(port, () => console.log(`Listening on port ${port}`));
+function AddGetEndpoint(app, path, handler) {
+    app.get(path, (req, res) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            handler(req, res);
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }));
+}
 //# sourceMappingURL=index.js.map
