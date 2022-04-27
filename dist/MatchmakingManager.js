@@ -36,6 +36,7 @@ class MatchmakingManager {
         const lobbyState = new LobbyState_1.LobbyState(lobbyId);
         const playerId = this.GeneratePlayerId(lobbyState.players);
         lobbyState.AddPlayer(playerId);
+        console.log(`created lobby: ${lobbyId}`);
         this.openLobbyIds[lobbyId] = lobbyState;
         this.lobbyIds[lobbyId] = lobbyState;
         return new ClientId_1.ClientId(lobbyId, playerId);

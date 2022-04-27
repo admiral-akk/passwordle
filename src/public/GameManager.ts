@@ -4,6 +4,7 @@ import {
   PlayerBoardManager,
 } from './BoardManager';
 import {InputManager} from './InputManager';
+import { LobbyManager } from './LobbyManager';
 import {NetworkInterface} from './NetworkInterface';
 
 export class GameManager {
@@ -12,6 +13,7 @@ export class GameManager {
   private playerBoard: PlayerBoardManager;
   private opponentBoard: OpponentBoardManager;
   private input: InputManager;
+  private lobby: LobbyManager;
 
   constructor() {
     this.state = GameState.WaitingForGame;
@@ -19,8 +21,11 @@ export class GameManager {
     this.playerBoard = new PlayerBoardManager();
     this.opponentBoard = new OpponentBoardManager();
     this.input = new InputManager();
+    this.lobby = new LobbyManager();
     this.network.Connect();
   }
+
+
 }
 
 enum GameState {
@@ -28,20 +33,4 @@ enum GameState {
   WaitingForGame,
   WaitingForMove,
   PlayerToMove,
-}
-
-export enum PlayerActions {
-  JoinLobby, // send lobby id, get game state
-  StartLobby, // send blank, get lobby id
-  EnterGuess, // send guess + id + player, get knowledge + player (Move)
-  DeleteChar, // send blank
-  AddChar, // send char
-  CopyLobbyLink, //  send blank
-}
-
-export enum GameActions {
-  SendState, //  send id + Move[]
-  SendGameId, // send id
-  SendResults, // send knowledge
-  RequestState, // send id + player
 }

@@ -27,7 +27,7 @@ class PlayerBoardManager extends BoardManager {
         if (this.currentGuess.length <= 0) {
             return;
         }
-        this.currentGuess += this.currentGuess.slice(0, -1);
+        this.currentGuess = this.currentGuess.slice(0, -1);
         this.boardView.UpdateGuess(this.currentGuess, this.guessCount);
     }
     Submit() {
