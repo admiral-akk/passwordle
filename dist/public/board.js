@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpponentBoard = exports.PlayerBoard = exports.Board = exports.MultiBoard = void 0;
-const animate_1 = require("./animate");
+const Animate_1 = require("./Animate");
 const events_1 = require("./events");
 const knowledge_1 = require("./knowledge");
 const words_1 = require("./words");
@@ -95,7 +95,7 @@ class Board {
             const letterKnowledge = knowledge.letterKnowledge[letter_index];
             letter.innerText = knowledge.guess[letter_index];
             this.UpdateColor(letter, letterKnowledge);
-            (0, animate_1.AnimateCSS)(letter, animate_1.AnimationType.Pulse);
+            (0, Animate_1.AnimateCSS)(letter, Animate_1.AnimationType.Pulse);
         }
         this._currentGuess = '';
     }

@@ -1,4 +1,4 @@
-import {AnimateCSS, AnimationType} from './animate';
+import {AnimateCSS, AnimationType} from './Animate';
 import {
   GameHistoryEvent,
   KnowledgeUpdateEvent,

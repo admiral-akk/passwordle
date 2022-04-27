@@ -1,8 +1,15 @@
+import {BoardManager} from './BoardManager';
+import {ClientManager} from './ClientManager';
+
 export class GameManager {
   private state: GameState;
+  private network: ClientManager;
+  private board: BoardManager;
 
   constructor() {
     this.state = GameState.None;
+    this.network = new ClientManager();
+    this.board = new BoardManager();
   }
 }
 

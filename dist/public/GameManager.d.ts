@@ -1,5 +1,7 @@
 export declare class GameManager {
     private state;
+    private network;
+    private board;
     constructor();
 }
 export declare enum PlayerActions {

@@ -1,9 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameActions = exports.PlayerActions = exports.GameManager = void 0;
+const BoardManager_1 = require("./BoardManager");
+const ClientManager_1 = require("./ClientManager");
 class GameManager {
     constructor() {
         this.state = GameState.None;
+        this.network = new ClientManager_1.ClientManager();
+        this.board = new BoardManager_1.BoardManager();
     }
 }
 exports.GameManager = GameManager;
