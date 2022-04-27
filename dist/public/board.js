@@ -1,26 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Board = exports.MultiBoard = void 0;
+exports.OpponentBoard = exports.PlayerBoard = exports.Board = exports.MultiBoard = void 0;
 const animate_1 = require("./animate");
 const events_1 = require("./events");
 const knowledge_1 = require("./knowledge");
 const words_1 = require("./words");
 class MultiBoard {
     constructor(guessCount, wordLength) {
-        this._you = new Board(guessCount, wordLength, 'You');
-        this._opponent = new Board(guessCount, wordLength, 'Opponent');
+        this._you = new PlayerBoard(guessCount, wordLength);
+        this._opponent = new OpponentBoard(guessCount, wordLength);
     }
 }
 exports.MultiBoard = MultiBoard;
 class Board {
-    constructor(guessCount, wordLength, playerName) {
+    constructor(guessCount, wordLength) {
         this._letterBoxes = [];
         const top = document.getElementById('game');
         const gameboard = document.createElement('div');
-        const title = document.createElement('div');
-        title.innerText = playerName;
-        title.className = 'player-title';
-        gameboard.appendChild(title);
         gameboard.className = 'game-board';
         for (let i = 0; i < guessCount; i++) {
             const rowArray = [];
@@ -36,20 +32,11 @@ class Board {
             this._letterBoxes.push(rowArray);
         }
         top === null || top === void 0 ? void 0 : top.appendChild(gameboard);
-        document.addEventListener('update_knowledge', e => {
-            this.UpdateKnowledge(e.detail);
-        });
         this._guessCount = 0;
         this._currentGuess = '';
         this._wordLength = wordLength;
-        document.addEventListener('add_key', e => {
-            this.AddChar(e.detail);
-        });
-        document.addEventListener('delete', () => {
-            this.Delete();
-        });
-        document.addEventListener('submit_command', () => {
-            this.Submit();
+        document.addEventListener('update_knowledge', e => {
+            this.UpdateKnowledge(e.detail);
         });
         document.addEventListener('new_game', () => {
             this.NewGame();
@@ -83,6 +70,53 @@ class Board {
     }
     PreviousRow() {
         return this._letterBoxes[this._guessCount - 1];
+    }
+    UpdateColor(letter, knowledge) {
+        switch (knowledge) {
+            case knowledge_1.LetterState.None:
+                letter.style.backgroundColor = 'white';
+                break;
+            case knowledge_1.LetterState.Yellow:
+                letter.style.backgroundColor = 'yellow';
+                break;
+            case knowledge_1.LetterState.Green:
+                letter.style.backgroundColor = 'green';
+                break;
+            case knowledge_1.LetterState.Grey:
+                letter.style.backgroundColor = 'grey';
+                break;
+        }
+    }
+    UpdateKnowledge(knowledge) {
+        this._guessCount++;
+        const row = this.PreviousRow();
+        for (let letter_index = 0; letter_index < this._wordLength; letter_index++) {
+            const letter = row[letter_index];
+            const letterKnowledge = knowledge.letterKnowledge[letter_index];
+            letter.innerText = knowledge.guess[letter_index];
+            this.UpdateColor(letter, letterKnowledge);
+            (0, animate_1.AnimateCSS)(letter, animate_1.AnimationType.Pulse);
+        }
+        this._currentGuess = '';
+    }
+}
+exports.Board = Board;
+class PlayerBoard extends Board {
+    RegisterEventListeners() {
+        document.addEventListener('add_key', e => {
+            this.AddChar(e.detail);
+        });
+        document.addEventListener('delete', () => {
+            this.Delete();
+        });
+        document.addEventListener('submit_command', () => {
+            this.Submit();
+        });
+    }
+    constructor(guessCount, wordLength) {
+        super(guessCount, wordLength);
+        this._currentGuess = '';
+        this.RegisterEventListeners();
     }
     CurrentRow() {
         return this._letterBoxes[this._guessCount];
@@ -124,34 +158,12 @@ class Board {
         }
         document.dispatchEvent(new events_1.SubmitWordEvent(this._currentGuess));
     }
-    UpdateColor(letter, knowledge) {
-        switch (knowledge) {
-            case knowledge_1.LetterState.None:
-                letter.style.backgroundColor = 'white';
-                break;
-            case knowledge_1.LetterState.Yellow:
-                letter.style.backgroundColor = 'yellow';
-                break;
-            case knowledge_1.LetterState.Green:
-                letter.style.backgroundColor = 'green';
-                break;
-            case knowledge_1.LetterState.Grey:
-                letter.style.backgroundColor = 'grey';
-                break;
-        }
-    }
-    UpdateKnowledge(knowledge) {
-        this._guessCount++;
-        const row = this.PreviousRow();
-        for (let letter_index = 0; letter_index < this._wordLength; letter_index++) {
-            const letter = row[letter_index];
-            const letterKnowledge = knowledge.letterKnowledge[letter_index];
-            letter.innerText = knowledge.guess[letter_index];
-            this.UpdateColor(letter, letterKnowledge);
-            (0, animate_1.AnimateCSS)(letter, animate_1.AnimationType.Pulse);
-        }
-        this._currentGuess = '';
+}
+exports.PlayerBoard = PlayerBoard;
+class OpponentBoard extends Board {
+    constructor(guessCount, wordLength) {
+        super(guessCount, wordLength);
     }
 }
-exports.Board = Board;
+exports.OpponentBoard = OpponentBoard;
 //# sourceMappingURL=board.js.map

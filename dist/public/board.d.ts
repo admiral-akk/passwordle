@@ -5,20 +5,27 @@ export declare class MultiBoard {
     constructor(guessCount: number, wordLength: number);
 }
 export declare class Board {
-    private _letterBoxes;
-    private _guessCount;
-    private _currentGuess;
-    private _wordLength;
-    constructor(guessCount: number, wordLength: number, playerName: string);
+    protected _letterBoxes: HTMLDivElement[][];
+    protected _guessCount: number;
+    protected _currentGuess: string;
+    protected _wordLength: number;
+    constructor(guessCount: number, wordLength: number);
     private GameHistory;
     private NewGame;
     private PreviousRow;
+    private UpdateColor;
+    UpdateKnowledge(knowledge: WordKnowledge): void;
+}
+export declare class PlayerBoard extends Board {
+    private RegisterEventListeners;
+    constructor(guessCount: number, wordLength: number);
     private CurrentRow;
     private CurrentLetter;
     private LastLetter;
-    AddChar(char: string): void;
-    Delete(): void;
-    Submit(): void;
-    private UpdateColor;
-    UpdateKnowledge(knowledge: WordKnowledge): void;
+    private AddChar;
+    private Delete;
+    private Submit;
+}
+export declare class OpponentBoard extends Board {
+    constructor(guessCount: number, wordLength: number);
 }

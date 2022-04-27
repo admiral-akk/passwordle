@@ -1,8 +1,12 @@
-import {History} from './game_history';
+import {History, Move} from './game_history';
 import {WordKnowledge} from './knowledge';
 
 export interface INetworkMessage {
   type: string;
+  id: string;
+}
+export interface INewNetworkMessage {
+  playerName: string;
   id: string;
 }
 
@@ -14,6 +18,32 @@ export abstract class BaseNetworkMessage<T> implements INetworkMessage {
     this.type = type;
     this.detail = detail;
     this.id = id;
+  }
+}
+
+export abstract class BaseMessage implements INewNetworkMessage {
+  public id: string;
+  public playerName: string;
+  constructor(id = '', playerName = '') {
+    this.id = id;
+    this.playerName = playerName;
+  }
+}
+
+export class StartNewGameMessage extends BaseMessage {}
+export class EnterGameMessage extends BaseMessage {}
+export class GameStateMesssage extends BaseMessage {
+  public history: History;
+  constructor(id = '', playerName = '', history: History = new History()) {
+    super(id, playerName);
+    this.history = history;
+  }
+}
+export class MoveMessage extends BaseMessage {
+  public move: Move;
+  constructor(id = '', playerName = '', move: Move) {
+    super(id, playerName);
+    this.move = move;
   }
 }
 

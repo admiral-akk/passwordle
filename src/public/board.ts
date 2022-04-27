@@ -12,26 +12,22 @@ export class MultiBoard {
   private _you: Board;
   private _opponent: Board;
   constructor(guessCount: number, wordLength: number) {
-    this._you = new Board(guessCount, wordLength, 'You');
-    this._opponent = new Board(guessCount, wordLength, 'Opponent');
+    this._you = new PlayerBoard(guessCount, wordLength);
+    this._opponent = new OpponentBoard(guessCount, wordLength);
   }
 }
 
 export class Board {
-  private _letterBoxes: HTMLDivElement[][];
+  protected _letterBoxes: HTMLDivElement[][];
 
-  private _guessCount: number;
-  private _currentGuess: string;
-  private _wordLength: number;
+  protected _guessCount: number;
+  protected _currentGuess: string;
+  protected _wordLength: number;
 
-  constructor(guessCount: number, wordLength: number, playerName: string) {
+  constructor(guessCount: number, wordLength: number) {
     this._letterBoxes = [];
     const top = document.getElementById('game');
     const gameboard = document.createElement('div');
-    const title = document.createElement('div');
-    title.innerText = playerName;
-    title.className = 'player-title';
-    gameboard.appendChild(title);
     gameboard.className = 'game-board';
     for (let i = 0; i < guessCount; i++) {
       const rowArray = [];
@@ -48,21 +44,11 @@ export class Board {
     }
     top?.appendChild(gameboard);
 
-    document.addEventListener('update_knowledge', e => {
-      this.UpdateKnowledge(e.detail);
-    });
-
     this._guessCount = 0;
     this._currentGuess = '';
     this._wordLength = wordLength;
-    document.addEventListener('add_key', e => {
-      this.AddChar(e.detail);
-    });
-    document.addEventListener('delete', () => {
-      this.Delete();
-    });
-    document.addEventListener('submit_command', () => {
-      this.Submit();
+    document.addEventListener('update_knowledge', e => {
+      this.UpdateKnowledge(e.detail);
     });
     document.addEventListener('new_game', () => {
       this.NewGame();
@@ -104,51 +90,6 @@ export class Board {
   private PreviousRow(): HTMLDivElement[] {
     return this._letterBoxes[this._guessCount - 1];
   }
-  private CurrentRow(): HTMLDivElement[] {
-    return this._letterBoxes[this._guessCount];
-  }
-
-  private CurrentLetter(): HTMLDivElement {
-    const row = this.CurrentRow();
-    return row[this._currentGuess.length];
-  }
-
-  private LastLetter(): HTMLDivElement {
-    const row = this.CurrentRow();
-    return row[this._currentGuess.length - 1];
-  }
-
-  AddChar(char: string) {
-    if (this._currentGuess.length >= this._wordLength) {
-      console.log(`Character limit: ${this._currentGuess}`);
-      return;
-    }
-    const letter = this.CurrentLetter();
-    letter.innerText = char;
-    this._currentGuess += char;
-  }
-
-  Delete() {
-    if (this._currentGuess.length === 0) {
-      console.log(`Nothing to dlete: ${this._currentGuess}`);
-      return;
-    }
-    const letter = this.LastLetter();
-    letter.innerText = '';
-    this._currentGuess = this._currentGuess.slice(0, -1);
-  }
-
-  Submit() {
-    if (this._currentGuess.length !== this._wordLength) {
-      console.log(`Too short: ${this._currentGuess}`);
-      return;
-    }
-    if (!WORDS.includes(this._currentGuess.toLowerCase())) {
-      console.log(`Invalid word: ${this._currentGuess}`);
-      return;
-    }
-    document.dispatchEvent(new SubmitWordEvent(this._currentGuess));
-  }
 
   private UpdateColor(letter: HTMLDivElement, knowledge: LetterState) {
     switch (knowledge) {
@@ -182,5 +123,76 @@ export class Board {
       AnimateCSS(letter, AnimationType.Pulse);
     }
     this._currentGuess = '';
+  }
+}
+
+export class PlayerBoard extends Board {
+  private RegisterEventListeners() {
+    document.addEventListener('add_key', e => {
+      this.AddChar(e.detail);
+    });
+    document.addEventListener('delete', () => {
+      this.Delete();
+    });
+    document.addEventListener('submit_command', () => {
+      this.Submit();
+    });
+  }
+
+  constructor(guessCount: number, wordLength: number) {
+    super(guessCount, wordLength);
+    this._currentGuess = '';
+    this.RegisterEventListeners();
+  }
+  private CurrentRow(): HTMLDivElement[] {
+    return this._letterBoxes[this._guessCount];
+  }
+
+  private CurrentLetter(): HTMLDivElement {
+    const row = this.CurrentRow();
+    return row[this._currentGuess.length];
+  }
+
+  private LastLetter(): HTMLDivElement {
+    const row = this.CurrentRow();
+    return row[this._currentGuess.length - 1];
+  }
+
+  private AddChar(char: string) {
+    if (this._currentGuess.length >= this._wordLength) {
+      console.log(`Character limit: ${this._currentGuess}`);
+      return;
+    }
+    const letter = this.CurrentLetter();
+    letter.innerText = char;
+    this._currentGuess += char;
+  }
+
+  private Delete() {
+    if (this._currentGuess.length === 0) {
+      console.log(`Nothing to dlete: ${this._currentGuess}`);
+      return;
+    }
+    const letter = this.LastLetter();
+    letter.innerText = '';
+    this._currentGuess = this._currentGuess.slice(0, -1);
+  }
+
+  private Submit() {
+    if (this._currentGuess.length !== this._wordLength) {
+      console.log(`Too short: ${this._currentGuess}`);
+      return;
+    }
+    if (!WORDS.includes(this._currentGuess.toLowerCase())) {
+      console.log(`Invalid word: ${this._currentGuess}`);
+      return;
+    }
+    document.dispatchEvent(new SubmitWordEvent(this._currentGuess));
+  }
+}
+
+export class OpponentBoard extends Board {
+  constructor(guessCount: number, wordLength: number) {
+    super(guessCount, wordLength);
   }
 }

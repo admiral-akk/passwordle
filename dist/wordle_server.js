@@ -15,6 +15,7 @@ const network_events_1 = require("./public/network_events");
 class WordleServer {
     constructor() {
         this._games = {};
+        this._awaitingMatch = [];
     }
     HandleEvent(body) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -40,13 +41,17 @@ class WordleServer {
         });
     }
     NewGame() {
+        if (this._awaitingMatch.length > 0) {
+            const id = this._awaitingMatch.pop();
+            return Promise.resolve(new network_events_1.GameStartedMessage(id));
+        }
         let id = '1';
         while (id in this._games) {
             console.log(`id taken: ${id}, answer: ${this._games[id]}`);
             id = Math.floor(Math.random() * 10000).toString();
         }
         this._games[id] = new game_data_1.Game(id);
-        console.log(`id is: ${id}`);
+        this._awaitingMatch.push(id);
         return Promise.resolve(new network_events_1.GameStartedMessage(id));
     }
     Guess(guess, id) {

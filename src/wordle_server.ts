@@ -9,8 +9,12 @@ import {
 
 export class WordleServer {
   private _games: Record<string, Game>;
+
+  private _awaitingMatch: string[];
+
   constructor() {
     this._games = {};
+    this._awaitingMatch = [];
   }
 
   async HandleEvent(body: INetworkMessage): Promise<INetworkMessage> {
@@ -35,13 +39,17 @@ export class WordleServer {
   }
 
   private NewGame(): Promise<GameStartedMessage> {
+    if (this._awaitingMatch.length > 0) {
+      const id = this._awaitingMatch.pop()!;
+      return Promise.resolve(new GameStartedMessage(id));
+    }
     let id = '1';
     while (id in this._games) {
       console.log(`id taken: ${id}, answer: ${this._games[id]}`);
       id = Math.floor(Math.random() * 10000).toString();
     }
     this._games[id] = new Game(id);
-    console.log(`id is: ${id}`);
+    this._awaitingMatch.push(id);
     return Promise.resolve(new GameStartedMessage(id));
   }
 

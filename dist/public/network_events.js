@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GameStateMessage = exports.PollingMessage = exports.GameStartedMessage = exports.NewGameMessage = exports.KnowledgeUpdateMessage = exports.SubmitWordMessage = exports.BaseNetworkMessage = void 0;
+exports.GameStateMessage = exports.PollingMessage = exports.GameStartedMessage = exports.NewGameMessage = exports.KnowledgeUpdateMessage = exports.SubmitWordMessage = exports.MoveMessage = exports.GameStateMesssage = exports.EnterGameMessage = exports.StartNewGameMessage = exports.BaseMessage = exports.BaseNetworkMessage = void 0;
+const game_history_1 = require("./game_history");
 class BaseNetworkMessage {
     constructor(type, id, detail) {
         this.type = type;
@@ -9,6 +10,33 @@ class BaseNetworkMessage {
     }
 }
 exports.BaseNetworkMessage = BaseNetworkMessage;
+class BaseMessage {
+    constructor(id = '', playerName = '') {
+        this.id = id;
+        this.playerName = playerName;
+    }
+}
+exports.BaseMessage = BaseMessage;
+class StartNewGameMessage extends BaseMessage {
+}
+exports.StartNewGameMessage = StartNewGameMessage;
+class EnterGameMessage extends BaseMessage {
+}
+exports.EnterGameMessage = EnterGameMessage;
+class GameStateMesssage extends BaseMessage {
+    constructor(id = '', playerName = '', history = new game_history_1.History()) {
+        super(id, playerName);
+        this.history = history;
+    }
+}
+exports.GameStateMesssage = GameStateMesssage;
+class MoveMessage extends BaseMessage {
+    constructor(id = '', playerName = '', move) {
+        super(id, playerName);
+        this.move = move;
+    }
+}
+exports.MoveMessage = MoveMessage;
 class SubmitWordMessage extends BaseNetworkMessage {
     constructor(guess, id) {
         super('submit', id, guess);
