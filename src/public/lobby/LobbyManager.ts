@@ -16,37 +16,20 @@ enum LobbyState {
 
 export class LobbyManager {
   private view: LobbyView;
-  private state: LobbyState;
   private clientId: ClientId;
 
   constructor() {
     this.clientId = new ClientId();
-    this.state = LobbyState.Start;
     this.view = new LobbyView();
-
-    const lobbyId = this.FindLobbyIdInURL();
-    if (!lobbyId) {
-      this.SetState(LobbyState.LobbyMenu);
-      return;
-    }
-    this.clientId.lobbyId = lobbyId!;
-    this.SetState(LobbyState.JoiningMatch);
-  }
-
-  private FindLobbyIdInURL(): string | null {
-    return new URLSearchParams(window.location.search).get(LOBBY_ID_QUERY_NAME);
+    this.SetState(LobbyState.Start);
   }
 
   private HostingLobby(clientId: ClientId) {
-    console.log(`old lobby id: ${this.clientId.lobbyId}`);
-    console.log(`new lobby id: ${clientId.lobbyId}`);
     this.clientId = clientId;
     this.SetState(LobbyState.HostingMatch);
   }
 
   private FindingMatch(clientId: ClientId) {
-    console.log(`old lobby id: ${this.clientId.lobbyId}`);
-    console.log(`new lobby id: ${clientId.lobbyId}`);
     this.clientId = clientId;
     this.SetState(LobbyState.FindingMatch);
   }
@@ -54,6 +37,13 @@ export class LobbyManager {
   private SetState(newState: LobbyState) {
     switch (newState) {
       case LobbyState.Start:
+        const lobbyId = FindLobbyIdInURL();
+        if (!lobbyId) {
+          this.SetState(LobbyState.LobbyMenu);
+          return;
+        }
+        this.clientId.lobbyId = lobbyId!;
+        this.SetState(LobbyState.JoiningMatch);
         break;
       case LobbyState.JoiningMatch:
         break;
@@ -66,17 +56,22 @@ export class LobbyManager {
       case LobbyState.FindingMatch:
         break;
       case LobbyState.HostingMatch:
-        {
-          const url = new URLSearchParams(window.location.search);
-          url.append(LOBBY_ID_QUERY_NAME, this.clientId.lobbyId);
-          this.view.HostingMatch(window.location.href + url.toString());
-        }
+          this.view.HostingMatch(GenerateLobbyLink(this.clientId.lobbyId));
         break;
       case LobbyState.MatchMade:
         break;
       case LobbyState.InGame:
         break;
     }
-    this.state = newState;
   }
+}
+
+function FindLobbyIdInURL(): string | null {
+  return new URLSearchParams(window.location.search).get(LOBBY_ID_QUERY_NAME);
+}
+
+function GenerateLobbyLink(lobbyId: string): string {
+  const url = new URLSearchParams(window.location.search);
+  url.append(LOBBY_ID_QUERY_NAME, lobbyId);
+  return window.location.href + url.toString();
 }
