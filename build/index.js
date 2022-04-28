@@ -33,6 +33,17 @@ app.post('/event', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         res.json({ error: 'errors' });
     }
 }));
+app.post('/new_game', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        server.HandleEvent(req.body).then(event => {
+            res.json(event);
+        });
+    }
+    catch (err) {
+        console.error(err);
+        res.json({ error: 'errors' });
+    }
+}));
 app.get('/poll/:gameId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(`Recieved request: ${JSON.stringify(req.params)}`);

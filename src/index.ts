@@ -21,6 +21,17 @@ app.post('/event', async (req, res) => {
   }
 });
 
+app.post('/new_game', async (req, res) => {
+  try {
+    server.HandleEvent(req.body).then(event => {
+      res.json(event);
+    });
+  } catch (err) {
+    console.error(err);
+    res.json({error: 'errors'});
+  }
+});
+
 app.get('/poll/:gameId', async (req, res) => {
   try {
     console.log(`Recieved request: ${JSON.stringify(req.params)}`);
