@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyManager = void 0;
 const ClientId_1 = require("../struct/ClientId");
-const LobbyNetwork_1 = require("./LobbyNetwork");
 const LobbyView_1 = require("./view/LobbyView");
 const LOBBY_ID_QUERY_NAME = 'lobbyId';
 var LobbyState;
@@ -16,17 +15,22 @@ var LobbyState;
     LobbyState[LobbyState["InGame"] = 6] = "InGame";
 })(LobbyState || (LobbyState = {}));
 class LobbyManager {
-    constructor() {
+    constructor(socket) {
         this.clientId = new ClientId_1.ClientId();
         this.view = new LobbyView_1.LobbyView();
+        this.socket = socket;
+        this.socket.RegisterGetPrivateLobbyId((lobbyId) => this.HostingLobby(lobbyId));
+        this.socket.RegisterGetPublicLobbyId((lobbyId) => this.FindingMatch(lobbyId));
         this.SetState(LobbyState.Start);
     }
-    HostingLobby(clientId) {
-        this.clientId = clientId;
+    HostingLobby(lobbyId) {
+        console.log(`Hosting private lobby, ID: ${lobbyId}`);
+        this.clientId.lobbyId = lobbyId;
         this.SetState(LobbyState.HostingMatch);
     }
-    FindingMatch(clientId) {
-        this.clientId = clientId;
+    FindingMatch(lobbyId) {
+        console.log(`Hosting public lobby, ID: ${lobbyId}`);
+        this.clientId.lobbyId = lobbyId;
         this.SetState(LobbyState.FindingMatch);
     }
     SetState(newState) {
@@ -43,7 +47,7 @@ class LobbyManager {
             case LobbyState.JoiningMatch:
                 break;
             case LobbyState.LobbyMenu:
-                this.view.Menu(() => (0, LobbyNetwork_1.HostLobby)((clientId) => this.HostingLobby(clientId)), () => (0, LobbyNetwork_1.FindMatch)((clientId) => this.FindingMatch(clientId)));
+                this.view.Menu(() => this.socket.RequestPrivateLobby(), () => this.socket.RequestPublicLobby());
                 break;
             case LobbyState.FindingMatch:
                 break;

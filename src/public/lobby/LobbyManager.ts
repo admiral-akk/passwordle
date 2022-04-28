@@ -1,5 +1,6 @@
+import { SocketManager } from '../network/SocketManager';
 import {ClientId} from '../struct/ClientId';
-import {FindMatch, HostLobby} from './LobbyNetwork';
+import {FindMatch, HostLobby, LobbyNetwork} from './LobbyNetwork';
 import {LobbyView} from './view/LobbyView';
 
 const LOBBY_ID_QUERY_NAME = 'lobbyId';
@@ -17,20 +18,25 @@ enum LobbyState {
 export class LobbyManager {
   private view: LobbyView;
   private clientId: ClientId;
+  private socket: SocketManager;
 
-  constructor() {
+  constructor(socket: SocketManager) {
     this.clientId = new ClientId();
     this.view = new LobbyView();
+    this.socket = socket;
+    this.socket.RegisterGetPrivateLobbyId((lobbyId:string) => this.HostingLobby(lobbyId));
+    this.socket.RegisterGetPublicLobbyId((lobbyId:string) => this.FindingMatch(lobbyId));
     this.SetState(LobbyState.Start);
   }
-
-  private HostingLobby(clientId: ClientId) {
-    this.clientId = clientId;
+  private HostingLobby(lobbyId: string) {
+    console.log(`Hosting private lobby, ID: ${lobbyId}`);
+    this.clientId.lobbyId = lobbyId;
     this.SetState(LobbyState.HostingMatch);
   }
 
-  private FindingMatch(clientId: ClientId) {
-    this.clientId = clientId;
+  private FindingMatch(lobbyId: string) {
+    console.log(`Hosting public lobby, ID: ${lobbyId}`);
+    this.clientId.lobbyId = lobbyId;
     this.SetState(LobbyState.FindingMatch);
   }
 
@@ -49,8 +55,8 @@ export class LobbyManager {
         break;
       case LobbyState.LobbyMenu:
         this.view.Menu(
-          () => HostLobby((clientId) => this.HostingLobby(clientId)),
-          () => FindMatch((clientId) => this.FindingMatch(clientId))
+          () => this.socket.RequestPrivateLobby(),
+          () => this.socket.RequestPublicLobby()
         );
         break;
       case LobbyState.FindingMatch:

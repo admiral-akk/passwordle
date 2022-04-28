@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FindMatch = exports.HostLobby = exports.FIND_MATCH_ENDPOINT_NAME = exports.HOST_LOBBY_ENDPOINT_NAME = void 0;
+exports.LobbyNetwork = exports.FindMatch = exports.HostLobby = exports.FIND_MATCH_ENDPOINT_NAME = exports.HOST_LOBBY_ENDPOINT_NAME = void 0;
 const ClientId_1 = require("../struct/ClientId");
 exports.HOST_LOBBY_ENDPOINT_NAME = '/host';
 exports.FIND_MATCH_ENDPOINT_NAME = '/find_match';
@@ -28,4 +28,12 @@ function Post(path, callback, data = new ClientId_1.ClientId()) {
         callback(clientId);
     });
 }
+class LobbyNetwork {
+    constructor(socket) {
+        this.socket = socket;
+    }
+    HostLobby(callback) {
+    }
+}
+exports.LobbyNetwork = LobbyNetwork;
 //# sourceMappingURL=LobbyNetwork.js.map

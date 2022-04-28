@@ -1,7 +1,11 @@
 import express from 'express';
 import path from 'path';
+import { Server } from 'socket.io';
 import {LobbyServer} from './LobbyServer';
+import { ClientToServerEvents,ServerToClientEvents} from './public/network/NetworkTypes';
 import {PollingMessage} from './public/network_events';
+import { InterServerEvents, SocketData } from './ServerNetworkTypes';
+import { ServerSocket } from './ServerSocket';
 import {WordleServer} from './wordle_server';
 
 const server = new WordleServer();
@@ -12,6 +16,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const lobbyServer = new LobbyServer();
 lobbyServer.RegisterLobbyHandlers(app);
+
+
+const http = require("http").Server(app);
+const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(http);
+
+const sockets = []; 
+
+io.on("connection", (socket) => {
+  sockets.push(new ServerSocket(socket));
+});
+
+
+const wsServer = http.listen(4000, function() {
+  console.log("listening on *:4000");
+});
 
 app.post('/event', async (req, res) => {
   try {

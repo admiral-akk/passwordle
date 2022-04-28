@@ -1,3 +1,4 @@
+import { SocketManager } from '../network/SocketManager';
 import {ClientId} from '../struct/ClientId';
 
 export const HOST_LOBBY_ENDPOINT_NAME = '/host';
@@ -29,4 +30,15 @@ function Post(
     .then(clientId => {
       console.log(`Recieved response: ${JSON.stringify(clientId)}`)
       callback(clientId as ClientId)});
+}
+
+export class LobbyNetwork {
+  private socket: SocketManager;
+  constructor(socket: SocketManager) {
+    this.socket = socket;
+  }
+
+  HostLobby(callback: (data: ClientId) => void) {
+
+  }
 }

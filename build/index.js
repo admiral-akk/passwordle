@@ -14,8 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
+const socket_io_1 = require("socket.io");
 const LobbyServer_1 = require("./LobbyServer");
 const network_events_1 = require("./public/network_events");
+const ServerSocket_1 = require("./ServerSocket");
 const wordle_server_1 = require("./wordle_server");
 const server = new wordle_server_1.WordleServer();
 const app = (0, express_1.default)();
@@ -24,6 +26,15 @@ app.use(express_1.default.json());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 const lobbyServer = new LobbyServer_1.LobbyServer();
 lobbyServer.RegisterLobbyHandlers(app);
+const http = require("http").Server(app);
+const io = new socket_io_1.Server(http);
+const sockets = [];
+io.on("connection", (socket) => {
+    sockets.push(new ServerSocket_1.ServerSocket(socket));
+});
+const wsServer = http.listen(4000, function () {
+    console.log("listening on *:4000");
+});
 app.post('/event', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(`Recieved request: ${JSON.stringify(req.body)}`);

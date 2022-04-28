@@ -30,7 +30,8 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "express": "^4.17.3",
-    "socket.io": "^4.5.0"
+    "socket.io": "^4.5.0",
+    "socket.io-client": "^4.5.0"
   },
   "engines": {
     "node": ">=10.0.0"
