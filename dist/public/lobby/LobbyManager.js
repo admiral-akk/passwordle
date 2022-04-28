@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyManager = void 0;
 const ClientId_1 = require("../struct/ClientId");
 const LobbyNetwork_1 = require("./LobbyNetwork");
-const LobbyView_1 = require("./LobbyView");
+const LobbyView_1 = require("./view/LobbyView");
 const LOBBY_ID_QUERY_NAME = 'lobbyId';
 var LobbyState;
 (function (LobbyState) {
@@ -19,7 +19,7 @@ class LobbyManager {
     constructor() {
         this.clientId = new ClientId_1.ClientId();
         this.state = LobbyState.Start;
-        this.view = new LobbyView_1.LobbyView(() => (0, LobbyNetwork_1.HostLobby)(this.HostingLobby), () => (0, LobbyNetwork_1.FindMatch)(this.FindingMatch));
+        this.view = new LobbyView_1.LobbyView();
         const lobbyId = this.FindLobbyIdInURL();
         if (!lobbyId) {
             this.SetState(LobbyState.LobbyMenu);
@@ -50,10 +50,12 @@ class LobbyManager {
             case LobbyState.JoiningMatch:
                 break;
             case LobbyState.LobbyMenu:
+                this.view.Menu(() => (0, LobbyNetwork_1.HostLobby)(this.HostingLobby), () => (0, LobbyNetwork_1.FindMatch)(this.FindingMatch));
                 break;
             case LobbyState.FindingMatch:
                 break;
             case LobbyState.HostingMatch:
+                this.view.HostingMatch(this.clientId.lobbyId);
                 break;
             case LobbyState.MatchMade:
                 break;

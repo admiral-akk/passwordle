@@ -1,6 +1,6 @@
 import {ClientId} from '../struct/ClientId';
 import {FindMatch, HostLobby} from './LobbyNetwork';
-import {LobbyView} from './LobbyView';
+import {LobbyView} from './view/LobbyView';
 
 const LOBBY_ID_QUERY_NAME = 'lobbyId';
 
@@ -22,10 +22,7 @@ export class LobbyManager {
   constructor() {
     this.clientId = new ClientId();
     this.state = LobbyState.Start;
-    this.view = new LobbyView(
-      () => HostLobby(this.HostingLobby),
-      () => FindMatch(this.FindingMatch)
-    );
+    this.view = new LobbyView();
 
     const lobbyId = this.FindLobbyIdInURL();
     if (!lobbyId) {
@@ -61,10 +58,15 @@ export class LobbyManager {
       case LobbyState.JoiningMatch:
         break;
       case LobbyState.LobbyMenu:
+        this.view.Menu(
+          () => HostLobby(this.HostingLobby),
+          () => FindMatch(this.FindingMatch)
+        );
         break;
       case LobbyState.FindingMatch:
         break;
       case LobbyState.HostingMatch:
+        this.view.HostingMatch(this.clientId.lobbyId);
         break;
       case LobbyState.MatchMade:
         break;
