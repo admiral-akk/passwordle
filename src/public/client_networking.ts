@@ -35,14 +35,13 @@ function Get(path: string, gameId: string) {
 }
 
 export class ClientNetworking {
-  private urlParams: URLSearchParams;
-
+  private clientId: string;
   private GetId(): string | null {
-    return this.urlParams.get('id');
+    return null;
   }
 
   constructor() {
-    this.urlParams = new URLSearchParams(window.location.search);
+    this.clientId = '';
     document.addEventListener('submit', e => {
       const id = this.GetId();
       if (id === null) {
@@ -60,16 +59,12 @@ export class ClientNetworking {
       Post('/event', new NewGameMessage())
         .then(response => response.json())
         .then(data => {
-          const searchParams = new URLSearchParams(window.location.search);
-          searchParams.set('id', data.id);
-          window.location.search = searchParams.toString();
+          this.clientId = data.id;
           const gameStarted = new GameStartedEvent();
           document.dispatchEvent(gameStarted);
         });
     });
-    if (this.urlParams.get('id') === null) {
-      document.dispatchEvent(new NewGameEvent());
-    }
+    document.dispatchEvent(new NewGameEvent());
     setInterval(() => {
       const id = this.GetId();
       if (id === null) {

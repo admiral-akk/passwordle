@@ -1,0 +1,46 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="752" height="563" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="58.5" cy="58.5" rx="56" ry="56"/>
+	<text x="39.5" y="64.5" font-family="Times New Roman" font-size="20">Start</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="399.5" cy="58.5" rx="56" ry="56"/>
+	<text x="347.5" y="64.5" font-family="Times New Roman" font-size="20">Lobby Menu</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="391.5" cy="252.5" rx="56" ry="56"/>
+	<text x="318.5" y="258.5" font-family="Times New Roman" font-size="20">Waiting for match</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="692.5" cy="58.5" rx="56" ry="56"/>
+	<text x="634.5" y="64.5" font-family="Times New Roman" font-size="20">Finding match</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="692.5" cy="252.5" rx="56" ry="56"/>
+	<text x="642.5" y="258.5" font-family="Times New Roman" font-size="20">Match made</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="692.5" cy="505.5" rx="56" ry="56"/>
+	<text x="647.5" y="511.5" font-family="Times New Roman" font-size="20">Game Start</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="216.5" cy="58.5" rx="56" ry="56"/>
+	<text x="183.5" y="64.5" font-family="Times New Roman" font-size="20">Has ID?</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="216.5" cy="402.5" rx="56" ry="56"/>
+	<text x="159.5" y="408.5" font-family="Times New Roman" font-size="20">Joining Match</text>
+	<polygon stroke="black" stroke-width="1" points="397.193,114.452 393.807,196.548"/>
+	<polygon fill="black" stroke-width="1" points="393.807,196.548 399.133,188.76 389.141,188.348"/>
+	<text x="304.5" y="161.5" font-family="Times New Roman" font-size="20">start lobby</text>
+	<polygon stroke="black" stroke-width="1" points="447.5,252.5 636.5,252.5"/>
+	<polygon fill="black" stroke-width="1" points="636.5,252.5 628.5,247.5 628.5,257.5"/>
+	<text x="472.5" y="273.5" font-family="Times New Roman" font-size="20">other player joins</text>
+	<polygon stroke="black" stroke-width="1" points="692.5,114.5 692.5,196.5"/>
+	<polygon fill="black" stroke-width="1" points="692.5,196.5 697.5,188.5 687.5,188.5"/>
+	<text x="549.5" y="161.5" font-family="Times New Roman" font-size="20">find empty lobby</text>
+	<polygon stroke="black" stroke-width="1" points="455.5,58.5 636.5,58.5"/>
+	<polygon fill="black" stroke-width="1" points="636.5,58.5 628.5,53.5 628.5,63.5"/>
+	<text x="499.5" y="79.5" font-family="Times New Roman" font-size="20">matchmake</text>
+	<polygon stroke="black" stroke-width="1" points="692.5,308.5 692.5,449.5"/>
+	<polygon fill="black" stroke-width="1" points="692.5,449.5 697.5,441.5 687.5,441.5"/>
+	<text x="532.5" y="385.5" font-family="Times New Roman" font-size="20">game start message</text>
+	<polygon stroke="black" stroke-width="1" points="114.5,58.5 160.5,58.5"/>
+	<polygon fill="black" stroke-width="1" points="160.5,58.5 152.5,53.5 152.5,63.5"/>
+	<polygon stroke="black" stroke-width="1" points="272.5,58.5 343.5,58.5"/>
+	<polygon fill="black" stroke-width="1" points="343.5,58.5 335.5,53.5 335.5,63.5"/>
+	<text x="295.5" y="79.5" font-family="Times New Roman" font-size="20">No</text>
+	<polygon stroke="black" stroke-width="1" points="216.5,114.5 216.5,346.5"/>
+	<polygon fill="black" stroke-width="1" points="216.5,346.5 221.5,338.5 211.5,338.5"/>
+	<text x="182.5" y="236.5" font-family="Times New Roman" font-size="20">Yes</text>
+	<polygon stroke="black" stroke-width="1" points="269.911,385.669 639.089,269.331"/>
+	<polygon fill="black" stroke-width="1" points="639.089,269.331 629.956,266.967 632.962,276.504"/>
+</svg>

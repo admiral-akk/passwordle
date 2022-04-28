@@ -1,5 +1,5 @@
 export declare class ClientNetworking {
-    private urlParams;
+    private clientId;
     private GetId;
     constructor();
 }

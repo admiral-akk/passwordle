@@ -1,6 +1,10 @@
 export declare class LobbyManager {
     private view;
+    private state;
+    private clientId;
     constructor();
-    private CreateLobby;
-    private Matchmake;
+    private FindLobbyIdInURL;
+    private HostingLobby;
+    private FindingMatch;
+    private SetState;
 }

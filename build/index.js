@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
+const LobbyServer_1 = require("./LobbyServer");
 const network_events_1 = require("./public/network_events");
 const wordle_server_1 = require("./wordle_server");
 const server = new wordle_server_1.WordleServer();
@@ -21,6 +22,8 @@ const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.json());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
+const lobbyServer = new LobbyServer_1.LobbyServer();
+lobbyServer.RegisterLobbyHandlers(app);
 app.post('/event', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(`Recieved request: ${JSON.stringify(req.body)}`);
