@@ -32,14 +32,14 @@ class LobbyManager {
         return new URLSearchParams(window.location.search).get(LOBBY_ID_QUERY_NAME);
     }
     HostingLobby(clientId) {
-        console.log(`old client id: ${this.clientId}`);
-        console.log(`new client id: ${clientId}`);
+        console.log(`old lobby id: ${this.clientId.lobbyId}`);
+        console.log(`new lobby id: ${clientId.lobbyId}`);
         this.clientId = clientId;
         this.SetState(LobbyState.HostingMatch);
     }
     FindingMatch(clientId) {
-        console.log(`old client id: ${this.clientId}`);
-        console.log(`new client id: ${clientId}`);
+        console.log(`old lobby id: ${this.clientId.lobbyId}`);
+        console.log(`new lobby id: ${clientId.lobbyId}`);
         this.clientId = clientId;
         this.SetState(LobbyState.FindingMatch);
     }
@@ -50,12 +50,16 @@ class LobbyManager {
             case LobbyState.JoiningMatch:
                 break;
             case LobbyState.LobbyMenu:
-                this.view.Menu(() => (0, LobbyNetwork_1.HostLobby)(this.HostingLobby), () => (0, LobbyNetwork_1.FindMatch)(this.FindingMatch));
+                this.view.Menu(() => (0, LobbyNetwork_1.HostLobby)((clientId) => this.HostingLobby(clientId)), () => (0, LobbyNetwork_1.FindMatch)((clientId) => this.FindingMatch(clientId)));
                 break;
             case LobbyState.FindingMatch:
                 break;
             case LobbyState.HostingMatch:
-                this.view.HostingMatch(this.clientId.lobbyId);
+                {
+                    const url = new URLSearchParams(window.location.search);
+                    url.append(LOBBY_ID_QUERY_NAME, this.clientId.lobbyId);
+                    this.view.HostingMatch(window.location.href + url.toString());
+                }
                 break;
             case LobbyState.MatchMade:
                 break;

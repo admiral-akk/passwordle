@@ -1,6 +1,6 @@
-import {ModalView} from './ModalView';
+import {Modal} from './Modal';
 
-export class LobbyMenuView implements ModalView {
+export class MenuModal implements Modal {
   private privateGame: HTMLButtonElement;
   private publicGame: HTMLButtonElement;
 

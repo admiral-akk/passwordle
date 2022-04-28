@@ -1,5 +1,6 @@
-import {LobbyMenuView} from './LobbyMenuView';
-import {ModalView} from './ModalView';
+import {HostingModal} from './modal/HostingModal';
+import {MenuModal} from './modal/MenuModal';
+import {Modal} from './modal/Modal';
 
 export class LobbyView {
   private root: HTMLElement;
@@ -7,7 +8,7 @@ export class LobbyView {
   private modal: HTMLDivElement;
 
   // Using https://gameprogrammingpatterns.com/state.html pattern here.
-  private currentModal: ModalView | null;
+  private currentModal: Modal | null;
 
   constructor() {
     this.root = document.getElementById('lobby')!;
@@ -22,7 +23,7 @@ export class LobbyView {
     this.currentModal = null;
   }
 
-  private SetModal(newModal: ModalView) {
+  private SetModal(newModal: Modal) {
     if (this.currentModal) {
       this.currentModal.Exit();
     }
@@ -31,20 +32,14 @@ export class LobbyView {
   }
 
   Menu(hostLobby: () => void, matchmake: () => void): void {
-    this.SetModal(new LobbyMenuView(this.modal, hostLobby, matchmake));
+    this.SetModal(new MenuModal(this.modal, hostLobby, matchmake));
   }
 
-  HostingMatch(shareUrl: string) {}
-
-  private CopyToClipboard(url: string) {
-    navigator.clipboard.writeText(url);
+  HostingMatch(link: string) {
+    this.SetModal(new HostingModal(this.modal, () => CopyToClipboard(link)));
   }
 }
 
-function AddButton(parent: HTMLElement, name: string, callback: () => void) {
-  const button = document.createElement('button');
-  button.className = 'host-button';
-  button.innerText = name;
-  button.addEventListener('click', callback);
-  parent.appendChild(button);
+function CopyToClipboard(url: string) {
+  navigator.clipboard.writeText(url);
 }

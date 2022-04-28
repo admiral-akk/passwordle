@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyView = void 0;
-const LobbyMenuView_1 = require("./LobbyMenuView");
+const HostingModal_1 = require("./modal/HostingModal");
+const MenuModal_1 = require("./modal/MenuModal");
 class LobbyView {
     constructor() {
         this.root = document.getElementById('lobby');
@@ -22,19 +23,14 @@ class LobbyView {
         this.currentModal.Enter();
     }
     Menu(hostLobby, matchmake) {
-        this.SetModal(new LobbyMenuView_1.LobbyMenuView(this.modal, hostLobby, matchmake));
+        this.SetModal(new MenuModal_1.MenuModal(this.modal, hostLobby, matchmake));
     }
-    HostingMatch(shareUrl) { }
-    CopyToClipboard(url) {
-        navigator.clipboard.writeText(url);
+    HostingMatch(link) {
+        this.SetModal(new HostingModal_1.HostingModal(this.modal, () => CopyToClipboard(link)));
     }
 }
 exports.LobbyView = LobbyView;
-function AddButton(parent, name, callback) {
-    const button = document.createElement('button');
-    button.className = 'host-button';
-    button.innerText = name;
-    button.addEventListener('click', callback);
-    parent.appendChild(button);
+function CopyToClipboard(url) {
+    navigator.clipboard.writeText(url);
 }
 //# sourceMappingURL=LobbyView.js.map

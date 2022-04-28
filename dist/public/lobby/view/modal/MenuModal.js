@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LobbyMenuView = void 0;
-class LobbyMenuView {
+exports.MenuModal = void 0;
+class MenuModal {
     constructor(modal, hostLobby, matchmake) {
         this.privateGame = AddButton(modal, 'Private Game', hostLobby);
         this.publicGame = AddButton(modal, 'Join Random Game', matchmake);
@@ -15,7 +15,7 @@ class LobbyMenuView {
         this.publicGame.remove();
     }
 }
-exports.LobbyMenuView = LobbyMenuView;
+exports.MenuModal = MenuModal;
 function AddButton(parent, name, callback) {
     const button = document.createElement('button');
     button.style.display = 'none';
@@ -25,4 +25,4 @@ function AddButton(parent, name, callback) {
     parent.appendChild(button);
     return button;
 }
-//# sourceMappingURL=LobbyMenuView.js.map
+//# sourceMappingURL=MenuModal.js.map

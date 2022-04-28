@@ -26,5 +26,7 @@ function Post(
       body: JSON.stringify(data),
     })
     .then(res => res.json())
-    .then(clientId => callback(clientId));
+    .then(clientId => {
+      console.log(`Recieved response: ${JSON.stringify(clientId)}`)
+      callback(clientId as ClientId)});
 }

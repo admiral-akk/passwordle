@@ -6,6 +6,5 @@ export declare class LobbyView {
     constructor();
     private SetModal;
     Menu(hostLobby: () => void, matchmake: () => void): void;
-    HostingMatch(shareUrl: string): void;
-    private CopyToClipboard;
+    HostingMatch(link: string): void;
 }

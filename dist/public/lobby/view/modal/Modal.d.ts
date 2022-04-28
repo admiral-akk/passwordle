@@ -1,4 +1,4 @@
-export interface ModalView {
+export interface Modal {
     Enter(): void;
     Exit(): void;
 }

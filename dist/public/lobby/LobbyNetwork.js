@@ -23,6 +23,9 @@ function Post(path, callback, data = new ClientId_1.ClientId()) {
         body: JSON.stringify(data),
     })
         .then(res => res.json())
-        .then(clientId => callback(clientId));
+        .then(clientId => {
+        console.log(`Recieved response: ${JSON.stringify(clientId)}`);
+        callback(clientId);
+    });
 }
 //# sourceMappingURL=LobbyNetwork.js.map

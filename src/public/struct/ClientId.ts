@@ -3,7 +3,7 @@ export class ClientId {
   public playerId: string;
 
   constructor(lobbyId = '', playerId = '') {
-    this.lobbyId = '';
-    this.playerId = '';
+    this.lobbyId = lobbyId;
+    this.playerId = playerId;
   }
 }
