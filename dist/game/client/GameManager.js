@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameManager = void 0;
 const InputManager_1 = require("./input/InputManager");
+const CharUpdate_1 = require("./view/CharUpdate");
 const GameView_1 = require("./view/GameView");
 var GameState;
 (function (GameState) {
@@ -20,17 +21,43 @@ class GameManager {
         this.view = new GameView_1.GameView();
         this.socket = socket;
         this.state = GameState.Start;
-        this.input = new InputManager_1.InputManager(this.AddChar, this.Delete, this.Submit);
+        this.currentGuess = '';
+        this.input = new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
         RegisterSecretWord(this.socket, (secret) => this.SetSecret(secret));
         RegisterSubmissionOpen(this.socket, () => this.SubmissionOpen());
     }
+    InputActive() {
+        return (this.state === GameState.SubmissionOpen ||
+            this.state === GameState.OpponentGuessed);
+    }
     AddChar(char) {
+        if (!this.InputActive()) {
+            return;
+        }
+        if (this.currentGuess.length >= 5) {
+            return;
+        }
+        const update = new CharUpdate_1.CharUpdate(char, 0, this.currentGuess.length);
+        this.view.Update(update);
+        this.currentGuess += char;
         console.log(`CHAR: ${char}`);
     }
     Submit() {
+        if (!this.InputActive()) {
+            return;
+        }
         console.log('SUBMIT');
     }
     Delete() {
+        if (!this.InputActive()) {
+            return;
+        }
+        if (this.currentGuess.length === 0) {
+            return;
+        }
+        this.currentGuess = this.currentGuess.slice(0, -1);
+        const update = new CharUpdate_1.CharUpdate('', 0, this.currentGuess.length);
+        this.view.Update(update);
         console.log('DELETE');
     }
     SubmissionOpen() {

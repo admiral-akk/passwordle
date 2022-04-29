@@ -1,3 +1,4 @@
+import {CharUpdate} from './CharUpdate';
 import {AnswerView} from './subview/AnswerView';
 import {KeyboardView} from './subview/KeyboardView';
 import {OpponentBoardView} from './subview/OpponentBoardView';
@@ -30,8 +31,12 @@ export class GameView {
     this.keyboard = new KeyboardView(root);
   }
 
-  SetSecret(secret: string): void {
+  SetSecret(secret: string) {
     this.answer.SetSecret(secret);
+  }
+
+  Update(update: CharUpdate) {
+    this.playerBoard.Update(update);
   }
 }
 

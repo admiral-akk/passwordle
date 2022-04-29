@@ -1,3 +1,4 @@
+import {CharUpdate} from '../CharUpdate';
 import {Subview} from './Subview';
 import {WordView} from './word/WordView';
 
@@ -11,5 +12,9 @@ export abstract class BoardView extends Subview {
     for (let i = 0; i < WORD_COUNT; i++) {
       this.words.push(new WordView(this.root));
     }
+  }
+
+  protected BaseUpdate(update: CharUpdate) {
+    this.words[update.wordIndex].Update(update);
   }
 }

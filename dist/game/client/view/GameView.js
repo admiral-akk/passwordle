@@ -23,6 +23,9 @@ class GameView {
     SetSecret(secret) {
         this.answer.SetSecret(secret);
     }
+    Update(update) {
+        this.playerBoard.Update(update);
+    }
 }
 exports.GameView = GameView;
 function AddDiv(parent, className) {

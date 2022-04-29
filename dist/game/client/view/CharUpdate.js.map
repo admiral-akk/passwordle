@@ -1,0 +1,1 @@
+{"version":3,"file":"CharUpdate.js","sourceRoot":"","sources":["../../../../src/game/client/view/CharUpdate.ts"],"names":[],"mappings":";;;AAAA,MAAa,UAAU;IAIrB,YAAY,IAAY,EAAE,SAAiB,EAAE,SAAiB;QAC5D,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,SAAS,GAAG,SAAS,CAAC;QAC3B,IAAI,CAAC,SAAS,GAAG,SAAS,CAAC;IAC7B,CAAC;CACF;AATD,gCASC"}

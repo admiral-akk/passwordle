@@ -6,6 +6,9 @@ class PlayerBoardView extends BoardView_1.BoardView {
     constructor(base) {
         super(base);
     }
+    Update(update) {
+        this.BaseUpdate(update);
+    }
 }
 exports.PlayerBoardView = PlayerBoardView;
 //# sourceMappingURL=PlayerBoardView.js.map

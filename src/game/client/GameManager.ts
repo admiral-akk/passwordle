@@ -1,5 +1,6 @@
 import {GameSocket} from './GameNetworkEvents';
 import {InputManager} from './input/InputManager';
+import {CharUpdate} from './view/CharUpdate';
 import {GameView} from './view/GameView';
 
 enum GameState {
@@ -20,24 +21,57 @@ export class GameManager {
   private state: GameState;
   private input: InputManager;
 
+
+  private InputActive(): boolean {
+    return (
+      this.state === GameState.SubmissionOpen ||
+      this.state === GameState.OpponentGuessed
+    );
+  }
+
   constructor(socket: GameSocket) {
     this.view = new GameView();
     this.socket = socket;
     this.state = GameState.Start;
-    this.input = new InputManager(this.AddChar, this.Delete, this.Submit);
+    this.currentGuess = '';
+    this.input = new InputManager((char: string) => this.AddChar(char), ()=>this.Delete(), ()=>this.Submit());
     RegisterSecretWord(this.socket, (secret: string) => this.SetSecret(secret));
     RegisterSubmissionOpen(this.socket, () => this.SubmissionOpen());
   }
 
+  private currentGuess: string;
+
   private AddChar(char: string) {
+    if (!this.InputActive()) {
+      return;
+    }
+    if (this.currentGuess.length >= 5) {
+      return;
+    }
+    const update = new CharUpdate(char, 0, this.currentGuess.length);
+    this.view.Update(update);
+    this.currentGuess += char;
     console.log(`CHAR: ${char}`);
   }
 
   private Submit() {
+    if (!this.InputActive()) {
+      return;
+    }
     console.log('SUBMIT');
   }
 
   private Delete() {
+    if (!this.InputActive()) {
+      return;
+    }
+    if (this.currentGuess.length === 0) {
+      return;
+    }
+
+    this.currentGuess = this.currentGuess.slice(0, -1);
+    const update = new CharUpdate('', 0, this.currentGuess.length);
+    this.view.Update(update);
     console.log('DELETE');
   }
 

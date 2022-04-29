@@ -12,6 +12,9 @@ class BoardView extends Subview_1.Subview {
             this.words.push(new WordView_1.WordView(this.root));
         }
     }
+    BaseUpdate(update) {
+        this.words[update.wordIndex].Update(update);
+    }
 }
 exports.BoardView = BoardView;
 //# sourceMappingURL=BoardView.js.map
