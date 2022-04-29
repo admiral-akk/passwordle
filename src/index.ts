@@ -1,11 +1,13 @@
 import express from 'express';
 import path from 'path';
-import { Server } from 'socket.io';
-import {LobbyServer} from './LobbyServer';
-import { ClientToServerEvents,ServerToClientEvents} from './public/network/NetworkTypes';
+import {Server} from 'socket.io';
+import {LobbyServer} from './lobby/LobbyServer';
+import {
+  ClientToServerEvents,
+  ServerToClientEvents,
+} from './public/network/NetworkTypes';
 import {PollingMessage} from './public/network_events';
-import { InterServerEvents, SocketData } from './ServerNetworkTypes';
-import { ServerSocket } from './ServerSocket';
+import {InterServerEvents, SocketData} from './ServerNetworkTypes';
 import {WordleServer} from './wordle_server';
 
 const server = new WordleServer();
@@ -14,22 +16,27 @@ const port = 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const http = require('http').Server(app);
+const io = new Server<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>(http);
+
 const lobbyServer = new LobbyServer();
-lobbyServer.RegisterLobbyHandlers(app);
 
-
-const http = require("http").Server(app);
-const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(http);
-
-const sockets = []; 
-
-io.on("connection", (socket) => {
-  sockets.push(new ServerSocket(socket));
+io.on('connection', socket => {
+  lobbyServer.AddSocket(socket);
 });
 
+const wsServer = http.listen(4000, () => {
+  console.log('listening on *:4000');
+});
 
-const wsServer = http.listen(4000, function() {
-  console.log("listening on *:4000");
+app.get('/', async (req, res) => {
+  // Return the articles to the rendering engine
+  res.render('index');
 });
 
 app.post('/event', async (req, res) => {

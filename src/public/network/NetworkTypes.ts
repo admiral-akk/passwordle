@@ -1,8 +1,7 @@
-export interface ServerToClientEvents {
- PrivateLobbyId: (lobbyId: string) => void;
- PublicLobbyId: (lobbyId: string) => void;
- }
-export interface ClientToServerEvents {
-  HostPublicLobby: () => void;
-  HostPrivateLobby: () => void;
-}
+import {
+  LobbyClientToServerEvents,
+  LobbyServerToClientEvents,
+} from '../lobby/network/LobbyNetworkEvents';
+
+export type ServerToClientEvents = LobbyServerToClientEvents;
+export type ClientToServerEvents = LobbyClientToServerEvents;

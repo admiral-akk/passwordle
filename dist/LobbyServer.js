@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyServer = void 0;
-const LobbyNetwork_1 = require("./public/lobby/LobbyNetwork");
 const ClientId_1 = require("./public/struct/ClientId");
 class LobbyServer {
     constructor() {
@@ -10,8 +9,6 @@ class LobbyServer {
         this.publicLobbyIds = [];
     }
     RegisterLobbyHandlers(app) {
-        app.post(LobbyNetwork_1.HOST_LOBBY_ENDPOINT_NAME, (req, res) => this.HostLobby(req, res));
-        app.post(LobbyNetwork_1.FIND_MATCH_ENDPOINT_NAME, (req, res) => this.FindMatch(req, res));
     }
     FindMatch(req, res) {
         const lobbyId = GenerateLobbyId(this.lobbyIds);

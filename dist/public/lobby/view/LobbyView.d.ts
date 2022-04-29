@@ -7,4 +7,6 @@ export declare class LobbyView {
     private SetModal;
     Menu(hostLobby: () => void, matchmake: () => void): void;
     HostingMatch(link: string): void;
+    FindingMatch(): void;
+    LobbyReady(): void;
 }

@@ -6,7 +6,7 @@ export class HostingModal implements Modal {
 
   constructor(modal: HTMLDivElement, copyToClipboard: () => void) {
     this.shareLink = AddButton(modal, 'Share Link', copyToClipboard);
-    this.text = AddDiv(modal, 'div');
+    this.text = AddDiv(modal, 'Share the link');
   }
 
   Enter(): void {

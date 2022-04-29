@@ -4,7 +4,7 @@ exports.HostingModal = void 0;
 class HostingModal {
     constructor(modal, copyToClipboard) {
         this.shareLink = AddButton(modal, 'Share Link', copyToClipboard);
-        this.text = AddDiv(modal, 'div');
+        this.text = AddDiv(modal, 'Share the link');
     }
     Enter() {
         this.shareLink.style.display = 'block';

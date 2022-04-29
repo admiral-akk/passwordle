@@ -7,7 +7,7 @@ const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
 
 const socket = new SocketManager();
-new LobbyManager(socket);
+new LobbyManager(socket.socket);
 new Board(NUMBER_OF_GUESSES, WORD_LENGTH);
 new Keyboard();
 new ClientNetworking();

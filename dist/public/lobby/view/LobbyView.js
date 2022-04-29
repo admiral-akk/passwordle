@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyView = void 0;
+const FindingMatchModal_1 = require("./modal/FindingMatchModal");
 const HostingModal_1 = require("./modal/HostingModal");
+const LobbyReadyModal_1 = require("./modal/LobbyReadyModal");
 const MenuModal_1 = require("./modal/MenuModal");
 class LobbyView {
     constructor() {
@@ -27,6 +29,12 @@ class LobbyView {
     }
     HostingMatch(link) {
         this.SetModal(new HostingModal_1.HostingModal(this.modal, () => CopyToClipboard(link)));
+    }
+    FindingMatch() {
+        this.SetModal(new FindingMatchModal_1.FindingMatchModal(this.modal));
+    }
+    LobbyReady() {
+        this.SetModal(new LobbyReadyModal_1.LobbyReadyModal(this.modal));
     }
 }
 exports.LobbyView = LobbyView;

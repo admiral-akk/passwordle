@@ -6,5 +6,5 @@ export declare class SocketManager {
     RequestPublicLobby(): void;
     RequestPrivateLobby(): void;
     RegisterGetPrivateLobbyId(callback: (lobbyId: string) => void): void;
-    RegisterGetPublicLobbyId(callback: (lobbyId: string) => void): void;
+    RegisterGetPublicLobbyId(callback: () => void): void;
 }

@@ -8,24 +8,24 @@ class SocketManager {
         this.socket.on('connect', () => {
             console.log(`connected: ${this.socket.id}`);
         });
-        this.socket.on("disconnect", () => {
+        this.socket.on('disconnect', () => {
             console.log(`disconnected: ${this.socket.id}`);
         });
     }
     RequestPublicLobby() {
-        this.socket.emit(`HostPublicLobby`);
+        this.socket.emit('HostPublicLobby');
     }
     RequestPrivateLobby() {
-        this.socket.emit(`HostPrivateLobby`);
+        this.socket.emit('HostPrivateLobby');
     }
     RegisterGetPrivateLobbyId(callback) {
-        this.socket.on(`PrivateLobbyId`, (lobbyId) => {
+        this.socket.on('PrivateLobbyId', lobbyId => {
             callback(lobbyId);
         });
     }
     RegisterGetPublicLobbyId(callback) {
-        this.socket.on(`PublicLobbyId`, (lobbyId) => {
-            callback(lobbyId);
+        this.socket.on('PublicLobbyId', () => {
+            callback();
         });
     }
 }

@@ -8,7 +8,7 @@ const SocketManager_1 = require("./network/SocketManager");
 const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
 const socket = new SocketManager_1.SocketManager();
-new LobbyManager_1.LobbyManager(socket);
+new LobbyManager_1.LobbyManager(socket.socket);
 new board_1.Board(NUMBER_OF_GUESSES, WORD_LENGTH);
 new keyboard_1.Keyboard();
 new client_networking_1.ClientNetworking();

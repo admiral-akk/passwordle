@@ -1,4 +1,6 @@
+import {FindingMatchModal} from './modal/FindingMatchModal';
 import {HostingModal} from './modal/HostingModal';
+import {LobbyReadyModal} from './modal/LobbyReadyModal';
 import {MenuModal} from './modal/MenuModal';
 import {Modal} from './modal/Modal';
 
@@ -37,6 +39,14 @@ export class LobbyView {
 
   HostingMatch(link: string) {
     this.SetModal(new HostingModal(this.modal, () => CopyToClipboard(link)));
+  }
+
+  FindingMatch() {
+    this.SetModal(new FindingMatchModal(this.modal));
+  }
+
+  LobbyReady() {
+    this.SetModal(new LobbyReadyModal(this.modal));
   }
 }
 
