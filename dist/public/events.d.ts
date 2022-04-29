@@ -1,5 +1,5 @@
 import { History } from './game_history';
-import { WordKnowledge } from './knowledge';
+import { WordKnowledge } from '../game/logic/Knowledge';
 export declare class SubmitWordEvent extends CustomEvent<string> {
     constructor(guess: string);
 }

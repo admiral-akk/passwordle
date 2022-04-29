@@ -1,2 +1,2 @@
-import { WordKnowledge } from '../../public/knowledge';
+import { WordKnowledge } from './Knowledge';
 export declare function GetKnowledge(guess: string, answer: string): WordKnowledge;

@@ -5,7 +5,7 @@ import {
   SubmitWordEvent,
 } from './events';
 import {History} from './game_history';
-import {LetterState, WordKnowledge} from './knowledge';
+import {LetterState, WordKnowledge} from '../game/logic/Knowledge';
 import {WORDS} from './words';
 
 export class Board {

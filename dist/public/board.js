@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Board = void 0;
 const animate_1 = require("./animate");
 const events_1 = require("./events");
-const knowledge_1 = require("./knowledge");
+const Knowledge_1 = require("../game/logic/Knowledge");
 const words_1 = require("./words");
 class Board {
     constructor(guessCount, wordLength) {
@@ -63,7 +63,7 @@ class Board {
         this._letterBoxes.forEach(row => {
             row.forEach(letter => {
                 letter.innerText = '';
-                this.UpdateColor(letter, knowledge_1.LetterState.None);
+                this.UpdateColor(letter, Knowledge_1.LetterState.None);
             });
         });
     }
@@ -112,16 +112,16 @@ class Board {
     }
     UpdateColor(letter, knowledge) {
         switch (knowledge) {
-            case knowledge_1.LetterState.None:
+            case Knowledge_1.LetterState.None:
                 letter.style.backgroundColor = 'white';
                 break;
-            case knowledge_1.LetterState.Yellow:
+            case Knowledge_1.LetterState.Yellow:
                 letter.style.backgroundColor = 'yellow';
                 break;
-            case knowledge_1.LetterState.Green:
+            case Knowledge_1.LetterState.Green:
                 letter.style.backgroundColor = 'green';
                 break;
-            case knowledge_1.LetterState.Grey:
+            case Knowledge_1.LetterState.Grey:
                 letter.style.backgroundColor = 'grey';
                 break;
         }

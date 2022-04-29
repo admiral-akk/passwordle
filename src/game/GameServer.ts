@@ -28,7 +28,7 @@ export class GameServer {
         this.GenerateAnswers();
         setTimeout(() => {
           this.SetState(GameState.SubmissionOpen);
-        }, 4000);
+        }, 1000);
         break;
       case GameState.SubmissionOpen:
         this.OpenSubmission();

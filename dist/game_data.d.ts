@@ -1,5 +1,5 @@
 import { History } from './public/game_history';
-import { WordKnowledge } from './public/knowledge';
+import { WordKnowledge } from './game/logic/Knowledge';
 export declare class Game {
     history: History;
     id: string;

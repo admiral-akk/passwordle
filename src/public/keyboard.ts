@@ -1,5 +1,5 @@
 import {AddCharEvent, DeleteEvent, SubmitCommand} from './events';
-import {LetterState} from './knowledge';
+import {LetterState} from '../game/logic/Knowledge';
 
 const KEYBOARD_KEYS = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],

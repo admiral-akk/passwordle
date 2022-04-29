@@ -1,5 +1,5 @@
 import {History} from './game_history';
-import {WordKnowledge} from './knowledge';
+import {WordKnowledge} from '../game/logic/Knowledge';
 
 export interface INetworkMessage {
   type: string;

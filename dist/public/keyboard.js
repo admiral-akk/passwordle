@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Keyboard = void 0;
 const events_1 = require("./events");
-const knowledge_1 = require("./knowledge");
+const Knowledge_1 = require("../game/logic/Knowledge");
 const KEYBOARD_KEYS = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
@@ -39,7 +39,7 @@ class Keyboard {
     }
     registerKey(key) {
         this._keys[key.innerText] = key;
-        this._knowledge[key.innerText] = knowledge_1.LetterState.None;
+        this._knowledge[key.innerText] = Knowledge_1.LetterState.None;
         key.addEventListener('click', () => {
             const text = key.innerText;
             if (text === 'ENTER') {
@@ -55,16 +55,16 @@ class Keyboard {
     }
     ColorKey(key, state) {
         switch (state) {
-            case knowledge_1.LetterState.None:
+            case Knowledge_1.LetterState.None:
                 key.style.backgroundColor = 'lightgrey';
                 break;
-            case knowledge_1.LetterState.Yellow:
+            case Knowledge_1.LetterState.Yellow:
                 key.style.backgroundColor = 'yellow';
                 break;
-            case knowledge_1.LetterState.Green:
+            case Knowledge_1.LetterState.Green:
                 key.style.backgroundColor = 'green';
                 break;
-            case knowledge_1.LetterState.Grey:
+            case Knowledge_1.LetterState.Grey:
                 key.style.backgroundColor = 'grey';
                 break;
         }
@@ -72,16 +72,16 @@ class Keyboard {
     UpdateKey(char, state) {
         const currentState = this._knowledge[char];
         switch (state) {
-            case knowledge_1.LetterState.None:
-            case knowledge_1.LetterState.Grey:
+            case Knowledge_1.LetterState.None:
+            case Knowledge_1.LetterState.Grey:
                 this._knowledge[char] = state;
                 break;
-            case knowledge_1.LetterState.Yellow:
-                if (currentState !== knowledge_1.LetterState.Green) {
+            case Knowledge_1.LetterState.Yellow:
+                if (currentState !== Knowledge_1.LetterState.Green) {
                     this._knowledge[char] = state;
                 }
                 break;
-            case knowledge_1.LetterState.Green:
+            case Knowledge_1.LetterState.Green:
                 this._knowledge[char] = state;
                 break;
         }
@@ -89,8 +89,8 @@ class Keyboard {
     }
     NewGame() {
         for (const key in this._knowledge) {
-            this._knowledge[key] = knowledge_1.LetterState.None;
-            this.ColorKey(this._keys[key], knowledge_1.LetterState.None);
+            this._knowledge[key] = Knowledge_1.LetterState.None;
+            this.ColorKey(this._keys[key], Knowledge_1.LetterState.None);
         }
     }
     registerKeyboardEvents() {

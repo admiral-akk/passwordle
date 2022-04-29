@@ -1,4 +1,4 @@
-import { WordKnowledge } from './knowledge';
+import { WordKnowledge } from '../game/logic/Knowledge';
 export declare class Board {
     private _letterBoxes;
     private _guessCount;

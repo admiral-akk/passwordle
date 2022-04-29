@@ -1,4 +1,4 @@
-import { WordKnowledge } from './knowledge';
+import { WordKnowledge } from '../game/logic/Knowledge';
 export declare class Move {
     guess: string;
     knowledge: WordKnowledge;
