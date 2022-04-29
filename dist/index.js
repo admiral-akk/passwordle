@@ -17,9 +17,6 @@ const path_1 = __importDefault(require("path"));
 const GameServer_1 = require("./game/GameServer");
 const LobbyServer_1 = require("./lobby/LobbyServer");
 const NetworkTypes_1 = require("./NetworkTypes");
-const network_events_1 = require("./public/network_events");
-const wordle_server_1 = require("./wordle_server");
-const server = new wordle_server_1.WordleServer();
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.json());
@@ -36,42 +33,6 @@ function HandoffLobby(lobby) {
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Return the articles to the rendering engine
     res.render('index');
-}));
-app.post('/event', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        console.log(`Recieved request: ${JSON.stringify(req.body)}`);
-        server.HandleEvent(req.body).then(event => {
-            res.json(event);
-        });
-    }
-    catch (err) {
-        console.error(err);
-        res.json({ error: 'errors' });
-    }
-}));
-app.post('/new_game', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        server.HandleEvent(req.body).then(event => {
-            res.json(event);
-        });
-    }
-    catch (err) {
-        console.error(err);
-        res.json({ error: 'errors' });
-    }
-}));
-app.get('/poll/:gameId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        console.log(`Recieved request: ${JSON.stringify(req.params)}`);
-        const request = new network_events_1.PollingMessage(req.params.gameId);
-        server.HandlePoll(request).then(event => {
-            res.json(event);
-        });
-    }
-    catch (err) {
-        console.error(err);
-        res.json({ error: 'errors' });
-    }
 }));
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

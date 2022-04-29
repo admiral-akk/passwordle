@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameServer = void 0;
-const words_1 = require("../public/words");
+const Words_1 = require("./Words");
 const Hint_1 = require("./client/structs/Hint");
 var GameState;
 (function (GameState) {
@@ -74,7 +74,7 @@ exports.GameServer = GameServer;
 function GenerateAnswer(existingAnswers) {
     let answer;
     do {
-        answer = words_1.WORDS[Math.floor(Math.random() * words_1.WORDS.length)];
+        answer = Words_1.WORDS[Math.floor(Math.random() * Words_1.WORDS.length)];
     } while (answer in existingAnswers);
     return answer;
 }

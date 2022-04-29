@@ -1,4 +1,4 @@
-import {WORDS} from '../public/words';
+import {WORDS} from './Words';
 import {Hint} from './client/structs/Hint';
 import {GameServerSocket} from './GameServerSocket';
 

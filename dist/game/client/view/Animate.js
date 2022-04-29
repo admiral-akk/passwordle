@@ -24,4 +24,4 @@ function AnimateCSS(element, animation, duration = 0.3) {
     });
 }
 exports.AnimateCSS = AnimateCSS;
-//# sourceMappingURL=animate.js.map
+//# sourceMappingURL=Animate.js.map
