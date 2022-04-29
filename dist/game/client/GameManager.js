@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameManager = void 0;
+const Word_1 = require("../structs/Word");
+const Words_1 = require("../Words");
 const InputManager_1 = require("./input/InputManager");
 const CharUpdate_1 = require("./view/CharUpdate");
 const GameView_1 = require("./view/GameView");
@@ -53,6 +55,9 @@ class GameManager {
             return;
         }
         if (this.currentGuess.length !== 5) {
+            return;
+        }
+        if (!(0, Words_1.IsValidWord)((0, Word_1.ToWord)(this.currentGuess))) {
             return;
         }
         SubmitGuess(this.socket, this.currentGuess);

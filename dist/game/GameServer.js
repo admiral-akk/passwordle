@@ -92,7 +92,7 @@ exports.GameServer = GameServer;
 function GenerateAnswer(existingAnswers) {
     let answer;
     do {
-        answer = Words_1.WORDS[Math.floor(Math.random() * Words_1.WORDS.length)];
+        answer = (0, Words_1.GetRandomWord)();
     } while (answer in existingAnswers);
     return answer;
 }

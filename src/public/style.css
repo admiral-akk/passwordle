@@ -17,16 +17,19 @@
 
 .player {
 
-    margin: 2px;
+    margin: 12px;
 }
 
 
 .opponent {
-    margin: 2px;
+    margin: 12px;
 }
 
 .board {
     margin: 2px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .word {
@@ -51,11 +54,11 @@
 }
 
 .answer {
-    margin: 2px;
+    margin:  12px;
 }
 
 .target {
-    margin: 2px;
+    margin: 12px;
 }
 
 .end-game {

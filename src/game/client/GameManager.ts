@@ -1,3 +1,5 @@
+import {ToWord} from '../structs/Word';
+import {IsValidWord} from '../Words';
 import {GameSocket} from './GameNetworkEvents';
 import {InputManager} from './input/InputManager';
 import {Hint} from './structs/Hint';
@@ -74,6 +76,9 @@ export class GameManager {
       return;
     }
     if (this.currentGuess.length !== 5) {
+      return;
+    }
+    if (!IsValidWord(ToWord(this.currentGuess))) {
       return;
     }
 

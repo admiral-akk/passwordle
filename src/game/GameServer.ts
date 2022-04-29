@@ -1,4 +1,4 @@
-import {WORDS} from './Words';
+import {GetRandomWord} from './Words';
 import {Hint} from './client/structs/Hint';
 import {GameServerSocket} from './GameServerSocket';
 import {GetKnowledge} from './logic/WordleLogic';
@@ -108,7 +108,7 @@ export class GameServer {
 function GenerateAnswer(existingAnswers: string[]) {
   let answer: string;
   do {
-    answer = WORDS[Math.floor(Math.random() * WORDS.length)];
+    answer = GetRandomWord();
   } while (answer in existingAnswers);
   return answer;
 }
