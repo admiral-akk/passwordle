@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import { LobbyClientToServerEvents, LobbyServerToClientEvents } from '../public/lobby/network/LobbyNetworkEvents';
+import { LobbyClientToServerEvents, LobbyServerToClientEvents } from './client/LobbyNetworkEvents';
 import { InterServerEvents, SocketData } from '../ServerNetworkTypes';
 declare type LobbySocket = Socket<LobbyClientToServerEvents, LobbyServerToClientEvents, InterServerEvents, SocketData>;
 export declare class LobbyServer {

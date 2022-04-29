@@ -1,7 +1,7 @@
-import {LobbySocket} from './LobbySocket';
+import {LobbyServerSocket} from './LobbyServerSocket';
 
 export class Lobby {
-  players: LobbySocket[];
+  players: LobbyServerSocket[];
   constructor() {
     this.players = [];
   }

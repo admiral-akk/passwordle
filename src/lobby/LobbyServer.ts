@@ -2,7 +2,7 @@ import {Socket} from 'socket.io';
 import {
   LobbyClientToServerEvents,
   LobbyServerToClientEvents,
-} from '../public/lobby/network/LobbyNetworkEvents';
+} from './client/LobbyNetworkEvents';
 import {InterServerEvents, SocketData} from '../ServerNetworkTypes';
 import {Lobby} from './Lobby';
 

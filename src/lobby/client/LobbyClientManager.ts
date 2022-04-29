@@ -1,5 +1,5 @@
-import {ClientId} from '../struct/ClientId';
-import {LobbySocket} from './network/LobbyNetworkEvents';
+import {ClientId} from '../../public/struct/ClientId';
+import {LobbySocket} from './LobbyNetworkEvents';
 import {LobbyView} from './view/LobbyView';
 
 const LOBBY_ID_QUERY_NAME = 'lobbyId';
