@@ -4,6 +4,8 @@ export interface GameServerToClientEvents {
     SecretWord: (secret: string) => void;
     SubmissionOpen: () => void;
     Hints: (hint: Hint) => void;
+    GameLost: () => void;
+    GameWon: () => void;
 }
 export interface GameClientToServerEvents {
     SubmitGuess: (guess: string) => void;
