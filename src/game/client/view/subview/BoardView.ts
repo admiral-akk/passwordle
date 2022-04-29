@@ -1,6 +1,5 @@
 import {WordKnowledge} from '../../../logic/Knowledge';
 import {CharUpdate} from '../CharUpdate';
-import {HintUpdate} from '../HintUpdate';
 import {Subview} from './Subview';
 import {WordView} from './word/WordView';
 
