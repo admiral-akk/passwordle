@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import {Server} from 'socket.io';
-import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import {DefaultEventsMap} from 'socket.io/dist/typed-events';
 import {LobbyServer} from './lobby/LobbyServer';
 import {
   ClientToServerEvents,

@@ -1,4 +1,3 @@
-import {ClientId} from '../../public/struct/ClientId';
 import {LobbySocket} from './LobbyNetworkEvents';
 import {LobbyView} from './view/LobbyView';
 
@@ -16,10 +15,10 @@ enum LobbyState {
 
 export class LobbyManager {
   private view: LobbyView;
-  private clientId: ClientId;
+  private lobbyId: string;
   private socket: LobbySocket;
   constructor(socket: LobbySocket) {
-    this.clientId = new ClientId();
+    this.lobbyId = '';
     this.view = new LobbyView();
     this.socket = socket;
     RegisterGetPrivateLobbyId(this.socket, (lobbyId: string) =>
@@ -32,7 +31,7 @@ export class LobbyManager {
 
   private HostingLobby(lobbyId: string) {
     console.log(`Hosting private lobby, ID: ${lobbyId}`);
-    this.clientId.lobbyId = lobbyId;
+    this.lobbyId = lobbyId;
     this.SetState(LobbyState.HostingMatch);
   }
 
@@ -53,12 +52,12 @@ export class LobbyManager {
             this.SetState(LobbyState.LobbyMenu);
             return;
           }
-          this.clientId.lobbyId = lobbyId!;
+          this.lobbyId = lobbyId!;
           this.SetState(LobbyState.JoiningMatch);
         }
         break;
       case LobbyState.JoiningMatch:
-        JoinPrivateLobby(this.socket, this.clientId.lobbyId);
+        JoinPrivateLobby(this.socket, this.lobbyId);
         break;
       case LobbyState.LobbyMenu:
         this.view.Menu(
@@ -70,7 +69,7 @@ export class LobbyManager {
         this.view.FindingMatch();
         break;
       case LobbyState.HostingMatch:
-        this.view.HostingMatch(GenerateLobbyLink(this.clientId.lobbyId));
+        this.view.HostingMatch(GenerateLobbyLink(this.lobbyId));
         break;
       case LobbyState.LobbyReady:
         this.view.LobbyReady();

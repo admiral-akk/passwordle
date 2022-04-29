@@ -1,7 +1,7 @@
 import { LobbySocket } from './LobbyNetworkEvents';
 export declare class LobbyManager {
     private view;
-    private clientId;
+    private lobbyId;
     private socket;
     constructor(socket: LobbySocket);
     private HostingLobby;

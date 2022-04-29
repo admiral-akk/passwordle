@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyManager = void 0;
-const ClientId_1 = require("../../public/struct/ClientId");
 const LobbyView_1 = require("./view/LobbyView");
 const LOBBY_ID_QUERY_NAME = 'lobbyId';
 var LobbyState;
@@ -16,7 +15,7 @@ var LobbyState;
 })(LobbyState || (LobbyState = {}));
 class LobbyManager {
     constructor(socket) {
-        this.clientId = new ClientId_1.ClientId();
+        this.lobbyId = '';
         this.view = new LobbyView_1.LobbyView();
         this.socket = socket;
         RegisterGetPrivateLobbyId(this.socket, (lobbyId) => this.HostingLobby(lobbyId));
@@ -26,7 +25,7 @@ class LobbyManager {
     }
     HostingLobby(lobbyId) {
         console.log(`Hosting private lobby, ID: ${lobbyId}`);
-        this.clientId.lobbyId = lobbyId;
+        this.lobbyId = lobbyId;
         this.SetState(LobbyState.HostingMatch);
     }
     FindingMatch() {
@@ -44,12 +43,12 @@ class LobbyManager {
                         this.SetState(LobbyState.LobbyMenu);
                         return;
                     }
-                    this.clientId.lobbyId = lobbyId;
+                    this.lobbyId = lobbyId;
                     this.SetState(LobbyState.JoiningMatch);
                 }
                 break;
             case LobbyState.JoiningMatch:
-                JoinPrivateLobby(this.socket, this.clientId.lobbyId);
+                JoinPrivateLobby(this.socket, this.lobbyId);
                 break;
             case LobbyState.LobbyMenu:
                 this.view.Menu(() => RequestPrivateLobby(this.socket), () => RequestPublicLobby(this.socket));
@@ -58,7 +57,7 @@ class LobbyManager {
                 this.view.FindingMatch();
                 break;
             case LobbyState.HostingMatch:
-                this.view.HostingMatch(GenerateLobbyLink(this.clientId.lobbyId));
+                this.view.HostingMatch(GenerateLobbyLink(this.lobbyId));
                 break;
             case LobbyState.LobbyReady:
                 this.view.LobbyReady();
