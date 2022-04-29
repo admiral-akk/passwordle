@@ -1,7 +1,7 @@
 import {Socket} from 'socket.io-client';
 
 export interface GameServerToClientEvents {
-  NewGame: () => void;
+  SecretWord: (secret: string) => void;
 }
 
 export interface GameClientToServerEvents {

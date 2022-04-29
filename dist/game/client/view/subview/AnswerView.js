@@ -8,6 +8,9 @@ class AnswerView extends Subview_1.Subview {
         super(base, 'answer');
         this.answer = new WordView_1.WordView(this.root);
     }
+    SetSecret(secret) {
+        this.answer.Set(secret);
+    }
 }
 exports.AnswerView = AnswerView;
 //# sourceMappingURL=AnswerView.js.map

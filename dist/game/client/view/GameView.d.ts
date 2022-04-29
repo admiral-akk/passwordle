@@ -6,4 +6,5 @@ export declare class GameView {
     private timer;
     private target;
     constructor();
+    SetSecret(secret: string): void;
 }

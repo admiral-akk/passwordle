@@ -29,6 +29,10 @@ export class GameView {
 
     this.keyboard = new KeyboardView(root);
   }
+
+  SetSecret(secret: string): void {
+    this.answer.SetSecret(secret);
+  }
 }
 
 function AddDiv(parent: HTMLElement, className: string): HTMLDivElement {

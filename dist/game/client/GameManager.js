@@ -19,8 +19,14 @@ class GameManager {
         this.view = new GameView_1.GameView();
         this.socket = socket;
         this.state = GameState.Start;
+        RegisterGetPublicLobbyId(this.socket, (secret) => this.SetSecret(secret));
+    }
+    SetSecret(secret) {
+        this.view.SetSecret(secret);
+        this.SetState(GameState.ShowHiddenWord);
     }
     SetState(newState) {
+        this.state = newState;
         switch (newState) {
             default:
                 break;
@@ -28,4 +34,9 @@ class GameManager {
     }
 }
 exports.GameManager = GameManager;
+function RegisterGetPublicLobbyId(socket, callback) {
+    socket.on('SecretWord', (secret) => {
+        callback(secret);
+    });
+}
 //# sourceMappingURL=GameManager.js.map

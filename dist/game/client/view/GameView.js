@@ -20,6 +20,9 @@ class GameView {
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
         this.keyboard = new KeyboardView_1.KeyboardView(root);
     }
+    SetSecret(secret) {
+        this.answer.SetSecret(secret);
+    }
 }
 exports.GameView = GameView;
 function AddDiv(parent, className) {

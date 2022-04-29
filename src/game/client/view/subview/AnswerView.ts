@@ -7,4 +7,8 @@ export class AnswerView extends Subview {
     super(base, 'answer');
     this.answer = new WordView(this.root);
   }
+
+  SetSecret(secret: string) {
+    this.answer.Set(secret);
+  }
 }

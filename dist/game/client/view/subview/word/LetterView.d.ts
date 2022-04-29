@@ -1,4 +1,5 @@
 import { Subview } from '../Subview';
 export declare class LetterView extends Subview {
-    constructor(root: HTMLElement);
+    constructor(base: HTMLElement);
+    Set(char: string): void;
 }

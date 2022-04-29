@@ -12,4 +12,9 @@ export class WordView extends Subview {
       this.letters.push(new LetterView(this.root));
     }
   }
+  Set(word: string) {
+    for (let i = 0; i < WORD_LENGTH; i++) {
+      this.letters[i].Set(word[i]);
+    }
+  }
 }
