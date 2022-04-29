@@ -65,6 +65,9 @@ class GameServer {
             const opponentGuess = this.guesses[(playerIndex + 1) % 2];
             player.emit('Hints', new Hint_1.Hint(playerGuess, opponentGuess));
         });
+        for (let i = 0; i < this.guesses.length; i++) {
+            this.guesses[i] = '';
+        }
     }
 }
 exports.GameServer = GameServer;

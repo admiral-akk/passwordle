@@ -80,10 +80,16 @@ class GameManager {
     Hints(hint) {
         const update = new HintUpdate_1.HintUpdate(hint.opponentGuess, this.currentIndex - 1);
         this.view.HintUpdate(update);
+        this.SetState(GameState.RevealHints);
     }
     SetState(newState) {
         this.state = newState;
         switch (newState) {
+            case GameState.RevealHints:
+                this.SetState(GameState.SubmissionOpen);
+                break;
+            case GameState.SubmissionOpen:
+                break;
             default:
                 break;
         }

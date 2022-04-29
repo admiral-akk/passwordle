@@ -111,11 +111,17 @@ export class GameManager {
   private Hints(hint: Hint) {
     const update = new HintUpdate(hint.opponentGuess, this.currentIndex - 1);
     this.view.HintUpdate(update);
+    this.SetState(GameState.RevealHints);
   }
 
   private SetState(newState: GameState) {
     this.state = newState;
     switch (newState) {
+      case GameState.RevealHints:
+        this.SetState(GameState.SubmissionOpen);
+        break;
+      case GameState.SubmissionOpen:
+        break;
       default:
         break;
     }
