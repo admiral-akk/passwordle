@@ -1,4 +1,5 @@
 import { CharUpdate } from './CharUpdate';
+import { HintUpdate } from './HintUpdate';
 export declare class GameView {
     private answer;
     private playerBoard;
@@ -8,5 +9,6 @@ export declare class GameView {
     private target;
     constructor();
     SetSecret(secret: string): void;
-    Update(update: CharUpdate): void;
+    CharUpdate(update: CharUpdate): void;
+    HintUpdate(update: HintUpdate): void;
 }

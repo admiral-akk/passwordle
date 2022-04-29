@@ -1,12 +1,15 @@
 import {GameSocket} from './GameNetworkEvents';
 import {InputManager} from './input/InputManager';
+import {Hint} from './structs/Hint';
 import {CharUpdate} from './view/CharUpdate';
 import {GameView} from './view/GameView';
+import {HintUpdate} from './view/HintUpdate';
 
 enum GameState {
   Start, // Nothing happened yet. Request game info.
   ShowHiddenWord, // Hidden word revealed
   SubmissionOpen, // Player can guess
+  SentGuess, // Player guessed
   WaitingForOpponent, // Guessed, waiting for opponent to guess
   OpponentGuessed, // Opponent guessed, start timer
   RevealHints, // Both guessed, show results
@@ -21,7 +24,6 @@ export class GameManager {
   private state: GameState;
   private input: InputManager;
 
-
   private InputActive(): boolean {
     return (
       this.state === GameState.SubmissionOpen ||
@@ -34,12 +36,19 @@ export class GameManager {
     this.socket = socket;
     this.state = GameState.Start;
     this.currentGuess = '';
-    this.input = new InputManager((char: string) => this.AddChar(char), ()=>this.Delete(), ()=>this.Submit());
+    this.currentIndex = 0;
+    this.input = new InputManager(
+      (char: string) => this.AddChar(char),
+      () => this.Delete(),
+      () => this.Submit()
+    );
     RegisterSecretWord(this.socket, (secret: string) => this.SetSecret(secret));
     RegisterSubmissionOpen(this.socket, () => this.SubmissionOpen());
+    RegisterHints(this.socket, (hint: Hint) => this.Hints(hint));
   }
 
   private currentGuess: string;
+  private currentIndex: number;
 
   private AddChar(char: string) {
     if (!this.InputActive()) {
@@ -48,8 +57,12 @@ export class GameManager {
     if (this.currentGuess.length >= 5) {
       return;
     }
-    const update = new CharUpdate(char, 0, this.currentGuess.length);
-    this.view.Update(update);
+    const update = new CharUpdate(
+      char,
+      this.currentIndex,
+      this.currentGuess.length
+    );
+    this.view.CharUpdate(update);
     this.currentGuess += char;
     console.log(`CHAR: ${char}`);
   }
@@ -58,7 +71,14 @@ export class GameManager {
     if (!this.InputActive()) {
       return;
     }
-    console.log('SUBMIT');
+    if (this.currentGuess.length !== 5) {
+      return;
+    }
+
+    SubmitGuess(this.socket, this.currentGuess);
+    this.currentGuess = '';
+    this.currentIndex++;
+    this.SetState(GameState.SentGuess);
   }
 
   private Delete() {
@@ -70,8 +90,12 @@ export class GameManager {
     }
 
     this.currentGuess = this.currentGuess.slice(0, -1);
-    const update = new CharUpdate('', 0, this.currentGuess.length);
-    this.view.Update(update);
+    const update = new CharUpdate(
+      '',
+      this.currentIndex,
+      this.currentGuess.length
+    );
+    this.view.CharUpdate(update);
     console.log('DELETE');
   }
 
@@ -84,6 +108,11 @@ export class GameManager {
     this.SetState(GameState.ShowHiddenWord);
   }
 
+  private Hints(hint: Hint) {
+    const update = new HintUpdate(hint.opponentGuess, this.currentIndex - 1);
+    this.view.HintUpdate(update);
+  }
+
   private SetState(newState: GameState) {
     this.state = newState;
     switch (newState) {
@@ -91,6 +120,10 @@ export class GameManager {
         break;
     }
   }
+}
+
+function SubmitGuess(socket: GameSocket, guess: string) {
+  socket.emit('SubmitGuess', guess);
 }
 
 function RegisterSecretWord(
@@ -105,5 +138,11 @@ function RegisterSecretWord(
 function RegisterSubmissionOpen(socket: GameSocket, callback: () => void) {
   socket.on('SubmissionOpen', () => {
     callback();
+  });
+}
+
+function RegisterHints(socket: GameSocket, callback: (hint: Hint) => void) {
+  socket.on('Hints', hint => {
+    callback(hint);
   });
 }

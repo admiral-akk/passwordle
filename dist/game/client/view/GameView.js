@@ -23,8 +23,11 @@ class GameView {
     SetSecret(secret) {
         this.answer.SetSecret(secret);
     }
-    Update(update) {
+    CharUpdate(update) {
         this.playerBoard.Update(update);
+    }
+    HintUpdate(update) {
+        this.opponentBoard.HintUpdate(update);
     }
 }
 exports.GameView = GameView;

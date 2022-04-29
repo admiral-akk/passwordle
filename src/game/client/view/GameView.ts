@@ -1,4 +1,5 @@
 import {CharUpdate} from './CharUpdate';
+import {HintUpdate} from './HintUpdate';
 import {AnswerView} from './subview/AnswerView';
 import {KeyboardView} from './subview/KeyboardView';
 import {OpponentBoardView} from './subview/OpponentBoardView';
@@ -35,8 +36,12 @@ export class GameView {
     this.answer.SetSecret(secret);
   }
 
-  Update(update: CharUpdate) {
+  CharUpdate(update: CharUpdate) {
     this.playerBoard.Update(update);
+  }
+
+  HintUpdate(update: HintUpdate) {
+    this.opponentBoard.HintUpdate(update);
   }
 }
 

@@ -21,6 +21,9 @@ function HandoffLobby(lobby: Lobby) {
   const gameSockets = lobby.players.map(
     lobbyServerSocket => lobbyServerSocket as GameServerSocket
   );
+  for (let i = 0; i < gameSockets.length; i++) {
+    gameSockets[i].data.playerIndex = i;
+  }
   const game = new GameServer(gameSockets);
 }
 

@@ -15,6 +15,9 @@ class BoardView extends Subview_1.Subview {
     BaseUpdate(update) {
         this.words[update.wordIndex].Update(update);
     }
+    BaseHintUpdate(update) {
+        this.words[update.guessIndex].Set(update.opponentGuess);
+    }
 }
 exports.BoardView = BoardView;
 //# sourceMappingURL=BoardView.js.map

@@ -6,6 +6,9 @@ class OpponentBoardView extends BoardView_1.BoardView {
     constructor(base) {
         super(base);
     }
+    HintUpdate(update) {
+        this.BaseHintUpdate(update);
+    }
 }
 exports.OpponentBoardView = OpponentBoardView;
 //# sourceMappingURL=OpponentBoardView.js.map

@@ -28,6 +28,9 @@ const lobbyServer = new LobbyServer_1.LobbyServer(HandoffLobby);
 (0, NetworkTypes_1.GetServer)(app, lobbyServer);
 function HandoffLobby(lobby) {
     const gameSockets = lobby.players.map(lobbyServerSocket => lobbyServerSocket);
+    for (let i = 0; i < gameSockets.length; i++) {
+        gameSockets[i].data.playerIndex = i;
+    }
     const game = new GameServer_1.GameServer(gameSockets);
 }
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

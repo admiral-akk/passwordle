@@ -1,4 +1,5 @@
 import {WORDS} from '../public/words';
+import {Hint} from './client/structs/Hint';
 import {GameServerSocket} from './GameServerSocket';
 
 enum GameState {
@@ -10,10 +11,13 @@ export class GameServer {
   private players: GameServerSocket[];
   private state: GameState;
   private answers: string[];
+  private guesses: string[];
   constructor(players: GameServerSocket[]) {
     this.players = players;
     this.state = GameState.Start;
     this.answers = [];
+    this.guesses = [];
+    this.RegisterPlayers(this.players);
     this.SetState(GameState.Start);
   }
 
@@ -43,10 +47,32 @@ export class GameServer {
   private GenerateAnswers() {
     this.players.forEach(() => {
       this.answers.push(GenerateAnswer(this.answers));
+      this.guesses.push('');
     });
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].emit('SecretWord', this.answers[i]);
     }
+  }
+
+  private RegisterPlayers(players: GameServerSocket[]) {
+    players.forEach(player => {
+      player.on('SubmitGuess', (guess: string) => {
+        const playerIndex = player.data.playerIndex!;
+        this.guesses[playerIndex] = guess;
+        if (this.guesses.filter(g => g.length === 0).length === 0) {
+          this.RevealHints();
+        }
+      });
+    });
+  }
+
+  private RevealHints() {
+    this.players.forEach(player => {
+      const playerIndex = player.data.playerIndex!;
+      const playerGuess = this.guesses[playerIndex];
+      const opponentGuess = this.guesses[(playerIndex + 1) % 2];
+      player.emit('Hints', new Hint(playerGuess, opponentGuess));
+    });
   }
 }
 

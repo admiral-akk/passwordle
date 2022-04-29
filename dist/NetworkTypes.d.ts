@@ -13,5 +13,6 @@ export interface InterServerEvents {
 }
 export interface SocketData {
     name: string;
+    playerIndex: number;
 }
 export declare function GetServer(app: Express.Application, lobbyServer: LobbyServer): Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;

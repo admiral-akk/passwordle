@@ -1,0 +1,1 @@
+{"version":3,"file":"Hint.js","sourceRoot":"","sources":["../../../../src/game/client/structs/Hint.ts"],"names":[],"mappings":";;;AAAA,MAAa,IAAI;IAGf,YAAY,WAAmB,EAAE,aAAqB;QACpD,IAAI,CAAC,WAAW,GAAG,WAAW,CAAC;QAC/B,IAAI,CAAC,aAAa,GAAG,aAAa,CAAC;IACrC,CAAC;CACF;AAPD,oBAOC"}

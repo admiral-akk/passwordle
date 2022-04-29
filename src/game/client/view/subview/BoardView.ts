@@ -1,4 +1,5 @@
 import {CharUpdate} from '../CharUpdate';
+import {HintUpdate} from '../HintUpdate';
 import {Subview} from './Subview';
 import {WordView} from './word/WordView';
 
@@ -16,5 +17,9 @@ export abstract class BoardView extends Subview {
 
   protected BaseUpdate(update: CharUpdate) {
     this.words[update.wordIndex].Update(update);
+  }
+
+  protected BaseHintUpdate(update: HintUpdate) {
+    this.words[update.guessIndex].Set(update.opponentGuess);
   }
 }
