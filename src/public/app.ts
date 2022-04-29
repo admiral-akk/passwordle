@@ -1,13 +1,7 @@
-import {Board} from './board';
-import {Keyboard} from './keyboard';
-import {ClientNetworking} from './client_networking';
-import {LobbyManager} from '../lobby/client/LobbyClientManager';
-import {SocketManager} from './network/SocketManager';
-const NUMBER_OF_GUESSES = 6;
-const WORD_LENGTH = 5;
+import {LobbyManager} from '../lobby/client/LobbyManager';
+import {GameManager} from '../game/client/GameManager';
+import {GetSocket} from './ClientNetworking';
 
-const socket = new SocketManager();
-new LobbyManager(socket.socket);
-new Board(NUMBER_OF_GUESSES, WORD_LENGTH);
-new Keyboard();
-new ClientNetworking();
+const socket = GetSocket();
+new LobbyManager(socket);
+new GameManager(socket);

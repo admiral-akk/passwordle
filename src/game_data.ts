@@ -1,4 +1,4 @@
-import {GetKnowledge} from './wordle_logic';
+import {GetKnowledge} from './game/logic/WordleLogic';
 import {WORDS} from './public/words';
 import {History} from './public/game_history';
 import {WordKnowledge} from './public/knowledge';

@@ -1,15 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const board_1 = require("./board");
-const keyboard_1 = require("./keyboard");
-const client_networking_1 = require("./client_networking");
-const LobbyClientManager_1 = require("../lobby/client/LobbyClientManager");
-const SocketManager_1 = require("./network/SocketManager");
-const NUMBER_OF_GUESSES = 6;
-const WORD_LENGTH = 5;
-const socket = new SocketManager_1.SocketManager();
-new LobbyClientManager_1.LobbyManager(socket.socket);
-new board_1.Board(NUMBER_OF_GUESSES, WORD_LENGTH);
-new keyboard_1.Keyboard();
-new client_networking_1.ClientNetworking();
+const LobbyManager_1 = require("../lobby/client/LobbyManager");
+const GameManager_1 = require("../game/client/GameManager");
+const ClientNetworking_1 = require("./ClientNetworking");
+const socket = (0, ClientNetworking_1.GetSocket)();
+new LobbyManager_1.LobbyManager(socket);
+new GameManager_1.GameManager(socket);
 //# sourceMappingURL=app.js.map

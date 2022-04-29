@@ -44,6 +44,7 @@ class LobbyServer {
                 });
             }
             else {
+                console.log(`Tried to connect to non-existent lobby: ${lobbyId}`);
             }
         });
     }

@@ -1,17 +1,5 @@
-import {Socket} from 'socket.io';
-import {
-  LobbyClientToServerEvents,
-  LobbyServerToClientEvents,
-} from './client/LobbyNetworkEvents';
-import {InterServerEvents, SocketData} from '../ServerNetworkTypes';
 import {Lobby} from './Lobby';
-
-type LobbySocket = Socket<
-  LobbyClientToServerEvents,
-  LobbyServerToClientEvents,
-  InterServerEvents,
-  SocketData
->;
+import {LobbyServerSocket} from './LobbyServerSocket';
 
 export class LobbyServer {
   private privateLobby: Record<string, Lobby>;
@@ -22,11 +10,11 @@ export class LobbyServer {
     this.publicLobby = [];
   }
 
-  AddSocket(socket: LobbySocket) {
+  AddSocket(socket: LobbyServerSocket) {
     this.RegisterLobbyHandlers(socket);
   }
 
-  private RegisterLobbyHandlers(socket: LobbySocket): void {
+  private RegisterLobbyHandlers(socket: LobbyServerSocket): void {
     socket.on('HostPrivateLobby', () => {
       console.log(`HostPrivateLobby request from: ${socket.id}`);
       const lobby = new Lobby();
@@ -62,6 +50,7 @@ export class LobbyServer {
           s.emit('LobbyReady');
         });
       } else {
+        console.log(`Tried to connect to non-existent lobby: ${lobbyId}`);
       }
     });
   }

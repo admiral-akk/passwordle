@@ -1,12 +1,8 @@
-import { Socket } from 'socket.io';
-import { LobbyClientToServerEvents, LobbyServerToClientEvents } from './client/LobbyNetworkEvents';
-import { InterServerEvents, SocketData } from '../ServerNetworkTypes';
-declare type LobbySocket = Socket<LobbyClientToServerEvents, LobbyServerToClientEvents, InterServerEvents, SocketData>;
+import { LobbyServerSocket } from './LobbyServerSocket';
 export declare class LobbyServer {
     private privateLobby;
     private publicLobby;
     constructor();
-    AddSocket(socket: LobbySocket): void;
+    AddSocket(socket: LobbyServerSocket): void;
     private RegisterLobbyHandlers;
 }
-export {};

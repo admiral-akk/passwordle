@@ -1,1 +1,0 @@
-{"version":3,"file":"LobbyEvent.js","sourceRoot":"","sources":["../../../../src/public/lobby/event/LobbyEvent.ts"],"names":[],"mappings":";;;AAAA,2DAAwD;AAGxD,MAAa,UAAW,SAAQ,2BAAY;IAExC,YAAY,QAAkB;QAC1B,KAAK,CAAC,UAAU,CAAC,IAAI,CAAC,CAAC;QACvB,IAAI,CAAC,QAAQ,GAAG,QAAQ,CAAC;IAC7B,CAAC;CACJ;AAND,gCAMC"}

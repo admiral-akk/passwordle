@@ -1,13 +1,15 @@
 import express from 'express';
 import path from 'path';
 import {Server} from 'socket.io';
+import { DefaultEventsMap } from 'socket.io/dist/typed-events';
 import {LobbyServer} from './lobby/LobbyServer';
 import {
   ClientToServerEvents,
   ServerToClientEvents,
-} from './public/network/NetworkTypes';
+  InterServerEvents,
+  SocketData,
+} from './NetworkTypes';
 import {PollingMessage} from './public/network_events';
-import {InterServerEvents, SocketData} from './ServerNetworkTypes';
 import {WordleServer} from './wordle_server';
 
 const server = new WordleServer();
@@ -20,8 +22,8 @@ const http = require('http').Server(app);
 const io = new Server<
   ClientToServerEvents,
   ServerToClientEvents,
-  InterServerEvents,
-  SocketData
+  DefaultEventsMap,
+  DefaultEventsMap
 >(http);
 
 const lobbyServer = new LobbyServer();
@@ -30,7 +32,7 @@ io.on('connection', socket => {
   lobbyServer.AddSocket(socket);
 });
 
-const wsServer = http.listen(4000, () => {
+http.listen(4000, () => {
   console.log('listening on *:4000');
 });
 

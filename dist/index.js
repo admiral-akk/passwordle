@@ -29,7 +29,7 @@ const lobbyServer = new LobbyServer_1.LobbyServer();
 io.on('connection', socket => {
     lobbyServer.AddSocket(socket);
 });
-const wsServer = http.listen(4000, () => {
+http.listen(4000, () => {
     console.log('listening on *:4000');
 });
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
