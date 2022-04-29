@@ -24,7 +24,6 @@ class GameManager {
     SetState(newState) {
         switch (newState) {
             case GameState.Start:
-                this.view.Start();
                 break;
             default:
                 break;

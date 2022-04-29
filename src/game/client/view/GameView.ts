@@ -29,8 +29,6 @@ export class GameView {
 
     this.keyboard = new KeyboardView(root);
   }
-
-  public Start() {}
 }
 
 function AddDiv(parent: HTMLElement, className: string): HTMLDivElement {

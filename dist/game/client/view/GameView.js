@@ -20,7 +20,6 @@ class GameView {
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
         this.keyboard = new KeyboardView_1.KeyboardView(root);
     }
-    Start() { }
 }
 exports.GameView = GameView;
 function AddDiv(parent, className) {
