@@ -43,6 +43,7 @@ export class GameView {
   HintUpdate(update: HintUpdate) {
     this.playerBoard.HintUpdate(update);
     this.opponentBoard.HintUpdate(update);
+    this.target.HintUpdate(update);
   }
 }
 

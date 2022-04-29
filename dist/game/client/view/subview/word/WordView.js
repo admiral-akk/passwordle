@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WordView = void 0;
 const LetterView_1 = require("./LetterView");
 const Subview_1 = require("../Subview");
+const Knowledge_1 = require("../../../../logic/Knowledge");
 const WORD_LENGTH = 5;
 class WordView extends Subview_1.Subview {
     constructor(root) {
@@ -18,16 +19,16 @@ class WordView extends Subview_1.Subview {
         }
     }
     SetKnowledge(knowledge) {
-        this.Set(knowledge.guess);
         for (let i = 0; i < WORD_LENGTH; i++) {
-            this.letters[i].SetKnowledge(knowledge.letterKnowledge[i]);
+            this.SetChar(knowledge.guess[i], i, knowledge.letterKnowledge[i]);
         }
     }
     Update(update) {
         this.letters[update.charIndex].Update(update);
     }
-    SetChar(char, charIndex) {
+    SetChar(char, charIndex, letterState = Knowledge_1.LetterState.None) {
         this.letters[charIndex].Set(char);
+        this.letters[charIndex].SetKnowledge(letterState);
     }
 }
 exports.WordView = WordView;

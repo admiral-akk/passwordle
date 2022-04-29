@@ -1,7 +1,7 @@
 import {LetterView} from './LetterView';
 import {Subview} from '../Subview';
 import {CharUpdate} from '../../CharUpdate';
-import {WordKnowledge} from '../../../../logic/Knowledge';
+import {LetterState, WordKnowledge} from '../../../../logic/Knowledge';
 
 const WORD_LENGTH = 5;
 
@@ -21,16 +21,21 @@ export class WordView extends Subview {
   }
 
   SetKnowledge(knowledge: WordKnowledge) {
-    this.Set(knowledge.guess);
     for (let i = 0; i < WORD_LENGTH; i++) {
-      this.letters[i].SetKnowledge(knowledge.letterKnowledge[i]);
+      this.SetChar(knowledge.guess[i], i, knowledge.letterKnowledge[i]);
     }
   }
 
   Update(update: CharUpdate) {
     this.letters[update.charIndex].Update(update);
   }
-  SetChar(char: string, charIndex: number) {
+
+  SetChar(
+    char: string,
+    charIndex: number,
+    letterState: LetterState = LetterState.None
+  ) {
     this.letters[charIndex].Set(char);
+    this.letters[charIndex].SetKnowledge(letterState);
   }
 }
