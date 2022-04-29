@@ -4,5 +4,7 @@ export declare class GameServer {
     private state;
     private answers;
     constructor(players: GameServerSocket[]);
+    private SetState;
+    private OpenSubmission;
     private GenerateAnswers;
 }

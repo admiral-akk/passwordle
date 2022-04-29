@@ -22,9 +22,12 @@ export class GameManager {
     this.view = new GameView();
     this.socket = socket;
     this.state = GameState.Start;
-    RegisterGetPublicLobbyId(this.socket, (secret: string) =>
-      this.SetSecret(secret)
-    );
+    RegisterSecretWord(this.socket, (secret: string) => this.SetSecret(secret));
+    RegisterSubmissionOpen(this.socket, () => this.SubmissionOpen());
+  }
+
+  private SubmissionOpen() {
+    this.SetState(GameState.Guess);
   }
 
   private SetSecret(secret: string) {
@@ -41,11 +44,17 @@ export class GameManager {
   }
 }
 
-function RegisterGetPublicLobbyId(
+function RegisterSecretWord(
   socket: GameSocket,
   callback: (secret: string) => void
 ) {
   socket.on('SecretWord', (secret: string) => {
     callback(secret);
+  });
+}
+
+function RegisterSubmissionOpen(socket: GameSocket, callback: () => void) {
+  socket.on('SubmissionOpen', () => {
+    callback();
   });
 }

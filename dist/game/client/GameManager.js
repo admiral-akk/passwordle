@@ -19,7 +19,11 @@ class GameManager {
         this.view = new GameView_1.GameView();
         this.socket = socket;
         this.state = GameState.Start;
-        RegisterGetPublicLobbyId(this.socket, (secret) => this.SetSecret(secret));
+        RegisterSecretWord(this.socket, (secret) => this.SetSecret(secret));
+        RegisterSubmissionOpen(this.socket, () => this.SubmissionOpen());
+    }
+    SubmissionOpen() {
+        this.SetState(GameState.Guess);
     }
     SetSecret(secret) {
         this.view.SetSecret(secret);
@@ -34,9 +38,14 @@ class GameManager {
     }
 }
 exports.GameManager = GameManager;
-function RegisterGetPublicLobbyId(socket, callback) {
+function RegisterSecretWord(socket, callback) {
     socket.on('SecretWord', (secret) => {
         callback(secret);
+    });
+}
+function RegisterSubmissionOpen(socket, callback) {
+    socket.on('SubmissionOpen', () => {
+        callback();
     });
 }
 //# sourceMappingURL=GameManager.js.map

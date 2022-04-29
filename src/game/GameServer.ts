@@ -3,18 +3,41 @@ import {GameServerSocket} from './GameServerSocket';
 
 enum GameState {
   Start,
+  SubmissionOpen,
 }
 
 export class GameServer {
   private players: GameServerSocket[];
   private state: GameState;
-
   private answers: string[];
   constructor(players: GameServerSocket[]) {
     this.players = players;
     this.state = GameState.Start;
     this.answers = [];
-    this.GenerateAnswers();
+    this.SetState(GameState.Start);
+  }
+
+  private SetState(newState: GameState) {
+    this.state = newState;
+    switch (newState) {
+      case GameState.Start:
+        this.GenerateAnswers();
+        setTimeout(() => {
+          this.SetState(GameState.SubmissionOpen);
+        }, 4000);
+        break;
+      case GameState.SubmissionOpen:
+        this.OpenSubmission();
+        break;
+      default:
+        break;
+    }
+  }
+
+  private OpenSubmission() {
+    this.players.forEach(player => {
+      player.emit('SubmissionOpen');
+    });
   }
 
   private GenerateAnswers() {

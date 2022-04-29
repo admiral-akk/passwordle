@@ -5,13 +5,35 @@ const words_1 = require("../public/words");
 var GameState;
 (function (GameState) {
     GameState[GameState["Start"] = 0] = "Start";
+    GameState[GameState["SubmissionOpen"] = 1] = "SubmissionOpen";
 })(GameState || (GameState = {}));
 class GameServer {
     constructor(players) {
         this.players = players;
         this.state = GameState.Start;
         this.answers = [];
-        this.GenerateAnswers();
+        this.SetState(GameState.Start);
+    }
+    SetState(newState) {
+        this.state = newState;
+        switch (newState) {
+            case GameState.Start:
+                this.GenerateAnswers();
+                setTimeout(() => {
+                    this.SetState(GameState.SubmissionOpen);
+                }, 4000);
+                break;
+            case GameState.SubmissionOpen:
+                this.OpenSubmission();
+                break;
+            default:
+                break;
+        }
+    }
+    OpenSubmission() {
+        this.players.forEach(player => {
+            player.emit('SubmissionOpen');
+        });
     }
     GenerateAnswers() {
         this.players.forEach(() => {
