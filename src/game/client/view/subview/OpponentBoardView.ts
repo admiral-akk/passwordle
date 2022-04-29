@@ -7,6 +7,6 @@ export class OpponentBoardView extends BoardView {
   }
 
   HintUpdate(update: HintUpdate) {
-    this.BaseHintUpdate(update);
+    this.BaseHintUpdate(update.opponentKnowledge, update.guessIndex);
   }
 }

@@ -1,3 +1,4 @@
+import {WordKnowledge} from '../../../logic/Knowledge';
 import {CharUpdate} from '../CharUpdate';
 import {HintUpdate} from '../HintUpdate';
 import {Subview} from './Subview';
@@ -19,7 +20,7 @@ export abstract class BoardView extends Subview {
     this.words[update.wordIndex].Update(update);
   }
 
-  protected BaseHintUpdate(update: HintUpdate) {
-    this.words[update.guessIndex].Set(update.opponentGuess);
+  protected BaseHintUpdate(knowledge: WordKnowledge, index: number) {
+    this.words[index].Set(knowledge.guess);
   }
 }

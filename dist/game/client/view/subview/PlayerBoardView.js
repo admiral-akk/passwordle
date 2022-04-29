@@ -9,6 +9,9 @@ class PlayerBoardView extends BoardView_1.BoardView {
     Update(update) {
         this.BaseUpdate(update);
     }
+    HintUpdate(update) {
+        this.BaseHintUpdate(update.playerKnowledge, update.guessIndex);
+    }
 }
 exports.PlayerBoardView = PlayerBoardView;
 //# sourceMappingURL=PlayerBoardView.js.map

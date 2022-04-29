@@ -1,5 +1,6 @@
+import { WordKnowledge } from '../../logic/Knowledge';
 export declare class Hint {
-    playerGuess: string;
-    opponentGuess: string;
-    constructor(playerGuess: string, opponentGuess: string);
+    playerGuess: WordKnowledge;
+    opponentGuess: WordKnowledge;
+    constructor(playerGuess: WordKnowledge, opponentGuess: WordKnowledge);
 }

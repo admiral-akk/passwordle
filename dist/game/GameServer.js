@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameServer = void 0;
 const Words_1 = require("./Words");
 const Hint_1 = require("./client/structs/Hint");
+const WordleLogic_1 = require("./logic/WordleLogic");
 var GameState;
 (function (GameState) {
     GameState[GameState["Start"] = 0] = "Start";
@@ -61,9 +62,10 @@ class GameServer {
     RevealHints() {
         this.players.forEach(player => {
             const playerIndex = player.data.playerIndex;
-            const playerGuess = this.guesses[playerIndex];
-            const opponentGuess = this.guesses[(playerIndex + 1) % 2];
-            player.emit('Hints', new Hint_1.Hint(playerGuess, opponentGuess));
+            const answer = this.answers[playerIndex];
+            const playerKnowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[playerIndex], answer);
+            const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[(playerIndex + 1) % 2], answer);
+            player.emit('Hints', new Hint_1.Hint(playerKnowledge, opponentKnowledge));
         });
         for (let i = 0; i < this.guesses.length; i++) {
             this.guesses[i] = '';

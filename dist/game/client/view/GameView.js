@@ -27,6 +27,7 @@ class GameView {
         this.playerBoard.Update(update);
     }
     HintUpdate(update) {
+        this.playerBoard.HintUpdate(update);
         this.opponentBoard.HintUpdate(update);
     }
 }

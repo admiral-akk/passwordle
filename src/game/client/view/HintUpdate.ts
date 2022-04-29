@@ -1,8 +1,16 @@
+import {WordKnowledge} from '../../logic/Knowledge';
+
 export class HintUpdate {
-  opponentGuess: string;
+  playerKnowledge: WordKnowledge;
+  opponentKnowledge: WordKnowledge;
   guessIndex: number;
-  constructor(opponentGuess: string, guessIndex: number) {
-    this.opponentGuess = opponentGuess;
+  constructor(
+    playerKnowledge: WordKnowledge,
+    opponentKnowledge: WordKnowledge,
+    guessIndex: number
+  ) {
+    this.playerKnowledge = playerKnowledge;
+    this.opponentKnowledge = opponentKnowledge;
     this.guessIndex = guessIndex;
   }
 }

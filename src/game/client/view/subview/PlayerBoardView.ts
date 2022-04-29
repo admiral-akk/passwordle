@@ -1,4 +1,5 @@
 import {CharUpdate} from '../CharUpdate';
+import {HintUpdate} from '../HintUpdate';
 import {BoardView} from './BoardView';
 
 export class PlayerBoardView extends BoardView {
@@ -8,5 +9,8 @@ export class PlayerBoardView extends BoardView {
 
   Update(update: CharUpdate) {
     this.BaseUpdate(update);
+  }
+  HintUpdate(update: HintUpdate) {
+    this.BaseHintUpdate(update.playerKnowledge, update.guessIndex);
   }
 }

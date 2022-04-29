@@ -1,6 +1,7 @@
 import {WORDS} from './Words';
 import {Hint} from './client/structs/Hint';
 import {GameServerSocket} from './GameServerSocket';
+import {GetKnowledge} from './logic/WordleLogic';
 
 enum GameState {
   Start,
@@ -69,9 +70,13 @@ export class GameServer {
   private RevealHints() {
     this.players.forEach(player => {
       const playerIndex = player.data.playerIndex!;
-      const playerGuess = this.guesses[playerIndex];
-      const opponentGuess = this.guesses[(playerIndex + 1) % 2];
-      player.emit('Hints', new Hint(playerGuess, opponentGuess));
+      const answer = this.answers[playerIndex];
+      const playerKnowledge = GetKnowledge(this.guesses[playerIndex], answer);
+      const opponentKnowledge = GetKnowledge(
+        this.guesses[(playerIndex + 1) % 2],
+        answer
+      );
+      player.emit('Hints', new Hint(playerKnowledge, opponentKnowledge));
     });
     for (let i = 0; i < this.guesses.length; i++) {
       this.guesses[i] = '';
