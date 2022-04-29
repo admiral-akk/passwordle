@@ -1,9 +1,7 @@
 import express from 'express';
 import path from 'path';
 import {LobbyServer} from './lobby/LobbyServer';
-import {
-  GetServer,
-} from './NetworkTypes';
+import {GetServer} from './NetworkTypes';
 import {PollingMessage} from './public/network_events';
 import {WordleServer} from './wordle_server';
 
@@ -14,7 +12,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const lobbyServer = new LobbyServer();
-GetServer(app,lobbyServer);
+GetServer(app, lobbyServer);
 
 app.get('/', async (req, res) => {
   // Return the articles to the rendering engine
