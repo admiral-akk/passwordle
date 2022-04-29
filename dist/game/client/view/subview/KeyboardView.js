@@ -8,6 +8,9 @@ const KEYBOARD_KEYS = [
     ['Del', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Enter'],
 ];
 class KeyboardView extends Subview_1.Subview {
+    constructor(root) {
+        super(root, 'keyboard');
+    }
 }
 exports.KeyboardView = KeyboardView;
 //# sourceMappingURL=KeyboardView.js.map

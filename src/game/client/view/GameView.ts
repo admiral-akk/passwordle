@@ -15,21 +15,19 @@ export class GameView {
 
   constructor() {
     const root = document.getElementById('game-board')!;
-    const game = AddDiv(root, 'board');
-    const timer = AddDiv(game, 'timer');
-    this.timer = new TimerView(timer);
+    this.timer = new TimerView(root);
+
+    const game = AddDiv(root, 'play-area');
+
     const player = AddDiv(game, 'player');
-    const answer = AddDiv(player, 'answer');
-    this.answer = new AnswerView(answer);
-    const playerBoard = AddDiv(player, 'board');
-    this.playerBoard = new PlayerBoardView(playerBoard);
+    this.answer = new AnswerView(player);
+    this.playerBoard = new PlayerBoardView(player);
+
     const opponent = AddDiv(game, 'opponent');
-    const target = AddDiv(opponent, 'target');
-    this.target = new TargetView(target);
-    const opponentBoard = AddDiv(opponent, 'board');
-    this.opponentBoard = new OpponentBoardView(opponentBoard);
-    const keyboard = AddDiv(root, 'keyboard');
-    this.keyboard = new KeyboardView(keyboard);
+    this.target = new TargetView(opponent);
+    this.opponentBoard = new OpponentBoardView(opponent);
+
+    this.keyboard = new KeyboardView(root);
   }
 
   public Start() {}

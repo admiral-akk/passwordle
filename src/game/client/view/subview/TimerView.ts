@@ -1,3 +1,7 @@
 import {Subview} from './Subview';
 
-export class TimerView extends Subview {}
+export class TimerView extends Subview {
+  constructor(base: HTMLElement) {
+    super(base, 'timer');
+  }
+}

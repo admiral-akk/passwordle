@@ -1,1 +1,1 @@
-{"version":3,"file":"TimerView.js","sourceRoot":"","sources":["../../../../../src/game/client/view/subview/TimerView.ts"],"names":[],"mappings":";;;AAAA,uCAAkC;AAElC,MAAa,SAAU,SAAQ,iBAAO;CAAG;AAAzC,8BAAyC"}
+{"version":3,"file":"TimerView.js","sourceRoot":"","sources":["../../../../../src/game/client/view/subview/TimerView.ts"],"names":[],"mappings":";;;AAAA,uCAAkC;AAElC,MAAa,SAAU,SAAQ,iBAAO;IACpC,YAAY,IAAiB;QAC3B,KAAK,CAAC,IAAI,EAAE,OAAO,CAAC,CAAC;IACvB,CAAC;CACF;AAJD,8BAIC"}

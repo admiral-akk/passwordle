@@ -1,3 +1,4 @@
-import { Subview } from './Subview';
-export declare class OpponentBoardView extends Subview {
+import { BoardView } from './BoardView';
+export declare class OpponentBoardView extends BoardView {
+    constructor(root: HTMLDivElement);
 }

@@ -10,21 +10,15 @@ const TimerView_1 = require("./subview/TimerView");
 class GameView {
     constructor() {
         const root = document.getElementById('game-board');
-        const game = AddDiv(root, 'board');
-        const timer = AddDiv(game, 'timer');
-        this.timer = new TimerView_1.TimerView(timer);
+        this.timer = new TimerView_1.TimerView(root);
+        const game = AddDiv(root, 'play-area');
         const player = AddDiv(game, 'player');
-        const answer = AddDiv(player, 'answer');
-        this.answer = new AnswerView_1.AnswerView(answer);
-        const playerBoard = AddDiv(player, 'board');
-        this.playerBoard = new PlayerBoardView_1.PlayerBoardView(playerBoard);
+        this.answer = new AnswerView_1.AnswerView(player);
+        this.playerBoard = new PlayerBoardView_1.PlayerBoardView(player);
         const opponent = AddDiv(game, 'opponent');
-        const target = AddDiv(opponent, 'target');
-        this.target = new TargetView_1.TargetView(target);
-        const opponentBoard = AddDiv(opponent, 'board');
-        this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponentBoard);
-        const keyboard = AddDiv(root, 'keyboard');
-        this.keyboard = new KeyboardView_1.KeyboardView(keyboard);
+        this.target = new TargetView_1.TargetView(opponent);
+        this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
+        this.keyboard = new KeyboardView_1.KeyboardView(root);
     }
     Start() { }
 }

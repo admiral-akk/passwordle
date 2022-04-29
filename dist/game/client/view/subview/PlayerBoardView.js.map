@@ -1,1 +1,1 @@
-{"version":3,"file":"PlayerBoardView.js","sourceRoot":"","sources":["../../../../../src/game/client/view/subview/PlayerBoardView.ts"],"names":[],"mappings":";;;AAAA,uCAAkC;AAElC,MAAa,eAAgB,SAAQ,iBAAO;CAAG;AAA/C,0CAA+C"}
+{"version":3,"file":"PlayerBoardView.js","sourceRoot":"","sources":["../../../../../src/game/client/view/subview/PlayerBoardView.ts"],"names":[],"mappings":";;;AAAA,2CAAsC;AAEtC,MAAa,eAAgB,SAAQ,qBAAS;IAC5C,YAAY,IAAoB;QAC9B,KAAK,CAAC,IAAI,CAAC,CAAC;IACd,CAAC;CACF;AAJD,0CAIC"}

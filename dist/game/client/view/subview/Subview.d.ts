@@ -1,4 +1,4 @@
 export declare abstract class Subview {
-    protected root: HTMLElement;
-    constructor(root: HTMLElement);
+    protected root: HTMLDivElement;
+    constructor(base: HTMLElement, rootClassName: string);
 }

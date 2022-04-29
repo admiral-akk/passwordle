@@ -6,4 +6,8 @@ const KEYBOARD_KEYS = [
   ['Del', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Enter'],
 ];
 
-export class KeyboardView extends Subview {}
+export class KeyboardView extends Subview {
+  constructor(root: HTMLElement) {
+    super(root, 'keyboard');
+  }
+}

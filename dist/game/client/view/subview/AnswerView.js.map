@@ -1,1 +1,1 @@
-{"version":3,"file":"AnswerView.js","sourceRoot":"","sources":["../../../../../src/game/client/view/subview/AnswerView.ts"],"names":[],"mappings":";;;AAAA,uCAAkC;AAElC,MAAa,UAAW,SAAQ,iBAAO;CAAG;AAA1C,gCAA0C"}
+{"version":3,"file":"AnswerView.js","sourceRoot":"","sources":["../../../../../src/game/client/view/subview/AnswerView.ts"],"names":[],"mappings":";;;AAAA,uCAAkC;AAClC,8CAAyC;AAEzC,MAAa,UAAW,SAAQ,iBAAO;IAErC,YAAY,IAAiB;QAC3B,KAAK,CAAC,IAAI,EAAE,QAAQ,CAAC,CAAC;QACtB,IAAI,CAAC,MAAM,GAAG,IAAI,mBAAQ,CAAC,IAAI,CAAC,IAAI,CAAC,CAAC;IACxC,CAAC;CACF;AAND,gCAMC"}
