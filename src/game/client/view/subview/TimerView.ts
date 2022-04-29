@@ -1,1 +1,3 @@
-export class TimerView {}
+import {Subview} from './Subview';
+
+export class TimerView extends Subview {}

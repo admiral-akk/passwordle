@@ -1,5 +1,6 @@
 import {Socket} from 'socket.io';
 import {DefaultEventsMap} from 'socket.io/dist/typed-events';
+import { InterServerEvents, SocketData } from '../NetworkTypes';
 import {
   GameClientToServerEvents,
   GameServerToClientEvents,
@@ -8,6 +9,6 @@ import {
 export type GameServerSocket = Socket<
   GameClientToServerEvents,
   GameServerToClientEvents,
-  DefaultEventsMap,
-  DefaultEventsMap
+  InterServerEvents,
+  SocketData
 >;

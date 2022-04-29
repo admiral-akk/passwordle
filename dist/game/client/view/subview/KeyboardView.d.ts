@@ -1,2 +1,3 @@
-export declare class KeyboardView {
+import { Subview } from './Subview';
+export declare class KeyboardView extends Subview {
 }

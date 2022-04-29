@@ -14,8 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
-const socket_io_1 = require("socket.io");
 const LobbyServer_1 = require("./lobby/LobbyServer");
+const NetworkTypes_1 = require("./NetworkTypes");
 const network_events_1 = require("./public/network_events");
 const wordle_server_1 = require("./wordle_server");
 const server = new wordle_server_1.WordleServer();
@@ -23,15 +23,8 @@ const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.json());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
-const http = require('http').Server(app);
-const io = new socket_io_1.Server(http);
 const lobbyServer = new LobbyServer_1.LobbyServer();
-io.on('connection', socket => {
-    lobbyServer.AddSocket(socket);
-});
-http.listen(4000, () => {
-    console.log('listening on *:4000');
-});
+(0, NetworkTypes_1.GetServer)(app, lobbyServer);
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Return the articles to the rendering engine
     res.render('index');

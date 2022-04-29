@@ -1,4 +1,4 @@
 import { Socket } from 'socket.io';
-import { DefaultEventsMap } from 'socket.io/dist/typed-events';
+import { InterServerEvents, SocketData } from '../NetworkTypes';
 import { LobbyClientToServerEvents, LobbyServerToClientEvents } from './client/LobbyNetworkEvents';
-export declare type LobbyServerSocket = Socket<LobbyClientToServerEvents, LobbyServerToClientEvents, DefaultEventsMap, DefaultEventsMap>;
+export declare type LobbyServerSocket = Socket<LobbyClientToServerEvents, LobbyServerToClientEvents, InterServerEvents, SocketData>;

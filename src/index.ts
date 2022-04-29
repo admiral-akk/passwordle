@@ -1,13 +1,8 @@
 import express from 'express';
 import path from 'path';
-import {Server} from 'socket.io';
-import {DefaultEventsMap} from 'socket.io/dist/typed-events';
 import {LobbyServer} from './lobby/LobbyServer';
 import {
-  ClientToServerEvents,
-  ServerToClientEvents,
-  InterServerEvents,
-  SocketData,
+  GetServer,
 } from './NetworkTypes';
 import {PollingMessage} from './public/network_events';
 import {WordleServer} from './wordle_server';
@@ -18,23 +13,8 @@ const port = 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const http = require('http').Server(app);
-const io = new Server<
-  ClientToServerEvents,
-  ServerToClientEvents,
-  DefaultEventsMap,
-  DefaultEventsMap
->(http);
-
 const lobbyServer = new LobbyServer();
-
-io.on('connection', socket => {
-  lobbyServer.AddSocket(socket);
-});
-
-http.listen(4000, () => {
-  console.log('listening on *:4000');
-});
+GetServer(app,lobbyServer);
 
 app.get('/', async (req, res) => {
   // Return the articles to the rendering engine
