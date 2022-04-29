@@ -32,12 +32,10 @@ io.on('connection', socket => {
 const wsServer = http.listen(4000, () => {
     console.log('listening on *:4000');
 });
-app.get('/', function (req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        // Return the articles to the rendering engine
-        res.render('index');
-    });
-});
+app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // Return the articles to the rendering engine
+    res.render('index');
+}));
 app.post('/event', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(`Recieved request: ${JSON.stringify(req.body)}`);
