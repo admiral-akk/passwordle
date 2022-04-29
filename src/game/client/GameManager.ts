@@ -21,13 +21,10 @@ export class GameManager {
     this.view = new GameView();
     this.socket = socket;
     this.state = GameState.Start;
-    this.SetState(GameState.Start);
   }
 
   private SetState(newState: GameState) {
     switch (newState) {
-      case GameState.Start:
-        break;
       default:
         break;
     }

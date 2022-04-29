@@ -19,12 +19,9 @@ class GameManager {
         this.view = new GameView_1.GameView();
         this.socket = socket;
         this.state = GameState.Start;
-        this.SetState(GameState.Start);
     }
     SetState(newState) {
         switch (newState) {
-            case GameState.Start:
-                break;
             default:
                 break;
         }
