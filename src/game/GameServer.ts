@@ -63,6 +63,8 @@ export class GameServer {
         this.guesses[playerIndex] = ToWord(guess);
         if (this.guesses.filter(g => g.length === 0).length === 0) {
           this.RevealHints();
+          this.CheckWin();
+          this.ClearWords();
         }
       });
     });
@@ -82,6 +84,21 @@ export class GameServer {
       );
       player.emit('Hints', new Hint(playerKnowledge, opponentKnowledge));
     });
+  }
+
+  private CheckWin() {
+    for (let i = 0; i < this.players.length; i++) {
+      const guess = this.guesses[i];
+      const targetAnswer = this.answers[(i + 1) % 2];
+      if (guess === targetAnswer) {
+        this.players[i].emit('Won');
+        this.players[(i + 1) % 2].emit('Lost');
+        break;
+      }
+    }
+  }
+
+  private ClearWords() {
     for (let i = 0; i < this.guesses.length; i++) {
       this.guesses[i] = ToWord('');
     }

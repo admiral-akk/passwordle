@@ -10,4 +10,6 @@ export declare class GameServer {
     private GenerateAnswers;
     private RegisterPlayers;
     private RevealHints;
+    private CheckWin;
+    private ClearWords;
 }

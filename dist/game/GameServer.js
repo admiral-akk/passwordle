@@ -56,6 +56,8 @@ class GameServer {
                 this.guesses[playerIndex] = (0, Word_1.ToWord)(guess);
                 if (this.guesses.filter(g => g.length === 0).length === 0) {
                     this.RevealHints();
+                    this.CheckWin();
+                    this.ClearWords();
                 }
             });
         });
@@ -68,6 +70,19 @@ class GameServer {
             const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[(playerIndex + 1) % 2], targetAnswer);
             player.emit('Hints', new Hint_1.Hint(playerKnowledge, opponentKnowledge));
         });
+    }
+    CheckWin() {
+        for (let i = 0; i < this.players.length; i++) {
+            const guess = this.guesses[i];
+            const targetAnswer = this.answers[(i + 1) % 2];
+            if (guess === targetAnswer) {
+                this.players[i].emit('Won');
+                this.players[(i + 1) % 2].emit('Lost');
+                break;
+            }
+        }
+    }
+    ClearWords() {
         for (let i = 0; i < this.guesses.length; i++) {
             this.guesses[i] = (0, Word_1.ToWord)('');
         }

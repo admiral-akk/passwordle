@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameView = void 0;
 const AnswerView_1 = require("./subview/AnswerView");
+const EndGameView_1 = require("./subview/EndGameView");
 const KeyboardView_1 = require("./subview/KeyboardView");
 const OpponentBoardView_1 = require("./subview/OpponentBoardView");
 const PlayerBoardView_1 = require("./subview/PlayerBoardView");
@@ -19,6 +20,7 @@ class GameView {
         this.target = new TargetView_1.TargetView(opponent);
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
         this.keyboard = new KeyboardView_1.KeyboardView(root);
+        this.endGame = new EndGameView_1.EndGameView(root);
     }
     SetSecret(secret) {
         this.answer.SetSecret(secret);
@@ -30,6 +32,9 @@ class GameView {
         this.playerBoard.HintUpdate(update);
         this.opponentBoard.HintUpdate(update);
         this.target.HintUpdate(update);
+    }
+    GameOver(won) {
+        this.endGame.GameOver(won);
     }
 }
 exports.GameView = GameView;

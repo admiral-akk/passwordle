@@ -29,6 +29,8 @@ class GameManager {
         RegisterSecretWord(this.socket, (secret) => this.SetSecret(secret));
         RegisterSubmissionOpen(this.socket, () => this.SubmissionOpen());
         RegisterHints(this.socket, (hint) => this.Hints(hint));
+        RegisterLost(this.socket, () => this.Lost());
+        RegisterWon(this.socket, () => this.Won());
     }
     InputActive() {
         return (this.state === GameState.SubmissionOpen ||
@@ -70,6 +72,12 @@ class GameManager {
         this.view.CharUpdate(update);
         console.log('DELETE');
     }
+    Lost() {
+        this.SetState(GameState.Lost);
+    }
+    Won() {
+        this.SetState(GameState.Won);
+    }
     SubmissionOpen() {
         this.SetState(GameState.SubmissionOpen);
     }
@@ -88,7 +96,11 @@ class GameManager {
             case GameState.RevealHints:
                 this.SetState(GameState.SubmissionOpen);
                 break;
-            case GameState.SubmissionOpen:
+            case GameState.Lost:
+                this.view.GameOver(false);
+                break;
+            case GameState.Won:
+                this.view.GameOver(true);
                 break;
             default:
                 break;
@@ -112,6 +124,16 @@ function RegisterSubmissionOpen(socket, callback) {
 function RegisterHints(socket, callback) {
     socket.on('Hints', hint => {
         callback(hint);
+    });
+}
+function RegisterLost(socket, callback) {
+    socket.on('Lost', () => {
+        callback();
+    });
+}
+function RegisterWon(socket, callback) {
+    socket.on('Won', () => {
+        callback();
     });
 }
 //# sourceMappingURL=GameManager.js.map

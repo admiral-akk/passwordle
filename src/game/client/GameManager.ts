@@ -45,6 +45,8 @@ export class GameManager {
     RegisterSecretWord(this.socket, (secret: string) => this.SetSecret(secret));
     RegisterSubmissionOpen(this.socket, () => this.SubmissionOpen());
     RegisterHints(this.socket, (hint: Hint) => this.Hints(hint));
+    RegisterLost(this.socket, () => this.Lost());
+    RegisterWon(this.socket, () => this.Won());
   }
 
   private currentGuess: string;
@@ -99,6 +101,14 @@ export class GameManager {
     console.log('DELETE');
   }
 
+  private Lost() {
+    this.SetState(GameState.Lost);
+  }
+
+  private Won() {
+    this.SetState(GameState.Won);
+  }
+
   private SubmissionOpen() {
     this.SetState(GameState.SubmissionOpen);
   }
@@ -124,7 +134,11 @@ export class GameManager {
       case GameState.RevealHints:
         this.SetState(GameState.SubmissionOpen);
         break;
-      case GameState.SubmissionOpen:
+      case GameState.Lost:
+        this.view.GameOver(false);
+        break;
+      case GameState.Won:
+        this.view.GameOver(true);
         break;
       default:
         break;
@@ -154,5 +168,17 @@ function RegisterSubmissionOpen(socket: GameSocket, callback: () => void) {
 function RegisterHints(socket: GameSocket, callback: (hint: Hint) => void) {
   socket.on('Hints', hint => {
     callback(hint);
+  });
+}
+
+function RegisterLost(socket: GameSocket, callback: () => void) {
+  socket.on('Lost', () => {
+    callback();
+  });
+}
+
+function RegisterWon(socket: GameSocket, callback: () => void) {
+  socket.on('Won', () => {
+    callback();
   });
 }

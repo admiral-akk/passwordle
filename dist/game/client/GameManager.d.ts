@@ -11,6 +11,8 @@ export declare class GameManager {
     private AddChar;
     private Submit;
     private Delete;
+    private Lost;
+    private Won;
     private SubmissionOpen;
     private SetSecret;
     private Hints;

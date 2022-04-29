@@ -1,6 +1,7 @@
 import {CharUpdate} from './CharUpdate';
 import {HintUpdate} from './HintUpdate';
 import {AnswerView} from './subview/AnswerView';
+import {EndGameView} from './subview/EndGameView';
 import {KeyboardView} from './subview/KeyboardView';
 import {OpponentBoardView} from './subview/OpponentBoardView';
 import {PlayerBoardView} from './subview/PlayerBoardView';
@@ -14,6 +15,7 @@ export class GameView {
   private keyboard: KeyboardView;
   private timer: TimerView;
   private target: TargetView;
+  private endGame: EndGameView;
 
   constructor() {
     const root = document.getElementById('game-board')!;
@@ -30,6 +32,8 @@ export class GameView {
     this.opponentBoard = new OpponentBoardView(opponent);
 
     this.keyboard = new KeyboardView(root);
+
+    this.endGame = new EndGameView(root);
   }
 
   SetSecret(secret: string) {
@@ -44,6 +48,10 @@ export class GameView {
     this.playerBoard.HintUpdate(update);
     this.opponentBoard.HintUpdate(update);
     this.target.HintUpdate(update);
+  }
+
+  GameOver(won: boolean) {
+    this.endGame.GameOver(won);
   }
 }
 

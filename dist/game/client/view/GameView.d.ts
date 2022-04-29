@@ -7,8 +7,10 @@ export declare class GameView {
     private keyboard;
     private timer;
     private target;
+    private endGame;
     constructor();
     SetSecret(secret: string): void;
     CharUpdate(update: CharUpdate): void;
     HintUpdate(update: HintUpdate): void;
+    GameOver(won: boolean): void;
 }
