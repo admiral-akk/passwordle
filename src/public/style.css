@@ -9,29 +9,24 @@
     display: flex;
     align-items: center;
     flex-direction: row;
-    border: 2px solid orange;
 }
 .timer {
 
     margin: 2px;
-    border: 2px solid red;
 }
 
 .player {
 
     margin: 2px;
-    border: 2px solid blue;
 }
 
 
 .opponent {
     margin: 2px;
-    border: 2px solid green;
 }
 
 .board {
     margin: 2px;
-    border: 2px solid yellow;
 }
 
 .word {
@@ -39,7 +34,6 @@
     align-items: center;
     flex-direction: row;
     margin: 2px;
-    border: 2px solid black;
 }
 
 .letter {
@@ -58,14 +52,17 @@
 
 .answer {
     margin: 2px;
-    border: 2px solid lawngreen;
 }
 
 .target {
     margin: 2px;
-    border: 2px solid purple;
 }
 
+.end-game {
+    margin: 2px;
+    font-size: 3rem;
+    font-weight: 700;
+}
 .letter-row {
     display: flex;
 }
