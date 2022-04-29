@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyServer = void 0;
 const Lobby_1 = require("./Lobby");
 class LobbyServer {
-    constructor() {
+    constructor(handoffLobby) {
         this.privateLobby = {};
         this.publicLobby = [];
+        this.handoffLobby = handoffLobby;
     }
     AddSocket(socket) {
         this.RegisterLobbyHandlers(socket);
@@ -27,6 +28,7 @@ class LobbyServer {
                 lobby.players.forEach(s => {
                     s.emit('LobbyReady');
                 });
+                this.handoffLobby(lobby);
             }
             else {
                 const lobby = new Lobby_1.Lobby();

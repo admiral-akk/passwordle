@@ -1,5 +1,6 @@
-import { GameSocket } from './client/GameNetworkEvents';
+import { GameServerSocket } from './GameServerSocket';
 export declare class GameServer {
     private players;
-    constructor(players: GameSocket[]);
+    private state;
+    constructor(players: GameServerSocket[]);
 }

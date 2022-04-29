@@ -5,9 +5,12 @@ export class LobbyServer {
   private privateLobby: Record<string, Lobby>;
   private publicLobby: Lobby[];
 
-  constructor() {
+  private handoffLobby: (lobby: Lobby) => void;
+
+  constructor(handoffLobby: (lobby: Lobby) => void) {
     this.privateLobby = {};
     this.publicLobby = [];
+    this.handoffLobby = handoffLobby;
   }
 
   AddSocket(socket: LobbyServerSocket) {
@@ -33,6 +36,7 @@ export class LobbyServer {
         lobby.players.forEach(s => {
           s.emit('LobbyReady');
         });
+        this.handoffLobby(lobby);
       } else {
         const lobby = new Lobby();
         lobby.players.push(socket);

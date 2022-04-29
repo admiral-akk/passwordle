@@ -9,4 +9,5 @@ export declare class LobbyView {
     HostingMatch(link: string): void;
     FindingMatch(): void;
     LobbyReady(): void;
+    InGame(): void;
 }

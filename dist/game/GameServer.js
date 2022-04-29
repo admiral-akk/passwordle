@@ -8,6 +8,7 @@ var GameState;
 class GameServer {
     constructor(players) {
         this.players = players;
+        this.state = GameState.Start;
     }
 }
 exports.GameServer = GameServer;

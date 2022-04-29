@@ -7,7 +7,7 @@ const KEYBOARD_KEYS = [
 ];
 
 export class KeyboardView extends Subview {
-  constructor(root: HTMLElement) {
-    super(root, 'keyboard');
+  constructor(base: HTMLElement) {
+    super(base, 'keyboard');
   }
 }

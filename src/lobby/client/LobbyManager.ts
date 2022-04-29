@@ -73,8 +73,12 @@ export class LobbyManager {
         break;
       case LobbyState.LobbyReady:
         this.view.LobbyReady();
+        setTimeout(() => {
+          this.SetState(LobbyState.InGame);
+        }, 1000);
         break;
       case LobbyState.InGame:
+        this.view.InGame();
         break;
     }
   }

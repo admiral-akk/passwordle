@@ -8,8 +8,8 @@ const KEYBOARD_KEYS = [
     ['Del', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'Enter'],
 ];
 class KeyboardView extends Subview_1.Subview {
-    constructor(root) {
-        super(root, 'keyboard');
+    constructor(base) {
+        super(base, 'keyboard');
     }
 }
 exports.KeyboardView = KeyboardView;

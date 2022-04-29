@@ -48,6 +48,16 @@ export class LobbyView {
   LobbyReady() {
     this.SetModal(new LobbyReadyModal(this.modal));
   }
+
+  InGame() {
+    if (this.currentModal) {
+      this.currentModal.Exit();
+    }
+    this.currentModal = null;
+    this.modal.remove();
+    this.background.remove();
+    this.root.remove();
+  }
 }
 
 function CopyToClipboard(url: string) {
