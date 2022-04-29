@@ -4,6 +4,7 @@ exports.GameServer = void 0;
 const Words_1 = require("./Words");
 const Hint_1 = require("./client/structs/Hint");
 const WordleLogic_1 = require("./logic/WordleLogic");
+const Word_1 = require("./structs/Word");
 var GameState;
 (function (GameState) {
     GameState[GameState["Start"] = 0] = "Start";
@@ -41,8 +42,8 @@ class GameServer {
     }
     GenerateAnswers() {
         this.players.forEach(() => {
-            this.answers.push(GenerateAnswer(this.answers));
-            this.guesses.push('');
+            this.answers.push((0, Word_1.ToWord)(GenerateAnswer(this.answers)));
+            this.guesses.push((0, Word_1.ToWord)(''));
         });
         for (let i = 0; i < this.players.length; i++) {
             this.players[i].emit('SecretWord', this.answers[i]);
@@ -52,7 +53,7 @@ class GameServer {
         players.forEach(player => {
             player.on('SubmitGuess', (guess) => {
                 const playerIndex = player.data.playerIndex;
-                this.guesses[playerIndex] = guess;
+                this.guesses[playerIndex] = (0, Word_1.ToWord)(guess);
                 if (this.guesses.filter(g => g.length === 0).length === 0) {
                     this.RevealHints();
                 }
@@ -62,13 +63,13 @@ class GameServer {
     RevealHints() {
         this.players.forEach(player => {
             const playerIndex = player.data.playerIndex;
-            const answer = this.answers[playerIndex];
-            const playerKnowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[playerIndex], answer);
-            const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[(playerIndex + 1) % 2], answer);
+            const targetAnswer = this.answers[(playerIndex + 1) % 2];
+            const playerKnowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[playerIndex], targetAnswer);
+            const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[(playerIndex + 1) % 2], targetAnswer);
             player.emit('Hints', new Hint_1.Hint(playerKnowledge, opponentKnowledge));
         });
         for (let i = 0; i < this.guesses.length; i++) {
-            this.guesses[i] = '';
+            this.guesses[i] = (0, Word_1.ToWord)('');
         }
     }
 }

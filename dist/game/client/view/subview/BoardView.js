@@ -16,7 +16,7 @@ class BoardView extends Subview_1.Subview {
         this.words[update.wordIndex].Update(update);
     }
     BaseHintUpdate(knowledge, index) {
-        this.words[index].Set(knowledge.guess);
+        this.words[index].SetKnowledge(knowledge);
     }
 }
 exports.BoardView = BoardView;

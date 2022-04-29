@@ -1,6 +1,8 @@
+import {Word} from '../structs/Word';
 import {LetterState, WordKnowledge} from './Knowledge';
 
-export function GetKnowledge(guess: string, answer: string): WordKnowledge {
+export function GetKnowledge(guess: Word, answer: Word): WordKnowledge {
+  console.log(`testing: ${guess} v ${answer}`);
   const answer_state: LetterState[] = [];
   for (let i = 0; i < guess.length; i++) {
     answer_state[i] = LetterState.None;

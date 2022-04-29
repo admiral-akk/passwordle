@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetKnowledge = void 0;
 const Knowledge_1 = require("./Knowledge");
 function GetKnowledge(guess, answer) {
+    console.log(`testing: ${guess} v ${answer}`);
     const answer_state = [];
     for (let i = 0; i < guess.length; i++) {
         answer_state[i] = Knowledge_1.LetterState.None;

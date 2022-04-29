@@ -21,6 +21,6 @@ export abstract class BoardView extends Subview {
   }
 
   protected BaseHintUpdate(knowledge: WordKnowledge, index: number) {
-    this.words[index].Set(knowledge.guess);
+    this.words[index].SetKnowledge(knowledge);
   }
 }

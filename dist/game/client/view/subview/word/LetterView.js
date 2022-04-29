@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LetterView = void 0;
+const Knowledge_1 = require("../../../../logic/Knowledge");
 const Subview_1 = require("../Subview");
 class LetterView extends Subview_1.Subview {
     constructor(base) {
@@ -11,6 +12,23 @@ class LetterView extends Subview_1.Subview {
     }
     Set(char) {
         this.root.innerText = char;
+    }
+    SetKnowledge(letterKnowledge) {
+        console.log(`setting color: ${letterKnowledge}`);
+        switch (letterKnowledge) {
+            case Knowledge_1.LetterState.None:
+                this.root.style.backgroundColor = 'white';
+                break;
+            case Knowledge_1.LetterState.Yellow:
+                this.root.style.backgroundColor = 'yellow';
+                break;
+            case Knowledge_1.LetterState.Green:
+                this.root.style.backgroundColor = 'green';
+                break;
+            case Knowledge_1.LetterState.Grey:
+                this.root.style.backgroundColor = 'grey';
+                break;
+        }
     }
 }
 exports.LetterView = LetterView;

@@ -2,6 +2,7 @@ import {WORDS} from './Words';
 import {Hint} from './client/structs/Hint';
 import {GameServerSocket} from './GameServerSocket';
 import {GetKnowledge} from './logic/WordleLogic';
+import {ToWord, Word} from './structs/Word';
 
 enum GameState {
   Start,
@@ -11,8 +12,8 @@ enum GameState {
 export class GameServer {
   private players: GameServerSocket[];
   private state: GameState;
-  private answers: string[];
-  private guesses: string[];
+  private answers: Word[];
+  private guesses: Word[];
   constructor(players: GameServerSocket[]) {
     this.players = players;
     this.state = GameState.Start;
@@ -47,8 +48,8 @@ export class GameServer {
 
   private GenerateAnswers() {
     this.players.forEach(() => {
-      this.answers.push(GenerateAnswer(this.answers));
-      this.guesses.push('');
+      this.answers.push(ToWord(GenerateAnswer(this.answers)));
+      this.guesses.push(ToWord(''));
     });
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].emit('SecretWord', this.answers[i]);
@@ -59,7 +60,7 @@ export class GameServer {
     players.forEach(player => {
       player.on('SubmitGuess', (guess: string) => {
         const playerIndex = player.data.playerIndex!;
-        this.guesses[playerIndex] = guess;
+        this.guesses[playerIndex] = ToWord(guess);
         if (this.guesses.filter(g => g.length === 0).length === 0) {
           this.RevealHints();
         }
@@ -70,16 +71,19 @@ export class GameServer {
   private RevealHints() {
     this.players.forEach(player => {
       const playerIndex = player.data.playerIndex!;
-      const answer = this.answers[playerIndex];
-      const playerKnowledge = GetKnowledge(this.guesses[playerIndex], answer);
+      const targetAnswer = this.answers[(playerIndex + 1) % 2];
+      const playerKnowledge = GetKnowledge(
+        this.guesses[playerIndex],
+        targetAnswer
+      );
       const opponentKnowledge = GetKnowledge(
         this.guesses[(playerIndex + 1) % 2],
-        answer
+        targetAnswer
       );
       player.emit('Hints', new Hint(playerKnowledge, opponentKnowledge));
     });
     for (let i = 0; i < this.guesses.length; i++) {
-      this.guesses[i] = '';
+      this.guesses[i] = ToWord('');
     }
   }
 }
