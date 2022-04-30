@@ -30,9 +30,9 @@ export class LetterView extends Subview {
       case LetterState.Grey:
         this.root.style.backgroundColor = 'grey';
         break;
-        case LetterState.Red:
-          this.root.style.backgroundColor = 'red';
-          break;
+      case LetterState.Red:
+        this.root.style.backgroundColor = 'red';
+        break;
     }
   }
 }

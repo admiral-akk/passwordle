@@ -1,5 +1,5 @@
-import { LetterState } from '../../structs/LetterState';
-import { HintUpdate } from '../HintUpdate';
+import {LetterState} from '../../structs/LetterState';
+import {HintUpdate} from '../HintUpdate';
 import {Subview} from './Subview';
 import {WordView} from './word/WordView';
 
@@ -13,7 +13,6 @@ export class AnswerView extends Subview {
   SetSecret(secret: string) {
     this.answer.Set(secret);
   }
-
 
   HintUpdate(update: HintUpdate) {
     const knownCharacters = update.hint.playerProgress.knownCharacters;

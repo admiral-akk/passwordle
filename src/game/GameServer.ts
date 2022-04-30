@@ -78,8 +78,8 @@ export class GameServer {
   private UpdateProgress() {
     for (let i = 0; i < this.progress.length; i++) {
       const answer = this.answers[i];
-      const knowledge = GetKnowledge(this.guesses[i],answer);
-      const extraKnowledge = GetKnowledge(this.guesses[(i+1)%2],answer);
+      const knowledge = GetKnowledge(this.guesses[i], answer);
+      const extraKnowledge = GetKnowledge(this.guesses[(i + 1) % 2], answer);
       this.progress[i].UpdateProgress(knowledge);
       this.progress[i].UpdateProgress(extraKnowledge);
     }

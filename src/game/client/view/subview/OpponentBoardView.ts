@@ -1,4 +1,3 @@
-
 import {HintUpdate} from '../HintUpdate';
 import {BoardView} from './BoardView';
 

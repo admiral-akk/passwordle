@@ -124,10 +124,7 @@ export class GameManager {
   }
 
   private Hints(hint: Hint) {
-    const update = new HintUpdate(
-      hint,
-      this.currentIndex - 1
-    );
+    const update = new HintUpdate(hint, this.currentIndex - 1);
     this.view.HintUpdate(update);
     this.SetState(GameState.RevealHints);
   }

@@ -1,5 +1,5 @@
 import {LetterState} from '../../structs/LetterState';
-import { TargetProgress } from '../../structs/TargetProgress';
+import {TargetProgress} from '../../structs/TargetProgress';
 import {HintUpdate} from '../HintUpdate';
 import {Subview} from './Subview';
 import {WordView} from './word/WordView';

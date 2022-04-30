@@ -21,7 +21,6 @@ class LobbyServer {
             socket.emit('PrivateLobbyId', lobbyId);
         });
         socket.on('HostPublicLobby', () => {
-            console.log(`befor public lobby request, length: ${this.publicLobby.length}`);
             if (this.publicLobby.length > 0) {
                 const lobby = this.publicLobby.pop();
                 lobby.players.push(socket);
@@ -36,7 +35,6 @@ class LobbyServer {
                 this.publicLobby.push(lobby);
                 socket.emit('PublicLobbyId');
             }
-            console.log(`after public lobby request, length: ${this.publicLobby.length}`);
         });
         socket.on('JoinPrivateLobby', (lobbyId) => {
             if (lobbyId in this.privateLobby) {
