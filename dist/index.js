@@ -14,21 +14,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
-const GameServer_1 = require("./game/GameServer");
-const LobbyServer_1 = require("./lobby/LobbyServer");
+const GameServerManager_1 = require("./GameServerManager");
+const LobbyServerManager_1 = require("./LobbyServerManager");
 const NetworkTypes_1 = require("./NetworkTypes");
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.json());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
-const lobbyServer = new LobbyServer_1.LobbyServer(HandoffLobby);
+const lobbyServer = new LobbyServerManager_1.LobbyServerManager(HandoffLobby);
+const gameServer = new GameServerManager_1.GameServerManager(HandoffGame);
 (0, NetworkTypes_1.GetServer)(app, lobbyServer);
 function HandoffLobby(lobby) {
-    const gameSockets = lobby.players.map(lobbyServerSocket => lobbyServerSocket);
-    for (let i = 0; i < gameSockets.length; i++) {
-        gameSockets[i].data.playerIndex = i;
-    }
-    const game = new GameServer_1.GameServer(gameSockets);
+    const game = (0, NetworkTypes_1.LobbyToGame)(lobby);
+}
+function HandoffGame(game) {
+    const lobby = (0, NetworkTypes_1.GameToLobby)(game);
 }
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Return the articles to the rendering engine

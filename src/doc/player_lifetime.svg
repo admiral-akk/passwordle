@@ -1,0 +1,41 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "https://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="800" height="600" version="1.1" xmlns="http://www.w3.org/2000/svg">
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="39.5" cy="51.5" rx="30" ry="30"/>
+	<text x="22.5" y="57.5" font-family="Times New Roman" font-size="20">start</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="122.5" cy="166.5" rx="30" ry="30"/>
+	<text x="80.5" y="172.5" font-family="Times New Roman" font-size="20">solo lobby</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="387.5" cy="93.5" rx="30" ry="30"/>
+	<text x="314.5" y="99.5" font-family="Times New Roman" font-size="20">filled lobby, ready</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="695.5" cy="340.5" rx="30" ry="30"/>
+	<text x="654.5" y="346.5" font-family="Times New Roman" font-size="20">new game</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="132.5" cy="486.5" rx="30" ry="30"/>
+	<text x="33.5" y="492.5" font-family="Times New Roman" font-size="20">filled lobby. asking (0/2)</text>
+	<ellipse stroke="black" stroke-width="1" fill="none" cx="299.5" cy="354.5" rx="30" ry="30"/>
+	<text x="200.5" y="360.5" font-family="Times New Roman" font-size="20">filled lobby, asking (1/2)</text>
+	<polygon stroke="black" stroke-width="1" points="57.057,75.826 104.943,142.174"/>
+	<polygon fill="black" stroke-width="1" points="104.943,142.174 104.315,132.761 96.207,138.613"/>
+	<text x="12.5" y="128.5" font-family="Times New Roman" font-size="20">connect</text>
+	<polygon stroke="black" stroke-width="1" points="151.423,158.533 358.577,101.467"/>
+	<polygon fill="black" stroke-width="1" points="358.577,101.467 349.537,98.772 352.193,108.412"/>
+	<text x="248.5" y="154.5" font-family="Times New Roman" font-size="20">player joins</text>
+	<polygon stroke="black" stroke-width="1" points="410.904,112.269 672.096,321.731"/>
+	<polygon fill="black" stroke-width="1" points="672.096,321.731 668.983,312.826 662.727,320.627"/>
+	<text x="453.5" y="237.5" font-family="Times New Roman" font-size="20">start game</text>
+	<polygon stroke="black" stroke-width="1" points="156.036,467.897 275.964,373.103"/>
+	<polygon fill="black" stroke-width="1" points="275.964,373.103 266.588,374.141 272.789,381.986"/>
+	<text x="221.5" y="441.5" font-family="Times New Roman" font-size="20">yes</text>
+	<polygon stroke="black" stroke-width="1" points="278.935,332.657 143.065,188.343"/>
+	<polygon fill="black" stroke-width="1" points="143.065,188.343 144.908,197.595 152.189,190.74"/>
+	<text x="216.5" y="251.5" font-family="Times New Roman" font-size="20">no</text>
+	<polygon stroke="black" stroke-width="1" points="309.085,326.072 377.915,121.928"/>
+	<polygon fill="black" stroke-width="1" points="377.915,121.928 370.621,127.911 380.097,131.106"/>
+	<text x="351.5" y="237.5" font-family="Times New Roman" font-size="20">yes</text>
+	<polygon stroke="black" stroke-width="1" points="131.563,456.515 123.437,196.485"/>
+	<polygon fill="black" stroke-width="1" points="123.437,196.485 118.689,204.638 128.684,204.325"/>
+	<text x="132.5" y="332.5" font-family="Times New Roman" font-size="20">no</text>
+	<polygon stroke="black" stroke-width="1" points="666.461,348.031 161.539,478.969"/>
+	<polygon fill="black" stroke-width="1" points="161.539,478.969 170.538,481.801 168.028,472.121"/>
+	<text x="407.5" y="437.5" font-family="Times New Roman" font-size="20">game over</text>
+</svg>

@@ -1,27 +1,27 @@
 import express from 'express';
 import path from 'path';
 import {GameServer} from './game/GameServer';
-import {GameServerSocket} from './game/GameServerSocket';
-import {Lobby} from './lobby/Lobby';
+import {GameServerManager} from './GameServerManager';
 import {LobbyServer} from './lobby/LobbyServer';
-import {GetServer} from './NetworkTypes';
+import {LobbyServerManager} from './LobbyServerManager';
+import {GameToLobby, GetServer, LobbyToGame} from './NetworkTypes';
 
 const app = express();
 const port = 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const lobbyServer = new LobbyServer(HandoffLobby);
+const lobbyServer = new LobbyServerManager(HandoffLobby);
+const gameServer = new GameServerManager(HandoffGame);
+
 GetServer(app, lobbyServer);
 
-function HandoffLobby(lobby: Lobby) {
-  const gameSockets = lobby.players.map(
-    lobbyServerSocket => lobbyServerSocket as GameServerSocket
-  );
-  for (let i = 0; i < gameSockets.length; i++) {
-    gameSockets[i].data.playerIndex = i;
-  }
-  const game = new GameServer(gameSockets);
+function HandoffLobby(lobby: LobbyServer) {
+  const game = LobbyToGame(lobby);
+}
+
+function HandoffGame(game: GameServer) {
+  const lobby = GameToLobby(game);
 }
 
 app.get('/', async (req, res) => {

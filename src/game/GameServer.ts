@@ -11,7 +11,7 @@ enum GameState {
 }
 
 export class GameServer {
-  private players: GameServerSocket[];
+  players: GameServerSocket[];
   private state: GameState;
   private answers: Word[];
   private guesses: Word[];

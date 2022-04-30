@@ -5,9 +5,13 @@ import {
   LobbyServerToClientEvents,
 } from './client/LobbyNetworkEvents';
 
+export interface LobbySocketData {
+  isReady: boolean;
+}
+
 export type LobbyServerSocket = Socket<
   LobbyClientToServerEvents,
   LobbyServerToClientEvents,
   InterServerEvents,
-  SocketData
+  LobbySocketData
 >;

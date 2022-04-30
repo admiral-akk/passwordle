@@ -1,6 +1,6 @@
 import { GameServerSocket } from './GameServerSocket';
 export declare class GameServer {
-    private players;
+    players: GameServerSocket[];
     private state;
     private answers;
     private guesses;

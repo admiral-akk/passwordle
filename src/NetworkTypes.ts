@@ -1,11 +1,14 @@
 import {Server} from 'socket.io';
 import {GameServerToClientEvents} from './game/client/GameNetworkEvents';
+import {GameServer} from './game/GameServer';
+import {GameServerSocket} from './game/GameServerSocket';
 import {
   LobbyClientToServerEvents,
   LobbyServerToClientEvents,
 } from './lobby/client/LobbyNetworkEvents';
-import {Lobby} from './lobby/Lobby';
 import {LobbyServer} from './lobby/LobbyServer';
+import {LobbyServerSocket, LobbySocketData} from './lobby/LobbyServerSocket';
+import {LobbyServerManager} from './LobbyServerManager';
 
 export interface ServerToClientEvents
   extends LobbyServerToClientEvents,
@@ -15,16 +18,16 @@ export interface ClientToServerEvents
     GameServerToClientEvents {}
 
 export interface InterServerEvents {
-  HandoffLobby: (lobby: Lobby) => void;
+  HandoffLobby: (lobby: LobbyServer) => void;
 }
-export interface SocketData {
+export interface SocketData extends LobbySocketData {
   name: string;
   playerIndex: number;
 }
 
 export function GetServer(
   app: Express.Application,
-  lobbyServer: LobbyServer
+  lobbyServer: LobbyServerManager
 ): Server<
   ClientToServerEvents,
   ServerToClientEvents,
@@ -47,4 +50,21 @@ export function GetServer(
     console.log('listening on *:4000');
   });
   return io;
+}
+
+export function LobbyToGame(lobby: LobbyServer): GameServer {
+  const gameSockets = lobby.players.map(
+    lobbyServerSocket => lobbyServerSocket as GameServerSocket
+  );
+  gameSockets.forEach((s, i) => (s.data.playerIndex = i));
+  return new GameServer(gameSockets);
+}
+
+export function GameToLobby(game: GameServer): LobbyServer {
+  const lobbySockets = game.players.map(
+    gameServerSocket => gameServerSocket as LobbyServerSocket
+  );
+  const lobby = new LobbyServer(lobbySockets[0]);
+  lobby.AddPlayer(lobbySockets[1]);
+  return lobby;
 }

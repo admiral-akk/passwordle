@@ -1,11 +1,9 @@
-import { Lobby } from './Lobby';
 import { LobbyServerSocket } from './LobbyServerSocket';
 export declare class LobbyServer {
-    private privateLobby;
-    private publicLobby;
-    private handoffLobby;
-    constructor(handoffLobby: (lobby: Lobby) => void);
-    AddSocket(socket: LobbyServerSocket): void;
-    private RegisterLobbyHandlers;
-    private Connect;
+    id: string;
+    players: LobbyServerSocket[];
+    ready: boolean[];
+    constructor(socket: LobbyServerSocket);
+    PlayerJoins(player: LobbyServerSocket): void;
+    AddPlayer(player: LobbyServerSocket): void;
 }

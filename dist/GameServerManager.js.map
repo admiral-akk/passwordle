@@ -1,0 +1,1 @@
+{"version":3,"file":"GameServerManager.js","sourceRoot":"","sources":["../src/GameServerManager.ts"],"names":[],"mappings":";;;AAEA,MAAa,iBAAiB;IAK5B,YAAY,WAAuC;QACjD,IAAI,CAAC,WAAW,GAAG,EAAE,CAAC;QACtB,IAAI,CAAC,WAAW,GAAG,WAAW,CAAC;IACjC,CAAC;IAED,OAAO,CAAC,IAAgB;QACtB,IAAI,CAAC,WAAW,CAAC,IAAI,CAAC,IAAI,CAAC,CAAC;IAC9B,CAAC;IAED,aAAa,KAAI,CAAC;CACnB;AAfD,8CAeC"}
