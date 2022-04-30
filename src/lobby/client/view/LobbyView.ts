@@ -49,14 +49,20 @@ export class LobbyView {
     this.SetModal(new LobbyReadyModal(this.modal));
   }
 
+  RematchMenu() {
+    this.modal.style.display = 'block';
+    this.background.style.display = 'block';
+    this.root.style.display = 'block';
+  }
+
   InGame() {
     if (this.currentModal) {
       this.currentModal.Exit();
     }
     this.currentModal = null;
-    this.modal.remove();
-    this.background.remove();
-    this.root.remove();
+    this.modal.style.display = 'none';
+    this.background.style.display = 'none';
+    this.root.style.display = 'none';
   }
 }
 

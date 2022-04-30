@@ -11,6 +11,7 @@ enum LobbyState {
   HostingMatch, // Hosting a game, waiting for someone to join the link shared.
   LobbyReady, // Two players have joined the lobby, waiting for the server to send an initial state
   InGame, // Initial state recieved, passing players to actual game
+  RematchMenu,
 }
 
 export class LobbyManager {

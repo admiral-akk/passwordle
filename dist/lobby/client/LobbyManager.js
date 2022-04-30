@@ -12,6 +12,7 @@ var LobbyState;
     LobbyState[LobbyState["HostingMatch"] = 4] = "HostingMatch";
     LobbyState[LobbyState["LobbyReady"] = 5] = "LobbyReady";
     LobbyState[LobbyState["InGame"] = 6] = "InGame";
+    LobbyState[LobbyState["RematchMenu"] = 7] = "RematchMenu";
 })(LobbyState || (LobbyState = {}));
 class LobbyManager {
     constructor(socket) {
