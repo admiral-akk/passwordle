@@ -19,40 +19,33 @@ export class LobbyServer {
 
   private RegisterLobbyHandlers(socket: LobbyServerSocket): void {
     socket.on('HostPrivateLobby', () => {
-      console.log(`HostPrivateLobby request from: ${socket.id}`);
-      const lobby = new Lobby();
-      lobby.players.push(socket);
-      const lobbyId = GenerateLobbyId(Object.keys(this.privateLobby));
-      this.privateLobby[lobbyId] = lobby;
-      socket.emit('PrivateLobbyId', lobbyId);
+      const lobby = new Lobby(socket);
+      this.privateLobby[lobby.id] = lobby;
+      socket.emit('PrivateLobbyId', lobby.id);
     });
     socket.on('HostPublicLobby', () => {
       if (this.publicLobby.length > 0) {
-        const lobby = this.publicLobby.pop()!;
-        lobby.players.push(socket);
-        lobby.players.forEach(s => {
-          s.emit('LobbyReady');
-        });
-        this.handoffLobby(lobby);
+        this.Connect(this.publicLobby.pop()!, socket);
       } else {
-        const lobby = new Lobby();
-        lobby.players.push(socket);
-        this.publicLobby.push(lobby);
+        this.publicLobby.push(new Lobby(socket));
         socket.emit('PublicLobbyId');
       }
     });
     socket.on('JoinPrivateLobby', (lobbyId: string) => {
       if (lobbyId in this.privateLobby) {
-        const lobby = this.privateLobby[lobbyId];
-        lobby.players.push(socket);
-        lobby.players.forEach(s => {
-          s.emit('LobbyReady');
-        });
-        this.handoffLobby(lobby);
+        this.Connect(this.privateLobby[lobbyId], socket);
       } else {
         console.log(`Tried to connect to non-existent lobby: ${lobbyId}`);
       }
     });
+  }
+
+  private Connect(lobby: Lobby, otherPlayer: LobbyServerSocket) {
+    lobby.AddPlayer(otherPlayer);
+    lobby.players.forEach(s => {
+      s.emit('LobbyReady');
+    });
+    this.handoffLobby(lobby);
   }
 }
 

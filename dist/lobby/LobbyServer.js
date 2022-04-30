@@ -13,42 +13,34 @@ class LobbyServer {
     }
     RegisterLobbyHandlers(socket) {
         socket.on('HostPrivateLobby', () => {
-            console.log(`HostPrivateLobby request from: ${socket.id}`);
-            const lobby = new Lobby_1.Lobby();
-            lobby.players.push(socket);
-            const lobbyId = GenerateLobbyId(Object.keys(this.privateLobby));
-            this.privateLobby[lobbyId] = lobby;
-            socket.emit('PrivateLobbyId', lobbyId);
+            const lobby = new Lobby_1.Lobby(socket);
+            this.privateLobby[lobby.id] = lobby;
+            socket.emit('PrivateLobbyId', lobby.id);
         });
         socket.on('HostPublicLobby', () => {
             if (this.publicLobby.length > 0) {
-                const lobby = this.publicLobby.pop();
-                lobby.players.push(socket);
-                lobby.players.forEach(s => {
-                    s.emit('LobbyReady');
-                });
-                this.handoffLobby(lobby);
+                this.Connect(this.publicLobby.pop(), socket);
             }
             else {
-                const lobby = new Lobby_1.Lobby();
-                lobby.players.push(socket);
-                this.publicLobby.push(lobby);
+                this.publicLobby.push(new Lobby_1.Lobby(socket));
                 socket.emit('PublicLobbyId');
             }
         });
         socket.on('JoinPrivateLobby', (lobbyId) => {
             if (lobbyId in this.privateLobby) {
-                const lobby = this.privateLobby[lobbyId];
-                lobby.players.push(socket);
-                lobby.players.forEach(s => {
-                    s.emit('LobbyReady');
-                });
-                this.handoffLobby(lobby);
+                this.Connect(this.privateLobby[lobbyId], socket);
             }
             else {
                 console.log(`Tried to connect to non-existent lobby: ${lobbyId}`);
             }
         });
+    }
+    Connect(lobby, otherPlayer) {
+        lobby.AddPlayer(otherPlayer);
+        lobby.players.forEach(s => {
+            s.emit('LobbyReady');
+        });
+        this.handoffLobby(lobby);
     }
 }
 exports.LobbyServer = LobbyServer;

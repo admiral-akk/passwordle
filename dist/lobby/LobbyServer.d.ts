@@ -7,4 +7,5 @@ export declare class LobbyServer {
     constructor(handoffLobby: (lobby: Lobby) => void);
     AddSocket(socket: LobbyServerSocket): void;
     private RegisterLobbyHandlers;
+    private Connect;
 }
