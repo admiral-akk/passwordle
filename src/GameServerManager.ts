@@ -13,12 +13,13 @@ export class GameServerManager {
 
   NewGame(players: GameServerSocket[]) {
     players.forEach((s, i) => (s.data.playerIndex = i));
-    const game = new GameServer(players);
-    this.activeGames[players[0].id] = game;
+    const gameId = players[0].id;
+    const game = new GameServer(players, () => this.GameCompleted(gameId));
+    this.activeGames[gameId] = game;
   }
 
-  GameCompleted(game: GameServer) {
-    this.gameComplete(game.players);
-    delete this.activeGames[game.players[0].id];
+  private GameCompleted(gameId: string) {
+    this.gameComplete(this.activeGames[gameId].players);
+    delete this.activeGames[gameId];
   }
 }

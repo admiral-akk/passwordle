@@ -9,12 +9,13 @@ class GameServerManager {
     }
     NewGame(players) {
         players.forEach((s, i) => (s.data.playerIndex = i));
-        const game = new GameServer_1.GameServer(players);
-        this.activeGames[players[0].id] = game;
+        const gameId = players[0].id;
+        const game = new GameServer_1.GameServer(players, () => this.GameCompleted(gameId));
+        this.activeGames[gameId] = game;
     }
-    GameCompleted(game) {
-        this.gameComplete(game.players);
-        delete this.activeGames[game.players[0].id];
+    GameCompleted(gameId) {
+        this.gameComplete(this.activeGames[gameId].players);
+        delete this.activeGames[gameId];
     }
 }
 exports.GameServerManager = GameServerManager;

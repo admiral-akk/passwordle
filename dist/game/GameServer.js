@@ -12,12 +12,13 @@ var GameState;
     GameState[GameState["SubmissionOpen"] = 1] = "SubmissionOpen";
 })(GameState || (GameState = {}));
 class GameServer {
-    constructor(players) {
+    constructor(players, onGameOver) {
         this.players = players;
         this.state = GameState.Start;
         this.answers = [];
         this.guesses = [];
         this.progress = [];
+        this.onGameOver = onGameOver;
         this.RegisterPlayers(this.players);
         this.SetState(GameState.Start);
     }
@@ -91,6 +92,7 @@ class GameServer {
             if (guess === targetAnswer) {
                 this.players[i].emit('Won');
                 this.players[(i + 1) % 2].emit('Lost');
+                this.onGameOver();
                 break;
             }
         }

@@ -16,12 +16,14 @@ export class GameServer {
   private answers: Word[];
   private guesses: Word[];
   private progress: TargetProgress[];
-  constructor(players: GameServerSocket[]) {
+  private onGameOver: () => void;
+  constructor(players: GameServerSocket[], onGameOver: () => void) {
     this.players = players;
     this.state = GameState.Start;
     this.answers = [];
     this.guesses = [];
     this.progress = [];
+    this.onGameOver = onGameOver;
     this.RegisterPlayers(this.players);
     this.SetState(GameState.Start);
   }
@@ -116,6 +118,7 @@ export class GameServer {
       if (guess === targetAnswer) {
         this.players[i].emit('Won');
         this.players[(i + 1) % 2].emit('Lost');
+        this.onGameOver();
         break;
       }
     }

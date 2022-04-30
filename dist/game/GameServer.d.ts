@@ -5,7 +5,8 @@ export declare class GameServer {
     private answers;
     private guesses;
     private progress;
-    constructor(players: GameServerSocket[]);
+    private onGameOver;
+    constructor(players: GameServerSocket[], onGameOver: () => void);
     private SetState;
     private OpenSubmission;
     private GenerateAnswers;
