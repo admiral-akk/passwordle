@@ -11,6 +11,6 @@ export class PlayerBoardView extends BoardView {
     this.BaseUpdate(update);
   }
   HintUpdate(update: HintUpdate) {
-    this.BaseHintUpdate(update.playerKnowledge, update.guessIndex);
+    this.BaseHintUpdate(update.hint.playerGuess, update.guessIndex);
   }
 }

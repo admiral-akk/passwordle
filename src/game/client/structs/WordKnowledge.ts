@@ -1,9 +1,4 @@
-export enum LetterState {
-  None,
-  Grey,
-  Yellow,
-  Green,
-}
+import {LetterState} from './LetterState';
 
 export class WordKnowledge {
   public letterKnowledge: LetterState[];

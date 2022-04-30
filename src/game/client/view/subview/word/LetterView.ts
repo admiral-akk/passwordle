@@ -1,4 +1,4 @@
-import {LetterState} from '../../../../logic/Knowledge';
+import {LetterState} from '../../../structs/LetterState';
 import {CharUpdate} from '../../CharUpdate';
 import {Subview} from '../Subview';
 
@@ -30,6 +30,9 @@ export class LetterView extends Subview {
       case LetterState.Grey:
         this.root.style.backgroundColor = 'grey';
         break;
+        case LetterState.Red:
+          this.root.style.backgroundColor = 'red';
+          break;
     }
   }
 }

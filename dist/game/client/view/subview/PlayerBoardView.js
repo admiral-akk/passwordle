@@ -10,7 +10,7 @@ class PlayerBoardView extends BoardView_1.BoardView {
         this.BaseUpdate(update);
     }
     HintUpdate(update) {
-        this.BaseHintUpdate(update.playerKnowledge, update.guessIndex);
+        this.BaseHintUpdate(update.hint.playerGuess, update.guessIndex);
     }
 }
 exports.PlayerBoardView = PlayerBoardView;

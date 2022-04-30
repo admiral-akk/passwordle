@@ -1,6 +1,7 @@
 import { Subview } from '../Subview';
 import { CharUpdate } from '../../CharUpdate';
-import { LetterState, WordKnowledge } from '../../../../logic/Knowledge';
+import { WordKnowledge } from '../../../structs/WordKnowledge';
+import { LetterState } from '../../../structs/LetterState';
 export declare class WordView extends Subview {
     private letters;
     constructor(root: HTMLElement);

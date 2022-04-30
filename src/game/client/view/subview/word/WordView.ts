@@ -1,7 +1,8 @@
 import {LetterView} from './LetterView';
 import {Subview} from '../Subview';
 import {CharUpdate} from '../../CharUpdate';
-import {LetterState, WordKnowledge} from '../../../../logic/Knowledge';
+import {WordKnowledge} from '../../../structs/WordKnowledge';
+import {LetterState} from '../../../structs/LetterState';
 
 const WORD_LENGTH = 5;
 

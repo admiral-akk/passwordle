@@ -1,7 +1,6 @@
-import { WordKnowledge } from '../../logic/Knowledge';
+import { Hint } from '../structs/Hint';
 export declare class HintUpdate {
-    playerKnowledge: WordKnowledge;
-    opponentKnowledge: WordKnowledge;
+    hint: Hint;
     guessIndex: number;
-    constructor(playerKnowledge: WordKnowledge, opponentKnowledge: WordKnowledge, guessIndex: number);
+    constructor(hint: Hint, guessIndex: number);
 }

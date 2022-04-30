@@ -1,5 +1,6 @@
 import {Word} from '../structs/Word';
-import {LetterState, WordKnowledge} from './Knowledge';
+import {WordKnowledge} from '../client/structs/WordKnowledge';
+import {LetterState} from '../client/structs/LetterState';
 
 export function GetKnowledge(guess: Word, answer: Word): WordKnowledge {
   console.log(`testing: ${guess} v ${answer}`);

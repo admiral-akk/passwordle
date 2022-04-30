@@ -1,3 +1,4 @@
+
 import {HintUpdate} from '../HintUpdate';
 import {BoardView} from './BoardView';
 
@@ -7,6 +8,6 @@ export class OpponentBoardView extends BoardView {
   }
 
   HintUpdate(update: HintUpdate) {
-    this.BaseHintUpdate(update.opponentKnowledge, update.guessIndex);
+    this.BaseHintUpdate(update.hint.opponentGuess, update.guessIndex);
   }
 }

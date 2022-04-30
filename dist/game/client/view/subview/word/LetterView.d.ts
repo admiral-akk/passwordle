@@ -1,4 +1,4 @@
-import { LetterState } from '../../../../logic/Knowledge';
+import { LetterState } from '../../../structs/LetterState';
 import { CharUpdate } from '../../CharUpdate';
 import { Subview } from '../Subview';
 export declare class LetterView extends Subview {

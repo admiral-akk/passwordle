@@ -1,10 +1,21 @@
-import {WordKnowledge} from '../../logic/Knowledge';
+import {TargetProgress} from './TargetProgress';
+import {WordKnowledge} from './WordKnowledge';
 
 export class Hint {
   playerGuess: WordKnowledge;
   opponentGuess: WordKnowledge;
-  constructor(playerGuess: WordKnowledge, opponentGuess: WordKnowledge) {
+  opponentProgress: TargetProgress;
+  playerProgress: TargetProgress;
+
+  constructor(
+    playerGuess: WordKnowledge,
+    opponentGuess: WordKnowledge,
+    playerProgress: TargetProgress,
+    opponentProgress: TargetProgress
+  ) {
     this.playerGuess = playerGuess;
     this.opponentGuess = opponentGuess;
+    this.playerProgress = playerProgress;
+    this.opponentProgress = opponentProgress;
   }
 }

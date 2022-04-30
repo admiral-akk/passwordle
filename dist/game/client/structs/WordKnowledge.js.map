@@ -1,0 +1,1 @@
+{"version":3,"file":"WordKnowledge.js","sourceRoot":"","sources":["../../../../src/game/client/structs/WordKnowledge.ts"],"names":[],"mappings":";;;AAEA,MAAa,aAAa;IAGxB,YAAY,eAA8B,EAAE,KAAa;QACvD,IAAI,CAAC,eAAe,GAAG,eAAe,CAAC;QACvC,IAAI,CAAC,KAAK,GAAG,KAAK,CAAC;IACrB,CAAC;CACF;AAPD,sCAOC"}

@@ -5,6 +5,7 @@ const Words_1 = require("./Words");
 const Hint_1 = require("./client/structs/Hint");
 const WordleLogic_1 = require("./logic/WordleLogic");
 const Word_1 = require("./structs/Word");
+const TargetProgress_1 = require("./client/structs/TargetProgress");
 var GameState;
 (function (GameState) {
     GameState[GameState["Start"] = 0] = "Start";
@@ -16,6 +17,7 @@ class GameServer {
         this.state = GameState.Start;
         this.answers = [];
         this.guesses = [];
+        this.progress = [];
         this.RegisterPlayers(this.players);
         this.SetState(GameState.Start);
     }
@@ -44,6 +46,7 @@ class GameServer {
         this.players.forEach(() => {
             this.answers.push((0, Word_1.ToWord)(GenerateAnswer(this.answers)));
             this.guesses.push((0, Word_1.ToWord)(''));
+            this.progress.push(new TargetProgress_1.TargetProgress(['', '', '', '', '']));
         });
         for (let i = 0; i < this.players.length; i++) {
             this.players[i].emit('SecretWord', this.answers[i]);
@@ -55,6 +58,7 @@ class GameServer {
                 const playerIndex = player.data.playerIndex;
                 this.guesses[playerIndex] = (0, Word_1.ToWord)(guess);
                 if (this.guesses.filter(g => g.length === 0).length === 0) {
+                    this.UpdateProgress();
                     this.RevealHints();
                     this.CheckWin();
                     this.ClearWords();
@@ -62,13 +66,22 @@ class GameServer {
             });
         });
     }
+    UpdateProgress() {
+        for (let i = 0; i < this.progress.length; i++) {
+            const answer = this.answers[i];
+            const knowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[i], answer);
+            const extraKnowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[(i + 1) % 2], answer);
+            this.progress[i].UpdateProgress(knowledge);
+            this.progress[i].UpdateProgress(extraKnowledge);
+        }
+    }
     RevealHints() {
         this.players.forEach(player => {
             const playerIndex = player.data.playerIndex;
             const targetAnswer = this.answers[(playerIndex + 1) % 2];
             const playerKnowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[playerIndex], targetAnswer);
             const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(this.guesses[(playerIndex + 1) % 2], targetAnswer);
-            player.emit('Hints', new Hint_1.Hint(playerKnowledge, opponentKnowledge));
+            player.emit('Hints', new Hint_1.Hint(playerKnowledge, opponentKnowledge, this.progress[playerIndex], this.progress[(playerIndex + 1) % 2]));
         });
     }
     CheckWin() {

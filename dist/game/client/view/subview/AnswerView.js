@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnswerView = void 0;
+const LetterState_1 = require("../../structs/LetterState");
 const Subview_1 = require("./Subview");
 const WordView_1 = require("./word/WordView");
 class AnswerView extends Subview_1.Subview {
@@ -10,6 +11,14 @@ class AnswerView extends Subview_1.Subview {
     }
     SetSecret(secret) {
         this.answer.Set(secret);
+    }
+    HintUpdate(update) {
+        const knownCharacters = update.hint.playerProgress.knownCharacters;
+        for (let i = 0; i < knownCharacters.length; i++) {
+            if (knownCharacters[i] !== '') {
+                this.answer.SetChar(knownCharacters[i], i, LetterState_1.LetterState.Red);
+            }
+        }
     }
 }
 exports.AnswerView = AnswerView;

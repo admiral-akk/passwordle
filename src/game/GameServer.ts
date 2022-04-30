@@ -3,6 +3,7 @@ import {Hint} from './client/structs/Hint';
 import {GameServerSocket} from './GameServerSocket';
 import {GetKnowledge} from './logic/WordleLogic';
 import {ToWord, Word} from './structs/Word';
+import {TargetProgress} from './client/structs/TargetProgress';
 
 enum GameState {
   Start,
@@ -14,11 +15,13 @@ export class GameServer {
   private state: GameState;
   private answers: Word[];
   private guesses: Word[];
+  private progress: TargetProgress[];
   constructor(players: GameServerSocket[]) {
     this.players = players;
     this.state = GameState.Start;
     this.answers = [];
     this.guesses = [];
+    this.progress = [];
     this.RegisterPlayers(this.players);
     this.SetState(GameState.Start);
   }
@@ -50,6 +53,7 @@ export class GameServer {
     this.players.forEach(() => {
       this.answers.push(ToWord(GenerateAnswer(this.answers)));
       this.guesses.push(ToWord(''));
+      this.progress.push(new TargetProgress(['', '', '', '', '']));
     });
     for (let i = 0; i < this.players.length; i++) {
       this.players[i].emit('SecretWord', this.answers[i]);
@@ -62,12 +66,23 @@ export class GameServer {
         const playerIndex = player.data.playerIndex!;
         this.guesses[playerIndex] = ToWord(guess);
         if (this.guesses.filter(g => g.length === 0).length === 0) {
+          this.UpdateProgress();
           this.RevealHints();
           this.CheckWin();
           this.ClearWords();
         }
       });
     });
+  }
+
+  private UpdateProgress() {
+    for (let i = 0; i < this.progress.length; i++) {
+      const answer = this.answers[i];
+      const knowledge = GetKnowledge(this.guesses[i],answer);
+      const extraKnowledge = GetKnowledge(this.guesses[(i+1)%2],answer);
+      this.progress[i].UpdateProgress(knowledge);
+      this.progress[i].UpdateProgress(extraKnowledge);
+    }
   }
 
   private RevealHints() {
@@ -82,7 +97,15 @@ export class GameServer {
         this.guesses[(playerIndex + 1) % 2],
         targetAnswer
       );
-      player.emit('Hints', new Hint(playerKnowledge, opponentKnowledge));
+      player.emit(
+        'Hints',
+        new Hint(
+          playerKnowledge,
+          opponentKnowledge,
+          this.progress[playerIndex],
+          this.progress[(playerIndex + 1) % 2]
+        )
+      );
     });
   }
 

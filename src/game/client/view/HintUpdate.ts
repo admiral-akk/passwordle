@@ -1,16 +1,13 @@
-import {WordKnowledge} from '../../logic/Knowledge';
+import { Hint } from '../structs/Hint';
 
 export class HintUpdate {
-  playerKnowledge: WordKnowledge;
-  opponentKnowledge: WordKnowledge;
+  hint: Hint;
   guessIndex: number;
   constructor(
-    playerKnowledge: WordKnowledge,
-    opponentKnowledge: WordKnowledge,
+    hint: Hint,
     guessIndex: number
   ) {
-    this.playerKnowledge = playerKnowledge;
-    this.opponentKnowledge = opponentKnowledge;
+    this.hint = hint;
     this.guessIndex = guessIndex;
   }
 }

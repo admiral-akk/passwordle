@@ -125,8 +125,7 @@ export class GameManager {
 
   private Hints(hint: Hint) {
     const update = new HintUpdate(
-      hint.playerGuess,
-      hint.opponentGuess,
+      hint,
       this.currentIndex - 1
     );
     this.view.HintUpdate(update);

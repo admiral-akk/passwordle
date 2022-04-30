@@ -91,7 +91,7 @@ class GameManager {
         this.SetState(GameState.ShowHiddenWord);
     }
     Hints(hint) {
-        const update = new HintUpdate_1.HintUpdate(hint.playerGuess, hint.opponentGuess, this.currentIndex - 1);
+        const update = new HintUpdate_1.HintUpdate(hint, this.currentIndex - 1);
         this.view.HintUpdate(update);
         this.SetState(GameState.RevealHints);
     }

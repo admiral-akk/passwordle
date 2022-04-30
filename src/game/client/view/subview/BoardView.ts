@@ -1,4 +1,4 @@
-import {WordKnowledge} from '../../../logic/Knowledge';
+import {WordKnowledge} from '../../structs/WordKnowledge';
 import {CharUpdate} from '../CharUpdate';
 import {Subview} from './Subview';
 import {WordView} from './word/WordView';

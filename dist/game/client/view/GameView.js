@@ -31,6 +31,7 @@ class GameView {
     HintUpdate(update) {
         this.playerBoard.HintUpdate(update);
         this.opponentBoard.HintUpdate(update);
+        this.answer.HintUpdate(update);
         this.target.HintUpdate(update);
     }
     GameOver(won) {
