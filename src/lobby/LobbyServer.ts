@@ -49,10 +49,12 @@ export class LobbyServer {
     });
     socket.on('JoinPrivateLobby', (lobbyId: string) => {
       if (lobbyId in this.privateLobby) {
-        this.privateLobby[lobbyId].players.push(socket);
-        this.privateLobby[lobbyId].players.forEach(s => {
+        const lobby = this.privateLobby[lobbyId];
+        lobby.players.push(socket);
+        lobby.players.forEach(s => {
           s.emit('LobbyReady');
         });
+        this.handoffLobby(lobby);
       } else {
         console.log(`Tried to connect to non-existent lobby: ${lobbyId}`);
       }
