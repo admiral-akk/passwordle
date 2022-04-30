@@ -6,7 +6,7 @@ import {WordView} from './word/WordView';
 export class AnswerView extends Subview {
   private answer: WordView;
   constructor(base: HTMLElement) {
-    super(base, 'answer');
+    super(base, 'answer', 'Lose if this is filled!');
     this.answer = new WordView(this.root);
   }
 

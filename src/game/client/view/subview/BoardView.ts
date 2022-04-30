@@ -7,8 +7,8 @@ const WORD_COUNT = 6;
 
 export abstract class BoardView extends Subview {
   private words: WordView[];
-  constructor(base: HTMLDivElement) {
-    super(base, 'board');
+  constructor(base: HTMLDivElement, explanationText = '') {
+    super(base, 'board', explanationText);
     this.words = [];
     for (let i = 0; i < WORD_COUNT; i++) {
       this.words.push(new WordView(this.root));

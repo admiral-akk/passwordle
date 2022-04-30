@@ -5,6 +5,7 @@ import {EndGameView} from './subview/EndGameView';
 import {KeyboardView} from './subview/KeyboardView';
 import {OpponentBoardView} from './subview/OpponentBoardView';
 import {PlayerBoardView} from './subview/PlayerBoardView';
+import {ExplanationView} from './subview/Subview';
 import {TargetView} from './subview/TargetView';
 import {TimerView} from './subview/TimerView';
 
@@ -32,6 +33,12 @@ export class GameView {
     this.opponentBoard = new OpponentBoardView(opponent);
 
     this.keyboard = new KeyboardView(root);
+    const explain = AddDiv(root, 'explain');
+    new ExplanationView(
+      explain,
+      `Each guess you make gives you and your opponent hints.\n
+    Find every letter of the opponents word before they find every letter of yours.`
+    );
 
     this.endGame = new EndGameView(root);
   }

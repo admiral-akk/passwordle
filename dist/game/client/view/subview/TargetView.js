@@ -6,7 +6,7 @@ const Subview_1 = require("./Subview");
 const WordView_1 = require("./word/WordView");
 class TargetView extends Subview_1.Subview {
     constructor(base) {
-        super(base, 'target');
+        super(base, 'target', 'Fill this word to win!');
         this.answer = new WordView_1.WordView(this.root);
     }
     HintUpdate(update) {

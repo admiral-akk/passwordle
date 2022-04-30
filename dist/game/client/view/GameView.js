@@ -6,6 +6,7 @@ const EndGameView_1 = require("./subview/EndGameView");
 const KeyboardView_1 = require("./subview/KeyboardView");
 const OpponentBoardView_1 = require("./subview/OpponentBoardView");
 const PlayerBoardView_1 = require("./subview/PlayerBoardView");
+const Subview_1 = require("./subview/Subview");
 const TargetView_1 = require("./subview/TargetView");
 const TimerView_1 = require("./subview/TimerView");
 class GameView {
@@ -20,6 +21,9 @@ class GameView {
         this.target = new TargetView_1.TargetView(opponent);
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
         this.keyboard = new KeyboardView_1.KeyboardView(root);
+        const explain = AddDiv(root, 'explain');
+        new Subview_1.ExplanationView(explain, `Each guess you make gives you and your opponent hints.\n
+    Find every letter of the opponents word before they find every letter of yours.`);
         this.endGame = new EndGameView_1.EndGameView(root);
     }
     SetSecret(secret) {

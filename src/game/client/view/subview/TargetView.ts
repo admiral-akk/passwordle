@@ -1,5 +1,4 @@
 import {LetterState} from '../../structs/LetterState';
-import {TargetProgress} from '../../structs/TargetProgress';
 import {HintUpdate} from '../HintUpdate';
 import {Subview} from './Subview';
 import {WordView} from './word/WordView';
@@ -7,7 +6,7 @@ import {WordView} from './word/WordView';
 export class TargetView extends Subview {
   private answer: WordView;
   constructor(base: HTMLElement) {
-    super(base, 'target');
+    super(base, 'target', 'Fill this word to win!');
     this.answer = new WordView(this.root);
   }
 

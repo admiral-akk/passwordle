@@ -4,7 +4,7 @@ exports.PlayerBoardView = void 0;
 const BoardView_1 = require("./BoardView");
 class PlayerBoardView extends BoardView_1.BoardView {
     constructor(base) {
-        super(base);
+        super(base, 'Your Guesses');
     }
     Update(update) {
         this.BaseUpdate(update);

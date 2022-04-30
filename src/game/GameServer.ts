@@ -113,9 +113,7 @@ export class GameServer {
 
   private CheckWin() {
     for (let i = 0; i < this.players.length; i++) {
-      const guess = this.guesses[i];
-      const targetAnswer = this.answers[(i + 1) % 2];
-      if (guess === targetAnswer) {
+      if (this.progress[i].knownCharacters.filter(c => c !== '').length === 0) {
         this.players[i].emit('Won');
         this.players[(i + 1) % 2].emit('Lost');
         this.onGameOver();

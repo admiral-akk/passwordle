@@ -57,6 +57,14 @@
     margin:  12px;
 }
 
+.explanation {
+    margin:  2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
 .target {
     margin: 12px;
 }
