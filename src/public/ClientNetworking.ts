@@ -5,7 +5,7 @@ export function GetSocket(): Socket<
   ServerToClientEvents,
   ClientToServerEvents
 > {
-  const socket = io('ws://localhost:4000/ws/', {transports: ['websocket']});
+  const socket = io('ws://node.magikarpierz:4000/ws/', {transports: ['websocket']});
   socket.on('connect', () => {
     console.log(`connected: ${socket.id}`);
   });

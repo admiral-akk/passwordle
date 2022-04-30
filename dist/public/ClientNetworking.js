@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetSocket = void 0;
 const socket_io_client_1 = require("socket.io-client");
 function GetSocket() {
-    const socket = (0, socket_io_client_1.io)('wss://localhost:4000/xws/', { transports: ['websocket'] });
+    const socket = (0, socket_io_client_1.io)('ws://node.magikarpierz:4000/ws/', { transports: ['websocket'] });
     socket.on('connect', () => {
         console.log(`connected: ${socket.id}`);
     });
