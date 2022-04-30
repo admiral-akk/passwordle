@@ -3,12 +3,18 @@ import { LobbyServerSocket } from './lobby/LobbyServerSocket';
 export declare class LobbyServerManager {
     private lobbies;
     private matchmakingLobbyIds;
-    private handoffLobby;
-    constructor(handoffLobby: (lobby: LobbyServer) => void);
-    CreatePrivateLobby(socket: LobbyServerSocket): void;
-    EnterMatchmaking(socket: LobbyServerSocket): void;
-    JoinPrivateLobby(socket: LobbyServerSocket, lobbyId: string): void;
+    private startGame;
+    constructor(startGame: (players: LobbyServerSocket[]) => void);
     AddSocket(socket: LobbyServerSocket): void;
+    AddLobby(lobby: LobbyServer): void;
+    RematchMenu(players: LobbyServerSocket[]): void;
+    private CreatePrivateLobby;
+    private EnterMatchmaking;
+    private JoinPrivateLobby;
     private RegisterLobbyHandlers;
+    private AcceptRematch;
+    private RejectRematch;
     private Connect;
+    private StartGame;
+    private RemoveLobby;
 }

@@ -1,8 +1,9 @@
 import { GameServer } from './game/GameServer';
+import { GameServerSocket } from './game/GameServerSocket';
 export declare class GameServerManager {
     private activeGames;
-    private handoffGame;
-    constructor(handoffGame: (game: GameServer) => void);
-    AddGame(game: GameServer): void;
-    GameCompleted(): void;
+    private gameComplete;
+    constructor(gameComplete: (game: GameServerSocket[]) => void);
+    NewGame(players: GameServerSocket[]): void;
+    GameCompleted(game: GameServer): void;
 }

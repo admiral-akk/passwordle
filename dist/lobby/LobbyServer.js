@@ -3,9 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyServer = void 0;
 class LobbyServer {
     constructor(socket) {
-        this.id = socket.id;
-        this.players = [socket];
-        this.ready = [false];
+        this.players = socket;
     }
     PlayerJoins(player) {
         player.data.isReady = false;
@@ -13,6 +11,9 @@ class LobbyServer {
     }
     AddPlayer(player) {
         this.players.push(player);
+    }
+    Ready() {
+        return this.players.filter(p => !p.data.isReady).length === 0;
     }
 }
 exports.LobbyServer = LobbyServer;

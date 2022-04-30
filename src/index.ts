@@ -1,10 +1,10 @@
 import express from 'express';
 import path from 'path';
-import {GameServer} from './game/GameServer';
+import {GameServerSocket} from './game/GameServerSocket';
 import {GameServerManager} from './GameServerManager';
-import {LobbyServer} from './lobby/LobbyServer';
+import {LobbyServerSocket} from './lobby/LobbyServerSocket';
 import {LobbyServerManager} from './LobbyServerManager';
-import {GameToLobby, GetServer, LobbyToGame} from './NetworkTypes';
+import {GetServer} from './NetworkTypes';
 
 const app = express();
 const port = 3000;
@@ -16,12 +16,18 @@ const gameServer = new GameServerManager(HandoffGame);
 
 GetServer(app, lobbyServer);
 
-function HandoffLobby(lobby: LobbyServer) {
-  const game = LobbyToGame(lobby);
+function HandoffLobby(players: LobbyServerSocket[]) {
+  const gamePlayers = players.map(
+    gameServerSocket => gameServerSocket as LobbyServerSocket
+  );
+  gameServer.NewGame(gamePlayers);
 }
 
-function HandoffGame(game: GameServer) {
-  const lobby = GameToLobby(game);
+function HandoffGame(players: GameServerSocket[]) {
+  const lobbyPlayers = players.map(
+    lobbyServerSocket => lobbyServerSocket as GameServerSocket
+  );
+  lobbyServer.RematchMenu(lobbyPlayers);
 }
 
 app.get('/', async (req, res) => {

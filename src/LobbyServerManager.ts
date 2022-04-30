@@ -5,42 +5,59 @@ export class LobbyServerManager {
   private lobbies: Record<string, LobbyServer>;
   private matchmakingLobbyIds: string[];
 
-  private handoffLobby: (lobby: LobbyServer) => void;
+  private startGame: (lobby: LobbyServerSocket[]) => void;
 
-  constructor(handoffLobby: (lobby: LobbyServer) => void) {
+  constructor(startGame: (players: LobbyServerSocket[]) => void) {
     this.lobbies = {};
     this.matchmakingLobbyIds = [];
-    this.handoffLobby = handoffLobby;
+    this.startGame = startGame;
   }
 
-  CreatePrivateLobby(socket: LobbyServerSocket) {
-    socket.emit('PrivateLobbyId', this.lobbies[socket.id].id);
+  AddSocket(socket: LobbyServerSocket) {
+    this.RegisterLobbyHandlers(socket);
+    socket.data.isReady = true;
+    const lobby = new LobbyServer([socket]);
+    this.lobbies[socket.id] = lobby;
   }
 
-  EnterMatchmaking(socket: LobbyServerSocket) {
+  AddLobby(lobby: LobbyServer) {
+    lobby.players.forEach(p => {
+      if (p.id in this.lobbies) {
+        this.lobbies[p.id] = lobby;
+      }
+    });
+  }
+
+  RematchMenu(players: LobbyServerSocket[]) {
+    players.forEach(p => (p.data.isReady = false));
+    const lobby = new LobbyServer(players);
+    lobby.players.forEach(p => {
+      if (p.id in this.lobbies) {
+        this.lobbies[p.id] = lobby;
+      }
+    });
+  }
+
+  private CreatePrivateLobby(socket: LobbyServerSocket) {
+    socket.emit('PrivateLobbyId', socket.id);
+  }
+
+  private EnterMatchmaking(socket: LobbyServerSocket) {
     if (this.matchmakingLobbyIds.length > 0) {
       const lobbyId = this.matchmakingLobbyIds.pop()!;
       this.Connect(this.lobbies[lobbyId], socket);
-      delete this.lobbies[lobbyId];
     } else {
       this.matchmakingLobbyIds.push(socket.id);
       socket.emit('PublicLobbyId');
     }
   }
 
-  JoinPrivateLobby(socket: LobbyServerSocket, lobbyId: string) {
+  private JoinPrivateLobby(socket: LobbyServerSocket, lobbyId: string) {
     if (lobbyId in this.lobbies) {
       this.Connect(this.lobbies[lobbyId], socket);
-      delete this.lobbies[lobbyId];
     } else {
       console.log(`Tried to connect to non-existent lobby: ${lobbyId}`);
     }
-  }
-
-  AddSocket(socket: LobbyServerSocket) {
-    this.RegisterLobbyHandlers(socket);
-    const lobby = new LobbyServer(socket);
-    this.lobbies[lobby.id] = lobby;
   }
 
   private RegisterLobbyHandlers(socket: LobbyServerSocket): void {
@@ -49,13 +66,50 @@ export class LobbyServerManager {
     socket.on('JoinPrivateLobby', (lobbyId: string) =>
       this.JoinPrivateLobby(socket, lobbyId)
     );
+    socket.on('AcceptRematch', () => this.AcceptRematch(socket));
+    socket.on('RejectRematch', () => this.RejectRematch(socket));
+  }
+
+  private AcceptRematch(socket: LobbyServerSocket) {
+    socket.data.isReady = true;
+    if (this.lobbies[socket.id].Ready()) {
+      this.StartGame(this.lobbies[socket.id]);
+    } else {
+      this.lobbies[socket.id].players.forEach(p => {
+        if (p !== socket) {
+          p.emit('RematchRequested');
+        }
+      });
+    }
+  }
+
+  private RejectRematch(socket: LobbyServerSocket) {
+    socket.data.isReady = false;
+    const players = this.lobbies[socket.id].players;
+    players.forEach(p => {
+      this.lobbies[p.id] = new LobbyServer([p]);
+      p.emit('RematchRefused');
+    });
   }
 
   private Connect(lobby: LobbyServer, otherPlayer: LobbyServerSocket) {
     lobby.AddPlayer(otherPlayer);
+    this.StartGame(lobby);
+  }
+
+  private StartGame(lobby: LobbyServer) {
     lobby.players.forEach(s => {
       s.emit('LobbyReady');
     });
-    this.handoffLobby(lobby);
+    this.startGame(lobby.players);
+    this.RemoveLobby(lobby);
+  }
+
+  private RemoveLobby(lobby: LobbyServer) {
+    lobby.players.forEach(p => {
+      if (p.id in this.lobbies) {
+        delete this.lobbies[p.id];
+      }
+    });
   }
 }

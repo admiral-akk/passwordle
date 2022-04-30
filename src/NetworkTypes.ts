@@ -51,20 +51,3 @@ export function GetServer(
   });
   return io;
 }
-
-export function LobbyToGame(lobby: LobbyServer): GameServer {
-  const gameSockets = lobby.players.map(
-    lobbyServerSocket => lobbyServerSocket as GameServerSocket
-  );
-  gameSockets.forEach((s, i) => (s.data.playerIndex = i));
-  return new GameServer(gameSockets);
-}
-
-export function GameToLobby(game: GameServer): LobbyServer {
-  const lobbySockets = game.players.map(
-    gameServerSocket => gameServerSocket as LobbyServerSocket
-  );
-  const lobby = new LobbyServer(lobbySockets[0]);
-  lobby.AddPlayer(lobbySockets[1]);
-  return lobby;
-}

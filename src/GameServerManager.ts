@@ -1,18 +1,24 @@
 import {GameServer} from './game/GameServer';
+import {GameServerSocket} from './game/GameServerSocket';
 
 export class GameServerManager {
-  private activeGames: GameServer[];
+  private activeGames: Record<string, GameServer>;
 
-  private handoffGame: (game: GameServer) => void;
+  private gameComplete: (game: GameServerSocket[]) => void;
 
-  constructor(handoffGame: (game: GameServer) => void) {
-    this.activeGames = [];
-    this.handoffGame = handoffGame;
+  constructor(gameComplete: (game: GameServerSocket[]) => void) {
+    this.activeGames = {};
+    this.gameComplete = gameComplete;
   }
 
-  AddGame(game: GameServer) {
-    this.activeGames.push(game);
+  NewGame(players: GameServerSocket[]) {
+    players.forEach((s, i) => (s.data.playerIndex = i));
+    const game = new GameServer(players);
+    this.activeGames[players[0].id] = game;
   }
 
-  GameCompleted() {}
+  GameCompleted(game: GameServer) {
+    this.gameComplete(game.players);
+    delete this.activeGames[game.players[0].id];
+  }
 }

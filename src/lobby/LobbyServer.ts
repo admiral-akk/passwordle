@@ -1,13 +1,9 @@
 import {LobbyServerSocket} from './LobbyServerSocket';
 
 export class LobbyServer {
-  id: string;
   players: LobbyServerSocket[];
-  ready: boolean[];
-  constructor(socket: LobbyServerSocket) {
-    this.id = socket.id;
-    this.players = [socket];
-    this.ready = [false];
+  constructor(socket: LobbyServerSocket[]) {
+    this.players = socket;
   }
 
   PlayerJoins(player: LobbyServerSocket) {
@@ -17,5 +13,9 @@ export class LobbyServer {
 
   AddPlayer(player: LobbyServerSocket) {
     this.players.push(player);
+  }
+
+  Ready() {
+    return this.players.filter(p => !p.data.isReady).length === 0;
   }
 }

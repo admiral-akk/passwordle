@@ -24,11 +24,13 @@ app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 const lobbyServer = new LobbyServerManager_1.LobbyServerManager(HandoffLobby);
 const gameServer = new GameServerManager_1.GameServerManager(HandoffGame);
 (0, NetworkTypes_1.GetServer)(app, lobbyServer);
-function HandoffLobby(lobby) {
-    const game = (0, NetworkTypes_1.LobbyToGame)(lobby);
+function HandoffLobby(players) {
+    const gamePlayers = players.map(gameServerSocket => gameServerSocket);
+    gameServer.NewGame(gamePlayers);
 }
-function HandoffGame(game) {
-    const lobby = (0, NetworkTypes_1.GameToLobby)(game);
+function HandoffGame(players) {
+    const lobbyPlayers = players.map(lobbyServerSocket => lobbyServerSocket);
+    lobbyServer.RematchMenu(lobbyPlayers);
 }
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Return the articles to the rendering engine
