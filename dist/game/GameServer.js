@@ -87,7 +87,7 @@ class GameServer {
     }
     CheckWin() {
         for (let i = 0; i < this.players.length; i++) {
-            if (this.progress[i].knownCharacters.filter(c => c !== '').length === 0) {
+            if (this.progress[i].knownCharacters.filter(c => c === '').length === 0) {
                 this.players[i].emit('Won');
                 this.players[(i + 1) % 2].emit('Lost');
                 this.onGameOver();

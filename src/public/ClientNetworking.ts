@@ -5,9 +5,7 @@ export function GetSocket(): Socket<
   ServerToClientEvents,
   ClientToServerEvents
 > {
-  const socket = io('http://node.magikarpierz.com', {
-    path: '/mysocket'
-});
+  const socket = io();
   socket.on('connect', () => {
     console.log(`connected: ${socket.id}`);
   });
