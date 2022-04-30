@@ -13,17 +13,17 @@ class GameView {
     constructor() {
         const root = document.getElementById('game-board');
         this.timer = new TimerView_1.TimerView(root);
+        this.target = new TargetView_1.TargetView(root);
         const game = AddDiv(root, 'play-area');
         const player = AddDiv(game, 'player');
-        this.answer = new AnswerView_1.AnswerView(player);
         this.playerBoard = new PlayerBoardView_1.PlayerBoardView(player);
         const opponent = AddDiv(game, 'opponent');
-        this.target = new TargetView_1.TargetView(opponent);
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
+        this.answer = new AnswerView_1.AnswerView(root);
         this.keyboard = new KeyboardView_1.KeyboardView(root);
         const explain = AddDiv(root, 'explain');
-        new Subview_1.ExplanationView(explain, `Each guess you make gives you and your opponent hints.\n
-    Find every letter of the opponents word before they find every letter of yours.`);
+        new Subview_1.ExplanationView(explain, `Each guess made fills both of the answer blocks.\n
+       The winner is the first to fill the hidden word that their opponent knows.`);
         this.endGame = new EndGameView_1.EndGameView(root);
     }
     SetSecret(secret) {

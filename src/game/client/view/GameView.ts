@@ -22,22 +22,22 @@ export class GameView {
     const root = document.getElementById('game-board')!;
     this.timer = new TimerView(root);
 
+    this.target = new TargetView(root);
     const game = AddDiv(root, 'play-area');
 
     const player = AddDiv(game, 'player');
-    this.answer = new AnswerView(player);
     this.playerBoard = new PlayerBoardView(player);
 
     const opponent = AddDiv(game, 'opponent');
-    this.target = new TargetView(opponent);
     this.opponentBoard = new OpponentBoardView(opponent);
+    this.answer = new AnswerView(root);
 
     this.keyboard = new KeyboardView(root);
     const explain = AddDiv(root, 'explain');
     new ExplanationView(
       explain,
-      `Each guess you make gives you and your opponent hints.\n
-    Find every letter of the opponents word before they find every letter of yours.`
+      `Each guess made fills both of the answer blocks.\n
+       The winner is the first to fill the hidden word that their opponent knows.`
     );
 
     this.endGame = new EndGameView(root);
