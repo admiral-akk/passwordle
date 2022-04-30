@@ -1,13 +1,11 @@
 import {Server} from 'socket.io';
 import {GameServerToClientEvents} from './game/client/GameNetworkEvents';
-import {GameServer} from './game/GameServer';
-import {GameServerSocket} from './game/GameServerSocket';
 import {
   LobbyClientToServerEvents,
   LobbyServerToClientEvents,
 } from './lobby/client/LobbyNetworkEvents';
 import {LobbyServer} from './lobby/LobbyServer';
-import {LobbyServerSocket, LobbySocketData} from './lobby/LobbyServerSocket';
+import {LobbySocketData} from './lobby/LobbyServerSocket';
 import {LobbyServerManager} from './LobbyServerManager';
 
 export interface ServerToClientEvents
