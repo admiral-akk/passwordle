@@ -36,7 +36,7 @@ export class GameView {
     const explain = AddDiv(root, 'explain');
     new ExplanationView(
       explain,
-      `Each guess made fills both of the answer blocks.\n
+      `Each guess made fills both the top and bottom block.\n
        The winner is the first to fill the hidden word that their opponent knows.`
     );
 
