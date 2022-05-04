@@ -12,19 +12,13 @@ class ServerGame {
             const player = sockets[i].data.playerId;
             console.log(`player: ${player}`);
             this.opponent[player] = sockets[(i + 1) % 2].data.playerId;
-            this.playerClient[player] = new ClientGameMirror_1.ClientGameMirror(sockets[i], (update) => this.addedChar(player, update), () => this.ready(player));
+            this.playerClient[player] = new ClientGameMirror_1.ClientGameMirror(sockets[i], (update) => this.addedChar(player, update));
             this.playerClient[player].UpdatedAnswerKnowledge(this.board.generateKnowledge(player));
         }
     }
     addedChar(player, update) {
         this.board.addedChar(player, update);
         this.playerClient[this.opponent[player]].OpponentAddedChar();
-    }
-    ready(player) {
-        const opponent = this.opponent[player];
-        if (this.playerClient[opponent].IsReady()) {
-            this.playerClient[opponent];
-        }
     }
 }
 exports.ServerGame = ServerGame;

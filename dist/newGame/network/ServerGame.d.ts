@@ -9,5 +9,4 @@ export declare class ServerGame {
     board: ServerBoard;
     constructor(sockets: GameServerSocket[]);
     addedChar(player: PlayerId, update: AddedChar): void;
-    ready(player: PlayerId): void;
 }

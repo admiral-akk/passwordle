@@ -9,6 +9,5 @@ export interface NewGameServerToClientEvents {
     UpdatedAnswerKnowledge: (update: UpdatedAnswerKnowledge) => void;
 }
 export interface NewGameClientToServerEvents {
-    Ready: () => void;
     AddedChar: (update: AddedChar) => void;
 }

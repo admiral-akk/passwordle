@@ -16,7 +16,6 @@ export class ClientGame implements NewGameServerToClientEvents {
     socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>
       this.UpdatedAnswerKnowledge(update)
     );
-    this.board.Ready();
     new InputManager(
       (char: string) => this.AddChar(char),
       () => {},

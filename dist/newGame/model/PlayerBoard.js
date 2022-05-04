@@ -5,14 +5,13 @@ const CharUpdate_1 = require("../../game/client/view/CharUpdate");
 const Updates_1 = require("../network/updates/Updates");
 var State;
 (function (State) {
-    State[State["None"] = 0] = "None";
-    State[State["WaitingForKnowledge"] = 1] = "WaitingForKnowledge";
-    State[State["CanSubmit"] = 2] = "CanSubmit";
+    State[State["WaitingForKnowledge"] = 0] = "WaitingForKnowledge";
+    State[State["CanSubmit"] = 1] = "CanSubmit";
 })(State || (State = {}));
 class PlayerBoard {
     constructor(view = null) {
         this.view = view;
-        this.state = State.None;
+        this.state = State.WaitingForKnowledge;
         this.guesses = [];
         this.currentGuess = '';
     }
@@ -23,12 +22,6 @@ class PlayerBoard {
         return new Updates_1.AddedChar(char);
     }
     OpponentAddedChar() { }
-    Ready() {
-        this.state = State.WaitingForKnowledge;
-    }
-    IsReady() {
-        return this.state === State.WaitingForKnowledge;
-    }
     UpdatedAnswerKnowledge(update) {
         var _a;
         this.state = State.CanSubmit;

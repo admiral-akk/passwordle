@@ -13,11 +13,9 @@ export class ClientGameMirror
 
   constructor(
     private socket: GameServerSocket,
-    private addedChar: (update: AddedChar) => void,
-    private ready: () => void
+    private addedChar: (update: AddedChar) => void
   ) {
     this.socket.on('AddedChar', (update: AddedChar) => this.AddedChar(update));
-    this.socket.on('Ready', () => this.Ready());
   }
 
   AddedChar(update: AddedChar) {
@@ -28,15 +26,6 @@ export class ClientGameMirror
   OpponentAddedChar() {
     this.board.OpponentAddedChar();
     this.socket.emit('OpponentAddedChar');
-  }
-
-  Ready() {
-    this.board.Ready();
-    this.ready();
-  }
-
-  IsReady(): boolean {
-    return this.board.IsReady();
   }
 
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {

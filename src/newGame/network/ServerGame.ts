@@ -16,8 +16,7 @@ export class ServerGame {
       this.opponent[player] = sockets[(i + 1) % 2].data.playerId!;
       this.playerClient[player] = new ClientGameMirror(
         sockets[i],
-        (update: AddedChar) => this.addedChar(player, update),
-        () => this.ready(player)
+        (update: AddedChar) => this.addedChar(player, update)
       );
       this.playerClient[player].UpdatedAnswerKnowledge(
         this.board.generateKnowledge(player)
@@ -28,12 +27,5 @@ export class ServerGame {
   addedChar(player: PlayerId, update: AddedChar) {
     this.board.addedChar(player, update);
     this.playerClient[this.opponent[player]].OpponentAddedChar();
-  }
-
-  ready(player: PlayerId) {
-    const opponent = this.opponent[player];
-    if (this.playerClient[opponent].IsReady()) {
-      this.playerClient[opponent];
-    }
   }
 }

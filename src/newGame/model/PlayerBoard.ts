@@ -4,14 +4,13 @@ import {Word} from '../../game/structs/Word';
 import {AddedChar, UpdatedAnswerKnowledge} from '../network/updates/Updates';
 
 enum State {
-  None,
   WaitingForKnowledge,
   CanSubmit,
 }
 
 export class PlayerBoard {
   constructor(private view: GameView | null = null) {}
-  state: State = State.None;
+  state: State = State.WaitingForKnowledge;
   guesses: Word[] = [];
   currentGuess = '';
   AddChar(char: string): AddedChar {
@@ -25,15 +24,6 @@ export class PlayerBoard {
   }
 
   OpponentAddedChar() {}
-
-  Ready() {
-    this.state = State.WaitingForKnowledge;
-  }
-
-  IsReady(): boolean {
-    return this.state === State.WaitingForKnowledge;
-  }
-
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
     this.state = State.CanSubmit;
     this.view?.SetSecret(update.playerWord);

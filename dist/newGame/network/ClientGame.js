@@ -12,7 +12,6 @@ class ClientGame {
         this.board = new PlayerBoard_1.PlayerBoard(this.view);
         socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
         socket.on('UpdatedAnswerKnowledge', (update) => this.UpdatedAnswerKnowledge(update));
-        this.board.Ready();
         new InputManager_1.InputManager((char) => this.AddChar(char), () => { }, () => { });
     }
     OpponentAddedChar() {

@@ -20,6 +20,5 @@ export interface NewGameServerToClientEvents {
 }
 
 export interface NewGameClientToServerEvents {
-  Ready: () => void;
   AddedChar: (update: AddedChar) => void;
 }
