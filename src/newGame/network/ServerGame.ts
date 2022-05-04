@@ -20,7 +20,7 @@ export class ServerGame {
   }
 
   addedChar(player: PlayerId, update: AddedChar) {
-    const res = this.board.addedChar(player, update);
-    this.playerClient[this.opponent[player]].OpponentAddedChar(res);
+    this.board.addedChar(player, update);
+    this.playerClient[this.opponent[player]].OpponentAddedChar();
   }
 }

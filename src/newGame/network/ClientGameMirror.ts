@@ -1,6 +1,6 @@
 import {GameServerSocket} from './GameNetworkTypes';
 import {ClientBoard} from '../model/ClientBoard';
-import {AddedChar, OpponentAddedChar} from './updates/Updates';
+import {AddedChar} from './updates/Updates';
 
 export class ClientGameMirror {
   private board: ClientBoard = new ClientBoard();
@@ -17,8 +17,8 @@ export class ClientGameMirror {
     this.addedChar(update);
   }
 
-  OpponentAddedChar(update: OpponentAddedChar) {
-    this.board.OpponentAddedChar(update);
-    this.socket.emit('OpponentAddedChar', update);
+  OpponentAddedChar() {
+    this.board.OpponentAddedChar();
+    this.socket.emit('OpponentAddedChar');
   }
 }
