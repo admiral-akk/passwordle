@@ -1,6 +1,7 @@
 import {CharUpdate} from '../../game/client/view/CharUpdate';
 import {GameView} from '../../game/client/view/GameView';
-import {Word} from '../../game/structs/Word';
+import {ToWord, Word} from '../../game/structs/Word';
+import {IsValidWord} from '../../game/Words';
 import {
   NewGameClientToServerEvents,
   NewGameServerToClientEvents,
@@ -8,6 +9,7 @@ import {
 import {
   AddedChar,
   Deleted,
+  Submitted,
   UpdatedAnswerKnowledge,
 } from '../network/updates/Updates';
 
@@ -20,6 +22,7 @@ export class PlayerBoard
   implements NewGameClientToServerEvents, NewGameServerToClientEvents
 {
   constructor(private view: GameView | null = null) {}
+  OpponentSubmitted() {}
 
   AddedChar(update: AddedChar) {
     const viewUpdate = new CharUpdate(
@@ -41,31 +44,50 @@ export class PlayerBoard
     this.view?.CharUpdate(update);
   }
 
+  Submitted(update: Submitted) {
+    this.guesses.push(update.guess);
+    this.currentGuess = '';
+    this.state = State.WaitingForKnowledge;
+  }
+
   state: State = State.WaitingForKnowledge;
   guesses: Word[] = [];
   currentGuess = '';
   secret: Word | null = null;
 
-  AddChar(char: string): AddedChar | null {
+  AddCharCommand(char: string): AddedChar | null {
     if (this.state !== State.CanSubmit) {
       return null;
     }
     if (this.currentGuess.length === 5) {
       return null;
     }
-    this.AddedChar(new AddedChar(char));
     return new AddedChar(char);
   }
 
-  Delete(): Deleted | null {
+  DeleteCommand(): Deleted | null {
     if (this.state !== State.CanSubmit) {
       return null;
     }
     if (this.currentGuess.length === 0) {
       return null;
     }
-    this.Deleted();
     return new Deleted();
+  }
+
+  SubmitCommand(): Submitted | null {
+    if (this.state !== State.CanSubmit) {
+      return null;
+    }
+    console.log('');
+    if (this.currentGuess.length !== 5) {
+      return null;
+    }
+    const guess = ToWord(this.currentGuess);
+    if (!IsValidWord(guess)) {
+      return null;
+    }
+    return new Submitted(guess);
   }
 
   OpponentAddedChar() {}

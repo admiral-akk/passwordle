@@ -5,7 +5,7 @@ import {
   GameClientSocket,
   NewGameServerToClientEvents,
 } from './GameNetworkTypes';
-import {AddedChar, UpdatedAnswerKnowledge} from './updates/Updates';
+import {AddedChar, Submitted, UpdatedAnswerKnowledge} from './updates/Updates';
 
 export class ClientGame implements NewGameServerToClientEvents {
   private board: PlayerBoard;
@@ -17,9 +17,12 @@ export class ClientGame implements NewGameServerToClientEvents {
     );
     new InputManager(
       (char: string) => this.AddChar(char),
-      () => {},
-      () => {}
+      () => this.Delete(),
+      () => this.Submit()
     );
+  }
+  OpponentSubmitted() {
+    this.board.OpponentSubmitted();
   }
 
   OpponentDeleted() {
@@ -35,10 +38,31 @@ export class ClientGame implements NewGameServerToClientEvents {
   }
 
   AddChar(char: string) {
-    const res = this.board.AddChar(char);
+    const res = this.board.AddCharCommand(char);
     // success: tell the server/view about it
-    if (typeof res === AddedChar.name) {
-      this.socket.emit('AddedChar', res as AddedChar);
+    if (res) {
+      const command = res as AddedChar;
+      this.board.AddedChar(command);
+      this.socket.emit('AddedChar', command);
+    }
+  }
+
+  Delete() {
+    const res = this.board.DeleteCommand();
+    // success: tell the server/view about it
+    if (res) {
+      this.board.Deleted();
+      this.socket.emit('Deleted');
+    }
+  }
+
+  Submit() {
+    const res = this.board.SubmitCommand();
+    // success: tell the server/view about it
+    if (res) {
+      const command = res as Submitted;
+      this.board.Submitted(command);
+      this.socket.emit('Submitted', command);
     }
   }
 }

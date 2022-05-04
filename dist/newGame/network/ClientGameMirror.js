@@ -9,6 +9,11 @@ class ClientGameMirror {
         this.otherPlayer = null;
         this.socket.on('AddedChar', (update) => this.AddedChar(update));
     }
+    OpponentSubmitted() { }
+    Submitted(update) {
+        this.board.Submitted(update);
+        this.socket.emit('OpponentSubmitted');
+    }
     RegisterOtherPlayer(otherPlayer) {
         this.otherPlayer = otherPlayer;
     }

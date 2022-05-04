@@ -9,3 +9,7 @@ export declare class UpdatedAnswerKnowledge {
     playerWord: Word;
     constructor(playerWord: Word);
 }
+export declare class Submitted {
+    guess: Word;
+    constructor(guess: Word);
+}

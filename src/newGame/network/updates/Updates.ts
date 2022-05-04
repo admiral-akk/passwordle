@@ -9,3 +9,7 @@ export class Deleted {}
 export class UpdatedAnswerKnowledge {
   constructor(public playerWord: Word) {}
 }
+
+export class Submitted {
+  constructor(public guess: Word) {}
+}

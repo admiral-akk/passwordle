@@ -4,7 +4,7 @@ import {
   NewGameServerToClientEvents,
 } from './GameNetworkTypes';
 import {PlayerBoard} from '../model/PlayerBoard';
-import {AddedChar, UpdatedAnswerKnowledge} from './updates/Updates';
+import {AddedChar, Submitted, UpdatedAnswerKnowledge} from './updates/Updates';
 
 export class ClientGameMirror
   implements NewGameClientToServerEvents, NewGameServerToClientEvents
@@ -14,6 +14,12 @@ export class ClientGameMirror
 
   constructor(private socket: GameServerSocket) {
     this.socket.on('AddedChar', (update: AddedChar) => this.AddedChar(update));
+  }
+  OpponentSubmitted() {}
+
+  Submitted(update: Submitted) {
+    this.board.Submitted(update);
+    this.socket.emit('OpponentSubmitted');
   }
 
   RegisterOtherPlayer(otherPlayer: ClientGameMirror) {
