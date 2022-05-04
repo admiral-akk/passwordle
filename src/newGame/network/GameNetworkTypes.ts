@@ -17,8 +17,10 @@ export type GameServerSocket = ServerSocket<
 export interface NewGameServerToClientEvents {
   OpponentAddedChar: () => void;
   UpdatedAnswerKnowledge: (update: UpdatedAnswerKnowledge) => void;
+  OpponentDeleted: () => void;
 }
 
 export interface NewGameClientToServerEvents {
   AddedChar: (update: AddedChar) => void;
+  Deleted: () => void;
 }

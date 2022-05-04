@@ -1,6 +1,10 @@
 import {Word} from '../../game/structs/Word';
 import {GetRandomWord} from '../../game/Words';
 import {PlayerId} from '../../PlayerId';
+import {
+  NewGameClientToServerEvents,
+  NewGameServerToClientEvents,
+} from '../network/GameNetworkTypes';
 import {AddedChar, UpdatedAnswerKnowledge} from '../network/updates/Updates';
 
 export class ServerBoard {

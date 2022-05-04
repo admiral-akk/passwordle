@@ -9,9 +9,8 @@ import {AddedChar, UpdatedAnswerKnowledge} from './updates/Updates';
 
 export class ClientGame implements NewGameServerToClientEvents {
   private board: PlayerBoard;
-  private view: GameView = new GameView();
   constructor(private socket: GameClientSocket) {
-    this.board = new PlayerBoard(this.view);
+    this.board = new PlayerBoard(new GameView());
     socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
     socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>
       this.UpdatedAnswerKnowledge(update)
@@ -31,12 +30,11 @@ export class ClientGame implements NewGameServerToClientEvents {
     this.board.UpdatedAnswerKnowledge(update);
   }
 
-  AddChar(char: string): AddedChar {
+  AddChar(char: string) {
     const res = this.board.AddChar(char);
     // success: tell the server/view about it
     if (typeof res === AddedChar.name) {
-      this.socket.emit('AddedChar', res);
+      this.socket.emit('AddedChar', res as AddedChar);
     }
-    return res;
   }
 }
