@@ -10,4 +10,4 @@ export interface GameServerToClientEvents {
 export interface GameClientToServerEvents {
     SubmitGuess: (guess: string) => void;
 }
-export declare type GameSocket = Socket<GameServerToClientEvents, GameClientToServerEvents>;
+export declare type GameClientSocket = Socket<GameServerToClientEvents, GameClientToServerEvents>;

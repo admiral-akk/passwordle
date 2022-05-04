@@ -1,6 +1,6 @@
 import {ToWord} from '../structs/Word';
 import {IsValidWord} from '../Words';
-import {GameSocket} from './GameNetworkEvents';
+import {GameClientSocket} from './GameNetworkEvents';
 import {InputManager} from './input/InputManager';
 import {Hint} from './structs/Hint';
 import {CharUpdate} from './view/CharUpdate';
@@ -22,7 +22,7 @@ enum GameState {
 
 export class GameManager {
   private view: GameView;
-  private socket: GameSocket;
+  private socket: GameClientSocket;
   private state: GameState;
   private input: InputManager;
 
@@ -33,7 +33,7 @@ export class GameManager {
     );
   }
 
-  constructor(socket: GameSocket) {
+  constructor(socket: GameClientSocket) {
     this.view = new GameView();
     this.socket = socket;
     this.state = GameState.Start;
@@ -147,12 +147,12 @@ export class GameManager {
   }
 }
 
-function SubmitGuess(socket: GameSocket, guess: string) {
+function SubmitGuess(socket: GameClientSocket, guess: string) {
   socket.emit('SubmitGuess', guess);
 }
 
 function RegisterSecretWord(
-  socket: GameSocket,
+  socket: GameClientSocket,
   callback: (secret: string) => void
 ) {
   socket.on('SecretWord', (secret: string) => {
@@ -160,25 +160,31 @@ function RegisterSecretWord(
   });
 }
 
-function RegisterSubmissionOpen(socket: GameSocket, callback: () => void) {
+function RegisterSubmissionOpen(
+  socket: GameClientSocket,
+  callback: () => void
+) {
   socket.on('SubmissionOpen', () => {
     callback();
   });
 }
 
-function RegisterHints(socket: GameSocket, callback: (hint: Hint) => void) {
+function RegisterHints(
+  socket: GameClientSocket,
+  callback: (hint: Hint) => void
+) {
   socket.on('Hints', hint => {
     callback(hint);
   });
 }
 
-function RegisterLost(socket: GameSocket, callback: () => void) {
+function RegisterLost(socket: GameClientSocket, callback: () => void) {
   socket.on('Lost', () => {
     callback();
   });
 }
 
-function RegisterWon(socket: GameSocket, callback: () => void) {
+function RegisterWon(socket: GameClientSocket, callback: () => void) {
   socket.on('Won', () => {
     callback();
   });

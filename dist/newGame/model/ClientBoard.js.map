@@ -1,0 +1,1 @@
+{"version":3,"file":"ClientBoard.js","sourceRoot":"","sources":["../../../src/newGame/model/ClientBoard.ts"],"names":[],"mappings":";;;AAAA,wDAAwE;AAExE,MAAa,WAAW;IACtB,OAAO,CAAC,IAAY;QAClB,OAAO,IAAI,mBAAS,CAAC,IAAI,CAAC,CAAC;IAC7B,CAAC;IAED,iBAAiB,CAAC,MAAyB,IAAG,CAAC;CAChD;AAND,kCAMC"}
