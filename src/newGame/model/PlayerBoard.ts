@@ -35,6 +35,7 @@ export class PlayerBoard {
   }
 
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
+    this.state = State.CanSubmit;
     this.view?.SetSecret(update.playerWord);
   }
 }

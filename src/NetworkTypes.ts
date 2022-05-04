@@ -7,7 +7,7 @@ import {
 import {LobbyServer} from './lobby/LobbyServer';
 import {LobbySocketData} from './lobby/LobbyServerSocket';
 import {LobbyServerManager} from './LobbyServerManager';
-import {PlayerId} from './PlayerId';
+import {PlayerId, ToPlayerId} from './PlayerId';
 
 export interface ServerToClientEvents
   extends LobbyServerToClientEvents,
@@ -43,6 +43,7 @@ export function GetServer(
   >(http);
 
   io.on('connection', socket => {
+    socket.data.playerId = ToPlayerId(socket.id);
     lobbyServer.AddSocket(socket);
   });
 

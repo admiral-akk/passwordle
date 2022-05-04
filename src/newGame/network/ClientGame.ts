@@ -22,7 +22,6 @@ export class ClientGame implements NewGameServerToClientEvents {
       () => {},
       () => {}
     );
-    socket.emit('Ready');
   }
 
   OpponentAddedChar() {
@@ -31,7 +30,6 @@ export class ClientGame implements NewGameServerToClientEvents {
 
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
     this.board.UpdatedAnswerKnowledge(update);
-    this.view.SetSecret(update.playerWord);
   }
 
   AddChar(char: string): AddedChar {
@@ -40,7 +38,6 @@ export class ClientGame implements NewGameServerToClientEvents {
     if (typeof res === AddedChar.name) {
       this.socket.emit('AddedChar', res);
     }
-
     return res;
   }
 }

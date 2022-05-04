@@ -14,14 +14,12 @@ class ClientGame {
         socket.on('UpdatedAnswerKnowledge', (update) => this.UpdatedAnswerKnowledge(update));
         this.board.Ready();
         new InputManager_1.InputManager((char) => this.AddChar(char), () => { }, () => { });
-        socket.emit('Ready');
     }
     OpponentAddedChar() {
         this.board.OpponentAddedChar();
     }
     UpdatedAnswerKnowledge(update) {
         this.board.UpdatedAnswerKnowledge(update);
-        this.view.SetSecret(update.playerWord);
     }
     AddChar(char) {
         const res = this.board.AddChar(char);

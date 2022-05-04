@@ -31,6 +31,7 @@ class PlayerBoard {
     }
     UpdatedAnswerKnowledge(update) {
         var _a;
+        this.state = State.CanSubmit;
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.SetSecret(update.playerWord);
     }
 }

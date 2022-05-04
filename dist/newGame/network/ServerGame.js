@@ -7,12 +7,14 @@ class ServerGame {
     constructor(sockets) {
         this.opponent = {};
         this.playerClient = {};
+        this.board = new ServerBoard_1.ServerBoard(sockets.map(s => s.data.playerId));
         for (let i = 0; i < sockets.length; i++) {
             const player = sockets[i].data.playerId;
+            console.log(`player: ${player}`);
             this.opponent[player] = sockets[(i + 1) % 2].data.playerId;
             this.playerClient[player] = new ClientGameMirror_1.ClientGameMirror(sockets[i], (update) => this.addedChar(player, update), () => this.ready(player));
+            this.playerClient[player].UpdatedAnswerKnowledge(this.board.generateKnowledge(player));
         }
-        this.board = new ServerBoard_1.ServerBoard(sockets.map(s => s.data.playerId));
     }
     addedChar(player, update) {
         this.board.addedChar(player, update);
@@ -21,7 +23,6 @@ class ServerGame {
     ready(player) {
         const opponent = this.opponent[player];
         if (this.playerClient[opponent].IsReady()) {
-            this.playerClient[player];
             this.playerClient[opponent];
         }
     }
