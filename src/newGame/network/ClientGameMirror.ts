@@ -1,9 +1,15 @@
-import {GameServerSocket} from './GameNetworkTypes';
-import {ClientBoard} from '../model/ClientBoard';
+import {
+  GameServerSocket,
+  NewGameClientToServerEvents,
+  NewGameServerToClientEvents,
+} from './GameNetworkTypes';
+import {PlayerBoard} from '../model/PlayerBoard';
 import {AddedChar, UpdatedAnswerKnowledge} from './updates/Updates';
 
-export class ClientGameMirror {
-  private board: ClientBoard = new ClientBoard();
+export class ClientGameMirror
+  implements NewGameClientToServerEvents, NewGameServerToClientEvents
+{
+  private board: PlayerBoard = new PlayerBoard();
 
   constructor(
     private socket: GameServerSocket,
@@ -33,7 +39,7 @@ export class ClientGameMirror {
     return this.board.IsReady();
   }
 
-  AnswerKnowledgeUpdated(update: UpdatedAnswerKnowledge) {
+  UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
     this.board.UpdatedAnswerKnowledge(update);
     this.socket.emit('UpdatedAnswerKnowledge', update);
   }
