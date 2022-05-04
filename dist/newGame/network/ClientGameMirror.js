@@ -1,21 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientGameMirror = void 0;
-const ClientBoard_1 = require("../model/ClientBoard");
+const PlayerBoard_1 = require("../model/PlayerBoard");
 class ClientGameMirror {
-    constructor(socket, addedChar) {
+    constructor(socket, addedChar, ready) {
         this.socket = socket;
         this.addedChar = addedChar;
-        this.board = new ClientBoard_1.ClientBoard();
+        this.ready = ready;
+        this.board = new PlayerBoard_1.PlayerBoard();
         this.socket.on('AddedChar', (update) => this.AddedChar(update));
+        this.socket.on('Ready', () => this.Ready());
     }
     AddedChar(update) {
         this.board.AddChar(update.char);
         this.addedChar(update);
     }
-    OpponentAddedChar(update) {
-        this.board.OpponentAddedChar(update);
-        this.socket.emit('OpponentAddedChar', update);
+    OpponentAddedChar() {
+        this.board.OpponentAddedChar();
+        this.socket.emit('OpponentAddedChar');
+    }
+    Ready() {
+        this.board.Ready();
+        this.ready();
+    }
+    IsReady() {
+        return this.board.IsReady();
+    }
+    UpdatedAnswerKnowledge(update) {
+        this.board.UpdatedAnswerKnowledge(update);
+        this.socket.emit('UpdatedAnswerKnowledge', update);
     }
 }
 exports.ClientGameMirror = ClientGameMirror;

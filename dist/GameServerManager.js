@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameServerManager = void 0;
-const GameServer_1 = require("./game/GameServer");
+const ServerGame_1 = require("./newGame/network/ServerGame");
 class GameServerManager {
     constructor(gameComplete) {
         this.activeGames = {};
@@ -10,11 +10,10 @@ class GameServerManager {
     NewGame(players) {
         players.forEach((s, i) => (s.data.playerIndex = i));
         const gameId = players[0].id;
-        const game = new GameServer_1.GameServer(players, () => this.GameCompleted(gameId));
+        const game = new ServerGame_1.ServerGame(players);
         this.activeGames[gameId] = game;
     }
     GameCompleted(gameId) {
-        this.gameComplete(this.activeGames[gameId].players);
         delete this.activeGames[gameId];
     }
 }

@@ -1,5 +1,8 @@
 import { PlayerId } from '../../PlayerId';
-import { AddedChar, OpponentAddedChar } from '../network/updates/Updates';
+import { AddedChar, UpdatedAnswerKnowledge } from '../network/updates/Updates';
 export declare class ServerBoard {
-    addedChar(player: PlayerId, update: AddedChar): OpponentAddedChar;
+    private answers;
+    constructor(players: PlayerId[]);
+    addedChar(player: PlayerId, update: AddedChar): void;
+    generateKnowledge(player: PlayerId): UpdatedAnswerKnowledge;
 }

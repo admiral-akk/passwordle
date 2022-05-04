@@ -1,23 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientGame = void 0;
-const ClientBoard_1 = require("../model/ClientBoard");
+const InputManager_1 = require("../../game/client/input/InputManager");
+const GameView_1 = require("../../game/client/view/GameView");
+const PlayerBoard_1 = require("../model/PlayerBoard");
 const Updates_1 = require("./updates/Updates");
 class ClientGame {
     constructor(socket) {
         this.socket = socket;
-        this.board = new ClientBoard_1.ClientBoard();
-        socket.on('OpponentAddedChar', (update) => this.OpponentAddedChar(update));
+        this.view = new GameView_1.GameView();
+        this.board = new PlayerBoard_1.PlayerBoard(this.view);
+        socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
+        socket.on('UpdatedAnswerKnowledge', (update) => this.UpdatedAnswerKnowledge(update));
+        this.board.Ready();
+        new InputManager_1.InputManager((char) => this.AddChar(char), () => { }, () => { });
+        socket.emit('Ready');
+    }
+    OpponentAddedChar() {
+        this.board.OpponentAddedChar();
+    }
+    UpdatedAnswerKnowledge(update) {
+        this.board.UpdatedAnswerKnowledge(update);
+        this.view.SetSecret(update.playerWord);
     }
     AddChar(char) {
         const res = this.board.AddChar(char);
+        // success: tell the server/view about it
         if (typeof res === Updates_1.AddedChar.name) {
             this.socket.emit('AddedChar', res);
         }
         return res;
-    }
-    OpponentAddedChar(update) {
-        this.board.OpponentAddedChar(update);
     }
 }
 exports.ClientGame = ClientGame;

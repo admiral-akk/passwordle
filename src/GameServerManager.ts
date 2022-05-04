@@ -1,8 +1,8 @@
-import {GameServer} from './game/GameServer';
 import {GameServerSocket} from './game/GameServerSocket';
+import {ServerGame} from './newGame/network/ServerGame';
 
 export class GameServerManager {
-  private activeGames: Record<string, GameServer>;
+  private activeGames: Record<string, ServerGame>;
 
   private gameComplete: (game: GameServerSocket[]) => void;
 
@@ -14,12 +14,11 @@ export class GameServerManager {
   NewGame(players: GameServerSocket[]) {
     players.forEach((s, i) => (s.data.playerIndex = i));
     const gameId = players[0].id;
-    const game = new GameServer(players, () => this.GameCompleted(gameId));
+    const game = new ServerGame(players);
     this.activeGames[gameId] = game;
   }
 
   private GameCompleted(gameId: string) {
-    this.gameComplete(this.activeGames[gameId].players);
     delete this.activeGames[gameId];
   }
 }
