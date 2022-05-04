@@ -7,6 +7,7 @@ import {
 import {LobbyServer} from './lobby/LobbyServer';
 import {LobbySocketData} from './lobby/LobbyServerSocket';
 import {LobbyServerManager} from './LobbyServerManager';
+import {PlayerId} from './PlayerId';
 
 export interface ServerToClientEvents
   extends LobbyServerToClientEvents,
@@ -21,6 +22,7 @@ export interface InterServerEvents {
 export interface SocketData extends LobbySocketData {
   name: string;
   playerIndex: number;
+  playerId: PlayerId;
 }
 
 export function GetServer(

@@ -13,7 +13,7 @@ export interface GameClientToServerEvents {
   SubmitGuess: (guess: string) => void;
 }
 
-export type GameSocket = Socket<
+export type GameClientSocket = Socket<
   GameServerToClientEvents,
   GameClientToServerEvents
 >;
