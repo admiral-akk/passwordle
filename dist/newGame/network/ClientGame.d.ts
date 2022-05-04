@@ -1,11 +1,11 @@
 import { GameClientSocket, NewGameServerToClientEvents } from './GameNetworkTypes';
-import { AddedChar, UpdatedAnswerKnowledge } from './updates/Updates';
+import { UpdatedAnswerKnowledge } from './updates/Updates';
 export declare class ClientGame implements NewGameServerToClientEvents {
     private socket;
     private board;
-    private view;
     constructor(socket: GameClientSocket);
+    OpponentDeleted(): void;
     OpponentAddedChar(): void;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): void;
-    AddChar(char: string): AddedChar;
+    AddChar(char: string): void;
 }

@@ -10,17 +10,29 @@ export class ClientGameMirror
   implements NewGameClientToServerEvents, NewGameServerToClientEvents
 {
   private board: PlayerBoard = new PlayerBoard();
+  private otherPlayer: NewGameServerToClientEvents | null = null;
 
-  constructor(
-    private socket: GameServerSocket,
-    private addedChar: (update: AddedChar) => void
-  ) {
+  constructor(private socket: GameServerSocket) {
     this.socket.on('AddedChar', (update: AddedChar) => this.AddedChar(update));
   }
 
+  RegisterOtherPlayer(otherPlayer: ClientGameMirror) {
+    this.otherPlayer = otherPlayer;
+  }
+
+  Deleted() {
+    this.board.Deleted();
+    this.otherPlayer?.OpponentDeleted();
+  }
+
   AddedChar(update: AddedChar) {
-    this.board.AddChar(update.char);
-    this.addedChar(update);
+    this.board.AddedChar(update);
+    this.otherPlayer?.OpponentAddedChar();
+  }
+
+  OpponentDeleted() {
+    this.board.OpponentDeleted();
+    this.socket.emit('OpponentDeleted');
   }
 
   OpponentAddedChar() {

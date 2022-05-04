@@ -3,6 +3,8 @@ export declare class AddedChar {
     char: string;
     constructor(char: string);
 }
+export declare class Deleted {
+}
 export declare class UpdatedAnswerKnowledge {
     playerWord: Word;
     constructor(playerWord: Word);

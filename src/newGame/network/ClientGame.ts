@@ -22,6 +22,10 @@ export class ClientGame implements NewGameServerToClientEvents {
     );
   }
 
+  OpponentDeleted() {
+    this.board.OpponentDeleted();
+  }
+
   OpponentAddedChar() {
     this.board.OpponentAddedChar();
   }

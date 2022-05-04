@@ -2,10 +2,13 @@ import { GameServerSocket, NewGameClientToServerEvents, NewGameServerToClientEve
 import { AddedChar, UpdatedAnswerKnowledge } from './updates/Updates';
 export declare class ClientGameMirror implements NewGameClientToServerEvents, NewGameServerToClientEvents {
     private socket;
-    private addedChar;
     private board;
-    constructor(socket: GameServerSocket, addedChar: (update: AddedChar) => void);
+    private otherPlayer;
+    constructor(socket: GameServerSocket);
+    RegisterOtherPlayer(otherPlayer: ClientGameMirror): void;
+    Deleted(): void;
     AddedChar(update: AddedChar): void;
+    OpponentDeleted(): void;
     OpponentAddedChar(): void;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): void;
 }

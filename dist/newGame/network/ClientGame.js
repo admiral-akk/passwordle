@@ -8,11 +8,13 @@ const Updates_1 = require("./updates/Updates");
 class ClientGame {
     constructor(socket) {
         this.socket = socket;
-        this.view = new GameView_1.GameView();
-        this.board = new PlayerBoard_1.PlayerBoard(this.view);
+        this.board = new PlayerBoard_1.PlayerBoard(new GameView_1.GameView());
         socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
         socket.on('UpdatedAnswerKnowledge', (update) => this.UpdatedAnswerKnowledge(update));
         new InputManager_1.InputManager((char) => this.AddChar(char), () => { }, () => { });
+    }
+    OpponentDeleted() {
+        this.board.OpponentDeleted();
     }
     OpponentAddedChar() {
         this.board.OpponentAddedChar();
@@ -26,7 +28,6 @@ class ClientGame {
         if (typeof res === Updates_1.AddedChar.name) {
             this.socket.emit('AddedChar', res);
         }
-        return res;
     }
 }
 exports.ClientGame = ClientGame;
