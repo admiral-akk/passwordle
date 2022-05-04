@@ -1,10 +1,7 @@
 import {Socket as ServerSocket} from 'socket.io';
 import {Socket as ClientSocket} from 'socket.io-client';
 import {InterServerEvents, SocketData} from '../../NetworkTypes';
-import {
-  AddedChar,
-  PlayerKnowledge as KnowledgeUpdated,
-} from './updates/Updates';
+import {AddedChar, UpdatedAnswerKnowledge} from './updates/Updates';
 
 export type GameClientSocket = ClientSocket<
   NewGameServerToClientEvents,
@@ -19,7 +16,7 @@ export type GameServerSocket = ServerSocket<
 
 export interface NewGameServerToClientEvents {
   OpponentAddedChar: () => void;
-  KnowledgeUpdated: (update: KnowledgeUpdated) => void;
+  UpdatedAnswerKnowledge: (update: UpdatedAnswerKnowledge) => void;
 }
 
 export interface NewGameClientToServerEvents {
