@@ -2,7 +2,6 @@ import {Hint} from '../../game/client/structs/Hint';
 import {CharUpdate} from '../../game/client/view/CharUpdate';
 import {GameView} from '../../game/client/view/GameView';
 import {HintUpdate} from '../../game/client/view/HintUpdate';
-import {GetKnowledge} from '../../game/logic/WordleLogic';
 import {ToWord, Word} from '../../game/structs/Word';
 import {IsValidWord} from '../../game/Words';
 import {
@@ -12,13 +11,18 @@ import {
 import {
   AddedChar,
   Deleted,
+  Gameover,
   LockedGuess,
+  Loss,
+  Tie,
   UpdatedAnswerKnowledge,
+  Win,
 } from '../network/updates/Updates';
 
 enum State {
   WaitingForKnowledge,
   CanSubmit,
+  GameEnded,
 }
 
 export class PlayerBoard
@@ -106,6 +110,18 @@ export class PlayerBoard
     );
     const hintUpdate = new HintUpdate(hint, this.guesses.length - 1);
     this.view?.HintUpdate(hintUpdate);
+    if (Gameover(update)) {
+      this.state = State.GameEnded;
+      if (Win(update)) {
+        this.view?.GameOver(true);
+      }
+      if (Loss(update)) {
+        this.view?.GameOver(false);
+      }
+      if (Tie(update)) {
+        this.view?.GameOver(false);
+      }
+    }
   }
 
   SetSecret(secret: Word) {

@@ -17,13 +17,11 @@ class ClientGameMirror {
         this.socket.emit('SetSecret', secret);
     }
     OpponentLockedGuess() {
-        console.log('Opponent locked guess!');
         this.board.OpponentLockedGuess();
         this.socket.emit('OpponentLockedGuess');
     }
     LockedGuess(update) {
         var _a;
-        console.log(`Locking guess! ${update.guess}`);
         this.board.LockedGuess(update);
         (_a = this.otherPlayer) === null || _a === void 0 ? void 0 : _a.OpponentLockedGuess();
         this.lockedGuessCallback(update);

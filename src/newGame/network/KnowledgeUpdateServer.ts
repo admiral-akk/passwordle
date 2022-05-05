@@ -51,8 +51,8 @@ export class KnowledgeExchangeServer {
     const update = new UpdatedAnswerKnowledge(
       playerKnowledge,
       opponentKnowledge,
-      this.progress[player],
-      this.progress[opponent]
+      this.progress[opponent],
+      this.progress[player]
     );
     this.updateKnowledgeCallback(player, update);
   }

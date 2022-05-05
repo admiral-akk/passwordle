@@ -15,3 +15,9 @@ export class TargetProgress {
     }
   }
 }
+
+export function Complete(progress: TargetProgress) {
+  const unfilled = progress.knownCharacters.filter(c => c === '').length;
+  console.log(`progress unfilled: ${unfilled}`);
+  return unfilled === 0;
+}

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TargetProgress = void 0;
+exports.Complete = exports.TargetProgress = void 0;
 const LetterState_1 = require("./LetterState");
 class TargetProgress {
     constructor(knownCharacters = ['', '', '', '', '']) {
@@ -15,4 +15,10 @@ class TargetProgress {
     }
 }
 exports.TargetProgress = TargetProgress;
+function Complete(progress) {
+    const unfilled = progress.knownCharacters.filter(c => c === '').length;
+    console.log(`progress unfilled: ${unfilled}`);
+    return unfilled === 0;
+}
+exports.Complete = Complete;
 //# sourceMappingURL=TargetProgress.js.map

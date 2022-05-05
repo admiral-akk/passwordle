@@ -4,3 +4,4 @@ export declare class TargetProgress {
     constructor(knownCharacters?: string[]);
     UpdateProgress(knowledge: WordKnowledge): void;
 }
+export declare function Complete(progress: TargetProgress): boolean;

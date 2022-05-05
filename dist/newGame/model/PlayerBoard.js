@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlayerBoard = void 0;
 const Hint_1 = require("../../game/client/structs/Hint");
+const TargetProgress_1 = require("../../game/client/structs/TargetProgress");
 const CharUpdate_1 = require("../../game/client/view/CharUpdate");
 const HintUpdate_1 = require("../../game/client/view/HintUpdate");
 const Word_1 = require("../../game/structs/Word");
@@ -11,6 +12,7 @@ var State;
 (function (State) {
     State[State["WaitingForKnowledge"] = 0] = "WaitingForKnowledge";
     State[State["CanSubmit"] = 1] = "CanSubmit";
+    State[State["GameEnded"] = 2] = "GameEnded";
 })(State || (State = {}));
 class PlayerBoard {
     constructor(view = null) {
@@ -57,10 +59,6 @@ class PlayerBoard {
         return new Updates_1.Deleted();
     }
     SubmitCommand() {
-        console.log('attempt submit');
-        console.log(`state: ${this.state}`);
-        console.log(`guess: ${this.currentGuess}`);
-        console.log(`guess length: ${this.currentGuess.length}`);
         if (this.state !== State.CanSubmit) {
             return null;
         }
@@ -77,11 +75,23 @@ class PlayerBoard {
     OpponentAddedChar() { }
     OpponentDeleted() { }
     UpdatedAnswerKnowledge(update) {
-        var _a;
+        var _a, _b, _c, _d;
         this.state = State.CanSubmit;
         const hint = new Hint_1.Hint(update.playerKnowledge, update.opponentKnowledge, update.playerProgress, update.opponentProgress);
         const hintUpdate = new HintUpdate_1.HintUpdate(hint, this.guesses.length - 1);
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.HintUpdate(hintUpdate);
+        if (Gameover(update)) {
+            this.state = State.GameEnded;
+            if (Win(update)) {
+                (_b = this.view) === null || _b === void 0 ? void 0 : _b.GameOver(true);
+            }
+            if (Loss(update)) {
+                (_c = this.view) === null || _c === void 0 ? void 0 : _c.GameOver(false);
+            }
+            if (Tie(update)) {
+                (_d = this.view) === null || _d === void 0 ? void 0 : _d.GameOver(false);
+            }
+        }
     }
     SetSecret(secret) {
         var _a;
@@ -89,9 +99,18 @@ class PlayerBoard {
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.SetSecret(secret);
         this.state = State.CanSubmit;
     }
-    IsWaiting() {
-        return this.state === State.WaitingForKnowledge;
-    }
 }
 exports.PlayerBoard = PlayerBoard;
+function Gameover(update) {
+    return (0, TargetProgress_1.Complete)(update.playerProgress) || (0, TargetProgress_1.Complete)(update.opponentProgress);
+}
+function Tie(update) {
+    return (0, TargetProgress_1.Complete)(update.playerProgress) && (0, TargetProgress_1.Complete)(update.opponentProgress);
+}
+function Win(update) {
+    return !Tie(update) && (0, TargetProgress_1.Complete)(update.playerProgress);
+}
+function Loss(update) {
+    return !Tie(update) && (0, TargetProgress_1.Complete)(update.opponentProgress);
+}
 //# sourceMappingURL=PlayerBoard.js.map

@@ -4,7 +4,8 @@ import { NewGameClientToServerEvents, NewGameServerToClientEvents } from '../net
 import { AddedChar, Deleted, LockedGuess, UpdatedAnswerKnowledge } from '../network/updates/Updates';
 declare enum State {
     WaitingForKnowledge = 0,
-    CanSubmit = 1
+    CanSubmit = 1,
+    GameEnded = 2
 }
 export declare class PlayerBoard implements NewGameClientToServerEvents, NewGameServerToClientEvents {
     private view;
@@ -24,6 +25,5 @@ export declare class PlayerBoard implements NewGameClientToServerEvents, NewGame
     OpponentDeleted(): void;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): void;
     SetSecret(secret: Word): void;
-    IsWaiting(): boolean;
 }
 export {};

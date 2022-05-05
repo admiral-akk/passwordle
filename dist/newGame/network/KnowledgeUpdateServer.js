@@ -40,7 +40,7 @@ class KnowledgeExchangeServer {
         const opponentGuess = this.currentGuess[opponent];
         const playerKnowledge = (0, WordleLogic_1.GetKnowledge)(playerGuess, targetAnswer);
         const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(opponentGuess, targetAnswer);
-        const update = new Updates_1.UpdatedAnswerKnowledge(playerKnowledge, opponentKnowledge, this.progress[player], this.progress[opponent]);
+        const update = new Updates_1.UpdatedAnswerKnowledge(playerKnowledge, opponentKnowledge, this.progress[opponent], this.progress[player]);
         this.updateKnowledgeCallback(player, update);
     }
     ClearGuesses() {
@@ -50,11 +50,9 @@ class KnowledgeExchangeServer {
     }
     RegisterGuess(player, guess) {
         this.currentGuess[player] = guess;
-        console.log(`logging guess: ${player}, ${guess}`);
         if (Object.keys(this.currentGuess).length < 2) {
             return;
         }
-        console.log('Two guesses logged!');
         this.SendUpdatedKnowledge();
     }
 }
