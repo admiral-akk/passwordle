@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TargetProgress = void 0;
 const LetterState_1 = require("./LetterState");
 class TargetProgress {
-    constructor(knownCharacters) {
+    constructor(knownCharacters = ['', '', '', '', '']) {
         this.knownCharacters = knownCharacters;
     }
     UpdateProgress(knowledge) {

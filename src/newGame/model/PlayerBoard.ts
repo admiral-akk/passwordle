@@ -1,5 +1,8 @@
+import {Hint} from '../../game/client/structs/Hint';
 import {CharUpdate} from '../../game/client/view/CharUpdate';
 import {GameView} from '../../game/client/view/GameView';
+import {HintUpdate} from '../../game/client/view/HintUpdate';
+import {GetKnowledge} from '../../game/logic/WordleLogic';
 import {ToWord, Word} from '../../game/structs/Word';
 import {IsValidWord} from '../../game/Words';
 import {
@@ -9,7 +12,7 @@ import {
 import {
   AddedChar,
   Deleted,
-  Submitted,
+  LockedGuess,
   UpdatedAnswerKnowledge,
 } from '../network/updates/Updates';
 
@@ -22,7 +25,7 @@ export class PlayerBoard
   implements NewGameClientToServerEvents, NewGameServerToClientEvents
 {
   constructor(private view: GameView | null = null) {}
-  OpponentSubmitted() {}
+  OpponentLockedGuess() {}
 
   AddedChar(update: AddedChar) {
     const viewUpdate = new CharUpdate(
@@ -44,7 +47,7 @@ export class PlayerBoard
     this.view?.CharUpdate(update);
   }
 
-  Submitted(update: Submitted) {
+  LockedGuess(update: LockedGuess) {
     this.guesses.push(update.guess);
     this.currentGuess = '';
     this.state = State.WaitingForKnowledge;
@@ -75,7 +78,7 @@ export class PlayerBoard
     return new Deleted();
   }
 
-  SubmitCommand(): Submitted | null {
+  SubmitCommand(): LockedGuess | null {
     if (this.state !== State.CanSubmit) {
       return null;
     }
@@ -87,14 +90,27 @@ export class PlayerBoard
     if (!IsValidWord(guess)) {
       return null;
     }
-    return new Submitted(guess);
+    return new LockedGuess(guess);
   }
 
   OpponentAddedChar() {}
   OpponentDeleted() {}
+
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
     this.state = State.CanSubmit;
-    this.secret = update.playerWord;
-    this.view?.SetSecret(update.playerWord);
+    const hint = new Hint(
+      update.playerKnowledge,
+      update.opponentKnowledge,
+      update.playerProgress,
+      update.opponentProgress
+    );
+    const hintUpdate = new HintUpdate(hint, this.guesses.length - 1);
+    this.view?.HintUpdate(hintUpdate);
+  }
+
+  SetSecret(secret: Word) {
+    this.secret = secret;
+    this.view?.SetSecret(secret);
+    this.state = State.CanSubmit;
   }
 }

@@ -4,26 +4,50 @@ import {
   NewGameServerToClientEvents,
 } from './GameNetworkTypes';
 import {PlayerBoard} from '../model/PlayerBoard';
-import {AddedChar, Submitted, UpdatedAnswerKnowledge} from './updates/Updates';
+import {
+  AddedChar,
+  LockedGuess,
+  UpdatedAnswerKnowledge,
+} from './updates/Updates';
+import {Word} from '../../game/structs/Word';
 
 export class ClientGameMirror
   implements NewGameClientToServerEvents, NewGameServerToClientEvents
 {
   private board: PlayerBoard = new PlayerBoard();
-  private otherPlayer: NewGameServerToClientEvents | null = null;
+  private otherPlayer: ClientGameMirror | null = null;
+  private lockedGuessCallback: (update: LockedGuess) => void = () => {};
 
   constructor(private socket: GameServerSocket) {
     this.socket.on('AddedChar', (update: AddedChar) => this.AddedChar(update));
+    this.socket.on('Deleted', () => this.Deleted());
+    this.socket.on('LockedGuess', (update: LockedGuess) =>
+      this.LockedGuess(update)
+    );
   }
-  OpponentSubmitted() {}
 
-  Submitted(update: Submitted) {
-    this.board.Submitted(update);
-    this.socket.emit('OpponentSubmitted');
+  SetSecret(secret: Word) {
+    this.board.SetSecret(secret);
+    this.socket.emit('SetSecret', secret);
+  }
+
+  OpponentLockedGuess() {
+    this.board.OpponentLockedGuess();
+    this.socket.emit('OpponentLockedGuess');
+  }
+
+  LockedGuess(update: LockedGuess) {
+    this.board.LockedGuess(update);
+    this.otherPlayer?.OpponentLockedGuess();
+    this.lockedGuessCallback(update);
   }
 
   RegisterOtherPlayer(otherPlayer: ClientGameMirror) {
     this.otherPlayer = otherPlayer;
+  }
+
+  RegisterLockedGuess(callback: (update: LockedGuess) => void) {
+    this.lockedGuessCallback = callback;
   }
 
   Deleted() {

@@ -1,10 +1,12 @@
+import { Word } from '../../game/structs/Word';
 import { GameClientSocket, NewGameServerToClientEvents } from './GameNetworkTypes';
 import { UpdatedAnswerKnowledge } from './updates/Updates';
 export declare class ClientGame implements NewGameServerToClientEvents {
     private socket;
     private board;
     constructor(socket: GameClientSocket);
-    OpponentSubmitted(): void;
+    SetSecret(secret: Word): void;
+    OpponentLockedGuess(): void;
     OpponentDeleted(): void;
     OpponentAddedChar(): void;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): void;

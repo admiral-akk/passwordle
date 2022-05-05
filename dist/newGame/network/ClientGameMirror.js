@@ -7,15 +7,32 @@ class ClientGameMirror {
         this.socket = socket;
         this.board = new PlayerBoard_1.PlayerBoard();
         this.otherPlayer = null;
+        this.lockedGuessCallback = () => { };
         this.socket.on('AddedChar', (update) => this.AddedChar(update));
+        this.socket.on('Deleted', () => this.Deleted());
+        this.socket.on('LockedGuess', (update) => this.LockedGuess(update));
     }
-    OpponentSubmitted() { }
-    Submitted(update) {
-        this.board.Submitted(update);
-        this.socket.emit('OpponentSubmitted');
+    SetSecret(secret) {
+        this.board.SetSecret(secret);
+        this.socket.emit('SetSecret', secret);
+    }
+    OpponentLockedGuess() {
+        console.log('Opponent locked guess!');
+        this.board.OpponentLockedGuess();
+        this.socket.emit('OpponentLockedGuess');
+    }
+    LockedGuess(update) {
+        var _a;
+        console.log(`Locking guess! ${update.guess}`);
+        this.board.LockedGuess(update);
+        (_a = this.otherPlayer) === null || _a === void 0 ? void 0 : _a.OpponentLockedGuess();
+        this.lockedGuessCallback(update);
     }
     RegisterOtherPlayer(otherPlayer) {
         this.otherPlayer = otherPlayer;
+    }
+    RegisterLockedGuess(callback) {
+        this.lockedGuessCallback = callback;
     }
     Deleted() {
         var _a;

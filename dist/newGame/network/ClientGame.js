@@ -10,10 +10,16 @@ class ClientGame {
         this.board = new PlayerBoard_1.PlayerBoard(new GameView_1.GameView());
         socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
         socket.on('UpdatedAnswerKnowledge', (update) => this.UpdatedAnswerKnowledge(update));
+        socket.on('SetSecret', (secret) => this.SetSecret(secret));
+        socket.on('OpponentDeleted', () => this.OpponentDeleted());
+        socket.on('OpponentLockedGuess', () => this.OpponentLockedGuess());
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }
-    OpponentSubmitted() {
-        this.board.OpponentSubmitted();
+    SetSecret(secret) {
+        this.board.SetSecret(secret);
+    }
+    OpponentLockedGuess() {
+        this.board.OpponentLockedGuess();
     }
     OpponentDeleted() {
         this.board.OpponentDeleted();
@@ -46,8 +52,8 @@ class ClientGame {
         // success: tell the server/view about it
         if (res) {
             const command = res;
-            this.board.Submitted(command);
-            this.socket.emit('Submitted', command);
+            this.board.LockedGuess(command);
+            this.socket.emit('LockedGuess', command);
         }
     }
 }

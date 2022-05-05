@@ -3,7 +3,7 @@ import {WordKnowledge} from './WordKnowledge';
 
 export class TargetProgress {
   public knownCharacters: string[];
-  constructor(knownCharacters: string[]) {
+  constructor(knownCharacters: string[] = ['', '', '', '', '']) {
     this.knownCharacters = knownCharacters;
   }
 

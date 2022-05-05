@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Submitted = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
+exports.LockedGuess = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
 class AddedChar {
     constructor(char) {
         this.char = char;
@@ -11,15 +11,18 @@ class Deleted {
 }
 exports.Deleted = Deleted;
 class UpdatedAnswerKnowledge {
-    constructor(playerWord) {
-        this.playerWord = playerWord;
+    constructor(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress) {
+        this.playerKnowledge = playerKnowledge;
+        this.opponentKnowledge = opponentKnowledge;
+        this.playerProgress = playerProgress;
+        this.opponentProgress = opponentProgress;
     }
 }
 exports.UpdatedAnswerKnowledge = UpdatedAnswerKnowledge;
-class Submitted {
+class LockedGuess {
     constructor(guess) {
         this.guess = guess;
     }
 }
-exports.Submitted = Submitted;
+exports.LockedGuess = LockedGuess;
 //# sourceMappingURL=Updates.js.map

@@ -1,3 +1,5 @@
+import { TargetProgress } from '../../../game/client/structs/TargetProgress';
+import { WordKnowledge } from '../../../game/client/structs/WordKnowledge';
 import { Word } from '../../../game/structs/Word';
 export declare class AddedChar {
     char: string;
@@ -6,10 +8,13 @@ export declare class AddedChar {
 export declare class Deleted {
 }
 export declare class UpdatedAnswerKnowledge {
-    playerWord: Word;
-    constructor(playerWord: Word);
+    playerKnowledge: WordKnowledge;
+    opponentKnowledge: WordKnowledge;
+    playerProgress: TargetProgress;
+    opponentProgress: TargetProgress;
+    constructor(playerKnowledge: WordKnowledge, opponentKnowledge: WordKnowledge, playerProgress: TargetProgress, opponentProgress: TargetProgress);
 }
-export declare class Submitted {
+export declare class LockedGuess {
     guess: Word;
     constructor(guess: Word);
 }
