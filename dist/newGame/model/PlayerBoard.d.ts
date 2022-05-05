@@ -12,9 +12,10 @@ export declare class PlayerBoard implements NewGameClientToServerEvents, NewGame
     state: State;
     guesses: Word[];
     currentGuess: string;
+    private GuessCount;
+    opponentCharCount: number;
     secret: Word | null;
     constructor(view?: GameView | null);
-    OpponentLockedGuess(): void;
     AddedChar(update: AddedChar): void;
     Deleted(): void;
     LockedGuess(update: LockedGuess): void;
@@ -23,6 +24,7 @@ export declare class PlayerBoard implements NewGameClientToServerEvents, NewGame
     SubmitCommand(): LockedGuess | null;
     OpponentAddedChar(): void;
     OpponentDeleted(): void;
+    OpponentLockedGuess(): void;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): void;
     SetSecret(secret: Word): void;
     private Reset;

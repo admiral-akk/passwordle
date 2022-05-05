@@ -48,6 +48,9 @@ class GameView {
         this.target.Reset();
         this.endGame.Reset();
     }
+    OpponentUpdate(update) {
+        this.opponentBoard.OpponentUpdate(update);
+    }
 }
 exports.GameView = GameView;
 function AddDiv(parent, className) {

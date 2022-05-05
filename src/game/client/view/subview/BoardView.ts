@@ -6,7 +6,7 @@ import {WordView} from './word/WordView';
 const WORD_COUNT = 6;
 
 export abstract class BoardView extends Subview {
-  private words: WordView[];
+  protected words: WordView[];
   constructor(base: HTMLDivElement, explanationText = '') {
     super(base, 'board', explanationText);
     this.words = [];

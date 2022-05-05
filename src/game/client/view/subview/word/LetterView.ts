@@ -1,4 +1,5 @@
 import {LetterState} from '../../../structs/LetterState';
+import {AnimateCSS, AnimationType} from '../../Animate';
 import {CharUpdate} from '../../CharUpdate';
 import {Subview} from '../Subview';
 
@@ -8,11 +9,14 @@ export class LetterView extends Subview {
   }
 
   Update(update: CharUpdate) {
-    this.root.innerText = update.char;
+    this.Set(update.char);
   }
 
   Set(char: string) {
     this.root.innerText = char;
+    if (char !== '') {
+      AnimateCSS(this.root, AnimationType.Pulse);
+    }
   }
 
   SetKnowledge(letterKnowledge: LetterState) {
@@ -29,6 +33,10 @@ export class LetterView extends Subview {
         break;
       case LetterState.Grey:
         this.root.style.backgroundColor = 'grey';
+        break;
+      case LetterState.LightGrey:
+        this.root.style.backgroundColor = 'lightgrey';
+        AnimateCSS(this.root, AnimationType.Pulse);
         break;
       case LetterState.Red:
         this.root.style.backgroundColor = 'red';

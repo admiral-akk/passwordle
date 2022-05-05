@@ -2,6 +2,10 @@ import {Hint} from '../../game/client/structs/Hint';
 import {CharUpdate} from '../../game/client/view/CharUpdate';
 import {GameView} from '../../game/client/view/GameView';
 import {HintUpdate} from '../../game/client/view/HintUpdate';
+import {
+  OpponentUpdate,
+  OpponentUpdateType,
+} from '../../game/client/view/OpponentUpdate';
 import {ToWord, Word} from '../../game/structs/Word';
 import {IsValidWord} from '../../game/Words';
 import {
@@ -31,10 +35,16 @@ export class PlayerBoard
   state: State = State.WaitingForKnowledge;
   guesses: Word[] = [];
   currentGuess = '';
+  private GuessCount(): number {
+    if (this.state === State.WaitingForKnowledge) {
+      return this.guesses.length - 1;
+    }
+    return this.guesses.length;
+  }
+  opponentCharCount = 0;
   secret: Word | null = null;
 
   constructor(private view: GameView | null = null) {}
-  OpponentLockedGuess() {}
 
   AddedChar(update: AddedChar) {
     const viewUpdate = new CharUpdate(
@@ -97,8 +107,33 @@ export class PlayerBoard
     return new LockedGuess(guess);
   }
 
-  OpponentAddedChar() {}
-  OpponentDeleted() {}
+  OpponentAddedChar() {
+    const update = new OpponentUpdate(
+      OpponentUpdateType.AddChar,
+      this.GuessCount(),
+      this.opponentCharCount
+    );
+    this.view?.OpponentUpdate(update);
+    this.opponentCharCount++;
+  }
+  OpponentDeleted() {
+    this.opponentCharCount--;
+    const update = new OpponentUpdate(
+      OpponentUpdateType.Delete,
+      this.GuessCount(),
+      this.opponentCharCount
+    );
+    this.view?.OpponentUpdate(update);
+  }
+  OpponentLockedGuess() {
+    this.opponentCharCount = 0;
+    const update = new OpponentUpdate(
+      OpponentUpdateType.Submit,
+      this.GuessCount(),
+      this.opponentCharCount
+    );
+    this.view?.OpponentUpdate(update);
+  }
 
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
     this.state = State.CanSubmit;

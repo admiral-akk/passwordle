@@ -1,5 +1,6 @@
 import {CharUpdate} from './CharUpdate';
 import {HintUpdate} from './HintUpdate';
+import {OpponentUpdate, OpponentUpdateType} from './OpponentUpdate';
 import {AnswerView} from './subview/AnswerView';
 import {EndGameView} from './subview/EndGameView';
 import {KeyboardView} from './subview/KeyboardView';
@@ -68,6 +69,10 @@ export class GameView {
     this.answer.Reset();
     this.target.Reset();
     this.endGame.Reset();
+  }
+
+  OpponentUpdate(update: OpponentUpdate) {
+    this.opponentBoard.OpponentUpdate(update);
   }
 }
 

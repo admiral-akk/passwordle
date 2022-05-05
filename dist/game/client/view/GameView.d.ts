@@ -1,5 +1,6 @@
 import { CharUpdate } from './CharUpdate';
 import { HintUpdate } from './HintUpdate';
+import { OpponentUpdate } from './OpponentUpdate';
 export declare class GameView {
     private answer;
     private playerBoard;
@@ -14,4 +15,5 @@ export declare class GameView {
     HintUpdate(update: HintUpdate): void;
     GameOver(won: boolean): void;
     Reset(): void;
+    OpponentUpdate(update: OpponentUpdate): void;
 }

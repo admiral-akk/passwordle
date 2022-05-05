@@ -4,6 +4,7 @@ exports.PlayerBoard = void 0;
 const Hint_1 = require("../../game/client/structs/Hint");
 const CharUpdate_1 = require("../../game/client/view/CharUpdate");
 const HintUpdate_1 = require("../../game/client/view/HintUpdate");
+const OpponentUpdate_1 = require("../../game/client/view/OpponentUpdate");
 const Word_1 = require("../../game/structs/Word");
 const Words_1 = require("../../game/Words");
 const Updates_1 = require("../network/updates/Updates");
@@ -19,9 +20,15 @@ class PlayerBoard {
         this.state = State.WaitingForKnowledge;
         this.guesses = [];
         this.currentGuess = '';
+        this.opponentCharCount = 0;
         this.secret = null;
     }
-    OpponentLockedGuess() { }
+    GuessCount() {
+        if (this.state === State.WaitingForKnowledge) {
+            return this.guesses.length - 1;
+        }
+        return this.guesses.length;
+    }
     AddedChar(update) {
         var _a;
         const viewUpdate = new CharUpdate_1.CharUpdate(update.char, this.guesses.length, this.currentGuess.length);
@@ -71,8 +78,24 @@ class PlayerBoard {
         }
         return new Updates_1.LockedGuess(guess);
     }
-    OpponentAddedChar() { }
-    OpponentDeleted() { }
+    OpponentAddedChar() {
+        var _a;
+        const update = new OpponentUpdate_1.OpponentUpdate(OpponentUpdate_1.OpponentUpdateType.AddChar, this.GuessCount(), this.opponentCharCount);
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.OpponentUpdate(update);
+        this.opponentCharCount++;
+    }
+    OpponentDeleted() {
+        var _a;
+        this.opponentCharCount--;
+        const update = new OpponentUpdate_1.OpponentUpdate(OpponentUpdate_1.OpponentUpdateType.Delete, this.GuessCount(), this.opponentCharCount);
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.OpponentUpdate(update);
+    }
+    OpponentLockedGuess() {
+        var _a;
+        this.opponentCharCount = 0;
+        const update = new OpponentUpdate_1.OpponentUpdate(OpponentUpdate_1.OpponentUpdateType.Submit, this.GuessCount(), this.opponentCharCount);
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.OpponentUpdate(update);
+    }
     UpdatedAnswerKnowledge(update) {
         var _a, _b, _c, _d;
         this.state = State.CanSubmit;
