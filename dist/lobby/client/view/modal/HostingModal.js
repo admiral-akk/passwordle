@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HostingModal = void 0;
 const Modal_1 = require("./Modal");
-class HostingModal extends Modal_1.Modal {
+class HostingModal extends Modal_1.BaseModal {
     constructor(modal, copyToClipboard) {
         super();
         this.shareLink = this.AddButton(modal, 'Share Link', copyToClipboard);

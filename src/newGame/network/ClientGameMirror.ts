@@ -19,6 +19,9 @@ export class ClientGameMirror
   private lockedGuessCallback: (update: LockedGuess) => void = () => {};
 
   constructor(private socket: GameServerSocket) {
+    this.socket.removeAllListeners('AddedChar');
+    this.socket.removeAllListeners('Deleted');
+    this.socket.removeAllListeners('LockedGuess');
     this.socket.on('AddedChar', (update: AddedChar) => this.AddedChar(update));
     this.socket.on('Deleted', () => this.Deleted());
     this.socket.on('LockedGuess', (update: LockedGuess) =>

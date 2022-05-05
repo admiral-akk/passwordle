@@ -30,6 +30,9 @@ class LobbyView {
         this.SetModal(new LoadingModal_1.LoadingModal(this.modal));
     }
     GameEnded() {
+        this.modal.style.display = 'block';
+        this.background.style.display = 'block';
+        this.root.style.display = 'block';
         console.log('Game ended modal triggered!');
         this.SetModal(new GameEndedModal_1.GameEndedModal(this.modal));
     }
@@ -44,11 +47,6 @@ class LobbyView {
     }
     LobbyReady() {
         this.SetModal(new LobbyReadyModal_1.LobbyReadyModal(this.modal));
-    }
-    RematchMenu() {
-        this.modal.style.display = 'block';
-        this.background.style.display = 'block';
-        this.root.style.display = 'block';
     }
     InGame() {
         if (this.currentModal) {

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MenuModal = void 0;
 const Modal_1 = require("./Modal");
-class MenuModal extends Modal_1.Modal {
+class MenuModal extends Modal_1.BaseModal {
     constructor(modal, hostLobby, matchmake) {
         super();
         this.privateGame = this.AddButton(modal, 'Private Game', hostLobby);

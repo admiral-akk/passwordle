@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Modal = void 0;
-class Modal {
+exports.BaseModal = void 0;
+class BaseModal {
+    constructor() { }
     AddButton(parent, name, callback) {
         const button = document.createElement('button');
         button.style.display = 'none';
@@ -19,5 +20,5 @@ class Modal {
         return div;
     }
 }
-exports.Modal = Modal;
+exports.BaseModal = BaseModal;
 //# sourceMappingURL=Modal.js.map

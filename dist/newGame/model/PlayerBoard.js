@@ -103,6 +103,8 @@ class PlayerBoard {
         var _a;
         this.secret = null;
         this.state = State.WaitingForKnowledge;
+        this.guesses = [];
+        this.currentGuess = '';
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Reset();
     }
 }

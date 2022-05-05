@@ -153,6 +153,7 @@ function RegisterSecretWord(
   socket: GameClientSocket,
   callback: (secret: string) => void
 ) {
+  socket.removeAllListeners('SecretWord');
   socket.on('SecretWord', (secret: string) => {
     callback(secret);
   });
@@ -162,6 +163,7 @@ function RegisterSubmissionOpen(
   socket: GameClientSocket,
   callback: () => void
 ) {
+  socket.removeAllListeners('SubmissionOpen');
   socket.on('SubmissionOpen', () => {
     callback();
   });
@@ -171,18 +173,21 @@ function RegisterHints(
   socket: GameClientSocket,
   callback: (hint: Hint) => void
 ) {
+  socket.removeAllListeners('Hints');
   socket.on('Hints', hint => {
     callback(hint);
   });
 }
 
 function RegisterLost(socket: GameClientSocket, callback: () => void) {
+  socket.removeAllListeners('Lost');
   socket.on('Lost', () => {
     callback();
   });
 }
 
 function RegisterWon(socket: GameClientSocket, callback: () => void) {
+  socket.removeAllListeners('Won');
   socket.on('Won', () => {
     callback();
   });

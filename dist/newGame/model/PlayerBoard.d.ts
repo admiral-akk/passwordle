@@ -9,15 +9,15 @@ declare enum State {
 }
 export declare class PlayerBoard implements NewGameClientToServerEvents, NewGameServerToClientEvents {
     private view;
+    state: State;
+    guesses: Word[];
+    currentGuess: string;
+    secret: Word | null;
     constructor(view?: GameView | null);
     OpponentLockedGuess(): void;
     AddedChar(update: AddedChar): void;
     Deleted(): void;
     LockedGuess(update: LockedGuess): void;
-    state: State;
-    guesses: Word[];
-    currentGuess: string;
-    secret: Word | null;
     AddCharCommand(char: string): AddedChar | null;
     DeleteCommand(): Deleted | null;
     SubmitCommand(): LockedGuess | null;

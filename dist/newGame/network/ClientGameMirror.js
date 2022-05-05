@@ -8,6 +8,9 @@ class ClientGameMirror {
         this.board = new PlayerBoard_1.PlayerBoard();
         this.otherPlayer = null;
         this.lockedGuessCallback = () => { };
+        this.socket.removeAllListeners('AddedChar');
+        this.socket.removeAllListeners('Deleted');
+        this.socket.removeAllListeners('LockedGuess');
         this.socket.on('AddedChar', (update) => this.AddedChar(update));
         this.socket.on('Deleted', () => this.Deleted());
         this.socket.on('LockedGuess', (update) => this.LockedGuess(update));

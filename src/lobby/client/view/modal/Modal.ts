@@ -2,6 +2,8 @@ export abstract class BaseModal {
   abstract Enter(): void;
   abstract Exit(): void;
 
+  constructor() {}
+
   protected AddButton(
     parent: HTMLElement,
     name: string,

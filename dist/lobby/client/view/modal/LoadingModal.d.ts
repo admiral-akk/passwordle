@@ -1,5 +1,5 @@
-import { Modal } from './Modal';
-export declare class LoadingModal extends Modal {
+import { BaseModal } from './Modal';
+export declare class LoadingModal extends BaseModal {
     private text;
     constructor(modal: HTMLDivElement);
     Enter(): void;

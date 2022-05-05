@@ -28,6 +28,11 @@ enum State {
 export class PlayerBoard
   implements NewGameClientToServerEvents, NewGameServerToClientEvents
 {
+  state: State = State.WaitingForKnowledge;
+  guesses: Word[] = [];
+  currentGuess = '';
+  secret: Word | null = null;
+
   constructor(private view: GameView | null = null) {}
   OpponentLockedGuess() {}
 
@@ -56,11 +61,6 @@ export class PlayerBoard
     this.currentGuess = '';
     this.state = State.WaitingForKnowledge;
   }
-
-  state: State = State.WaitingForKnowledge;
-  guesses: Word[] = [];
-  currentGuess = '';
-  secret: Word | null = null;
 
   AddCharCommand(char: string): AddedChar | null {
     if (this.state !== State.CanSubmit) {
@@ -134,6 +134,8 @@ export class PlayerBoard
   private Reset() {
     this.secret = null;
     this.state = State.WaitingForKnowledge;
+    this.guesses = [];
+    this.currentGuess = '';
     this.view?.Reset();
   }
 }

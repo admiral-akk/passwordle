@@ -115,26 +115,31 @@ function SubmitGuess(socket, guess) {
     socket.emit('SubmitGuess', guess);
 }
 function RegisterSecretWord(socket, callback) {
+    socket.removeAllListeners('SecretWord');
     socket.on('SecretWord', (secret) => {
         callback(secret);
     });
 }
 function RegisterSubmissionOpen(socket, callback) {
+    socket.removeAllListeners('SubmissionOpen');
     socket.on('SubmissionOpen', () => {
         callback();
     });
 }
 function RegisterHints(socket, callback) {
+    socket.removeAllListeners('Hints');
     socket.on('Hints', hint => {
         callback(hint);
     });
 }
 function RegisterLost(socket, callback) {
+    socket.removeAllListeners('Lost');
     socket.on('Lost', () => {
         callback();
     });
 }
 function RegisterWon(socket, callback) {
+    socket.removeAllListeners('Won');
     socket.on('Won', () => {
         callback();
     });

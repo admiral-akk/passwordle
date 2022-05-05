@@ -40,6 +40,9 @@ export class LobbyView {
   }
 
   GameEnded() {
+    this.modal.style.display = 'block';
+    this.background.style.display = 'block';
+    this.root.style.display = 'block';
     console.log('Game ended modal triggered!');
     this.SetModal(new GameEndedModal(this.modal));
   }
@@ -58,12 +61,6 @@ export class LobbyView {
 
   LobbyReady() {
     this.SetModal(new LobbyReadyModal(this.modal));
-  }
-
-  RematchMenu() {
-    this.modal.style.display = 'block';
-    this.background.style.display = 'block';
-    this.root.style.display = 'block';
   }
 
   InGame() {
