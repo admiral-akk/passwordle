@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyView = void 0;
 const FindingMatchModal_1 = require("./modal/FindingMatchModal");
+const GameEndedModal_1 = require("./modal/GameEndedModal");
 const HostingModal_1 = require("./modal/HostingModal");
+const LoadingModal_1 = require("./modal/LoadingModal");
 const LobbyReadyModal_1 = require("./modal/LobbyReadyModal");
 const MenuModal_1 = require("./modal/MenuModal");
 class LobbyView {
@@ -23,6 +25,13 @@ class LobbyView {
         }
         this.currentModal = newModal;
         this.currentModal.Enter();
+    }
+    Loading() {
+        this.SetModal(new LoadingModal_1.LoadingModal(this.modal));
+    }
+    GameEnded() {
+        console.log('Game ended modal triggered!');
+        this.SetModal(new GameEndedModal_1.GameEndedModal(this.modal));
     }
     Menu(hostLobby, matchmake) {
         this.SetModal(new MenuModal_1.MenuModal(this.modal, hostLobby, matchmake));

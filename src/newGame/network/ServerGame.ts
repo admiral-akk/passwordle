@@ -9,7 +9,7 @@ export class ServerGame {
   playerClient: Record<PlayerId, ClientGameMirror> = {};
   exchangeServer: KnowledgeExchangeServer;
 
-  constructor(sockets: GameServerSocket[]) {
+  constructor(sockets: GameServerSocket[], private GameEnded: () => void) {
     const players = sockets.map(s => s.data.playerId!);
     const secrets = GenerateSecrets(sockets.map(s => s.data.playerId!));
     for (let i = 0; i < sockets.length; i++) {
@@ -22,7 +22,8 @@ export class ServerGame {
       secrets,
       (playerId: PlayerId, update: UpdatedAnswerKnowledge) => {
         this.playerClient[playerId].UpdatedAnswerKnowledge(update);
-      }
+      },
+      () => this.GameEnded()
     );
     for (let i = 0; i < sockets.length; i++) {
       const player = sockets[i].data.playerId!;

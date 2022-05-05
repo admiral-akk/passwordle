@@ -48,7 +48,6 @@ class GameManager {
         const update = new CharUpdate_1.CharUpdate(char, this.currentIndex, this.currentGuess.length);
         this.view.CharUpdate(update);
         this.currentGuess += char;
-        console.log(`CHAR: ${char}`);
     }
     Submit() {
         if (!this.InputActive()) {
@@ -75,7 +74,6 @@ class GameManager {
         this.currentGuess = this.currentGuess.slice(0, -1);
         const update = new CharUpdate_1.CharUpdate('', this.currentIndex, this.currentGuess.length);
         this.view.CharUpdate(update);
-        console.log('DELETE');
     }
     Lost() {
         this.SetState(GameState.Lost);

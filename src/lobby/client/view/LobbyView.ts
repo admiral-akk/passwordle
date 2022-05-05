@@ -1,5 +1,7 @@
 import {FindingMatchModal} from './modal/FindingMatchModal';
+import {GameEndedModal} from './modal/GameEndedModal';
 import {HostingModal} from './modal/HostingModal';
+import {LoadingModal} from './modal/LoadingModal';
 import {LobbyReadyModal} from './modal/LobbyReadyModal';
 import {MenuModal} from './modal/MenuModal';
 import {Modal} from './modal/Modal';
@@ -31,6 +33,15 @@ export class LobbyView {
     }
     this.currentModal = newModal;
     this.currentModal.Enter();
+  }
+
+  Loading() {
+    this.SetModal(new LoadingModal(this.modal));
+  }
+
+  GameEnded() {
+    console.log('Game ended modal triggered!');
+    this.SetModal(new GameEndedModal(this.modal));
   }
 
   Menu(hostLobby: () => void, matchmake: () => void): void {

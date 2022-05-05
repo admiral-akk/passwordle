@@ -68,7 +68,6 @@ export class GameManager {
     );
     this.view.CharUpdate(update);
     this.currentGuess += char;
-    console.log(`CHAR: ${char}`);
   }
 
   private Submit() {
@@ -103,7 +102,6 @@ export class GameManager {
       this.currentGuess.length
     );
     this.view.CharUpdate(update);
-    console.log('DELETE');
   }
 
   private Lost() {

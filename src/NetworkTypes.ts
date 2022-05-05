@@ -1,4 +1,4 @@
-import {Server} from 'socket.io';
+import {Server, Socket} from 'socket.io';
 import {GameServerToClientEvents} from './game/client/GameNetworkEvents';
 import {
   LobbyClientToServerEvents,
@@ -6,15 +6,28 @@ import {
 } from './lobby/client/LobbyNetworkEvents';
 import {LobbyServer} from './lobby/LobbyServer';
 import {LobbySocketData} from './lobby/LobbyServerSocket';
-import {LobbyServerManager} from './LobbyServerManager';
+import {
+  NewGameClientToServerEvents,
+  NewGameServerToClientEvents,
+} from './newGame/network/GameNetworkTypes';
+import {
+  LobbyClientRequests,
+  LobbyServerRequests,
+} from './newLobby/NewLobbyNetworkTypes';
+import {NewLobbyServer} from './newLobby/NewLobbyServer';
 import {PlayerId, ToPlayerId} from './PlayerId';
+import {SocketManager} from './SocketManager';
 
 export interface ServerToClientEvents
   extends LobbyServerToClientEvents,
-    GameServerToClientEvents {}
+    GameServerToClientEvents,
+    NewGameClientToServerEvents,
+    LobbyClientRequests {}
 export interface ClientToServerEvents
   extends LobbyClientToServerEvents,
-    GameServerToClientEvents {}
+    GameServerToClientEvents,
+    NewGameServerToClientEvents,
+    LobbyServerRequests {}
 
 export interface InterServerEvents {
   HandoffLobby: (lobby: LobbyServer) => void;
@@ -25,9 +38,17 @@ export interface SocketData extends LobbySocketData {
   playerId: PlayerId;
 }
 
+export type ServerSocket = Socket<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>;
+
 export function GetServer(
   app: Express.Application,
-  lobbyServer: LobbyServerManager
+  socketManager: SocketManager,
+  lobbyServer: NewLobbyServer
 ): Server<
   ClientToServerEvents,
   ServerToClientEvents,
@@ -44,7 +65,8 @@ export function GetServer(
 
   io.on('connection', socket => {
     socket.data.playerId = ToPlayerId(socket.id);
-    lobbyServer.AddSocket(socket);
+    socketManager.AddSocket(socket);
+    lobbyServer.PlayerJoins(socket);
   });
 
   http.listen(4000, () => {

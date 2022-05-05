@@ -1,4 +1,7 @@
-import {TargetProgress} from '../../game/client/structs/TargetProgress';
+import {
+  Complete,
+  TargetProgress,
+} from '../../game/client/structs/TargetProgress';
 import {GetKnowledge} from '../../game/logic/WordleLogic';
 import {Word} from '../../game/structs/Word';
 import {PlayerId} from '../../PlayerId';
@@ -15,7 +18,8 @@ export class KnowledgeExchangeServer {
     private updateKnowledgeCallback: (
       playerId: PlayerId,
       update: UpdatedAnswerKnowledge
-    ) => void
+    ) => void,
+    private GameEnded: () => void
   ) {
     for (let i = 0; i < players.length; i++) {
       const player = players[i];
@@ -28,6 +32,16 @@ export class KnowledgeExchangeServer {
     this.UpdateProgress();
     this.players.forEach(player => this.SendKnowledge(player));
     this.ClearGuesses();
+    this.CheckEndGame();
+  }
+
+  private CheckEndGame() {
+    this.players.forEach(player => {
+      if (Complete(this.progress[player])) {
+        this.GameEnded();
+        return;
+      }
+    });
   }
 
   private UpdateProgress() {

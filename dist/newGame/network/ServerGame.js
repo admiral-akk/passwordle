@@ -5,7 +5,8 @@ const ClientGameMirror_1 = require("./ClientGameMirror");
 const Words_1 = require("../../game/Words");
 const KnowledgeUpdateServer_1 = require("./KnowledgeUpdateServer");
 class ServerGame {
-    constructor(sockets) {
+    constructor(sockets, GameEnded) {
+        this.GameEnded = GameEnded;
         this.playerClient = {};
         const players = sockets.map(s => s.data.playerId);
         const secrets = GenerateSecrets(sockets.map(s => s.data.playerId));
@@ -16,7 +17,7 @@ class ServerGame {
         }
         this.exchangeServer = new KnowledgeUpdateServer_1.KnowledgeExchangeServer(players, secrets, (playerId, update) => {
             this.playerClient[playerId].UpdatedAnswerKnowledge(update);
-        });
+        }, () => this.GameEnded());
         for (let i = 0; i < sockets.length; i++) {
             const player = sockets[i].data.playerId;
             const opponent = sockets[(i + 1) % 2].data.playerId;

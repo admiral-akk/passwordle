@@ -1,7 +1,7 @@
-import {LobbyManager} from '../lobby/client/LobbyManager';
 import {GetSocket} from './ClientNetworking';
 import {ClientGame} from '../newGame/network/ClientGame';
+import {NewLobbyManager} from '../newLobby/NewLobbyManager';
 
 const socket = GetSocket();
-new LobbyManager(socket);
+new NewLobbyManager(socket);
 new ClientGame(socket);

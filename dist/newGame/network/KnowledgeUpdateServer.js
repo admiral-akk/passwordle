@@ -5,10 +5,11 @@ const TargetProgress_1 = require("../../game/client/structs/TargetProgress");
 const WordleLogic_1 = require("../../game/logic/WordleLogic");
 const Updates_1 = require("./updates/Updates");
 class KnowledgeExchangeServer {
-    constructor(players, answers, updateKnowledgeCallback) {
+    constructor(players, answers, updateKnowledgeCallback, GameEnded) {
         this.players = players;
         this.answers = answers;
         this.updateKnowledgeCallback = updateKnowledgeCallback;
+        this.GameEnded = GameEnded;
         this.progress = {};
         this.opponent = {};
         this.currentGuess = {};
@@ -22,6 +23,15 @@ class KnowledgeExchangeServer {
         this.UpdateProgress();
         this.players.forEach(player => this.SendKnowledge(player));
         this.ClearGuesses();
+        this.CheckEndGame();
+    }
+    CheckEndGame() {
+        this.players.forEach(player => {
+            if ((0, TargetProgress_1.Complete)(this.progress[player])) {
+                this.GameEnded();
+                return;
+            }
+        });
     }
     UpdateProgress() {
         this.players.forEach(player => {
