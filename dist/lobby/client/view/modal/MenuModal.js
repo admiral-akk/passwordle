@@ -5,7 +5,7 @@ const Modal_1 = require("./Modal");
 class MenuModal extends Modal_1.BaseModal {
     constructor(modal, hostLobby, matchmake) {
         super();
-        this.privateGame = this.AddButton(modal, 'Private Game', hostLobby);
+        this.privateGame = this.AddButton(modal, 'Copy Link to Clipboard', hostLobby);
         this.publicGame = this.AddButton(modal, 'Join Random Game', matchmake);
     }
     Enter() {

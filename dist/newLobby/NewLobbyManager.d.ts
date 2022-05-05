@@ -4,5 +4,6 @@ export declare class NewLobbyManager implements LobbyServerRequests {
     private view;
     private model;
     constructor(socket: NewLobbyClientSocket);
+    JoinLobby(lobbyId: string): void;
     FindMatch(): void;
 }

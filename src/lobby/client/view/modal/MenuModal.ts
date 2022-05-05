@@ -10,7 +10,11 @@ export class MenuModal extends BaseModal {
     matchmake: () => void
   ) {
     super();
-    this.privateGame = this.AddButton(modal, 'Private Game', hostLobby);
+    this.privateGame = this.AddButton(
+      modal,
+      'Copy Link to Clipboard',
+      hostLobby
+    );
     this.publicGame = this.AddButton(modal, 'Join Random Game', matchmake);
   }
 

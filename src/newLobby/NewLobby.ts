@@ -12,10 +12,15 @@ enum State {
   EndGame,
 }
 
+const LOBBY_ID_QUERY_NAME = 'lobbyId';
+
 export class NewLobby implements LobbyClientRequests {
   private state: State = State.Loading;
   constructor(private view: LobbyView, private server: LobbyServerRequests) {
     view.Loading();
+    if (FindLobbyIdInURL()) {
+      server.JoinLobby(FindLobbyIdInURL()!);
+    }
   }
   GameEnded() {
     this.state = State.EndGame;
@@ -39,9 +44,10 @@ export class NewLobby implements LobbyClientRequests {
   }
 
   EnterMenu(lobbyId: string) {
+    const url = GenerateLobbyLink(lobbyId);
     this.state = State.InMenu;
     this.view.Menu(
-      () => {},
+      () => CopyToClipboard(url),
       () => this.FindMatch()
     );
   }
@@ -51,4 +57,18 @@ export class NewLobby implements LobbyClientRequests {
     this.view.FindingMatch();
     this.server.FindMatch();
   }
+}
+
+function FindLobbyIdInURL(): string | null {
+  return new URLSearchParams(window.location.search).get(LOBBY_ID_QUERY_NAME);
+}
+
+function GenerateLobbyLink(lobbyId: string): string {
+  const url = new URLSearchParams(window.location.search);
+  url.append(LOBBY_ID_QUERY_NAME, lobbyId);
+  return `${window.location.href}?${url.toString()}`;
+}
+
+function CopyToClipboard(url: string) {
+  navigator.clipboard.writeText(url);
 }

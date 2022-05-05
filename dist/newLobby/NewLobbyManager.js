@@ -10,6 +10,9 @@ class NewLobbyManager {
         this.model = new NewLobby_1.NewLobby(this.view, this);
         RegisterSocket(socket, this.model);
     }
+    JoinLobby(lobbyId) {
+        this.socket.emit('JoinLobby', lobbyId);
+    }
     FindMatch() {
         this.socket.emit('FindMatch');
     }

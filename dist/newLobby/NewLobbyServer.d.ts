@@ -8,4 +8,6 @@ export declare class NewLobbyServer {
     PlayerJoins(socket: NewLobbyServerSocket): void;
     EndGame(sockets: NewLobbyServerSocket[]): void;
     private FindMatch;
+    private JoinLobby;
+    private ConnectLobbies;
 }

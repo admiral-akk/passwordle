@@ -10,4 +10,5 @@ export interface LobbyClientRequests {
 }
 export interface LobbyServerRequests {
     FindMatch: () => void;
+    JoinLobby: (lobbyId: string) => void;
 }

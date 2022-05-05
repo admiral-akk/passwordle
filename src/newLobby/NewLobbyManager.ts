@@ -12,6 +12,9 @@ export class NewLobbyManager implements LobbyServerRequests {
   constructor(private socket: NewLobbyClientSocket) {
     RegisterSocket(socket, this.model);
   }
+  JoinLobby(lobbyId: string) {
+    this.socket.emit('JoinLobby', lobbyId);
+  }
 
   FindMatch() {
     this.socket.emit('FindMatch');

@@ -9,7 +9,7 @@ class NewLobbyServer {
     }
     PlayerJoins(socket) {
         const playerId = socket.data.playerId;
-        this.lobbies[playerId] = new LobbySocketManager(socket, () => this.FindMatch(playerId));
+        this.lobbies[playerId] = new LobbySocketManager(socket, () => this.FindMatch(playerId), (lobbyId) => this.JoinLobby(playerId, lobbyId));
     }
     EndGame(sockets) {
         const players = sockets.map(socket => socket.data.playerId);
@@ -23,21 +23,34 @@ class NewLobbyServer {
         }
         else {
             const other = this.publicLobbies.pop();
-            lobby.lobbyId = other.lobbyId;
-            lobby.MatchFound(lobby.lobbyId);
-            other.MatchFound(other.lobbyId);
-            this.EnterGame([lobby.GetPlayer(), other.GetPlayer()]);
+            this.ConnectLobbies(lobby, other);
         }
+    }
+    JoinLobby(playerId, lobbyId) {
+        const playerLobby = this.lobbies[playerId];
+        if (lobbyId in this.lobbies) {
+            this.ConnectLobbies(playerLobby, this.lobbies[lobbyId]);
+        }
+        else {
+            playerLobby.EnterMenu(playerLobby.lobbyId);
+        }
+    }
+    ConnectLobbies(lobby, other) {
+        lobby.lobbyId = other.lobbyId;
+        lobby.MatchFound(lobby.lobbyId);
+        other.MatchFound(other.lobbyId);
+        this.EnterGame([lobby.GetPlayer(), other.GetPlayer()]);
     }
 }
 exports.NewLobbyServer = NewLobbyServer;
 class LobbySocketManager {
-    constructor(socket, FindMatch) {
+    constructor(socket, FindMatch, JoinLobby) {
         this.socket = socket;
         this.FindMatch = FindMatch;
+        this.JoinLobby = JoinLobby;
         this.lobbyId = socket.data.playerId;
         this.RegisterSocket(socket);
-        socket.emit('EnterMenu', this.lobbyId);
+        socket.emit('EnterMenu', socket.data.playerId);
     }
     GetPlayer() {
         return this.socket.data.playerId;
@@ -53,6 +66,7 @@ class LobbySocketManager {
     }
     RegisterSocket(socket) {
         socket.on('FindMatch', () => this.FindMatch());
+        socket.on('JoinLobby', (lobbyId) => this.JoinLobby(lobbyId));
     }
 }
 //# sourceMappingURL=NewLobbyServer.js.map

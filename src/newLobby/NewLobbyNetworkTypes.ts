@@ -22,4 +22,5 @@ export interface LobbyClientRequests {
 // Things to ask the server/view to do
 export interface LobbyServerRequests {
   FindMatch: () => void;
+  JoinLobby: (lobbyId: string) => void;
 }
