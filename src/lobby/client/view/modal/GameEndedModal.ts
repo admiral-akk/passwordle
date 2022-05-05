@@ -1,10 +1,11 @@
-import {Modal} from './Modal';
+import {BaseModal} from './Modal';
 
-export class GameEndedModal implements Modal {
+export class GameEndedModal extends BaseModal {
   private text: HTMLDivElement;
 
   constructor(modal: HTMLDivElement) {
-    this.text = AddDiv(modal, 'Game over! Returning to menu...');
+    super();
+    this.text = this.AddDiv(modal, 'Game over! Returning to menu...');
   }
 
   Enter(): void {
@@ -14,11 +15,4 @@ export class GameEndedModal implements Modal {
   Exit(): void {
     this.text.remove();
   }
-}
-function AddDiv(parent: HTMLElement, text: string): HTMLDivElement {
-  const div = document.createElement('div');
-  div.style.display = 'none';
-  div.innerText = text;
-  parent.appendChild(div);
-  return div;
 }

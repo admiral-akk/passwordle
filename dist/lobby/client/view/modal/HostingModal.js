@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HostingModal = void 0;
-class HostingModal {
+const Modal_1 = require("./Modal");
+class HostingModal extends Modal_1.Modal {
     constructor(modal, copyToClipboard) {
-        this.shareLink = AddButton(modal, 'Share Link', copyToClipboard);
-        this.text = AddDiv(modal, 'Share the link');
+        super();
+        this.shareLink = this.AddButton(modal, 'Share Link', copyToClipboard);
+        this.text = this.AddDiv(modal, 'Share the link');
     }
     Enter() {
         this.shareLink.style.display = 'block';
@@ -16,20 +18,4 @@ class HostingModal {
     }
 }
 exports.HostingModal = HostingModal;
-function AddButton(parent, name, callback) {
-    const button = document.createElement('button');
-    button.style.display = 'none';
-    button.className = 'host-button';
-    button.innerText = name;
-    button.addEventListener('click', callback);
-    parent.appendChild(button);
-    return button;
-}
-function AddDiv(parent, text) {
-    const div = document.createElement('div');
-    div.style.display = 'none';
-    div.innerText = text;
-    parent.appendChild(div);
-    return div;
-}
 //# sourceMappingURL=HostingModal.js.map

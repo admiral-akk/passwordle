@@ -1,9 +1,10 @@
-import {Modal} from './Modal';
+import {BaseModal} from './Modal';
 
-export class LoadingModal implements Modal {
+export class LoadingModal extends BaseModal {
   private text: HTMLDivElement;
   constructor(modal: HTMLDivElement) {
-    this.text = AddDiv(modal, 'Loading...');
+    super();
+    this.text = this.AddDiv(modal, 'Loading...');
   }
 
   Enter(): void {
@@ -13,12 +14,4 @@ export class LoadingModal implements Modal {
   Exit(): void {
     this.text.remove();
   }
-}
-
-function AddDiv(parent: HTMLElement, text: string): HTMLDivElement {
-  const div = document.createElement('div');
-  div.style.display = 'none';
-  div.innerText = text;
-  parent.appendChild(div);
-  return div;
 }

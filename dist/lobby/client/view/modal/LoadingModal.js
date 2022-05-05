@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadingModal = void 0;
-class LoadingModal {
+const Modal_1 = require("./Modal");
+class LoadingModal extends Modal_1.Modal {
     constructor(modal) {
-        this.text = AddDiv(modal, 'Loading...');
+        super();
+        this.text = this.AddDiv(modal, 'Loading...');
     }
     Enter() {
         this.text.style.display = 'block';
@@ -13,11 +15,4 @@ class LoadingModal {
     }
 }
 exports.LoadingModal = LoadingModal;
-function AddDiv(parent, text) {
-    const div = document.createElement('div');
-    div.style.display = 'none';
-    div.innerText = text;
-    parent.appendChild(div);
-    return div;
-}
 //# sourceMappingURL=LoadingModal.js.map

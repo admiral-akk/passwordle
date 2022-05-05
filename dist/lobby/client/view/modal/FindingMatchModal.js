@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FindingMatchModal = void 0;
-class FindingMatchModal {
+const Modal_1 = require("./Modal");
+class FindingMatchModal extends Modal_1.Modal {
     constructor(modal) {
-        this.text = AddDiv(modal, 'Finding Match...');
+        super();
+        this.text = this.AddDiv(modal, 'Finding Match...');
     }
     Enter() {
         this.text.style.display = 'block';
@@ -13,11 +15,4 @@ class FindingMatchModal {
     }
 }
 exports.FindingMatchModal = FindingMatchModal;
-function AddDiv(parent, text) {
-    const div = document.createElement('div');
-    div.style.display = 'none';
-    div.innerText = text;
-    parent.appendChild(div);
-    return div;
-}
 //# sourceMappingURL=FindingMatchModal.js.map

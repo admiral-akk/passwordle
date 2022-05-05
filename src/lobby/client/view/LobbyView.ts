@@ -4,7 +4,7 @@ import {HostingModal} from './modal/HostingModal';
 import {LoadingModal} from './modal/LoadingModal';
 import {LobbyReadyModal} from './modal/LobbyReadyModal';
 import {MenuModal} from './modal/MenuModal';
-import {Modal} from './modal/Modal';
+import {BaseModal} from './modal/Modal';
 
 export class LobbyView {
   private root: HTMLElement;
@@ -12,7 +12,7 @@ export class LobbyView {
   private modal: HTMLDivElement;
 
   // Using https://gameprogrammingpatterns.com/state.html pattern here.
-  private currentModal: Modal | null;
+  private currentModal: BaseModal | null;
 
   constructor() {
     this.root = document.getElementById('lobby')!;
@@ -27,7 +27,7 @@ export class LobbyView {
     this.currentModal = null;
   }
 
-  private SetModal(newModal: Modal) {
+  private SetModal(newModal: BaseModal) {
     if (this.currentModal) {
       this.currentModal.Exit();
     }

@@ -34,13 +34,6 @@ function ExitGame(players) {
     const lobbySockets = socketManager.GetSockets(players);
     lobbyServer.EndGame(lobbySockets);
 }
-function HandoffLobby(players) {
-    const gamePlayers = players.map(gameServerSocket => gameServerSocket);
-    gameServer.EnterGame(gamePlayers);
-}
-function HandoffGame(players) {
-    const lobbyPlayers = players.map(lobbyServerSocket => lobbyServerSocket);
-}
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Return the articles to the rendering engine
     res.render('index');

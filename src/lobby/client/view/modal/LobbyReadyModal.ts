@@ -1,10 +1,11 @@
-import {Modal} from './Modal';
+import {BaseModal} from './Modal';
 
-export class LobbyReadyModal implements Modal {
+export class LobbyReadyModal extends BaseModal {
   private text: HTMLDivElement;
 
   constructor(modal: HTMLDivElement) {
-    this.text = AddDiv(modal, 'Match found! Good luck!');
+    super();
+    this.text = this.AddDiv(modal, 'Match found! Good luck!');
   }
 
   Enter(): void {
@@ -14,11 +15,4 @@ export class LobbyReadyModal implements Modal {
   Exit(): void {
     this.text.remove();
   }
-}
-function AddDiv(parent: HTMLElement, text: string): HTMLDivElement {
-  const div = document.createElement('div');
-  div.style.display = 'none';
-  div.innerText = text;
-  parent.appendChild(div);
-  return div;
 }

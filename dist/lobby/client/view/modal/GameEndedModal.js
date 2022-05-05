@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameEndedModal = void 0;
-class GameEndedModal {
+const Modal_1 = require("./Modal");
+class GameEndedModal extends Modal_1.Modal {
     constructor(modal) {
-        this.text = AddDiv(modal, 'Game over! Returning to menu...');
+        super();
+        this.text = this.AddDiv(modal, 'Game over! Returning to menu...');
     }
     Enter() {
         this.text.style.display = 'block';
@@ -13,11 +15,4 @@ class GameEndedModal {
     }
 }
 exports.GameEndedModal = GameEndedModal;
-function AddDiv(parent, text) {
-    const div = document.createElement('div');
-    div.style.display = 'none';
-    div.innerText = text;
-    parent.appendChild(div);
-    return div;
-}
 //# sourceMappingURL=GameEndedModal.js.map

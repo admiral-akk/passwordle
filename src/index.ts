@@ -29,19 +29,6 @@ function ExitGame(players: PlayerId[]) {
   lobbyServer.EndGame(lobbySockets);
 }
 
-function HandoffLobby(players: LobbyServerSocket[]) {
-  const gamePlayers = players.map(
-    gameServerSocket => gameServerSocket as LobbyServerSocket
-  );
-  gameServer.EnterGame(gamePlayers);
-}
-
-function HandoffGame(players: GameServerSocket[]) {
-  const lobbyPlayers = players.map(
-    lobbyServerSocket => lobbyServerSocket as GameServerSocket
-  );
-}
-
 app.get('/', async (req, res) => {
   // Return the articles to the rendering engine
   res.render('index');

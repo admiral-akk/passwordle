@@ -1,6 +1,6 @@
-import {Modal} from './Modal';
+import {BaseModal} from './Modal';
 
-export class MenuModal implements Modal {
+export class MenuModal extends BaseModal {
   private privateGame: HTMLButtonElement;
   private publicGame: HTMLButtonElement;
 
@@ -9,8 +9,9 @@ export class MenuModal implements Modal {
     hostLobby: () => void,
     matchmake: () => void
   ) {
-    this.privateGame = AddButton(modal, 'Private Game', hostLobby);
-    this.publicGame = AddButton(modal, 'Join Random Game', matchmake);
+    super();
+    this.privateGame = this.AddButton(modal, 'Private Game', hostLobby);
+    this.publicGame = this.AddButton(modal, 'Join Random Game', matchmake);
   }
 
   Enter(): void {
@@ -22,18 +23,4 @@ export class MenuModal implements Modal {
     this.privateGame.remove();
     this.publicGame.remove();
   }
-}
-
-function AddButton(
-  parent: HTMLElement,
-  name: string,
-  callback: () => void
-): HTMLButtonElement {
-  const button = document.createElement('button');
-  button.style.display = 'none';
-  button.className = 'host-button';
-  button.innerText = name;
-  button.addEventListener('click', callback);
-  parent.appendChild(button);
-  return button;
 }
