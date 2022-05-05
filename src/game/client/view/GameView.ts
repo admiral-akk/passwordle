@@ -61,6 +61,14 @@ export class GameView {
   GameOver(won: boolean) {
     this.endGame.GameOver(won);
   }
+
+  Reset() {
+    this.playerBoard.Reset();
+    this.opponentBoard.Reset();
+    this.answer.Reset();
+    this.target.Reset();
+    this.endGame.Reset();
+  }
 }
 
 function AddDiv(parent: HTMLElement, className: string): HTMLDivElement {

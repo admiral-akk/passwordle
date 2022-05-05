@@ -15,6 +15,9 @@ class EndGameView extends Subview_1.Subview {
             this.root.innerText = 'You lost!';
         }
     }
+    Reset() {
+        this.root.innerText = '';
+    }
 }
 exports.EndGameView = EndGameView;
 //# sourceMappingURL=EndGameView.js.map

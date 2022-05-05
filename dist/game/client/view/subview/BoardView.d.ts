@@ -6,4 +6,5 @@ export declare abstract class BoardView extends Subview {
     constructor(base: HTMLDivElement, explanationText?: string);
     protected BaseUpdate(update: CharUpdate): void;
     protected BaseHintUpdate(knowledge: WordKnowledge, index: number): void;
+    Reset(): void;
 }

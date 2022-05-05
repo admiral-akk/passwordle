@@ -39,4 +39,8 @@ export class WordView extends Subview {
     this.letters[charIndex].Set(char);
     this.letters[charIndex].SetKnowledge(letterState);
   }
+
+  Reset(): void {
+    this.letters.forEach(letter => letter.Reset());
+  }
 }

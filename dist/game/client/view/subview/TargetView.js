@@ -17,6 +17,9 @@ class TargetView extends Subview_1.Subview {
             }
         }
     }
+    Reset() {
+        this.answer.Reset();
+    }
 }
 exports.TargetView = TargetView;
 //# sourceMappingURL=TargetView.js.map

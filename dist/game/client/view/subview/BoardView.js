@@ -18,6 +18,9 @@ class BoardView extends Subview_1.Subview {
     BaseHintUpdate(knowledge, index) {
         this.words[index].SetKnowledge(knowledge);
     }
+    Reset() {
+        this.words.forEach(word => word.Reset());
+    }
 }
 exports.BoardView = BoardView;
 //# sourceMappingURL=BoardView.js.map

@@ -30,6 +30,9 @@ class WordView extends Subview_1.Subview {
         this.letters[charIndex].Set(char);
         this.letters[charIndex].SetKnowledge(letterState);
     }
+    Reset() {
+        this.letters.forEach(letter => letter.Reset());
+    }
 }
 exports.WordView = WordView;
 //# sourceMappingURL=WordView.js.map

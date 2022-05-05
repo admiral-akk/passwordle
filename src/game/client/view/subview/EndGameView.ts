@@ -13,4 +13,8 @@ export class EndGameView extends Subview {
       this.root.innerText = 'You lost!';
     }
   }
+
+  Reset(): void {
+    this.root.innerText = '';
+  }
 }

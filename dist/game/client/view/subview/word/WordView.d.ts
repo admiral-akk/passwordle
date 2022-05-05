@@ -9,4 +9,5 @@ export declare class WordView extends Subview {
     SetKnowledge(knowledge: WordKnowledge): void;
     Update(update: CharUpdate): void;
     SetChar(char: string, charIndex: number, letterState?: LetterState): void;
+    Reset(): void;
 }

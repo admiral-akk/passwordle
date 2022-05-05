@@ -6,6 +6,7 @@ class TimerView extends Subview_1.Subview {
     constructor(base) {
         super(base, 'timer');
     }
+    Reset() { }
 }
 exports.TimerView = TimerView;
 //# sourceMappingURL=TimerView.js.map

@@ -11,6 +11,7 @@ class KeyboardView extends Subview_1.Subview {
     constructor(base) {
         super(base, 'keyboard');
     }
+    Reset() { }
 }
 exports.KeyboardView = KeyboardView;
 //# sourceMappingURL=KeyboardView.js.map

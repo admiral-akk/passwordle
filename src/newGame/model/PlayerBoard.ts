@@ -125,8 +125,15 @@ export class PlayerBoard
   }
 
   SetSecret(secret: Word) {
+    this.Reset();
     this.secret = secret;
     this.view?.SetSecret(secret);
     this.state = State.CanSubmit;
+  }
+
+  private Reset() {
+    this.secret = null;
+    this.state = State.WaitingForKnowledge;
+    this.view?.Reset();
   }
 }

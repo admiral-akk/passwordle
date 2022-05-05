@@ -18,3 +18,7 @@ export declare class LockedGuess {
     guess: Word;
     constructor(guess: Word);
 }
+export declare function Gameover(update: UpdatedAnswerKnowledge): boolean;
+export declare function Tie(update: UpdatedAnswerKnowledge): boolean;
+export declare function Win(update: UpdatedAnswerKnowledge): boolean;
+export declare function Loss(update: UpdatedAnswerKnowledge): boolean;

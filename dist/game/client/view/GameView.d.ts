@@ -13,4 +13,5 @@ export declare class GameView {
     CharUpdate(update: CharUpdate): void;
     HintUpdate(update: HintUpdate): void;
     GameOver(won: boolean): void;
+    Reset(): void;
 }

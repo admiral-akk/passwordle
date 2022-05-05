@@ -33,6 +33,10 @@ class LetterView extends Subview_1.Subview {
                 break;
         }
     }
+    Reset() {
+        this.Set('');
+        this.SetKnowledge(LetterState_1.LetterState.None);
+    }
 }
 exports.LetterView = LetterView;
 //# sourceMappingURL=LetterView.js.map

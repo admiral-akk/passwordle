@@ -18,4 +18,7 @@ export class TargetView extends Subview {
       }
     }
   }
+  Reset(): void {
+    this.answer.Reset();
+  }
 }

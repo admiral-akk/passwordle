@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlayerBoard = void 0;
 const Hint_1 = require("../../game/client/structs/Hint");
-const TargetProgress_1 = require("../../game/client/structs/TargetProgress");
 const CharUpdate_1 = require("../../game/client/view/CharUpdate");
 const HintUpdate_1 = require("../../game/client/view/HintUpdate");
 const Word_1 = require("../../game/structs/Word");
@@ -80,37 +79,32 @@ class PlayerBoard {
         const hint = new Hint_1.Hint(update.playerKnowledge, update.opponentKnowledge, update.playerProgress, update.opponentProgress);
         const hintUpdate = new HintUpdate_1.HintUpdate(hint, this.guesses.length - 1);
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.HintUpdate(hintUpdate);
-        if (Gameover(update)) {
+        if ((0, Updates_1.Gameover)(update)) {
             this.state = State.GameEnded;
-            if (Win(update)) {
+            if ((0, Updates_1.Win)(update)) {
                 (_b = this.view) === null || _b === void 0 ? void 0 : _b.GameOver(true);
             }
-            if (Loss(update)) {
+            if ((0, Updates_1.Loss)(update)) {
                 (_c = this.view) === null || _c === void 0 ? void 0 : _c.GameOver(false);
             }
-            if (Tie(update)) {
+            if ((0, Updates_1.Tie)(update)) {
                 (_d = this.view) === null || _d === void 0 ? void 0 : _d.GameOver(false);
             }
         }
     }
     SetSecret(secret) {
         var _a;
+        this.Reset();
         this.secret = secret;
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.SetSecret(secret);
         this.state = State.CanSubmit;
     }
+    Reset() {
+        var _a;
+        this.secret = null;
+        this.state = State.WaitingForKnowledge;
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Reset();
+    }
 }
 exports.PlayerBoard = PlayerBoard;
-function Gameover(update) {
-    return (0, TargetProgress_1.Complete)(update.playerProgress) || (0, TargetProgress_1.Complete)(update.opponentProgress);
-}
-function Tie(update) {
-    return (0, TargetProgress_1.Complete)(update.playerProgress) && (0, TargetProgress_1.Complete)(update.opponentProgress);
-}
-function Win(update) {
-    return !Tie(update) && (0, TargetProgress_1.Complete)(update.playerProgress);
-}
-function Loss(update) {
-    return !Tie(update) && (0, TargetProgress_1.Complete)(update.opponentProgress);
-}
 //# sourceMappingURL=PlayerBoard.js.map

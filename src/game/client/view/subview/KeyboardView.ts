@@ -10,4 +10,5 @@ export class KeyboardView extends Subview {
   constructor(base: HTMLElement) {
     super(base, 'keyboard');
   }
+  Reset(): void {}
 }

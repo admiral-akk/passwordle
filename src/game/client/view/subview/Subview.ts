@@ -6,6 +6,8 @@ export abstract class Subview {
       new ExplanationView(this.root, explanationText);
     }
   }
+
+  abstract Reset(): void;
 }
 export class ExplanationView {
   private root: HTMLDivElement;

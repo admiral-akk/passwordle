@@ -6,4 +6,5 @@ export declare class LetterView extends Subview {
     Update(update: CharUpdate): void;
     Set(char: string): void;
     SetKnowledge(letterKnowledge: LetterState): void;
+    Reset(): void;
 }

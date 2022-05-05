@@ -14,6 +14,10 @@ export class AnswerView extends Subview {
     this.answer.Set(secret);
   }
 
+  Reset(): void {
+    this.answer.Reset();
+  }
+
   HintUpdate(update: HintUpdate) {
     const knownCharacters = update.hint.playerProgress.knownCharacters;
     for (let i = 0; i < knownCharacters.length; i++) {

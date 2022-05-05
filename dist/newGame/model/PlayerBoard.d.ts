@@ -25,5 +25,6 @@ export declare class PlayerBoard implements NewGameClientToServerEvents, NewGame
     OpponentDeleted(): void;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): void;
     SetSecret(secret: Word): void;
+    private Reset;
 }
 export {};

@@ -35,4 +35,8 @@ export class LetterView extends Subview {
         break;
     }
   }
+  Reset(): void {
+    this.Set('');
+    this.SetKnowledge(LetterState.None);
+  }
 }
