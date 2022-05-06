@@ -12,7 +12,7 @@ export declare class GameView {
     constructor();
     SetSecret(secret: string): void;
     CharUpdate(update: CharUpdate): void;
-    HintUpdate(update: HintUpdate): void;
+    HintUpdate(update: HintUpdate, updateComplete: () => void): void;
     GameOver(won: boolean): void;
     Reset(): void;
     OpponentUpdate(update: OpponentUpdate): void;

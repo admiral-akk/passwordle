@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnimateHint = void 0;
-function AnimateHint(update, yourBoard, opponentBoard, yourPassword, opponentPassword) {
+function AnimateHint(update, yourBoard, opponentBoard, yourPassword, opponentPassword, updateComplete) {
     let animations = GenerateAnimations(yourBoard, update.hint.playerGuess, update.guessIndex, yourPassword, opponentPassword, update.hint.playerProgress, update.hint.opponentProgress);
     animations = animations.concat(GenerateAnimations(opponentBoard, update.hint.opponentGuess, update.guessIndex, yourPassword, opponentPassword, update.hint.playerProgress, update.hint.opponentProgress));
     let promise = Promise.resolve();
@@ -10,6 +10,7 @@ function AnimateHint(update, yourBoard, opponentBoard, yourPassword, opponentPas
             promise = promise.then(() => delay(500)).then(() => animation());
         }
     });
+    promise.then(() => delay(500)).then(() => updateComplete());
 }
 exports.AnimateHint = AnimateHint;
 function GenerateAnimations(board, guess, wordIndex, yourPassword, opponentPassword, playerProgress, opponentProgress) {

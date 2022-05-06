@@ -33,9 +33,9 @@ class GameView {
     CharUpdate(update) {
         this.yourBoard.CharUpdate(update);
     }
-    HintUpdate(update) {
+    HintUpdate(update, updateComplete) {
         // Animated this.
-        (0, AnimateKnowledge_1.AnimateHint)(update, this.yourBoard, this.opponentBoard, this.yourPassword, this.opponentPassword);
+        (0, AnimateKnowledge_1.AnimateHint)(update, this.yourBoard, this.opponentBoard, this.yourPassword, this.opponentPassword, updateComplete);
     }
     GameOver(won) {
         this.endGame.GameOver(won);

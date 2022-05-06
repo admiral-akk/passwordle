@@ -53,14 +53,15 @@ export class GameView {
     this.yourBoard.CharUpdate(update);
   }
 
-  HintUpdate(update: HintUpdate) {
+  HintUpdate(update: HintUpdate, updateComplete: () => void) {
     // Animated this.
     AnimateHint(
       update,
       this.yourBoard,
       this.opponentBoard,
       this.yourPassword,
-      this.opponentPassword
+      this.opponentPassword,
+      updateComplete
     );
   }
 

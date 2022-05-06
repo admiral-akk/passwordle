@@ -97,22 +97,28 @@ class PlayerBoard {
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.OpponentUpdate(update);
     }
     UpdatedAnswerKnowledge(update) {
-        var _a, _b, _c, _d;
+        var _a;
         this.state = State.CanSubmit;
         const hint = new Hint_1.Hint(update.playerKnowledge, update.opponentKnowledge, update.playerProgress, update.opponentProgress);
         const hintUpdate = new HintUpdate_1.HintUpdate(hint, this.guesses.length - 1);
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.HintUpdate(hintUpdate);
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.HintUpdate(hintUpdate, () => this.CheckGameOver(update));
         if ((0, Updates_1.Gameover)(update)) {
             this.state = State.GameEnded;
-            if ((0, Updates_1.Win)(update)) {
-                (_b = this.view) === null || _b === void 0 ? void 0 : _b.GameOver(true);
-            }
-            if ((0, Updates_1.Loss)(update)) {
-                (_c = this.view) === null || _c === void 0 ? void 0 : _c.GameOver(false);
-            }
-            if ((0, Updates_1.Tie)(update)) {
-                (_d = this.view) === null || _d === void 0 ? void 0 : _d.GameOver(false);
-            }
+        }
+    }
+    CheckGameOver(update) {
+        var _a, _b, _c;
+        if (this.state !== State.GameEnded) {
+            return;
+        }
+        if ((0, Updates_1.Win)(update)) {
+            (_a = this.view) === null || _a === void 0 ? void 0 : _a.GameOver(true);
+        }
+        if ((0, Updates_1.Loss)(update)) {
+            (_b = this.view) === null || _b === void 0 ? void 0 : _b.GameOver(false);
+        }
+        if ((0, Updates_1.Tie)(update)) {
+            (_c = this.view) === null || _c === void 0 ? void 0 : _c.GameOver(false);
         }
     }
     SetSecret(secret) {

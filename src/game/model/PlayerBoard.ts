@@ -144,18 +144,24 @@ export class PlayerBoard
       update.opponentProgress
     );
     const hintUpdate = new HintUpdate(hint, this.guesses.length - 1);
-    this.view?.HintUpdate(hintUpdate);
+    this.view?.HintUpdate(hintUpdate, () => this.CheckGameOver(update));
     if (Gameover(update)) {
       this.state = State.GameEnded;
-      if (Win(update)) {
-        this.view?.GameOver(true);
-      }
-      if (Loss(update)) {
-        this.view?.GameOver(false);
-      }
-      if (Tie(update)) {
-        this.view?.GameOver(false);
-      }
+    }
+  }
+
+  private CheckGameOver(update: UpdatedAnswerKnowledge) {
+    if (this.state !== State.GameEnded) {
+      return;
+    }
+    if (Win(update)) {
+      this.view?.GameOver(true);
+    }
+    if (Loss(update)) {
+      this.view?.GameOver(false);
+    }
+    if (Tie(update)) {
+      this.view?.GameOver(false);
     }
   }
 

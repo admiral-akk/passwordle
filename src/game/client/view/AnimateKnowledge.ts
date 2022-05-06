@@ -12,7 +12,8 @@ export function AnimateHint(
   yourBoard: YourBoardView,
   opponentBoard: OpponentBoardView,
   yourPassword: YourPasswordView,
-  opponentPassword: OpponentPasswordView
+  opponentPassword: OpponentPasswordView,
+  updateComplete: () => void
 ) {
   let animations = GenerateAnimations(
     yourBoard,
@@ -42,6 +43,7 @@ export function AnimateHint(
       promise = promise.then(() => delay(500)).then(() => animation!());
     }
   });
+  promise.then(() => delay(500)).then(() => updateComplete());
 }
 
 function GenerateAnimations(
