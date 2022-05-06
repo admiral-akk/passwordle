@@ -2,30 +2,30 @@ import {AnimateHint} from './AnimateKnowledge';
 import {CharUpdate} from './CharUpdate';
 import {HintUpdate} from './HintUpdate';
 import {OpponentUpdate} from './OpponentUpdate';
-import {AnswerView} from './subview/AnswerView';
+import {YourPasswordView} from './subview/YourPasswordView';
 import {EndGameView} from './subview/EndGameView';
 import {KeyboardView} from './subview/KeyboardView';
 import {OpponentBoardView} from './subview/OpponentBoardView';
 import {PlayerBoardView} from './subview/PlayerBoardView';
 import {ExplanationView} from './subview/Subview';
-import {TargetView} from './subview/TargetView';
+import {OpponentPasswordView} from './subview/OpponentPasswordView';
 import {TimerView} from './subview/TimerView';
 
 export class GameView {
-  private answer: AnswerView;
+  private answer: YourPasswordView;
   private playerBoard: PlayerBoardView;
   private opponentBoard: OpponentBoardView;
   private keyboard: KeyboardView;
   private timer: TimerView;
-  private target: TargetView;
+  private target: OpponentPasswordView;
   private endGame: EndGameView;
 
   constructor() {
     const root = document.getElementById('game-board')!;
     this.timer = new TimerView(root);
 
-    this.answer = new AnswerView(root);
-    this.target = new TargetView(root);
+    this.answer = new YourPasswordView(root);
+    this.target = new OpponentPasswordView(root);
     const game = AddDiv(root, 'play-area');
 
     const player = AddDiv(game, 'player');

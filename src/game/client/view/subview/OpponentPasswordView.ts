@@ -4,7 +4,7 @@ import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
 
-export class TargetView extends Subview implements PasswordView {
+export class OpponentPasswordView extends Subview implements PasswordView {
   private answer: TargetWordView;
   constructor(base: HTMLElement) {
     super(base, 'target', "Opponent's Password");

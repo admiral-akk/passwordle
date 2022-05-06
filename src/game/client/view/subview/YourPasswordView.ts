@@ -3,7 +3,8 @@ import {PasswordView} from './PasswordView';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
-export class AnswerView extends Subview implements PasswordView {
+
+export class YourPasswordView extends Subview implements PasswordView {
   private answer: AnswerWordView;
   constructor(base: HTMLElement) {
     super(base, 'answer', 'Your Password');

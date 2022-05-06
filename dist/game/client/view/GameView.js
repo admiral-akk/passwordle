@@ -2,20 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameView = void 0;
 const AnimateKnowledge_1 = require("./AnimateKnowledge");
-const AnswerView_1 = require("./subview/AnswerView");
+const YourPasswordView_1 = require("./subview/YourPasswordView");
 const EndGameView_1 = require("./subview/EndGameView");
 const KeyboardView_1 = require("./subview/KeyboardView");
 const OpponentBoardView_1 = require("./subview/OpponentBoardView");
 const PlayerBoardView_1 = require("./subview/PlayerBoardView");
 const Subview_1 = require("./subview/Subview");
-const TargetView_1 = require("./subview/TargetView");
+const OpponentPasswordView_1 = require("./subview/OpponentPasswordView");
 const TimerView_1 = require("./subview/TimerView");
 class GameView {
     constructor() {
         const root = document.getElementById('game-board');
         this.timer = new TimerView_1.TimerView(root);
-        this.answer = new AnswerView_1.AnswerView(root);
-        this.target = new TargetView_1.TargetView(root);
+        this.answer = new YourPasswordView_1.YourPasswordView(root);
+        this.target = new OpponentPasswordView_1.OpponentPasswordView(root);
         const game = AddDiv(root, 'play-area');
         const player = AddDiv(game, 'player');
         this.playerBoard = new PlayerBoardView_1.PlayerBoardView(player);
