@@ -1,5 +1,4 @@
 import {LetterState} from '../../structs/LetterState';
-import {WordKnowledge} from '../../structs/WordKnowledge';
 import {OpponentUpdate, OpponentUpdateType} from '../OpponentUpdate';
 import {BoardView} from './BoardView';
 import {Subview} from './Subview';
