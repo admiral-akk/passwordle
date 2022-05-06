@@ -5,7 +5,7 @@ export function GetSocket(): Socket<
   ServerToClientEvents,
   ClientToServerEvents
 > {
-  const socket = io('http://localhost:4000/', {transports: ['websocket']});
+  const socket = io();
   socket.on('connect', () => {
     console.log(`connected: ${socket.id}`);
   });
