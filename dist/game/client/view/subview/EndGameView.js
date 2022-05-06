@@ -1,18 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EndGameView = void 0;
+exports.EndGameView = exports.EndGameState = void 0;
 const Subview_1 = require("./Subview");
+var EndGameState;
+(function (EndGameState) {
+    EndGameState[EndGameState["Lost"] = 0] = "Lost";
+    EndGameState[EndGameState["Won"] = 1] = "Won";
+    EndGameState[EndGameState["Tied"] = 2] = "Tied";
+})(EndGameState = exports.EndGameState || (exports.EndGameState = {}));
 class EndGameView extends Subview_1.Subview {
     constructor(base) {
         super(base, 'end-game');
         this.root.innerText = '';
     }
-    GameOver(won) {
-        if (won) {
-            this.root.innerText = 'You won!';
-        }
-        else {
-            this.root.innerText = 'You lost!';
+    GameOver(state) {
+        switch (state) {
+            case EndGameState.Lost:
+                this.root.innerText = 'You lost!';
+                break;
+            case EndGameState.Won:
+                this.root.innerText = 'You won!';
+                break;
+            case EndGameState.Tied:
+                this.root.innerText = 'You tied!';
+                break;
         }
     }
     Reset() {

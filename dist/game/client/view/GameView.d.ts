@@ -1,6 +1,7 @@
 import { CharUpdate } from './CharUpdate';
 import { HintUpdate } from './HintUpdate';
 import { OpponentUpdate } from './OpponentUpdate';
+import { EndGameState } from './subview/EndGameView';
 export declare class GameView {
     private yourBoard;
     private yourPassword;
@@ -13,7 +14,7 @@ export declare class GameView {
     SetSecret(secret: string): void;
     CharUpdate(update: CharUpdate): void;
     HintUpdate(update: HintUpdate, updateComplete: () => void): void;
-    GameOver(won: boolean): void;
+    GameOver(state: EndGameState): void;
     Reset(): void;
     OpponentUpdate(update: OpponentUpdate): void;
 }

@@ -3,7 +3,7 @@ import {CharUpdate} from './CharUpdate';
 import {HintUpdate} from './HintUpdate';
 import {OpponentUpdate} from './OpponentUpdate';
 import {YourPasswordView} from './subview/YourPasswordView';
-import {EndGameView} from './subview/EndGameView';
+import {EndGameState, EndGameView} from './subview/EndGameView';
 import {KeyboardView} from './subview/KeyboardView';
 import {OpponentBoardView} from './subview/OpponentBoardView';
 import {YourBoardView} from './subview/PlayerBoardView';
@@ -65,8 +65,8 @@ export class GameView {
     );
   }
 
-  GameOver(won: boolean) {
-    this.endGame.GameOver(won);
+  GameOver(state: EndGameState) {
+    this.endGame.GameOver(state);
   }
 
   Reset() {

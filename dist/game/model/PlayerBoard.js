@@ -8,6 +8,7 @@ const OpponentUpdate_1 = require("../client/view/OpponentUpdate");
 const Word_1 = require("../structs/Word");
 const Words_1 = require("../Words");
 const Updates_1 = require("../network/updates/Updates");
+const EndGameView_1 = require("../client/view/subview/EndGameView");
 var State;
 (function (State) {
     State[State["WaitingForKnowledge"] = 0] = "WaitingForKnowledge";
@@ -113,13 +114,13 @@ class PlayerBoard {
             return;
         }
         if ((0, Updates_1.Win)(update)) {
-            (_a = this.view) === null || _a === void 0 ? void 0 : _a.GameOver(true);
+            (_a = this.view) === null || _a === void 0 ? void 0 : _a.GameOver(EndGameView_1.EndGameState.Won);
         }
         if ((0, Updates_1.Loss)(update)) {
-            (_b = this.view) === null || _b === void 0 ? void 0 : _b.GameOver(false);
+            (_b = this.view) === null || _b === void 0 ? void 0 : _b.GameOver(EndGameView_1.EndGameState.Lost);
         }
         if ((0, Updates_1.Tie)(update)) {
-            (_c = this.view) === null || _c === void 0 ? void 0 : _c.GameOver(false);
+            (_c = this.view) === null || _c === void 0 ? void 0 : _c.GameOver(EndGameView_1.EndGameState.Tied);
         }
         this.showMenu();
     }

@@ -22,6 +22,7 @@ import {
   UpdatedAnswerKnowledge,
   Win,
 } from '../network/updates/Updates';
+import {EndGameState} from '../client/view/subview/EndGameView';
 
 enum State {
   WaitingForKnowledge,
@@ -158,13 +159,13 @@ export class PlayerBoard
       return;
     }
     if (Win(update)) {
-      this.view?.GameOver(true);
+      this.view?.GameOver(EndGameState.Won);
     }
     if (Loss(update)) {
-      this.view?.GameOver(false);
+      this.view?.GameOver(EndGameState.Lost);
     }
     if (Tie(update)) {
-      this.view?.GameOver(false);
+      this.view?.GameOver(EndGameState.Tied);
     }
     this.showMenu();
   }

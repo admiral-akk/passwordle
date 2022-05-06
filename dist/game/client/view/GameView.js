@@ -37,8 +37,8 @@ class GameView {
         // Animated this.
         (0, AnimateKnowledge_1.AnimateHint)(update, this.yourBoard, this.opponentBoard, this.yourPassword, this.opponentPassword, updateComplete);
     }
-    GameOver(won) {
-        this.endGame.GameOver(won);
+    GameOver(state) {
+        this.endGame.GameOver(state);
     }
     Reset() {
         this.yourBoard.Reset();
