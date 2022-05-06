@@ -6,7 +6,7 @@ const LetterView_1 = require("./word/letter/LetterView");
 const WordView_1 = require("./word/WordView");
 class AnswerView extends Subview_1.Subview {
     constructor(base) {
-        super(base, 'answer', 'Lose if this is all red!');
+        super(base, 'answer', 'Your Password');
         this.answer = new AnswerWordView(this.root);
     }
     SetSecret(secret) {

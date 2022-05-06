@@ -6,7 +6,7 @@ const LetterView_1 = require("./word/letter/LetterView");
 const WordView_1 = require("./word/WordView");
 class TargetView extends Subview_1.Subview {
     constructor(base) {
-        super(base, 'target', 'Win if this is all green!');
+        super(base, 'target', "Opponent's Password");
         this.answer = new TargetWordView(this.root);
     }
     GetAnimations(guess, target) {

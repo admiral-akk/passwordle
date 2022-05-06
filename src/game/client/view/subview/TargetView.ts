@@ -7,7 +7,7 @@ import {BaseWordView} from './word/WordView';
 export class TargetView extends Subview implements PasswordView {
   private answer: TargetWordView;
   constructor(base: HTMLElement) {
-    super(base, 'target', 'Win if this is all green!');
+    super(base, 'target', "Opponent's Password");
     this.answer = new TargetWordView(this.root);
   }
 

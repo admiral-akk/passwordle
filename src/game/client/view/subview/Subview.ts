@@ -9,6 +9,7 @@ export abstract class Subview {
 
   abstract Reset(): void;
 }
+
 export class ExplanationView {
   private root: HTMLDivElement;
   constructor(base: HTMLElement, text = '') {
