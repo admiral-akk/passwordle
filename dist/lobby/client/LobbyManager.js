@@ -16,6 +16,9 @@ class NewLobbyManager {
     FindMatch() {
         this.socket.emit('FindMatch');
     }
+    ShowMenu() {
+        this.model.GameEnded();
+    }
 }
 exports.NewLobbyManager = NewLobbyManager;
 function RegisterSocket(socket, model) {
@@ -25,6 +28,5 @@ function RegisterSocket(socket, model) {
     socket.on('MatchFound', (lobbyId) => {
         model.MatchFound(lobbyId);
     });
-    socket.on('GameEnded', () => model.GameEnded());
 }
 //# sourceMappingURL=LobbyManager.js.map

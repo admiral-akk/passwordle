@@ -44,7 +44,10 @@ export class PlayerBoard
   opponentCharCount = 0;
   secret: Word | null = null;
 
-  constructor(private view: GameView | null = null) {}
+  constructor(
+    private view: GameView | null = null,
+    private showMenu: () => void = () => {}
+  ) {}
 
   AddedChar(update: AddedChar) {
     const viewUpdate = new CharUpdate(
@@ -163,6 +166,7 @@ export class PlayerBoard
     if (Tie(update)) {
       this.view?.GameOver(false);
     }
+    this.showMenu();
   }
 
   SetSecret(secret: Word) {

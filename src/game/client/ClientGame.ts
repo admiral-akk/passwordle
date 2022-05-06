@@ -1,18 +1,21 @@
-import {InputManager} from '../client/input/InputManager';
-import {GameView} from '../client/view/GameView';
+import {InputManager} from './input/InputManager';
+import {GameView} from './view/GameView';
 import {Word} from '../structs/Word';
 import {PlayerBoard} from '../model/PlayerBoard';
-import {GameClientSocket, GameServerToClientEvents} from './GameNetworkTypes';
+import {
+  GameClientSocket,
+  GameServerToClientEvents,
+} from '../network/GameNetworkTypes';
 import {
   AddedChar,
   LockedGuess,
   UpdatedAnswerKnowledge,
-} from './updates/Updates';
+} from '../network/updates/Updates';
 
 export class ClientGame implements GameServerToClientEvents {
   private board: PlayerBoard;
-  constructor(private socket: GameClientSocket) {
-    this.board = new PlayerBoard(new GameView());
+  constructor(private socket: GameClientSocket, private showMenu: () => void) {
+    this.board = new PlayerBoard(new GameView(), showMenu);
     socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
     socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>
       this.UpdatedAnswerKnowledge(update)
@@ -26,6 +29,7 @@ export class ClientGame implements GameServerToClientEvents {
       () => this.Submit()
     );
   }
+
   SetSecret(secret: Word) {
     this.board.SetSecret(secret);
   }

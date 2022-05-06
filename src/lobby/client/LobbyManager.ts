@@ -12,12 +12,17 @@ export class NewLobbyManager implements LobbyServerRequests {
   constructor(private socket: NewLobbyClientSocket) {
     RegisterSocket(socket, this.model);
   }
+
   JoinLobby(lobbyId: string) {
     this.socket.emit('JoinLobby', lobbyId);
   }
 
   FindMatch() {
     this.socket.emit('FindMatch');
+  }
+
+  ShowMenu() {
+    this.model.GameEnded();
   }
 }
 
@@ -28,5 +33,4 @@ function RegisterSocket(socket: NewLobbyClientSocket, model: NewLobby) {
   socket.on('MatchFound', (lobbyId: string) => {
     model.MatchFound(lobbyId);
   });
-  socket.on('GameEnded', () => model.GameEnded());
 }
