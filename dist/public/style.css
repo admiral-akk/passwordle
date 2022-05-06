@@ -79,24 +79,24 @@
 }
 
 .letter-box {
-      border: 2px solid gray;
-      height: 3rem;
-      width: 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 3px;
-      margin: 2px;
-      font-size: 2.5rem;
-      font-weight: 700;
-      text-transform: uppercase;
-  }
+    border: 2px solid gray;
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    margin: 2px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
   
-  .filled-box {
+.filled-box {
     border: 2px solid black;
-  }
+}
 
-  #lobby .background {
+#lobby .background {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
@@ -106,7 +106,7 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+}
 
  .modal {
     position: absolute;
@@ -125,12 +125,12 @@
     justify-content: center;
 }
 
-
 .modal div {
     align-items: center;
     margin: 10px 10px;
     justify-content: center;
 }
+
 #keyboard {
     display: flex;
     align-items: center;

@@ -23,8 +23,10 @@ class GameView {
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
         this.keyboard = new KeyboardView_1.KeyboardView(root);
         const explain = AddDiv(root, 'explain');
-        new Subview_1.ExplanationView(explain, `Each guess made fills both the top and bottom block.\n
-       The winner is the first to fill the hidden word that their opponent knows.`);
+        new Subview_1.ExplanationView(explain, `Each red letter in your password is a revealed letter.\n
+      Each green letter in your opponent's password is a revealed letter.\n
+      Each guess you and your opponent make will reveal letters in both passwords.\n
+       Win by revealing your opponent's password before they reveal yours.`);
         this.endGame = new EndGameView_1.EndGameView(root);
     }
     SetSecret(secret) {
