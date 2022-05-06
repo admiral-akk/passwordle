@@ -7,6 +7,7 @@ export declare class ClientGameMirror implements GameClientToServerEvents, GameS
     private otherPlayer;
     private lockedGuessCallback;
     constructor(socket: GameServerSocket);
+    OpponentDisconnected(): void;
     SetSecret(secret: Word): void;
     OpponentLockedGuess(): void;
     LockedGuess(update: LockedGuess): void;

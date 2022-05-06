@@ -1,11 +1,11 @@
 import {Socket as ServerSocket} from 'socket.io';
 import {Socket as ClientSocket} from 'socket.io-client';
 import {InterServerEvents, SocketData} from '../../NetworkTypes';
-export type NewLobbyClientSocket = ClientSocket<
+export type LobbyClientSocket = ClientSocket<
   LobbyClientRequests,
   LobbyServerRequests
 >;
-export type NewLobbyServerSocket = ServerSocket<
+export type LobbyServerSocket = ServerSocket<
   LobbyServerRequests,
   LobbyClientRequests,
   InterServerEvents,

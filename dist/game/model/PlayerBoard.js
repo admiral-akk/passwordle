@@ -31,6 +31,10 @@ class PlayerBoard {
         }
         return this.guesses.length;
     }
+    OpponentDisconnected() {
+        this.state = State.GameEnded;
+        this.showMenu();
+    }
     AddedChar(update) {
         var _a;
         const viewUpdate = new CharUpdate_1.CharUpdate(update.char, this.guesses.length, this.currentGuess.length);

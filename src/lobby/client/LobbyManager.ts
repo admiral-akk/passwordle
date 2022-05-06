@@ -2,14 +2,14 @@ import {LobbyView} from './view/LobbyView';
 import {NewLobby} from '../server/Lobby';
 import {
   LobbyServerRequests,
-  NewLobbyClientSocket,
+  LobbyClientSocket,
 } from '../server/LobbyNetworkTypes';
 
 export class NewLobbyManager implements LobbyServerRequests {
   private view: LobbyView = new LobbyView();
   private model: NewLobby = new NewLobby(this.view, this);
 
-  constructor(private socket: NewLobbyClientSocket) {
+  constructor(private socket: LobbyClientSocket) {
     RegisterSocket(socket, this.model);
   }
 
@@ -26,7 +26,7 @@ export class NewLobbyManager implements LobbyServerRequests {
   }
 }
 
-function RegisterSocket(socket: NewLobbyClientSocket, model: NewLobby) {
+function RegisterSocket(socket: LobbyClientSocket, model: NewLobby) {
   socket.on('EnterMenu', (lobbyId: string) => {
     model.EnterMenu(lobbyId);
   });

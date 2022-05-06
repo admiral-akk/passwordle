@@ -9,7 +9,18 @@ class NewLobbyServer {
     }
     PlayerJoins(socket) {
         const playerId = socket.data.playerId;
-        this.lobbies[playerId] = new LobbySocketManager(socket, () => this.FindMatch(playerId), (lobbyId) => this.JoinLobby(playerId, lobbyId));
+        this.lobbies[playerId] = new LobbySocketManager(socket, () => this.FindMatch(playerId), (lobbyId) => this.JoinLobby(playerId, lobbyId), (playerId) => this.PlayerDisconnected(playerId));
+    }
+    PlayerDisconnected(playerId) {
+        for (let i = 0; i < this.publicLobbies.length; i++) {
+            if (this.publicLobbies[i].GetPlayer() === playerId) {
+                this.publicLobbies.splice(i);
+                break;
+            }
+        }
+        if (playerId in this.lobbies) {
+            delete this.lobbies[playerId];
+        }
     }
     EndGame(sockets) {
         const players = sockets.map(socket => socket.data.playerId);
@@ -44,10 +55,11 @@ class NewLobbyServer {
 }
 exports.NewLobbyServer = NewLobbyServer;
 class LobbySocketManager {
-    constructor(socket, FindMatch, JoinLobby) {
+    constructor(socket, FindMatch, JoinLobby, PlayerDisconnect) {
         this.socket = socket;
         this.FindMatch = FindMatch;
         this.JoinLobby = JoinLobby;
+        this.PlayerDisconnect = PlayerDisconnect;
         this.lobbyId = socket.data.playerId;
         this.RegisterSocket(socket);
         socket.emit('EnterMenu', socket.data.playerId);
@@ -67,6 +79,9 @@ class LobbySocketManager {
     RegisterSocket(socket) {
         socket.on('FindMatch', () => this.FindMatch());
         socket.on('JoinLobby', (lobbyId) => this.JoinLobby(lobbyId));
+        socket.on('disconnect', () => {
+            this.PlayerDisconnect(this.GetPlayer());
+        });
     }
 }
 //# sourceMappingURL=LobbyServer.js.map

@@ -14,7 +14,7 @@ import {
 
 export class ClientGame implements GameServerToClientEvents {
   private board: PlayerBoard;
-  constructor(private socket: GameClientSocket, private showMenu: () => void) {
+  constructor(private socket: GameClientSocket, showMenu: () => void) {
     this.board = new PlayerBoard(new GameView(), showMenu);
     socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
     socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>
@@ -23,11 +23,16 @@ export class ClientGame implements GameServerToClientEvents {
     socket.on('SetSecret', (secret: Word) => this.SetSecret(secret));
     socket.on('OpponentDeleted', () => this.OpponentDeleted());
     socket.on('OpponentLockedGuess', () => this.OpponentLockedGuess());
+    socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
     new InputManager(
       (char: string) => this.AddChar(char),
       () => this.Delete(),
       () => this.Submit()
     );
+  }
+
+  OpponentDisconnected() {
+    this.board.OpponentDisconnected();
   }
 
   SetSecret(secret: Word) {

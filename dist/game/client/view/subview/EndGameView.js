@@ -7,6 +7,7 @@ var EndGameState;
     EndGameState[EndGameState["Lost"] = 0] = "Lost";
     EndGameState[EndGameState["Won"] = 1] = "Won";
     EndGameState[EndGameState["Tied"] = 2] = "Tied";
+    EndGameState[EndGameState["Disconnected"] = 3] = "Disconnected";
 })(EndGameState = exports.EndGameState || (exports.EndGameState = {}));
 class EndGameView extends Subview_1.Subview {
     constructor(base) {
@@ -23,6 +24,9 @@ class EndGameView extends Subview_1.Subview {
                 break;
             case EndGameState.Tied:
                 this.root.innerText = 'You tied!';
+                break;
+            case EndGameState.Disconnected:
+                this.root.innerText = 'Opponent disconnected!';
                 break;
         }
     }

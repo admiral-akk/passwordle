@@ -25,6 +25,7 @@ export interface GameServerToClientEvents {
   OpponentLockedGuess: () => void;
   SetSecret: (secret: Word) => void;
   UpdatedAnswerKnowledge: (update: UpdatedAnswerKnowledge) => void;
+  OpponentDisconnected: () => void;
 }
 
 export interface GameClientToServerEvents {

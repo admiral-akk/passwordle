@@ -50,6 +50,11 @@ export class PlayerBoard
     private showMenu: () => void = () => {}
   ) {}
 
+  OpponentDisconnected() {
+    this.state = State.GameEnded;
+    this.showMenu();
+  }
+
   AddedChar(update: AddedChar) {
     const viewUpdate = new CharUpdate(
       update.char,

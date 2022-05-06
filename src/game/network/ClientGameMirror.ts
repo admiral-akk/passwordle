@@ -22,12 +22,14 @@ export class ClientGameMirror
     this.socket.removeAllListeners('AddedChar');
     this.socket.removeAllListeners('Deleted');
     this.socket.removeAllListeners('LockedGuess');
+    this.socket.removeAllListeners('disconnect');
     this.socket.on('AddedChar', (update: AddedChar) => this.AddedChar(update));
     this.socket.on('Deleted', () => this.Deleted());
     this.socket.on('LockedGuess', (update: LockedGuess) =>
       this.LockedGuess(update)
     );
   }
+  OpponentDisconnected() {}
 
   SetSecret(secret: Word) {
     this.board.SetSecret(secret);

@@ -7,14 +7,17 @@ const PlayerBoard_1 = require("../model/PlayerBoard");
 class ClientGame {
     constructor(socket, showMenu) {
         this.socket = socket;
-        this.showMenu = showMenu;
         this.board = new PlayerBoard_1.PlayerBoard(new GameView_1.GameView(), showMenu);
         socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
         socket.on('UpdatedAnswerKnowledge', (update) => this.UpdatedAnswerKnowledge(update));
         socket.on('SetSecret', (secret) => this.SetSecret(secret));
         socket.on('OpponentDeleted', () => this.OpponentDeleted());
         socket.on('OpponentLockedGuess', () => this.OpponentLockedGuess());
+        socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
+    }
+    OpponentDisconnected() {
+        this.board.OpponentDisconnected();
     }
     SetSecret(secret) {
         this.board.SetSecret(secret);

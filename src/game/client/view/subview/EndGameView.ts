@@ -4,6 +4,7 @@ export enum EndGameState {
   Lost,
   Won,
   Tied,
+  Disconnected,
 }
 
 export class EndGameView extends Subview {
@@ -22,6 +23,9 @@ export class EndGameView extends Subview {
         break;
       case EndGameState.Tied:
         this.root.innerText = 'You tied!';
+        break;
+      case EndGameState.Disconnected:
+        this.root.innerText = 'Opponent disconnected!';
         break;
     }
   }

@@ -3,9 +3,9 @@ import { GameClientSocket, GameServerToClientEvents } from '../network/GameNetwo
 import { UpdatedAnswerKnowledge } from '../network/updates/Updates';
 export declare class ClientGame implements GameServerToClientEvents {
     private socket;
-    private showMenu;
     private board;
     constructor(socket: GameClientSocket, showMenu: () => void);
+    OpponentDisconnected(): void;
     SetSecret(secret: Word): void;
     OpponentLockedGuess(): void;
     OpponentDeleted(): void;

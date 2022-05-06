@@ -17,6 +17,7 @@ export declare class PlayerBoard implements GameClientToServerEvents, GameServer
     opponentCharCount: number;
     secret: Word | null;
     constructor(view?: GameView | null, showMenu?: () => void);
+    OpponentDisconnected(): void;
     AddedChar(update: AddedChar): void;
     Deleted(): void;
     LockedGuess(update: LockedGuess): void;

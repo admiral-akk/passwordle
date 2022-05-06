@@ -36,6 +36,11 @@ export class ServerGame {
       });
       const secret = secrets[player];
       this.playerClient[player].SetSecret(secret);
+      sockets[i].on('disconnect', () => {
+        console.log(`socket disconnected: ${player}`);
+        sockets[(i + 1) % 2].emit('OpponentDisconnected');
+        this.GameEnded();
+      });
     }
   }
 }
