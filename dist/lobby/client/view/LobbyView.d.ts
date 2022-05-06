@@ -8,7 +8,6 @@ export declare class LobbyView {
     Loading(): void;
     GameEnded(): void;
     Menu(hostLobby: () => void, matchmake: () => void): void;
-    HostingMatch(link: string): void;
     FindingMatch(): void;
     LobbyReady(): void;
     InGame(): void;

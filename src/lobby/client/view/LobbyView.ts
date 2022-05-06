@@ -1,6 +1,5 @@
 import {FindingMatchModal} from './modal/FindingMatchModal';
 import {GameEndedModal} from './modal/GameEndedModal';
-import {HostingModal} from './modal/HostingModal';
 import {LoadingModal} from './modal/LoadingModal';
 import {LobbyReadyModal} from './modal/LobbyReadyModal';
 import {MenuModal} from './modal/MenuModal';
@@ -40,19 +39,13 @@ export class LobbyView {
   }
 
   GameEnded() {
-    this.modal.style.display = 'block';
     this.background.style.display = 'block';
-    this.root.style.display = 'block';
     console.log('Game ended modal triggered!');
     this.SetModal(new GameEndedModal(this.modal));
   }
 
   Menu(hostLobby: () => void, matchmake: () => void): void {
     this.SetModal(new MenuModal(this.modal, hostLobby, matchmake));
-  }
-
-  HostingMatch(link: string) {
-    this.SetModal(new HostingModal(this.modal, () => CopyToClipboard(link)));
   }
 
   FindingMatch() {
@@ -68,12 +61,6 @@ export class LobbyView {
       this.currentModal.Exit();
     }
     this.currentModal = null;
-    this.modal.style.display = 'none';
     this.background.style.display = 'none';
-    this.root.style.display = 'none';
   }
-}
-
-function CopyToClipboard(url: string) {
-  navigator.clipboard.writeText(url);
 }

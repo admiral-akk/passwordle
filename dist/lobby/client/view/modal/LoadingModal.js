@@ -5,13 +5,7 @@ const Modal_1 = require("./Modal");
 class LoadingModal extends Modal_1.BaseModal {
     constructor(modal) {
         super();
-        this.text = this.AddDiv(modal, 'Loading...');
-    }
-    Enter() {
-        this.text.style.display = 'block';
-    }
-    Exit() {
-        this.text.remove();
+        this.AddDiv(modal, 'Loading...');
     }
 }
 exports.LoadingModal = LoadingModal;
