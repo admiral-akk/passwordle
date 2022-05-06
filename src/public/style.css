@@ -77,6 +77,25 @@
 .letter-row {
     display: flex;
 }
+
+.letter-box {
+    border: 2px solid gray;
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    margin: 2px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+  
+.filled-box {
+    border: 2px solid black;
+}
+
 #lobby .background {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -87,7 +106,7 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+}
 
  .modal {
     position: absolute;
@@ -106,22 +125,10 @@
     justify-content: center;
 }
 
-.letter-box {
-    border: 2px solid gray;
-    height: 3rem;
-    width: 3rem;
-    display: flex;
+.modal div {
     align-items: center;
+    margin: 10px 10px;
     justify-content: center;
-    border-radius: 3px;
-    margin: 2px;
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.filled-box {
-  border: 2px solid black;
 }
 
 #keyboard {
@@ -150,26 +157,4 @@
     font-weight: 700;
     cursor: pointer;
     text-transform: uppercase;
-}
-
-div.private-game {
-    align-items: center;
-    margin: 10px 10px;
-    justify-content: center;
-}
-
-button.private-game {
-    align-items: center;
-    justify-content: center;
-}
-
-div.public-game {
-    align-items: center;
-    margin: 10px 10px;
-    justify-content: center;
-}
-
-button.public-game {
-    align-items: center;
-    justify-content: center;
 }

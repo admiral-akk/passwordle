@@ -77,7 +77,26 @@
 .letter-row {
     display: flex;
 }
-#lobby .background {
+
+.letter-box {
+      border: 2px solid gray;
+      height: 3rem;
+      width: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+      margin: 2px;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+  }
+  
+  .filled-box {
+    border: 2px solid black;
+  }
+
+  #lobby .background {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
@@ -106,24 +125,12 @@
     justify-content: center;
 }
 
-.letter-box {
-    border: 2px solid gray;
-    height: 3rem;
-    width: 3rem;
-    display: flex;
+
+.modal div {
     align-items: center;
+    margin: 10px 10px;
     justify-content: center;
-    border-radius: 3px;
-    margin: 2px;
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
 }
-
-.filled-box {
-  border: 2px solid black;
-}
-
 #keyboard {
     display: flex;
     align-items: center;
@@ -150,26 +157,4 @@
     font-weight: 700;
     cursor: pointer;
     text-transform: uppercase;
-}
-
-div.private-game {
-    align-items: center;
-    margin: 10px 10px;
-    justify-content: center;
-}
-
-button.private-game {
-    align-items: center;
-    justify-content: center;
-}
-
-div.public-game {
-    align-items: center;
-    margin: 10px 10px;
-    justify-content: center;
-}
-
-button.public-game {
-    align-items: center;
-    justify-content: center;
 }
