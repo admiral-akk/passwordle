@@ -15,6 +15,7 @@ var LetterColor;
 class LetterView extends Subview_1.Subview {
     constructor(base) {
         super(base, 'letter');
+        this.color = LetterColor.White;
     }
     SetChar(char) {
         this.root.innerText = char;
@@ -22,9 +23,13 @@ class LetterView extends Subview_1.Subview {
     ClearChar() {
         this.root.innerText = '';
     }
+    Color() {
+        return this.color;
+    }
     SetColor(color) {
         console.log(`setting color: ${color}`);
         this.root.style.backgroundColor = color;
+        this.color = color;
         switch (color) {
             default:
                 break;

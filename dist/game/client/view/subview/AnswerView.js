@@ -15,8 +15,20 @@ class AnswerView extends Subview_1.Subview {
     Reset() {
         this.answer.Reset();
     }
-    UpdateProgress(charIndex) {
-        this.answer.UpdateProgress(charIndex);
+    GetAnimations(guess, target) {
+        const animations = [];
+        for (let i = 0; i < target.knownCharacters.length; i++) {
+            if (target.knownCharacters[i] === '') {
+                animations.push(null);
+                continue;
+            }
+            if (target.knownCharacters[i] !== guess[i]) {
+                animations.push(null);
+                continue;
+            }
+            animations.push(this.answer.UpdateProgress(i));
+        }
+        return animations;
     }
 }
 exports.AnswerView = AnswerView;
@@ -27,7 +39,15 @@ class AnswerWordView extends WordView_1.BaseWordView {
         }
     }
     UpdateProgress(charIndex) {
-        this.letters[charIndex].SetColor(LetterView_1.LetterColor.Red);
+        const letter = this.letters[charIndex];
+        if (letter.Color() !== LetterView_1.LetterColor.Red) {
+            return () => {
+                letter.SetColor(LetterView_1.LetterColor.Red);
+            };
+        }
+        else {
+            return null;
+        }
     }
 }
 //# sourceMappingURL=AnswerView.js.map

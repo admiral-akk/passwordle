@@ -8,9 +8,11 @@ export declare enum LetterColor {
     Red = "crimson"
 }
 export declare class LetterView extends Subview {
+    private color;
     constructor(base: HTMLElement);
     SetChar(char: string): void;
     ClearChar(): void;
+    Color(): LetterColor;
     SetColor(color: LetterColor): void;
     Reset(): void;
 }

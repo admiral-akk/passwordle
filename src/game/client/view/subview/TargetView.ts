@@ -1,16 +1,33 @@
+import {TargetProgress} from '../../structs/TargetProgress';
+import {PasswordView} from './PasswordView';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
 
-export class TargetView extends Subview {
+export class TargetView extends Subview implements PasswordView {
   private answer: TargetWordView;
   constructor(base: HTMLElement) {
     super(base, 'target', 'Win if this is all green!');
     this.answer = new TargetWordView(this.root);
   }
 
-  UpdateProgress(charIndex: number, char: string) {
-    this.answer.UpdateProgress(charIndex, char);
+  GetAnimations(
+    guess: string,
+    target: TargetProgress
+  ): ((() => void) | null)[] {
+    const animations: ((() => void) | null)[] = [];
+    for (let i = 0; i < target.knownCharacters.length; i++) {
+      if (target.knownCharacters[i] === '') {
+        animations.push(null);
+        continue;
+      }
+      if (target.knownCharacters[i] !== guess[i]) {
+        animations.push(null);
+        continue;
+      }
+      animations.push(this.answer.UpdateProgress(i, target.knownCharacters[i]));
+    }
+    return animations;
   }
   Reset(): void {
     this.answer.Reset();
@@ -18,9 +35,15 @@ export class TargetView extends Subview {
 }
 
 class TargetWordView extends BaseWordView {
-  public UpdateProgress(charIndex: number, char: string) {
+  public UpdateProgress(charIndex: number, char: string): (() => void) | null {
     const letter = this.letters[charIndex];
-    letter.SetChar(char);
-    letter.SetColor(LetterColor.Green);
+    if (letter.Color() !== LetterColor.Green) {
+      return () => {
+        letter.SetChar(char);
+        letter.SetColor(LetterColor.Green);
+      };
+    } else {
+      return null;
+    }
   }
 }

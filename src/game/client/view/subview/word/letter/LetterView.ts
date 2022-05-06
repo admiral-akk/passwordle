@@ -11,6 +11,7 @@ export enum LetterColor {
 }
 
 export class LetterView extends Subview {
+  private color: LetterColor = LetterColor.White;
   constructor(base: HTMLElement) {
     super(base, 'letter');
   }
@@ -23,9 +24,14 @@ export class LetterView extends Subview {
     this.root.innerText = '';
   }
 
+  Color(): LetterColor {
+    return this.color;
+  }
+
   SetColor(color: LetterColor) {
     console.log(`setting color: ${color}`);
     this.root.style.backgroundColor = color;
+    this.color = color;
     switch (color) {
       default:
         break;

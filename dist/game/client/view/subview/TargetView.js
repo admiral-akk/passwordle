@@ -9,8 +9,20 @@ class TargetView extends Subview_1.Subview {
         super(base, 'target', 'Win if this is all green!');
         this.answer = new TargetWordView(this.root);
     }
-    UpdateProgress(charIndex, char) {
-        this.answer.UpdateProgress(charIndex, char);
+    GetAnimations(guess, target) {
+        const animations = [];
+        for (let i = 0; i < target.knownCharacters.length; i++) {
+            if (target.knownCharacters[i] === '') {
+                animations.push(null);
+                continue;
+            }
+            if (target.knownCharacters[i] !== guess[i]) {
+                animations.push(null);
+                continue;
+            }
+            animations.push(this.answer.UpdateProgress(i, target.knownCharacters[i]));
+        }
+        return animations;
     }
     Reset() {
         this.answer.Reset();
@@ -20,8 +32,15 @@ exports.TargetView = TargetView;
 class TargetWordView extends WordView_1.BaseWordView {
     UpdateProgress(charIndex, char) {
         const letter = this.letters[charIndex];
-        letter.SetChar(char);
-        letter.SetColor(LetterView_1.LetterColor.Green);
+        if (letter.Color() !== LetterView_1.LetterColor.Green) {
+            return () => {
+                letter.SetChar(char);
+                letter.SetColor(LetterView_1.LetterColor.Green);
+            };
+        }
+        else {
+            return null;
+        }
     }
 }
 //# sourceMappingURL=TargetView.js.map
