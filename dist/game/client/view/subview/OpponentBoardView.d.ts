@@ -1,5 +1,4 @@
 import { WordKnowledge } from '../../structs/WordKnowledge';
-import { HintUpdate } from '../HintUpdate';
 import { OpponentUpdate, OpponentUpdateType } from '../OpponentUpdate';
 import { Subview } from './Subview';
 import { BaseWordView } from './word/WordView';
@@ -8,7 +7,7 @@ export declare class OpponentBoardView extends Subview {
     constructor(base: HTMLDivElement, explanationText?: string);
     OpponentUpdate(update: OpponentUpdate): void;
     Reset(): void;
-    HintUpdate(update: HintUpdate): void;
+    AddGuess(wordIndex: number, guess: WordKnowledge): void;
 }
 declare class OpponentWordView extends BaseWordView {
     OpponentUpdate(type: OpponentUpdateType, charIndex: number): void;

@@ -20,8 +20,8 @@ class OpponentBoardView extends Subview_1.Subview {
     Reset() {
         this.words.forEach(word => word.Reset());
     }
-    HintUpdate(update) {
-        this.words[update.guessIndex].SetKnowledge(update.hint.opponentGuess);
+    AddGuess(wordIndex, guess) {
+        this.words[wordIndex].SetKnowledge(guess);
     }
 }
 exports.OpponentBoardView = OpponentBoardView;

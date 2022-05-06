@@ -15,8 +15,8 @@ class AnswerView extends Subview_1.Subview {
     Reset() {
         this.answer.Reset();
     }
-    HintUpdate(update) {
-        const knownCharacters = update.hint.playerProgress.knownCharacters;
+    UpdateProgress(progress) {
+        const knownCharacters = progress.knownCharacters;
         for (let i = 0; i < knownCharacters.length; i++) {
             if (knownCharacters[i] !== '') {
                 this.answer.UpdateProgress(i);

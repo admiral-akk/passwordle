@@ -1,4 +1,4 @@
-import {HintUpdate} from '../HintUpdate';
+import {TargetProgress} from '../../structs/TargetProgress';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
@@ -17,8 +17,8 @@ export class AnswerView extends Subview {
     this.answer.Reset();
   }
 
-  HintUpdate(update: HintUpdate) {
-    const knownCharacters = update.hint.playerProgress.knownCharacters;
+  UpdateProgress(progress: TargetProgress) {
+    const knownCharacters = progress.knownCharacters;
     for (let i = 0; i < knownCharacters.length; i++) {
       if (knownCharacters[i] !== '') {
         this.answer.UpdateProgress(i);

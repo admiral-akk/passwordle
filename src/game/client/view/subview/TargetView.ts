@@ -1,5 +1,4 @@
-import {LetterState} from '../../structs/LetterState';
-import {HintUpdate} from '../HintUpdate';
+import {TargetProgress} from '../../structs/TargetProgress';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
@@ -11,8 +10,8 @@ export class TargetView extends Subview {
     this.answer = new TargetWordView(this.root);
   }
 
-  HintUpdate(update: HintUpdate) {
-    const knownCharacters = update.hint.opponentProgress.knownCharacters;
+  UpdateProgress(progress: TargetProgress) {
+    const knownCharacters = progress.knownCharacters;
     for (let i = 0; i < knownCharacters.length; i++) {
       if (knownCharacters[i] !== '') {
         this.answer.UpdateProgress(i, knownCharacters[i]);

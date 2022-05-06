@@ -1,7 +1,6 @@
 import {LetterState} from '../../structs/LetterState';
 import {WordKnowledge} from '../../structs/WordKnowledge';
 import {CharUpdate} from '../CharUpdate';
-import {HintUpdate} from '../HintUpdate';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
@@ -19,8 +18,8 @@ export class PlayerBoardView extends Subview {
     }
   }
 
-  HintUpdate(update: HintUpdate) {
-    this.words[update.guessIndex].SetKnowledge(update.hint.playerGuess);
+  AddGuessKnowledge(wordIndex: number, knowledge: WordKnowledge) {
+    this.words[wordIndex].SetKnowledge(knowledge);
   }
 
   CharUpdate(update: CharUpdate) {

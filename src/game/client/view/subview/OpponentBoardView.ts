@@ -1,6 +1,5 @@
 import {LetterState} from '../../structs/LetterState';
 import {WordKnowledge} from '../../structs/WordKnowledge';
-import {HintUpdate} from '../HintUpdate';
 import {OpponentUpdate, OpponentUpdateType} from '../OpponentUpdate';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
@@ -24,8 +23,8 @@ export class OpponentBoardView extends Subview {
     this.words.forEach(word => word.Reset());
   }
 
-  HintUpdate(update: HintUpdate) {
-    this.words[update.guessIndex].SetKnowledge(update.hint.opponentGuess);
+  AddGuess(wordIndex: number, guess: WordKnowledge) {
+    this.words[wordIndex].SetKnowledge(guess);
   }
 }
 

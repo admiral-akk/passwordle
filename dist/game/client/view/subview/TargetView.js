@@ -9,8 +9,8 @@ class TargetView extends Subview_1.Subview {
         super(base, 'target', 'Fill this word to win!');
         this.answer = new TargetWordView(this.root);
     }
-    HintUpdate(update) {
-        const knownCharacters = update.hint.opponentProgress.knownCharacters;
+    UpdateProgress(progress) {
+        const knownCharacters = progress.knownCharacters;
         for (let i = 0; i < knownCharacters.length; i++) {
             if (knownCharacters[i] !== '') {
                 this.answer.UpdateProgress(i, knownCharacters[i]);

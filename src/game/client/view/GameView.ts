@@ -53,10 +53,11 @@ export class GameView {
   }
 
   HintUpdate(update: HintUpdate) {
-    this.playerBoard.HintUpdate(update);
-    this.opponentBoard.HintUpdate(update);
-    this.answer.HintUpdate(update);
-    this.target.HintUpdate(update);
+    const index = update.guessIndex;
+    this.playerBoard.AddGuessKnowledge(index, update.hint.playerGuess);
+    this.opponentBoard.AddGuess(index, update.hint.opponentGuess);
+    this.answer.UpdateProgress(update.hint.playerProgress);
+    this.target.UpdateProgress(update.hint.opponentProgress);
   }
 
   GameOver(won: boolean) {

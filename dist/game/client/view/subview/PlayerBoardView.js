@@ -16,8 +16,8 @@ class PlayerBoardView extends Subview_1.Subview {
     Reset() {
         this.words.forEach(word => word.Reset());
     }
-    HintUpdate(update) {
-        this.words[update.guessIndex].SetKnowledge(update.hint.playerGuess);
+    AddGuessKnowledge(wordIndex, knowledge) {
+        this.words[wordIndex].SetKnowledge(knowledge);
     }
     CharUpdate(update) {
         this.words[update.wordIndex].AddChar(update.char, update.charIndex);
