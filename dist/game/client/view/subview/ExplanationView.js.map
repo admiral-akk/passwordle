@@ -1,1 +1,0 @@
-{"version":3,"file":"ExplanationView.js","sourceRoot":"","sources":["../../../../../src/game/client/view/subview/ExplanationView.ts"],"names":[],"mappings":";;;AAAA,uCAAkC;AAElC,MAAa,eAAgB,SAAQ,iBAAO;IAC1C,YAAY,IAAiB,EAAE,IAAI,GAAG,EAAE;QACtC,KAAK,CAAC,IAAI,EAAE,aAAa,CAAC,CAAC;QAC3B,IAAI,CAAC,IAAI,CAAC,SAAS,GAAG,IAAI,CAAC;IAC7B,CAAC;CACF;AALD,0CAKC"}

@@ -6,7 +6,7 @@ const LetterView_1 = require("./word/letter/LetterView");
 const WordView_1 = require("./word/WordView");
 class AnswerView extends Subview_1.Subview {
     constructor(base) {
-        super(base, 'answer', 'Lose if this is filled!');
+        super(base, 'answer', 'Lose if this is all red!');
         this.answer = new AnswerWordView(this.root);
     }
     SetSecret(secret) {
@@ -15,13 +15,8 @@ class AnswerView extends Subview_1.Subview {
     Reset() {
         this.answer.Reset();
     }
-    UpdateProgress(progress) {
-        const knownCharacters = progress.knownCharacters;
-        for (let i = 0; i < knownCharacters.length; i++) {
-            if (knownCharacters[i] !== '') {
-                this.answer.UpdateProgress(i);
-            }
-        }
+    UpdateProgress(charIndex) {
+        this.answer.UpdateProgress(charIndex);
     }
 }
 exports.AnswerView = AnswerView;

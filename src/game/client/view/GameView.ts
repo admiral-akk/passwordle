@@ -1,6 +1,7 @@
+import {AnimateHint} from './AnimateKnowledge';
 import {CharUpdate} from './CharUpdate';
 import {HintUpdate} from './HintUpdate';
-import {OpponentUpdate, OpponentUpdateType} from './OpponentUpdate';
+import {OpponentUpdate} from './OpponentUpdate';
 import {AnswerView} from './subview/AnswerView';
 import {EndGameView} from './subview/EndGameView';
 import {KeyboardView} from './subview/KeyboardView';
@@ -23,6 +24,7 @@ export class GameView {
     const root = document.getElementById('game-board')!;
     this.timer = new TimerView(root);
 
+    this.answer = new AnswerView(root);
     this.target = new TargetView(root);
     const game = AddDiv(root, 'play-area');
 
@@ -31,7 +33,6 @@ export class GameView {
 
     const opponent = AddDiv(game, 'opponent');
     this.opponentBoard = new OpponentBoardView(opponent);
-    this.answer = new AnswerView(root);
 
     this.keyboard = new KeyboardView(root);
     const explain = AddDiv(root, 'explain');
@@ -53,11 +54,15 @@ export class GameView {
   }
 
   HintUpdate(update: HintUpdate) {
-    const index = update.guessIndex;
-    this.playerBoard.AddGuessKnowledge(index, update.hint.playerGuess);
-    this.opponentBoard.AddGuess(index, update.hint.opponentGuess);
-    this.answer.UpdateProgress(update.hint.playerProgress);
-    this.target.UpdateProgress(update.hint.opponentProgress);
+    // Animated this.
+    AnimateHint(
+      update,
+      0,
+      this.playerBoard,
+      this.opponentBoard,
+      this.answer,
+      this.target
+    );
   }
 
   GameOver(won: boolean) {

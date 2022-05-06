@@ -1,16 +1,17 @@
-import { WordKnowledge } from '../../structs/WordKnowledge';
+import { LetterState } from '../../structs/LetterState';
 import { OpponentUpdate, OpponentUpdateType } from '../OpponentUpdate';
+import { BoardView } from './BoardView';
 import { Subview } from './Subview';
 import { BaseWordView } from './word/WordView';
-export declare class OpponentBoardView extends Subview {
+export declare class OpponentBoardView extends Subview implements BoardView {
     protected words: OpponentWordView[];
     constructor(base: HTMLDivElement, explanationText?: string);
+    SetCharKnowledge(wordIndex: number, charIndex: number, char: string, knowledge: LetterState): void;
     OpponentUpdate(update: OpponentUpdate): void;
     Reset(): void;
-    AddGuess(wordIndex: number, guess: WordKnowledge): void;
 }
 declare class OpponentWordView extends BaseWordView {
     OpponentUpdate(type: OpponentUpdateType, charIndex: number): void;
-    SetKnowledge(knowledge: WordKnowledge): void;
+    SetKnowledge(charIndex: number, char: string, knowledge: LetterState): void;
 }
 export {};

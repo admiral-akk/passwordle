@@ -26,8 +26,19 @@ export class LetterView extends Subview {
   SetColor(color: LetterColor) {
     console.log(`setting color: ${color}`);
     this.root.style.backgroundColor = color;
-    if (color !== LetterColor.White && color !== LetterColor.Grey) {
-      AnimateCSS(this.root, AnimationType.Pulse);
+    switch (color) {
+      default:
+        break;
+      case LetterColor.Green:
+      case LetterColor.Yellow:
+        AnimateCSS(this.root, AnimationType.FlipInX, 0.5);
+        break;
+      case LetterColor.Red:
+        AnimateCSS(this.root, AnimationType.HeartBeat, 0.5);
+        break;
+      case LetterColor.LightGrey:
+        AnimateCSS(this.root, AnimationType.BounceIn, 0.5);
+        break;
     }
   }
 

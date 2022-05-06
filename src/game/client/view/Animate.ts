@@ -1,6 +1,9 @@
 export enum AnimationType {
   Pulse = 'pulse',
-  Bounce = 'bounce',
+  BounceIn = 'bounceIn',
+  FlipInX = 'flipInX',
+  HeartBeat = 'heartBeat',
+  ShakeX = 'shakeX',
 }
 
 const ANIMATION_DURATION_STR = '--animate-duration';
@@ -10,7 +13,7 @@ const ANIMATION_CLASS_STR = 'animate__animated';
 export function AnimateCSS(
   element: HTMLElement,
   animation: AnimationType,
-  duration: Number = 0.3
+  duration: Number = 0.5
 ): Promise<string> {
   return new Promise(resolve => {
     const animationName = `animate__${animation.toString()}`;

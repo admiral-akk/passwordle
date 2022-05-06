@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameView = void 0;
+const AnimateKnowledge_1 = require("./AnimateKnowledge");
 const AnswerView_1 = require("./subview/AnswerView");
 const EndGameView_1 = require("./subview/EndGameView");
 const KeyboardView_1 = require("./subview/KeyboardView");
@@ -13,13 +14,13 @@ class GameView {
     constructor() {
         const root = document.getElementById('game-board');
         this.timer = new TimerView_1.TimerView(root);
+        this.answer = new AnswerView_1.AnswerView(root);
         this.target = new TargetView_1.TargetView(root);
         const game = AddDiv(root, 'play-area');
         const player = AddDiv(game, 'player');
         this.playerBoard = new PlayerBoardView_1.PlayerBoardView(player);
         const opponent = AddDiv(game, 'opponent');
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
-        this.answer = new AnswerView_1.AnswerView(root);
         this.keyboard = new KeyboardView_1.KeyboardView(root);
         const explain = AddDiv(root, 'explain');
         new Subview_1.ExplanationView(explain, `Each guess made fills both the top and bottom block.\n
@@ -33,11 +34,8 @@ class GameView {
         this.playerBoard.CharUpdate(update);
     }
     HintUpdate(update) {
-        const index = update.guessIndex;
-        this.playerBoard.AddGuessKnowledge(index, update.hint.playerGuess);
-        this.opponentBoard.AddGuess(index, update.hint.opponentGuess);
-        this.answer.UpdateProgress(update.hint.playerProgress);
-        this.target.UpdateProgress(update.hint.opponentProgress);
+        // Animated this.
+        (0, AnimateKnowledge_1.AnimateHint)(update, 0, this.playerBoard, this.opponentBoard, this.answer, this.target);
     }
     GameOver(won) {
         this.endGame.GameOver(won);

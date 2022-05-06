@@ -4,12 +4,15 @@ exports.AnimateCSS = exports.AnimationType = void 0;
 var AnimationType;
 (function (AnimationType) {
     AnimationType["Pulse"] = "pulse";
-    AnimationType["Bounce"] = "bounce";
+    AnimationType["BounceIn"] = "bounceIn";
+    AnimationType["FlipInX"] = "flipInX";
+    AnimationType["HeartBeat"] = "heartBeat";
+    AnimationType["ShakeX"] = "shakeX";
 })(AnimationType = exports.AnimationType || (exports.AnimationType = {}));
 const ANIMATION_DURATION_STR = '--animate-duration';
 const ANIMATION_CLASS_STR = 'animate__animated';
 // From https://animate.style/#javascript
-function AnimateCSS(element, animation, duration = 0.3) {
+function AnimateCSS(element, animation, duration = 0.5) {
     return new Promise(resolve => {
         const animationName = `animate__${animation.toString()}`;
         const node = element;

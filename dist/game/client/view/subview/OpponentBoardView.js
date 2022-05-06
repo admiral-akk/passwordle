@@ -14,14 +14,14 @@ class OpponentBoardView extends Subview_1.Subview {
             this.words.push(new OpponentWordView(this.root));
         }
     }
+    SetCharKnowledge(wordIndex, charIndex, char, knowledge) {
+        this.words[wordIndex].SetKnowledge(charIndex, char, knowledge);
+    }
     OpponentUpdate(update) {
         this.words[update.wordIndex].OpponentUpdate(update.type, update.charIndex);
     }
     Reset() {
         this.words.forEach(word => word.Reset());
-    }
-    AddGuess(wordIndex, guess) {
-        this.words[wordIndex].SetKnowledge(guess);
     }
 }
 exports.OpponentBoardView = OpponentBoardView;
@@ -36,24 +36,22 @@ class OpponentWordView extends WordView_1.BaseWordView {
                 break;
         }
     }
-    SetKnowledge(knowledge) {
-        for (let i = 0; i < this.letters.length; i++) {
-            const letter = this.letters[i];
-            letter.SetChar(knowledge.guess[i]);
-            switch (knowledge.letterKnowledge[i]) {
-                case LetterState_1.LetterState.NoKnowledge:
-                    letter.SetColor(LetterView_1.LetterColor.White);
-                    break;
-                case LetterState_1.LetterState.NotInWord:
-                    letter.SetColor(LetterView_1.LetterColor.Grey);
-                    break;
-                case LetterState_1.LetterState.Correct:
-                    letter.SetColor(LetterView_1.LetterColor.Green);
-                    break;
-                case LetterState_1.LetterState.WrongPosition:
-                    letter.SetColor(LetterView_1.LetterColor.Yellow);
-                    break;
-            }
+    SetKnowledge(charIndex, char, knowledge) {
+        const letter = this.letters[charIndex];
+        letter.SetChar(char);
+        switch (knowledge) {
+            case LetterState_1.LetterState.NoKnowledge:
+                letter.SetColor(LetterView_1.LetterColor.White);
+                break;
+            case LetterState_1.LetterState.NotInWord:
+                letter.SetColor(LetterView_1.LetterColor.Grey);
+                break;
+            case LetterState_1.LetterState.Correct:
+                letter.SetColor(LetterView_1.LetterColor.Green);
+                break;
+            case LetterState_1.LetterState.WrongPosition:
+                letter.SetColor(LetterView_1.LetterColor.Yellow);
+                break;
         }
     }
 }

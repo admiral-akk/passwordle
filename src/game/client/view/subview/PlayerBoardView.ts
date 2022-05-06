@@ -1,11 +1,11 @@
 import {LetterState} from '../../structs/LetterState';
-import {WordKnowledge} from '../../structs/WordKnowledge';
 import {CharUpdate} from '../CharUpdate';
+import {BoardView} from './BoardView';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
 
-export class PlayerBoardView extends Subview {
+export class PlayerBoardView extends Subview implements BoardView {
   Reset() {
     this.words.forEach(word => word.Reset());
   }
@@ -18,8 +18,13 @@ export class PlayerBoardView extends Subview {
     }
   }
 
-  AddGuessKnowledge(wordIndex: number, knowledge: WordKnowledge) {
-    this.words[wordIndex].SetKnowledge(knowledge);
+  SetCharKnowledge(
+    wordIndex: number,
+    charIndex: number,
+    char: string,
+    knowledge: LetterState
+  ) {
+    this.words[wordIndex].SetKnowledge(charIndex, char, knowledge);
   }
 
   CharUpdate(update: CharUpdate) {
@@ -32,24 +37,22 @@ class PlayerWordView extends BaseWordView {
     this.letters[index].SetChar(char);
   }
 
-  public SetKnowledge(knowledge: WordKnowledge) {
-    for (let i = 0; i < this.letters.length; i++) {
-      const letter = this.letters[i];
-      letter.SetChar(knowledge.guess[i]);
-      switch (knowledge.letterKnowledge[i]) {
-        case LetterState.NoKnowledge:
-          letter.SetColor(LetterColor.White);
-          break;
-        case LetterState.NotInWord:
-          letter.SetColor(LetterColor.Grey);
-          break;
-        case LetterState.Correct:
-          letter.SetColor(LetterColor.Green);
-          break;
-        case LetterState.WrongPosition:
-          letter.SetColor(LetterColor.Yellow);
-          break;
-      }
+  public SetKnowledge(charIndex: number, char: string, knowledge: LetterState) {
+    const letter = this.letters[charIndex];
+    letter.SetChar(char);
+    switch (knowledge) {
+      case LetterState.NoKnowledge:
+        letter.SetColor(LetterColor.White);
+        break;
+      case LetterState.NotInWord:
+        letter.SetColor(LetterColor.Grey);
+        break;
+      case LetterState.Correct:
+        letter.SetColor(LetterColor.Green);
+        break;
+      case LetterState.WrongPosition:
+        letter.SetColor(LetterColor.Yellow);
+        break;
     }
   }
 }

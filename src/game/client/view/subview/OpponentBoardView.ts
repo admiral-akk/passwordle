@@ -1,11 +1,12 @@
 import {LetterState} from '../../structs/LetterState';
 import {WordKnowledge} from '../../structs/WordKnowledge';
 import {OpponentUpdate, OpponentUpdateType} from '../OpponentUpdate';
+import {BoardView} from './BoardView';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
 
-export class OpponentBoardView extends Subview {
+export class OpponentBoardView extends Subview implements BoardView {
   protected words: OpponentWordView[];
   constructor(base: HTMLDivElement, explanationText = '') {
     super(base, 'board', explanationText);
@@ -15,16 +16,21 @@ export class OpponentBoardView extends Subview {
     }
   }
 
+  SetCharKnowledge(
+    wordIndex: number,
+    charIndex: number,
+    char: string,
+    knowledge: LetterState
+  ) {
+    this.words[wordIndex].SetKnowledge(charIndex, char, knowledge);
+  }
+
   OpponentUpdate(update: OpponentUpdate) {
     this.words[update.wordIndex].OpponentUpdate(update.type, update.charIndex);
   }
 
   Reset() {
     this.words.forEach(word => word.Reset());
-  }
-
-  AddGuess(wordIndex: number, guess: WordKnowledge) {
-    this.words[wordIndex].SetKnowledge(guess);
   }
 }
 
@@ -40,24 +46,22 @@ class OpponentWordView extends BaseWordView {
     }
   }
 
-  public SetKnowledge(knowledge: WordKnowledge) {
-    for (let i = 0; i < this.letters.length; i++) {
-      const letter = this.letters[i];
-      letter.SetChar(knowledge.guess[i]);
-      switch (knowledge.letterKnowledge[i]) {
-        case LetterState.NoKnowledge:
-          letter.SetColor(LetterColor.White);
-          break;
-        case LetterState.NotInWord:
-          letter.SetColor(LetterColor.Grey);
-          break;
-        case LetterState.Correct:
-          letter.SetColor(LetterColor.Green);
-          break;
-        case LetterState.WrongPosition:
-          letter.SetColor(LetterColor.Yellow);
-          break;
-      }
+  public SetKnowledge(charIndex: number, char: string, knowledge: LetterState) {
+    const letter = this.letters[charIndex];
+    letter.SetChar(char);
+    switch (knowledge) {
+      case LetterState.NoKnowledge:
+        letter.SetColor(LetterColor.White);
+        break;
+      case LetterState.NotInWord:
+        letter.SetColor(LetterColor.Grey);
+        break;
+      case LetterState.Correct:
+        letter.SetColor(LetterColor.Green);
+        break;
+      case LetterState.WrongPosition:
+        letter.SetColor(LetterColor.Yellow);
+        break;
     }
   }
 }

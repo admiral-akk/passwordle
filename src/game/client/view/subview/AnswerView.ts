@@ -1,11 +1,10 @@
-import {TargetProgress} from '../../structs/TargetProgress';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
 export class AnswerView extends Subview {
   private answer: AnswerWordView;
   constructor(base: HTMLElement) {
-    super(base, 'answer', 'Lose if this is filled!');
+    super(base, 'answer', 'Lose if this is all red!');
     this.answer = new AnswerWordView(this.root);
   }
 
@@ -17,13 +16,8 @@ export class AnswerView extends Subview {
     this.answer.Reset();
   }
 
-  UpdateProgress(progress: TargetProgress) {
-    const knownCharacters = progress.knownCharacters;
-    for (let i = 0; i < knownCharacters.length; i++) {
-      if (knownCharacters[i] !== '') {
-        this.answer.UpdateProgress(i);
-      }
-    }
+  UpdateProgress(charIndex: number) {
+    this.answer.UpdateProgress(charIndex);
   }
 }
 
