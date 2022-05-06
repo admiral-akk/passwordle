@@ -1,8 +1,8 @@
 import express from 'express';
 import path from 'path';
 import {GameServerManager} from './GameServerManager';
+import {NewLobbyServer} from './lobby/server/LobbyServer';
 import {GetServer} from './NetworkTypes';
-import {NewLobbyServer} from './newLobby/NewLobbyServer';
 import {PlayerId} from './PlayerId';
 import {SocketManager} from './SocketManager';
 

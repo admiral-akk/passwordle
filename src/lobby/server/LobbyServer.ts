@@ -1,9 +1,9 @@
-import {PlayerId} from '../PlayerId';
+import {PlayerId} from '../../PlayerId';
 import {
   LobbyClientRequests,
   LobbyServerRequests,
   NewLobbyServerSocket,
-} from './NewLobbyNetworkTypes';
+} from './LobbyNetworkTypes';
 
 export class NewLobbyServer {
   private lobbies: Record<string, LobbySocketManager> = {};

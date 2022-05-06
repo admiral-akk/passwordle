@@ -1,37 +1,25 @@
 import {Server, Socket} from 'socket.io';
 import {
-  LobbyClientToServerEvents,
-  LobbyServerToClientEvents,
-} from './lobby/client/LobbyNetworkEvents';
-import {LobbyServer} from './lobby/LobbyServer';
-import {LobbySocketData} from './lobby/LobbyServerSocket';
-import {
   GameClientToServerEvents,
   GameServerToClientEvents,
 } from './game/network/GameNetworkTypes';
 import {
   LobbyClientRequests,
   LobbyServerRequests,
-} from './newLobby/NewLobbyNetworkTypes';
-import {NewLobbyServer} from './newLobby/NewLobbyServer';
+} from './lobby/server/LobbyNetworkTypes';
+import {NewLobbyServer} from './lobby/server/LobbyServer';
 import {PlayerId, ToPlayerId} from './PlayerId';
 import {SocketManager} from './SocketManager';
 
 export interface ServerToClientEvents
-  extends LobbyServerToClientEvents,
-    GameClientToServerEvents,
+  extends GameClientToServerEvents,
     LobbyClientRequests {}
 export interface ClientToServerEvents
-  extends LobbyClientToServerEvents,
-    GameServerToClientEvents,
+  extends GameServerToClientEvents,
     LobbyServerRequests {}
 
-export interface InterServerEvents {
-  HandoffLobby: (lobby: LobbyServer) => void;
-}
-export interface SocketData extends LobbySocketData {
-  name: string;
-  playerIndex: number;
+export interface InterServerEvents {}
+export interface SocketData {
   playerId: PlayerId;
 }
 

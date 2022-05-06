@@ -1,11 +1,9 @@
-import { LobbySocket } from './LobbyNetworkEvents';
-export declare class LobbyManager {
-    private view;
-    private lobbyId;
+import { LobbyServerRequests, NewLobbyClientSocket } from '../server/LobbyNetworkTypes';
+export declare class NewLobbyManager implements LobbyServerRequests {
     private socket;
-    constructor(socket: LobbySocket);
-    private HostingLobby;
-    private FindingMatch;
-    private LobbyReady;
-    private SetState;
+    private view;
+    private model;
+    constructor(socket: NewLobbyClientSocket);
+    JoinLobby(lobbyId: string): void;
+    FindMatch(): void;
 }

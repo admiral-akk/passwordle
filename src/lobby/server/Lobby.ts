@@ -1,5 +1,5 @@
-import {LobbyView} from '../lobby/client/view/LobbyView';
-import {LobbyClientRequests, LobbyServerRequests} from './NewLobbyNetworkTypes';
+import {LobbyView} from '../client/view/LobbyView';
+import {LobbyClientRequests, LobbyServerRequests} from './LobbyNetworkTypes';
 
 enum State {
   Loading,
