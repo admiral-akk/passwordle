@@ -1,17 +1,52 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlayerBoardView = void 0;
-const BoardView_1 = require("./BoardView");
-class PlayerBoardView extends BoardView_1.BoardView {
-    constructor(base) {
-        super(base, 'Your Guesses');
+const LetterState_1 = require("../../structs/LetterState");
+const Subview_1 = require("./Subview");
+const LetterView_1 = require("./word/letter/LetterView");
+const WordView_1 = require("./word/WordView");
+class PlayerBoardView extends Subview_1.Subview {
+    constructor(base, explanationText = '') {
+        super(base, 'board', explanationText);
+        this.words = [];
+        for (let i = 0; i < 6; i++) {
+            this.words.push(new PlayerWordView(this.root));
+        }
     }
-    Update(update) {
-        this.BaseUpdate(update);
+    Reset() {
+        this.words.forEach(word => word.Reset());
     }
     HintUpdate(update) {
-        this.BaseHintUpdate(update.hint.playerGuess, update.guessIndex);
+        this.words[update.guessIndex].SetKnowledge(update.hint.playerGuess);
+    }
+    CharUpdate(update) {
+        this.words[update.wordIndex].AddChar(update.char, update.charIndex);
     }
 }
 exports.PlayerBoardView = PlayerBoardView;
+class PlayerWordView extends WordView_1.BaseWordView {
+    AddChar(char, index) {
+        this.letters[index].SetChar(char);
+    }
+    SetKnowledge(knowledge) {
+        for (let i = 0; i < this.letters.length; i++) {
+            const letter = this.letters[i];
+            letter.SetChar(knowledge.guess[i]);
+            switch (knowledge.letterKnowledge[i]) {
+                case LetterState_1.LetterState.NoKnowledge:
+                    letter.SetColor(LetterView_1.LetterColor.White);
+                    break;
+                case LetterState_1.LetterState.NotInWord:
+                    letter.SetColor(LetterView_1.LetterColor.Grey);
+                    break;
+                case LetterState_1.LetterState.Correct:
+                    letter.SetColor(LetterView_1.LetterColor.Green);
+                    break;
+                case LetterState_1.LetterState.WrongPosition:
+                    letter.SetColor(LetterView_1.LetterColor.Yellow);
+                    break;
+            }
+        }
+    }
+}
 //# sourceMappingURL=PlayerBoardView.js.map

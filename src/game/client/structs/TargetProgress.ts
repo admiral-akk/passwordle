@@ -9,7 +9,7 @@ export class TargetProgress {
 
   UpdateProgress(knowledge: WordKnowledge) {
     for (let i = 0; i < knowledge.guess.length; i++) {
-      if (knowledge.letterKnowledge[i] === LetterState.Green) {
+      if (knowledge.letterKnowledge[i] === LetterState.Correct) {
         this.knownCharacters[i] = knowledge.guess[i];
       }
     }

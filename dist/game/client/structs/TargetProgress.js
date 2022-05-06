@@ -8,7 +8,7 @@ class TargetProgress {
     }
     UpdateProgress(knowledge) {
         for (let i = 0; i < knowledge.guess.length; i++) {
-            if (knowledge.letterKnowledge[i] === LetterState_1.LetterState.Green) {
+            if (knowledge.letterKnowledge[i] === LetterState_1.LetterState.Correct) {
                 this.knownCharacters[i] = knowledge.guess[i];
             }
         }

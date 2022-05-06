@@ -1,8 +1,6 @@
 export declare enum LetterState {
-    None = 0,
-    Grey = 1,
-    LightGrey = 2,
-    Yellow = 3,
-    Green = 4,
-    Red = 5
+    NoKnowledge = 0,
+    NotInWord = 1,
+    WrongPosition = 2,
+    Correct = 3
 }

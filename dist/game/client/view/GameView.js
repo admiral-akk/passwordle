@@ -30,7 +30,7 @@ class GameView {
         this.answer.SetSecret(secret);
     }
     CharUpdate(update) {
-        this.playerBoard.Update(update);
+        this.playerBoard.CharUpdate(update);
     }
     HintUpdate(update) {
         this.playerBoard.HintUpdate(update);

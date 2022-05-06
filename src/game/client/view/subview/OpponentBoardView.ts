@@ -1,33 +1,64 @@
 import {LetterState} from '../../structs/LetterState';
+import {WordKnowledge} from '../../structs/WordKnowledge';
 import {HintUpdate} from '../HintUpdate';
 import {OpponentUpdate, OpponentUpdateType} from '../OpponentUpdate';
-import {BoardView} from './BoardView';
+import {Subview} from './Subview';
+import {LetterColor} from './word/letter/LetterView';
+import {BaseWordView} from './word/WordView';
 
-export class OpponentBoardView extends BoardView {
-  constructor(base: HTMLDivElement) {
-    super(base, "Opponent's Guesses");
+export class OpponentBoardView extends Subview {
+  protected words: OpponentWordView[];
+  constructor(base: HTMLDivElement, explanationText = '') {
+    super(base, 'board', explanationText);
+    this.words = [];
+    for (let i = 0; i < 6; i++) {
+      this.words.push(new OpponentWordView(this.root));
+    }
   }
 
   OpponentUpdate(update: OpponentUpdate) {
-    switch (update.type) {
+    this.words[update.wordIndex].OpponentUpdate(update.type, update.charIndex);
+  }
+
+  Reset() {
+    this.words.forEach(word => word.Reset());
+  }
+
+  HintUpdate(update: HintUpdate) {
+    this.words[update.guessIndex].SetKnowledge(update.hint.opponentGuess);
+  }
+}
+
+class OpponentWordView extends BaseWordView {
+  public OpponentUpdate(type: OpponentUpdateType, charIndex: number) {
+    switch (type) {
       case OpponentUpdateType.AddChar:
-        this.words[update.wordIndex].SetChar(
-          '',
-          update.charIndex,
-          LetterState.LightGrey
-        );
+        this.letters[charIndex].SetColor(LetterColor.LightGrey);
         break;
       case OpponentUpdateType.Delete:
-        this.words[update.wordIndex].SetChar(
-          '',
-          update.charIndex,
-          LetterState.None
-        );
+        this.letters[charIndex].SetColor(LetterColor.White);
         break;
     }
   }
 
-  HintUpdate(update: HintUpdate) {
-    this.BaseHintUpdate(update.hint.opponentGuess, update.guessIndex);
+  public SetKnowledge(knowledge: WordKnowledge) {
+    for (let i = 0; i < this.letters.length; i++) {
+      const letter = this.letters[i];
+      letter.SetChar(knowledge.guess[i]);
+      switch (knowledge.letterKnowledge[i]) {
+        case LetterState.NoKnowledge:
+          letter.SetColor(LetterColor.White);
+          break;
+        case LetterState.NotInWord:
+          letter.SetColor(LetterColor.Grey);
+          break;
+        case LetterState.Correct:
+          letter.SetColor(LetterColor.Green);
+          break;
+        case LetterState.WrongPosition:
+          letter.SetColor(LetterColor.Yellow);
+          break;
+      }
+    }
   }
 }

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnswerView = void 0;
-const LetterState_1 = require("../../structs/LetterState");
 const Subview_1 = require("./Subview");
+const LetterView_1 = require("./word/letter/LetterView");
 const WordView_1 = require("./word/WordView");
 class AnswerView extends Subview_1.Subview {
     constructor(base) {
         super(base, 'answer', 'Lose if this is filled!');
-        this.answer = new WordView_1.WordView(this.root);
+        this.answer = new AnswerWordView(this.root);
     }
     SetSecret(secret) {
-        this.answer.Set(secret);
+        this.answer.SetSecret(secret);
     }
     Reset() {
         this.answer.Reset();
@@ -19,10 +19,20 @@ class AnswerView extends Subview_1.Subview {
         const knownCharacters = update.hint.playerProgress.knownCharacters;
         for (let i = 0; i < knownCharacters.length; i++) {
             if (knownCharacters[i] !== '') {
-                this.answer.SetChar(knownCharacters[i], i, LetterState_1.LetterState.Red);
+                this.answer.UpdateProgress(i);
             }
         }
     }
 }
 exports.AnswerView = AnswerView;
+class AnswerWordView extends WordView_1.BaseWordView {
+    SetSecret(secret) {
+        for (let i = 0; i < secret.length; i++) {
+            this.letters[i].SetChar(secret[i]);
+        }
+    }
+    UpdateProgress(charIndex) {
+        this.letters[charIndex].SetColor(LetterView_1.LetterColor.Red);
+    }
+}
 //# sourceMappingURL=AnswerView.js.map

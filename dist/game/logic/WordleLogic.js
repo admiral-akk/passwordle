@@ -7,16 +7,16 @@ function GetKnowledge(guess, answer) {
     console.log(`testing: ${guess} v ${answer}`);
     const answer_state = [];
     for (let i = 0; i < guess.length; i++) {
-        answer_state[i] = LetterState_1.LetterState.None;
+        answer_state[i] = LetterState_1.LetterState.NoKnowledge;
         if (guess[i] === answer[i]) {
-            answer_state[i] = LetterState_1.LetterState.Green;
+            answer_state[i] = LetterState_1.LetterState.Correct;
         }
         if (!answer.includes(guess[i])) {
-            answer_state[i] = LetterState_1.LetterState.Grey;
+            answer_state[i] = LetterState_1.LetterState.NotInWord;
         }
     }
     for (let i = 0; i < guess.length; i++) {
-        if (answer_state[i] !== LetterState_1.LetterState.None) {
+        if (answer_state[i] !== LetterState_1.LetterState.NoKnowledge) {
             continue;
         }
         let matched = 0;
@@ -24,8 +24,8 @@ function GetKnowledge(guess, answer) {
             if (i === j) {
                 continue;
             }
-            if (answer_state[j] !== LetterState_1.LetterState.Green &&
-                answer_state[j] !== LetterState_1.LetterState.Yellow) {
+            if (answer_state[j] !== LetterState_1.LetterState.Correct &&
+                answer_state[j] !== LetterState_1.LetterState.WrongPosition) {
                 continue;
             }
             if (guess[j] !== guess[i]) {
@@ -35,10 +35,10 @@ function GetKnowledge(guess, answer) {
         }
         const charCount = (answer.match(new RegExp(guess[i], 'g')) || []).length;
         if (charCount > matched) {
-            answer_state[i] = LetterState_1.LetterState.Yellow;
+            answer_state[i] = LetterState_1.LetterState.WrongPosition;
         }
         else {
-            answer_state[i] = LetterState_1.LetterState.Grey;
+            answer_state[i] = LetterState_1.LetterState.NotInWord;
         }
     }
     return new WordKnowledge_1.WordKnowledge(answer_state, guess);

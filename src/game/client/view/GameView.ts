@@ -49,7 +49,7 @@ export class GameView {
   }
 
   CharUpdate(update: CharUpdate) {
-    this.playerBoard.Update(update);
+    this.playerBoard.CharUpdate(update);
   }
 
   HintUpdate(update: HintUpdate) {
