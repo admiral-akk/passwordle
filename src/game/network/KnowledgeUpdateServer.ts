@@ -1,9 +1,6 @@
-import {
-  Complete,
-  TargetProgress,
-} from '../../game/client/structs/TargetProgress';
-import {GetKnowledge} from '../../game/logic/WordleLogic';
-import {Word} from '../../game/structs/Word';
+import {Complete, TargetProgress} from '../client/structs/TargetProgress';
+import {GetKnowledge} from '../logic/WordleLogic';
+import {Word} from '../structs/Word';
 import {PlayerId} from '../../PlayerId';
 import {UpdatedAnswerKnowledge} from './updates/Updates';
 

@@ -1,8 +1,8 @@
 import {GameServerSocket} from './GameNetworkTypes';
 import {PlayerId} from '../../PlayerId';
 import {ClientGameMirror} from './ClientGameMirror';
-import {Word} from '../../game/structs/Word';
-import {GetRandomWord} from '../../game/Words';
+import {Word} from '../structs/Word';
+import {GetRandomWord} from '../Words';
 import {KnowledgeExchangeServer} from './KnowledgeUpdateServer';
 import {LockedGuess, UpdatedAnswerKnowledge} from './updates/Updates';
 export class ServerGame {

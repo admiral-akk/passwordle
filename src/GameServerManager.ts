@@ -1,5 +1,5 @@
-import {GameServerSocket} from './game/GameServerSocket';
-import {ServerGame} from './newGame/network/ServerGame';
+import {GameServerSocket} from './game/network/GameNetworkTypes';
+import {ServerGame} from './game/network/ServerGame';
 import {PlayerId} from './PlayerId';
 
 export class GameServerManager {

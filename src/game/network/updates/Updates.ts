@@ -1,9 +1,6 @@
-import {
-  Complete,
-  TargetProgress,
-} from '../../../game/client/structs/TargetProgress';
-import {WordKnowledge} from '../../../game/client/structs/WordKnowledge';
-import {Word} from '../../../game/structs/Word';
+import {Complete, TargetProgress} from '../../client/structs/TargetProgress';
+import {WordKnowledge} from '../../client/structs/WordKnowledge';
+import {Word} from '../../structs/Word';
 
 export class AddedChar {
   constructor(public char: string) {}

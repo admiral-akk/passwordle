@@ -1,4 +1,4 @@
-import { GameServerSocket } from './game/GameServerSocket';
+import { GameServerSocket } from './game/network/GameNetworkTypes';
 import { PlayerId } from './PlayerId';
 export declare class GameServerManager {
     private ExitGame;

@@ -1,4 +1,6 @@
 import { HintUpdate } from './HintUpdate';
-import { BoardView } from './subview/BoardView';
-import { PasswordView } from './subview/PasswordView';
-export declare function AnimateHint(update: HintUpdate, charIndex: number, playerBoard: BoardView, opponentBoard: BoardView, answer: PasswordView, target: PasswordView): void;
+import { OpponentBoardView } from './subview/OpponentBoardView';
+import { OpponentPasswordView } from './subview/OpponentPasswordView';
+import { YourBoardView } from './subview/PlayerBoardView';
+import { YourPasswordView } from './subview/YourPasswordView';
+export declare function AnimateHint(update: HintUpdate, yourBoard: YourBoardView, opponentBoard: OpponentBoardView, yourPassword: YourPasswordView, opponentPassword: OpponentPasswordView): void;

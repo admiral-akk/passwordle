@@ -1,16 +1,16 @@
-import {Hint} from '../../game/client/structs/Hint';
-import {CharUpdate} from '../../game/client/view/CharUpdate';
-import {GameView} from '../../game/client/view/GameView';
-import {HintUpdate} from '../../game/client/view/HintUpdate';
+import {Hint} from '../client/structs/Hint';
+import {CharUpdate} from '../client/view/CharUpdate';
+import {GameView} from '../client/view/GameView';
+import {HintUpdate} from '../client/view/HintUpdate';
 import {
   OpponentUpdate,
   OpponentUpdateType,
-} from '../../game/client/view/OpponentUpdate';
-import {ToWord, Word} from '../../game/structs/Word';
-import {IsValidWord} from '../../game/Words';
+} from '../client/view/OpponentUpdate';
+import {ToWord, Word} from '../structs/Word';
+import {IsValidWord} from '../Words';
 import {
-  NewGameClientToServerEvents,
-  NewGameServerToClientEvents,
+  GameClientToServerEvents,
+  GameServerToClientEvents,
 } from '../network/GameNetworkTypes';
 import {
   AddedChar,
@@ -30,7 +30,7 @@ enum State {
 }
 
 export class PlayerBoard
-  implements NewGameClientToServerEvents, NewGameServerToClientEvents
+  implements GameClientToServerEvents, GameServerToClientEvents
 {
   state: State = State.WaitingForKnowledge;
   guesses: Word[] = [];

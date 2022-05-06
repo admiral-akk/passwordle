@@ -1,18 +1,15 @@
-import {InputManager} from '../../game/client/input/InputManager';
-import {GameView} from '../../game/client/view/GameView';
-import {Word} from '../../game/structs/Word';
+import {InputManager} from '../client/input/InputManager';
+import {GameView} from '../client/view/GameView';
+import {Word} from '../structs/Word';
 import {PlayerBoard} from '../model/PlayerBoard';
-import {
-  GameClientSocket,
-  NewGameServerToClientEvents,
-} from './GameNetworkTypes';
+import {GameClientSocket, GameServerToClientEvents} from './GameNetworkTypes';
 import {
   AddedChar,
   LockedGuess,
   UpdatedAnswerKnowledge,
 } from './updates/Updates';
 
-export class ClientGame implements NewGameServerToClientEvents {
+export class ClientGame implements GameServerToClientEvents {
   private board: PlayerBoard;
   constructor(private socket: GameClientSocket) {
     this.board = new PlayerBoard(new GameView());

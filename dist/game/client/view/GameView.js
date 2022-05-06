@@ -14,11 +14,11 @@ class GameView {
     constructor() {
         const root = document.getElementById('game-board');
         this.timer = new TimerView_1.TimerView(root);
-        this.answer = new YourPasswordView_1.YourPasswordView(root);
-        this.target = new OpponentPasswordView_1.OpponentPasswordView(root);
+        this.yourPassword = new YourPasswordView_1.YourPasswordView(root);
+        this.opponentPassword = new OpponentPasswordView_1.OpponentPasswordView(root);
         const game = AddDiv(root, 'play-area');
         const player = AddDiv(game, 'player');
-        this.playerBoard = new PlayerBoardView_1.PlayerBoardView(player);
+        this.yourBoard = new PlayerBoardView_1.YourBoardView(player);
         const opponent = AddDiv(game, 'opponent');
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
         this.keyboard = new KeyboardView_1.KeyboardView(root);
@@ -28,23 +28,23 @@ class GameView {
         this.endGame = new EndGameView_1.EndGameView(root);
     }
     SetSecret(secret) {
-        this.answer.SetSecret(secret);
+        this.yourPassword.SetSecret(secret);
     }
     CharUpdate(update) {
-        this.playerBoard.CharUpdate(update);
+        this.yourBoard.CharUpdate(update);
     }
     HintUpdate(update) {
         // Animated this.
-        (0, AnimateKnowledge_1.AnimateHint)(update, 0, this.playerBoard, this.opponentBoard, this.answer, this.target);
+        (0, AnimateKnowledge_1.AnimateHint)(update, this.yourBoard, this.opponentBoard, this.yourPassword, this.opponentPassword);
     }
     GameOver(won) {
         this.endGame.GameOver(won);
     }
     Reset() {
-        this.playerBoard.Reset();
+        this.yourBoard.Reset();
         this.opponentBoard.Reset();
-        this.answer.Reset();
-        this.target.Reset();
+        this.yourPassword.Reset();
+        this.opponentPassword.Reset();
         this.endGame.Reset();
     }
     OpponentUpdate(update) {

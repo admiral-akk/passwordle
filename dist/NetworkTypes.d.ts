@@ -1,17 +1,16 @@
 /// <reference types="express-serve-static-core" />
 import { Server, Socket } from 'socket.io';
-import { GameServerToClientEvents } from './game/client/GameNetworkEvents';
 import { LobbyClientToServerEvents, LobbyServerToClientEvents } from './lobby/client/LobbyNetworkEvents';
 import { LobbyServer } from './lobby/LobbyServer';
 import { LobbySocketData } from './lobby/LobbyServerSocket';
-import { NewGameClientToServerEvents, NewGameServerToClientEvents } from './newGame/network/GameNetworkTypes';
+import { GameClientToServerEvents, GameServerToClientEvents } from './game/network/GameNetworkTypes';
 import { LobbyClientRequests, LobbyServerRequests } from './newLobby/NewLobbyNetworkTypes';
 import { NewLobbyServer } from './newLobby/NewLobbyServer';
 import { PlayerId } from './PlayerId';
 import { SocketManager } from './SocketManager';
-export interface ServerToClientEvents extends LobbyServerToClientEvents, GameServerToClientEvents, NewGameClientToServerEvents, LobbyClientRequests {
+export interface ServerToClientEvents extends LobbyServerToClientEvents, GameClientToServerEvents, LobbyClientRequests {
 }
-export interface ClientToServerEvents extends LobbyClientToServerEvents, GameServerToClientEvents, NewGameServerToClientEvents, LobbyServerRequests {
+export interface ClientToServerEvents extends LobbyClientToServerEvents, GameServerToClientEvents, LobbyServerRequests {
 }
 export interface InterServerEvents {
     HandoffLobby: (lobby: LobbyServer) => void;

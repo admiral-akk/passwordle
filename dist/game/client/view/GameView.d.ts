@@ -2,12 +2,12 @@ import { CharUpdate } from './CharUpdate';
 import { HintUpdate } from './HintUpdate';
 import { OpponentUpdate } from './OpponentUpdate';
 export declare class GameView {
-    private answer;
-    private playerBoard;
+    private yourBoard;
+    private yourPassword;
     private opponentBoard;
+    private opponentPassword;
     private keyboard;
     private timer;
-    private target;
     private endGame;
     constructor();
     SetSecret(secret: string): void;

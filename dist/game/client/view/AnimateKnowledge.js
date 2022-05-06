@@ -1,12 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnimateHint = void 0;
-function AnimateHint(update, charIndex, playerBoard, opponentBoard, answer, target) {
-    if (charIndex >= 10) {
-        return;
-    }
-    let animations = GenerateAnimations(playerBoard, update.hint.playerGuess, update.guessIndex, answer, target, update.hint.playerProgress, update.hint.opponentProgress);
-    animations = animations.concat(GenerateAnimations(opponentBoard, update.hint.opponentGuess, update.guessIndex, answer, target, update.hint.playerProgress, update.hint.opponentProgress));
+function AnimateHint(update, yourBoard, opponentBoard, yourPassword, opponentPassword) {
+    let animations = GenerateAnimations(yourBoard, update.hint.playerGuess, update.guessIndex, yourPassword, opponentPassword, update.hint.playerProgress, update.hint.opponentProgress);
+    animations = animations.concat(GenerateAnimations(opponentBoard, update.hint.opponentGuess, update.guessIndex, yourPassword, opponentPassword, update.hint.playerProgress, update.hint.opponentProgress));
     let promise = Promise.resolve();
     animations.forEach(animation => {
         if (animation) {
@@ -15,10 +12,10 @@ function AnimateHint(update, charIndex, playerBoard, opponentBoard, answer, targ
     });
 }
 exports.AnimateHint = AnimateHint;
-function GenerateAnimations(board, guess, wordIndex, answer, target, playerProgress, opponentProgress) {
+function GenerateAnimations(board, guess, wordIndex, yourPassword, opponentPassword, playerProgress, opponentProgress) {
     const animations = [];
-    const targetAnimations = target.GetAnimations(guess.guess, opponentProgress);
-    const answerAnimations = answer.GetAnimations(guess.guess, playerProgress);
+    const targetAnimations = opponentPassword.GetAnimations(guess.guess, opponentProgress);
+    const answerAnimations = yourPassword.GetAnimations(guess.guess, playerProgress);
     for (let i = 0; i < 5; i++) {
         animations.push(() => {
             board.SetCharKnowledge(wordIndex, i, guess.guess[i], guess.letterKnowledge[i]);

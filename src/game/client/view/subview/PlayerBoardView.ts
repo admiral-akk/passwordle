@@ -5,7 +5,7 @@ import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
 
-export class PlayerBoardView extends Subview implements BoardView {
+export class YourBoardView extends Subview implements BoardView {
   Reset() {
     this.words.forEach(word => word.Reset());
   }

@@ -2,25 +2,24 @@ import {TargetProgress} from '../structs/TargetProgress';
 import {WordKnowledge} from '../structs/WordKnowledge';
 import {HintUpdate} from './HintUpdate';
 import {BoardView} from './subview/BoardView';
-import {PasswordView} from './subview/PasswordView';
+import {OpponentBoardView} from './subview/OpponentBoardView';
+import {OpponentPasswordView} from './subview/OpponentPasswordView';
+import {YourBoardView} from './subview/PlayerBoardView';
+import {YourPasswordView} from './subview/YourPasswordView';
 
 export function AnimateHint(
   update: HintUpdate,
-  charIndex: number,
-  playerBoard: BoardView,
-  opponentBoard: BoardView,
-  answer: PasswordView,
-  target: PasswordView
+  yourBoard: YourBoardView,
+  opponentBoard: OpponentBoardView,
+  yourPassword: YourPasswordView,
+  opponentPassword: OpponentPasswordView
 ) {
-  if (charIndex >= 10) {
-    return;
-  }
   let animations = GenerateAnimations(
-    playerBoard,
+    yourBoard,
     update.hint.playerGuess,
     update.guessIndex,
-    answer,
-    target,
+    yourPassword,
+    opponentPassword,
     update.hint.playerProgress,
     update.hint.opponentProgress
   );
@@ -30,8 +29,8 @@ export function AnimateHint(
       opponentBoard,
       update.hint.opponentGuess,
       update.guessIndex,
-      answer,
-      target,
+      yourPassword,
+      opponentPassword,
       update.hint.playerProgress,
       update.hint.opponentProgress
     )
@@ -49,14 +48,20 @@ function GenerateAnimations(
   board: BoardView,
   guess: WordKnowledge,
   wordIndex: number,
-  answer: PasswordView,
-  target: PasswordView,
+  yourPassword: YourPasswordView,
+  opponentPassword: OpponentPasswordView,
   playerProgress: TargetProgress,
   opponentProgress: TargetProgress
 ): ((() => void) | null)[] {
   const animations: ((() => void) | null)[] = [];
-  const targetAnimations = target.GetAnimations(guess.guess, opponentProgress);
-  const answerAnimations = answer.GetAnimations(guess.guess, playerProgress);
+  const targetAnimations = opponentPassword.GetAnimations(
+    guess.guess,
+    opponentProgress
+  );
+  const answerAnimations = yourPassword.GetAnimations(
+    guess.guess,
+    playerProgress
+  );
 
   for (let i = 0; i < 5; i++) {
     animations.push(() => {

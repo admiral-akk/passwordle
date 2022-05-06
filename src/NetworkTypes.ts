@@ -1,5 +1,4 @@
 import {Server, Socket} from 'socket.io';
-import {GameServerToClientEvents} from './game/client/GameNetworkEvents';
 import {
   LobbyClientToServerEvents,
   LobbyServerToClientEvents,
@@ -7,9 +6,9 @@ import {
 import {LobbyServer} from './lobby/LobbyServer';
 import {LobbySocketData} from './lobby/LobbyServerSocket';
 import {
-  NewGameClientToServerEvents,
-  NewGameServerToClientEvents,
-} from './newGame/network/GameNetworkTypes';
+  GameClientToServerEvents,
+  GameServerToClientEvents,
+} from './game/network/GameNetworkTypes';
 import {
   LobbyClientRequests,
   LobbyServerRequests,
@@ -20,13 +19,11 @@ import {SocketManager} from './SocketManager';
 
 export interface ServerToClientEvents
   extends LobbyServerToClientEvents,
-    GameServerToClientEvents,
-    NewGameClientToServerEvents,
+    GameClientToServerEvents,
     LobbyClientRequests {}
 export interface ClientToServerEvents
   extends LobbyClientToServerEvents,
     GameServerToClientEvents,
-    NewGameServerToClientEvents,
     LobbyServerRequests {}
 
 export interface InterServerEvents {

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameServerManager = void 0;
-const ServerGame_1 = require("./newGame/network/ServerGame");
+const ServerGame_1 = require("./game/network/ServerGame");
 class GameServerManager {
     constructor(ExitGame) {
         this.ExitGame = ExitGame;

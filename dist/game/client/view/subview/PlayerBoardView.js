@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlayerBoardView = void 0;
+exports.YourBoardView = void 0;
 const LetterState_1 = require("../../structs/LetterState");
 const Subview_1 = require("./Subview");
 const LetterView_1 = require("./word/letter/LetterView");
 const WordView_1 = require("./word/WordView");
-class PlayerBoardView extends Subview_1.Subview {
+class YourBoardView extends Subview_1.Subview {
     constructor(base, explanationText = 'Your Guesses') {
         super(base, 'board', explanationText);
         this.words = [];
@@ -23,7 +23,7 @@ class PlayerBoardView extends Subview_1.Subview {
         this.words[update.wordIndex].AddChar(update.char, update.charIndex);
     }
 }
-exports.PlayerBoardView = PlayerBoardView;
+exports.YourBoardView = YourBoardView;
 class PlayerWordView extends WordView_1.BaseWordView {
     AddChar(char, index) {
         this.letters[index].SetChar(char);

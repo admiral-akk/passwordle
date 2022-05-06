@@ -1,7 +1,7 @@
 import {
   GameServerSocket,
-  NewGameClientToServerEvents,
-  NewGameServerToClientEvents,
+  GameClientToServerEvents,
+  GameServerToClientEvents,
 } from './GameNetworkTypes';
 import {PlayerBoard} from '../model/PlayerBoard';
 import {
@@ -9,10 +9,10 @@ import {
   LockedGuess,
   UpdatedAnswerKnowledge,
 } from './updates/Updates';
-import {Word} from '../../game/structs/Word';
+import {Word} from '../structs/Word';
 
 export class ClientGameMirror
-  implements NewGameClientToServerEvents, NewGameServerToClientEvents
+  implements GameClientToServerEvents, GameServerToClientEvents
 {
   private board: PlayerBoard = new PlayerBoard();
   private otherPlayer: ClientGameMirror | null = null;

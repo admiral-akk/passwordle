@@ -3,7 +3,7 @@ import { CharUpdate } from '../CharUpdate';
 import { BoardView } from './BoardView';
 import { Subview } from './Subview';
 import { BaseWordView } from './word/WordView';
-export declare class PlayerBoardView extends Subview implements BoardView {
+export declare class YourBoardView extends Subview implements BoardView {
     Reset(): void;
     protected words: PlayerWordView[];
     constructor(base: HTMLDivElement, explanationText?: string);
