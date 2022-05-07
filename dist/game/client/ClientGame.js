@@ -16,6 +16,12 @@ class ClientGame {
         socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }
+    Enter(prevState) {
+        throw new Error('Method not implemented.');
+    }
+    Exit() {
+        throw new Error('Method not implemented.');
+    }
     OpponentDisconnected() {
         this.board.OpponentDisconnected();
     }

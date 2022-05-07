@@ -9,11 +9,11 @@ import {
 import {
   AddedChar,
   LockedGuess,
-  LockedGuessError,
   UpdatedAnswerKnowledge,
 } from '../network/updates/Updates';
+import {ExitState, PlayerState} from '../../public/Player';
 
-export class ClientGame implements GameServerToClientEvents {
+export class ClientGame implements GameServerToClientEvents, PlayerState {
   private board: PlayerBoard;
   constructor(private socket: GameClientSocket, showMenu: () => void) {
     this.board = new PlayerBoard(new GameView(), showMenu);
@@ -30,6 +30,13 @@ export class ClientGame implements GameServerToClientEvents {
       () => this.Delete(),
       () => this.Submit()
     );
+  }
+
+  Enter(prevState: ExitState): void {
+    throw new Error('Method not implemented.');
+  }
+  Exit(): ExitState {
+    throw new Error('Method not implemented.');
   }
 
   OpponentDisconnected() {

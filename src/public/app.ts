@@ -1,7 +1,3 @@
-import {GetSocket} from './ClientNetworking';
-import {ClientGame} from '../game/client/ClientGame';
-import {NewLobbyManager} from '../lobby/client/LobbyManager';
+import {Player} from './Player';
 
-const socket = GetSocket();
-const lobby = new NewLobbyManager(socket);
-new ClientGame(socket, () => lobby.ShowMenu());
+new Player();

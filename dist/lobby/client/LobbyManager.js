@@ -11,6 +11,12 @@ class NewLobbyManager {
         this.model = new Lobby_1.NewLobby(this.view, this);
         RegisterSocket(socket, this.model);
     }
+    Enter(prevState) {
+        throw new Error('Method not implemented.');
+    }
+    Exit() {
+        throw new Error('Method not implemented.');
+    }
     JoinLobby(lobbyId) {
         this.socket.emit('JoinLobby', lobbyId);
     }

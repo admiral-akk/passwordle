@@ -1,11 +1,10 @@
 import {io, Socket} from 'socket.io-client';
 import {ServerToClientEvents, ClientToServerEvents} from '../NetworkTypes';
 
-export function GetSocket(): Socket<
-  ServerToClientEvents,
-  ClientToServerEvents
-> {
-  let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
+export type ClientSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
+
+export function GetSocket(): ClientSocket {
+  let socket: ClientSocket;
   if (window.location.href.includes('localhost')) {
     socket = io('http://localhost:4000/', {transports: ['websocket']});
   } else {

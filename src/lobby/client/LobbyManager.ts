@@ -5,13 +5,20 @@ import {
   LobbyClientSocket,
 } from '../server/LobbyNetworkTypes';
 import {EndGameState} from '../../game/client/view/subview/EndGameView';
+import {ExitState, PlayerState} from '../../public/Player';
 
-export class NewLobbyManager implements LobbyServerRequests {
+export class NewLobbyManager implements LobbyServerRequests, PlayerState {
   private view: LobbyView = new LobbyView();
   private model: NewLobby = new NewLobby(this.view, this);
 
   constructor(private socket: LobbyClientSocket) {
     RegisterSocket(socket, this.model);
+  }
+  Enter(prevState: ExitState): void {
+    throw new Error('Method not implemented.');
+  }
+  Exit(): ExitState {
+    throw new Error('Method not implemented.');
   }
 
   JoinLobby(lobbyId: string) {
