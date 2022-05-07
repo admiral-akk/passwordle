@@ -10,6 +10,7 @@ export declare enum LetterColor {
 export declare class LetterView extends Subview {
     private color;
     constructor(base: HTMLElement);
+    Error(): void;
     SetChar(char: string): void;
     ClearChar(): void;
     Color(): LetterColor;

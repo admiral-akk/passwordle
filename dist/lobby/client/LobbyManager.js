@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NewLobbyManager = void 0;
 const LobbyView_1 = require("./view/LobbyView");
 const Lobby_1 = require("../server/Lobby");
+const EndGameView_1 = require("../../game/client/view/subview/EndGameView");
 class NewLobbyManager {
     constructor(socket) {
         this.socket = socket;
@@ -17,7 +18,7 @@ class NewLobbyManager {
         this.socket.emit('FindMatch');
     }
     ShowMenu() {
-        this.model.GameEnded();
+        this.model.GameEnded(EndGameView_1.EndGameState.Won);
     }
 }
 exports.NewLobbyManager = NewLobbyManager;

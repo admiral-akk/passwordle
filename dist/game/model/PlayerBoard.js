@@ -71,15 +71,19 @@ class PlayerBoard {
         return new Updates_1.Deleted();
     }
     SubmitCommand() {
+        var _a, _b, _c;
         if (this.state !== State.CanSubmit) {
+            (_a = this.view) === null || _a === void 0 ? void 0 : _a.LockedGuessError(new Updates_1.LockedGuessError(Updates_1.ErrorType.None, this.guesses.length, this.currentGuess.length));
             return null;
         }
         console.log('');
         if (this.currentGuess.length !== 5) {
+            (_b = this.view) === null || _b === void 0 ? void 0 : _b.LockedGuessError(new Updates_1.LockedGuessError(Updates_1.ErrorType.TooShort, this.guesses.length, this.currentGuess.length));
             return null;
         }
         const guess = (0, Word_1.ToWord)(this.currentGuess);
         if (!(0, Words_1.IsValidWord)(guess)) {
+            (_c = this.view) === null || _c === void 0 ? void 0 : _c.LockedGuessError(new Updates_1.LockedGuessError(Updates_1.ErrorType.NotValidWord, this.guesses.length, this.currentGuess.length));
             return null;
         }
         return new Updates_1.LockedGuess(guess);

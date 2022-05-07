@@ -1,3 +1,4 @@
+import {EndGameState} from '../../game/client/view/subview/EndGameView';
 import {LobbyView} from '../client/view/LobbyView';
 import {LobbyClientRequests, LobbyServerRequests} from './LobbyNetworkTypes';
 
@@ -22,12 +23,12 @@ export class NewLobby implements LobbyClientRequests {
       server.JoinLobby(FindLobbyIdInURL()!);
     }
   }
-  GameEnded() {
+  GameEnded(ending: EndGameState) {
     this.state = State.EndGame;
-    this.view.GameEnded();
+    this.view.GameEnded(ending);
     setTimeout(() => {
       this.EnterMenu('');
-    }, 1000);
+    }, 3000);
   }
 
   MatchFound(lobbyId: string) {

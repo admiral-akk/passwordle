@@ -1,3 +1,4 @@
+import { EndGameState } from '../../game/client/view/subview/EndGameView';
 import { LobbyView } from '../client/view/LobbyView';
 import { LobbyClientRequests, LobbyServerRequests } from './LobbyNetworkTypes';
 export declare class NewLobby implements LobbyClientRequests {
@@ -5,7 +6,7 @@ export declare class NewLobby implements LobbyClientRequests {
     private server;
     private state;
     constructor(view: LobbyView, server: LobbyServerRequests);
-    GameEnded(): void;
+    GameEnded(ending: EndGameState): void;
     MatchFound(lobbyId: string): void;
     EnterGame(): void;
     EnterMenu(lobbyId: string): void;

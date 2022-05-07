@@ -10,12 +10,12 @@ class GameServerManager {
     EnterGame(players) {
         const playerIds = players.map(player => player.data.playerId);
         const gameId = playerIds[0];
-        const game = new ServerGame_1.ServerGame(players, () => this.GameCompleted(gameId, playerIds));
+        const game = new ServerGame_1.ServerGame(players, (ending) => this.GameCompleted(gameId, playerIds, ending));
         this.activeGames[gameId] = game;
     }
-    GameCompleted(gameId, players) {
+    GameCompleted(gameId, players, ending) {
         delete this.activeGames[gameId];
-        this.ExitGame(players);
+        this.ExitGame(players, ending);
     }
 }
 exports.GameServerManager = GameServerManager;

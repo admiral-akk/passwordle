@@ -2,6 +2,7 @@ import { CharUpdate } from './CharUpdate';
 import { HintUpdate } from './HintUpdate';
 import { OpponentUpdate } from './OpponentUpdate';
 import { EndGameState } from './subview/EndGameView';
+import { LockedGuessError } from '../../network/updates/Updates';
 export declare class GameView {
     private yourBoard;
     private yourPassword;
@@ -17,4 +18,7 @@ export declare class GameView {
     GameOver(state: EndGameState): void;
     Reset(): void;
     OpponentUpdate(update: OpponentUpdate): void;
+    LockedGuessError(error: LockedGuessError): void;
+    WordTooShort(): void;
+    WordNotValid(): void;
 }

@@ -23,12 +23,12 @@ class NewLobby {
             server.JoinLobby(FindLobbyIdInURL());
         }
     }
-    GameEnded() {
+    GameEnded(ending) {
         this.state = State.EndGame;
-        this.view.GameEnded();
+        this.view.GameEnded(ending);
         setTimeout(() => {
             this.EnterMenu('');
-        }, 1000);
+        }, 3000);
     }
     MatchFound(lobbyId) {
         this.state = State.FoundMatch;

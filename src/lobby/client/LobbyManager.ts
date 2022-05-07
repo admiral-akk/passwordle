@@ -4,6 +4,7 @@ import {
   LobbyServerRequests,
   LobbyClientSocket,
 } from '../server/LobbyNetworkTypes';
+import {EndGameState} from '../../game/client/view/subview/EndGameView';
 
 export class NewLobbyManager implements LobbyServerRequests {
   private view: LobbyView = new LobbyView();
@@ -22,7 +23,7 @@ export class NewLobbyManager implements LobbyServerRequests {
   }
 
   ShowMenu() {
-    this.model.GameEnded();
+    this.model.GameEnded(EndGameState.Won);
   }
 }
 

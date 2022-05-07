@@ -16,6 +16,10 @@ export class LetterView extends Subview {
     super(base, 'letter');
   }
 
+  Error() {
+    AnimateCSS(this.root, AnimationType.ShakeY);
+  }
+
   SetChar(char: string) {
     this.root.innerText = char;
   }

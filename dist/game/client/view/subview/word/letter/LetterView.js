@@ -17,6 +17,9 @@ class LetterView extends Subview_1.Subview {
         super(base, 'letter');
         this.color = LetterColor.White;
     }
+    Error() {
+        (0, Animate_1.AnimateCSS)(this.root, Animate_1.AnimationType.ShakeY);
+    }
     SetChar(char) {
         this.root.innerText = char;
     }

@@ -9,6 +9,7 @@ import {
 import {
   AddedChar,
   LockedGuess,
+  LockedGuessError,
   UpdatedAnswerKnowledge,
 } from '../network/updates/Updates';
 
@@ -76,8 +77,8 @@ export class ClientGame implements GameServerToClientEvents {
   Submit() {
     const res = this.board.SubmitCommand();
     // success: tell the server/view about it
-    if (res) {
-      const command = res as LockedGuess;
+    const command = res as LockedGuess;
+    if (command) {
       this.board.LockedGuess(command);
       this.socket.emit('LockedGuess', command);
     }

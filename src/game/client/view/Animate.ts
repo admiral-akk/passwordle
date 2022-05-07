@@ -4,6 +4,7 @@ export enum AnimationType {
   FlipInX = 'flipInX',
   HeartBeat = 'heartBeat',
   ShakeX = 'shakeX',
+  ShakeY = 'shakeY',
 }
 
 const ANIMATION_DURATION_STR = '--animate-duration';

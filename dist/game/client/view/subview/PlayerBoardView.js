@@ -22,6 +22,9 @@ class YourBoardView extends Subview_1.Subview {
     CharUpdate(update) {
         this.words[update.wordIndex].AddChar(update.char, update.charIndex);
     }
+    SubmitError(error) {
+        this.words[error.wordIndex].LockedGuessError(error);
+    }
 }
 exports.YourBoardView = YourBoardView;
 class PlayerWordView extends WordView_1.BaseWordView {

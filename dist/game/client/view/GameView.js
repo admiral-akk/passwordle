@@ -52,6 +52,11 @@ class GameView {
     OpponentUpdate(update) {
         this.opponentBoard.OpponentUpdate(update);
     }
+    LockedGuessError(error) {
+        this.yourBoard.SubmitError(error);
+    }
+    WordTooShort() { }
+    WordNotValid() { }
 }
 exports.GameView = GameView;
 function AddDiv(parent, className) {

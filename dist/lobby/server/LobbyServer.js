@@ -22,10 +22,12 @@ class NewLobbyServer {
             delete this.lobbies[playerId];
         }
     }
-    EndGame(sockets) {
+    EndGame(sockets, ending) {
         const players = sockets.map(socket => socket.data.playerId);
         const lobbies = players.map(player => this.lobbies[player]);
-        lobbies.forEach(lobby => lobby.GameEnded());
+        for (let i = 0; i < lobbies.length; i++) {
+            lobbies[i].GameEnded(ending[players[i]]);
+        }
     }
     FindMatch(playerId) {
         const lobby = this.lobbies[playerId];
@@ -67,8 +69,8 @@ class LobbySocketManager {
     GetPlayer() {
         return this.socket.data.playerId;
     }
-    GameEnded() {
-        this.socket.emit('GameEnded');
+    GameEnded(ending) {
+        this.socket.emit('GameEnded', ending);
     }
     EnterMenu(lobbyId) {
         this.socket.emit('EnterMenu', lobbyId);

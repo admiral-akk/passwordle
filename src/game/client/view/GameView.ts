@@ -10,6 +10,7 @@ import {YourBoardView} from './subview/PlayerBoardView';
 import {ExplanationView} from './subview/Subview';
 import {OpponentPasswordView} from './subview/OpponentPasswordView';
 import {TimerView} from './subview/TimerView';
+import {LockedGuessError} from '../../network/updates/Updates';
 
 export class GameView {
   private yourBoard: YourBoardView;
@@ -82,6 +83,14 @@ export class GameView {
   OpponentUpdate(update: OpponentUpdate) {
     this.opponentBoard.OpponentUpdate(update);
   }
+
+  LockedGuessError(error: LockedGuessError) {
+    this.yourBoard.SubmitError(error);
+  }
+
+  WordTooShort() {}
+
+  WordNotValid() {}
 }
 
 function AddDiv(parent: HTMLElement, className: string): HTMLDivElement {

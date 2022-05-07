@@ -1,3 +1,4 @@
+import {EndGameState} from '../../game/client/view/subview/EndGameView';
 import {PlayerId} from '../../PlayerId';
 import {
   LobbyClientRequests,
@@ -31,10 +32,15 @@ export class NewLobbyServer {
     }
   }
 
-  EndGame(sockets: LobbyServerSocket[]) {
+  EndGame(
+    sockets: LobbyServerSocket[],
+    ending: Record<PlayerId, EndGameState>
+  ) {
     const players = sockets.map(socket => socket.data.playerId!);
     const lobbies = players.map(player => this.lobbies[player]);
-    lobbies.forEach(lobby => lobby.GameEnded());
+    for (let i = 0; i < lobbies.length; i++) {
+      lobbies[i].GameEnded(ending[players[i]]);
+    }
   }
 
   private FindMatch(playerId: PlayerId) {
@@ -81,8 +87,8 @@ class LobbySocketManager implements LobbyServerRequests, LobbyClientRequests {
     this.RegisterSocket(socket);
     socket.emit('EnterMenu', socket.data.playerId!);
   }
-  GameEnded() {
-    this.socket.emit('GameEnded');
+  GameEnded(ending: EndGameState) {
+    this.socket.emit('GameEnded', ending);
   }
   EnterMenu(lobbyId: string) {
     this.socket.emit('EnterMenu', lobbyId);

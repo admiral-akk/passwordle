@@ -1,3 +1,4 @@
+import {LockedGuessError} from '../../../network/updates/Updates';
 import {LetterState} from '../../structs/LetterState';
 import {CharUpdate} from '../CharUpdate';
 import {BoardView} from './BoardView';
@@ -29,6 +30,10 @@ export class YourBoardView extends Subview implements BoardView {
 
   CharUpdate(update: CharUpdate) {
     this.words[update.wordIndex].AddChar(update.char, update.charIndex);
+  }
+
+  SubmitError(error: LockedGuessError) {
+    this.words[error.wordIndex].LockedGuessError(error);
   }
 }
 

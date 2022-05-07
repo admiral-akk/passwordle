@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseWordView = void 0;
 const LetterView_1 = require("./letter/LetterView");
 const Subview_1 = require("../Subview");
+const Updates_1 = require("../../../../network/updates/Updates");
 const WORD_LENGTH = 5;
 class BaseWordView extends Subview_1.Subview {
     constructor(root) {
@@ -14,6 +15,15 @@ class BaseWordView extends Subview_1.Subview {
     }
     Reset() {
         this.letters.forEach(letter => letter.Reset());
+    }
+    LockedGuessError(error) {
+        switch (error.type) {
+            case Updates_1.ErrorType.NotValidWord:
+                this.letters.forEach(letter => letter.Error());
+                break;
+            case Updates_1.ErrorType.TooShort:
+                break;
+        }
     }
 }
 exports.BaseWordView = BaseWordView;

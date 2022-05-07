@@ -5,11 +5,16 @@ import {Word} from '../structs/Word';
 import {GetRandomWord} from '../Words';
 import {KnowledgeExchangeServer} from './KnowledgeUpdateServer';
 import {LockedGuess, UpdatedAnswerKnowledge} from './updates/Updates';
+import {EndGameState} from '../client/view/subview/EndGameView';
+
 export class ServerGame {
   playerClient: Record<PlayerId, ClientGameMirror> = {};
   exchangeServer: KnowledgeExchangeServer;
 
-  constructor(sockets: GameServerSocket[], private GameEnded: () => void) {
+  constructor(
+    sockets: GameServerSocket[],
+    private GameEnded: (ending: Record<PlayerId, EndGameState>) => void
+  ) {
     const players = sockets.map(s => s.data.playerId!);
     const secrets = GenerateSecrets(sockets.map(s => s.data.playerId!));
     for (let i = 0; i < sockets.length; i++) {
@@ -23,7 +28,7 @@ export class ServerGame {
       (playerId: PlayerId, update: UpdatedAnswerKnowledge) => {
         this.playerClient[playerId].UpdatedAnswerKnowledge(update);
       },
-      () => this.GameEnded()
+      (ending: Record<PlayerId, EndGameState>) => this.GameEnded(ending)
     );
     for (let i = 0; i < sockets.length; i++) {
       const player = sockets[i].data.playerId!;
@@ -39,7 +44,7 @@ export class ServerGame {
       sockets[i].on('disconnect', () => {
         console.log(`socket disconnected: ${player}`);
         sockets[(i + 1) % 2].emit('OpponentDisconnected');
-        this.GameEnded();
+        this.GameEnded({});
       });
     }
   }

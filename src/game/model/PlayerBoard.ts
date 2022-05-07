@@ -15,8 +15,10 @@ import {
 import {
   AddedChar,
   Deleted,
+  ErrorType,
   Gameover,
   LockedGuess,
+  LockedGuessError,
   Loss,
   Tie,
   UpdatedAnswerKnowledge,
@@ -103,14 +105,35 @@ export class PlayerBoard
 
   SubmitCommand(): LockedGuess | null {
     if (this.state !== State.CanSubmit) {
+      this.view?.LockedGuessError(
+        new LockedGuessError(
+          ErrorType.None,
+          this.guesses.length,
+          this.currentGuess.length
+        )
+      );
       return null;
     }
     console.log('');
     if (this.currentGuess.length !== 5) {
+      this.view?.LockedGuessError(
+        new LockedGuessError(
+          ErrorType.TooShort,
+          this.guesses.length,
+          this.currentGuess.length
+        )
+      );
       return null;
     }
     const guess = ToWord(this.currentGuess);
     if (!IsValidWord(guess)) {
+      this.view?.LockedGuessError(
+        new LockedGuessError(
+          ErrorType.NotValidWord,
+          this.guesses.length,
+          this.currentGuess.length
+        )
+      );
       return null;
     }
     return new LockedGuess(guess);

@@ -1,5 +1,6 @@
 import {LetterView} from './letter/LetterView';
 import {Subview} from '../Subview';
+import {ErrorType, LockedGuessError} from '../../../../network/updates/Updates';
 
 const WORD_LENGTH = 5;
 
@@ -15,5 +16,15 @@ export abstract class BaseWordView extends Subview {
 
   Reset(): void {
     this.letters.forEach(letter => letter.Reset());
+  }
+
+  LockedGuessError(error: LockedGuessError) {
+    switch (error.type) {
+      case ErrorType.NotValidWord:
+        this.letters.forEach(letter => letter.Error());
+        break;
+      case ErrorType.TooShort:
+        break;
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { LockedGuessError } from '../../../network/updates/Updates';
 import { LetterState } from '../../structs/LetterState';
 import { CharUpdate } from '../CharUpdate';
 import { BoardView } from './BoardView';
@@ -9,6 +10,7 @@ export declare class YourBoardView extends Subview implements BoardView {
     constructor(base: HTMLDivElement, explanationText?: string);
     SetCharKnowledge(wordIndex: number, charIndex: number, char: string, knowledge: LetterState): void;
     CharUpdate(update: CharUpdate): void;
+    SubmitError(error: LockedGuessError): void;
 }
 declare class PlayerWordView extends BaseWordView {
     AddChar(char: string, index: number): void;

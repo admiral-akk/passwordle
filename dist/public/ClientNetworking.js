@@ -3,7 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetSocket = void 0;
 const socket_io_client_1 = require("socket.io-client");
 function GetSocket() {
-    const socket = (0, socket_io_client_1.io)('http://localhost:4000/', { transports: ['websocket'] });
+    let socket;
+    if (window.location.href.includes('localhost')) {
+        socket = (0, socket_io_client_1.io)('http://localhost:4000/', { transports: ['websocket'] });
+    }
+    else {
+        socket = (0, socket_io_client_1.io)();
+    }
     socket.on('connect', () => {
         console.log(`connected: ${socket.id}`);
     });

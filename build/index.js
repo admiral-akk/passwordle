@@ -30,9 +30,9 @@ function EnterGame(players) {
     const gameSockets = socketManager.GetSockets(players);
     gameServer.EnterGame(gameSockets);
 }
-function ExitGame(players) {
+function ExitGame(players, ending) {
     const lobbySockets = socketManager.GetSockets(players);
-    lobbyServer.EndGame(lobbySockets);
+    lobbyServer.EndGame(lobbySockets, ending);
 }
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Return the articles to the rendering engine

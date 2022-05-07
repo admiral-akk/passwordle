@@ -1,3 +1,4 @@
+import {EndGameState} from '../../../game/client/view/subview/EndGameView';
 import {FindingMatchModal} from './modal/FindingMatchModal';
 import {GameEndedModal} from './modal/GameEndedModal';
 import {LoadingModal} from './modal/LoadingModal';
@@ -38,10 +39,10 @@ export class LobbyView {
     this.SetModal(new LoadingModal(this.modal));
   }
 
-  GameEnded() {
+  GameEnded(ending: EndGameState) {
     this.background.style.display = 'block';
     console.log('Game ended modal triggered!');
-    this.SetModal(new GameEndedModal(this.modal));
+    this.SetModal(new GameEndedModal(this.modal, ending));
   }
 
   Menu(hostLobby: () => void, matchmake: () => void): void {

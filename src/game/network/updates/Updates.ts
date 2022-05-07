@@ -21,6 +21,20 @@ export class LockedGuess {
   constructor(public guess: Word) {}
 }
 
+export enum ErrorType {
+  None,
+  TooShort,
+  NotValidWord,
+}
+
+export class LockedGuessError {
+  constructor(
+    public type: ErrorType,
+    public wordIndex: number,
+    public wordLength: number
+  ) {}
+}
+
 export function Gameover(update: UpdatedAnswerKnowledge): boolean {
   return Complete(update.playerProgress) || Complete(update.opponentProgress);
 }

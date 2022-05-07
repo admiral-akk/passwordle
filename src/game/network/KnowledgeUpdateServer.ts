@@ -3,6 +3,7 @@ import {GetKnowledge} from '../logic/WordleLogic';
 import {Word} from '../structs/Word';
 import {PlayerId} from '../../PlayerId';
 import {UpdatedAnswerKnowledge} from './updates/Updates';
+import {EndGameState} from '../client/view/subview/EndGameView';
 
 export class KnowledgeExchangeServer {
   private progress: Record<PlayerId, TargetProgress> = {};
@@ -16,7 +17,7 @@ export class KnowledgeExchangeServer {
       playerId: PlayerId,
       update: UpdatedAnswerKnowledge
     ) => void,
-    private GameEnded: () => void
+    private GameEnded: (ending: Record<PlayerId, EndGameState>) => void
   ) {
     for (let i = 0; i < players.length; i++) {
       const player = players[i];
@@ -32,10 +33,20 @@ export class KnowledgeExchangeServer {
     this.CheckEndGame();
   }
 
+  private GenerateEndgame(): Record<PlayerId, EndGameState> {
+    const endGame: Record<PlayerId, EndGameState> = {};
+    for (let i = 0; i < this.players.length; i++) {
+      const player = this.players[i];
+      const finished = Complete(this.progress[player]);
+    }
+    return endGame;
+  }
+
   private CheckEndGame() {
     this.players.forEach(player => {
       if (Complete(this.progress[player])) {
-        this.GameEnded();
+        const endgame = this.GenerateEndgame();
+        this.GameEnded(endgame);
         return;
       }
     });

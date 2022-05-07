@@ -54,8 +54,8 @@ class ClientGame {
     Submit() {
         const res = this.board.SubmitCommand();
         // success: tell the server/view about it
-        if (res) {
-            const command = res;
+        const command = res;
+        if (command) {
             this.board.LockedGuess(command);
             this.socket.emit('LockedGuess', command);
         }

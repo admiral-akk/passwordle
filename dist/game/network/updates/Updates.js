@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Loss = exports.Win = exports.Tie = exports.Gameover = exports.LockedGuess = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
+exports.Loss = exports.Win = exports.Tie = exports.Gameover = exports.LockedGuessError = exports.ErrorType = exports.LockedGuess = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
 const TargetProgress_1 = require("../../client/structs/TargetProgress");
 class AddedChar {
     constructor(char) {
@@ -26,6 +26,20 @@ class LockedGuess {
     }
 }
 exports.LockedGuess = LockedGuess;
+var ErrorType;
+(function (ErrorType) {
+    ErrorType[ErrorType["None"] = 0] = "None";
+    ErrorType[ErrorType["TooShort"] = 1] = "TooShort";
+    ErrorType[ErrorType["NotValidWord"] = 2] = "NotValidWord";
+})(ErrorType = exports.ErrorType || (exports.ErrorType = {}));
+class LockedGuessError {
+    constructor(type, wordIndex, wordLength) {
+        this.type = type;
+        this.wordIndex = wordIndex;
+        this.wordLength = wordLength;
+    }
+}
+exports.LockedGuessError = LockedGuessError;
 function Gameover(update) {
     return (0, TargetProgress_1.Complete)(update.playerProgress) || (0, TargetProgress_1.Complete)(update.opponentProgress);
 }

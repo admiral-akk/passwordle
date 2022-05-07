@@ -28,10 +28,10 @@ class LobbyView {
     Loading() {
         this.SetModal(new LoadingModal_1.LoadingModal(this.modal));
     }
-    GameEnded() {
+    GameEnded(ending) {
         this.background.style.display = 'block';
         console.log('Game ended modal triggered!');
-        this.SetModal(new GameEndedModal_1.GameEndedModal(this.modal));
+        this.SetModal(new GameEndedModal_1.GameEndedModal(this.modal, ending));
     }
     Menu(hostLobby, matchmake) {
         this.SetModal(new MenuModal_1.MenuModal(this.modal, hostLobby, matchmake));
