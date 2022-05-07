@@ -9,7 +9,6 @@ import {
 import {
   AddedChar,
   LockedGuess,
-  LockedGuessError,
   UpdatedAnswerKnowledge,
 } from '../network/updates/Updates';
 
