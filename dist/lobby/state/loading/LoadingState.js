@@ -7,10 +7,9 @@ const MatchState_1 = require("../match/MatchState");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");
 class LoadingState extends PlayerState_1.LobbyState {
-    constructor(socket, setState) {
+    constructor() {
         super();
         this.modal = new LoadingModal();
-        this.Initialize(socket, setState);
     }
     Enter() {
         const lobbyId = (0, LobbyId_1.FindLobbyIdInURL)();

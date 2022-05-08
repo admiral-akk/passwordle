@@ -32,12 +32,8 @@ export class LoadingState extends LobbyState {
     socket.removeAllListeners('MatchFound');
   }
 
-  constructor(
-    socket: LobbyClientSocket,
-    setState: (nextState: LobbyState) => void
-  ) {
+  constructor() {
     super();
-    this.Initialize(socket, setState);
   }
 
   EnterMenu(lobbyId: LobbyId) {

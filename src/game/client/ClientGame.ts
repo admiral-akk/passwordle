@@ -51,7 +51,7 @@ export class ClientGame
 
   OpponentDisconnected() {
     this.board.OpponentDisconnected();
-    this.SwitchState(new LobbyManager());
+    this.SwitchState(new LobbyManager(false));
   }
 
   SetSecret(secret: Word) {
@@ -72,7 +72,7 @@ export class ClientGame
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
     this.board.UpdatedAnswerKnowledge(update);
     if (this.board.IsGameOver()) {
-      this.SwitchState(new LobbyManager());
+      this.SwitchState(new LobbyManager(true));
     }
   }
 

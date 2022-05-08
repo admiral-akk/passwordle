@@ -7,7 +7,7 @@ export declare class LoadingState extends LobbyState {
     Exit(): void;
     protected Register(socket: LobbyClientSocket): void;
     protected Deregister(socket: LobbyClientSocket): void;
-    constructor(socket: LobbyClientSocket, setState: (nextState: LobbyState) => void);
+    constructor();
     EnterMenu(lobbyId: LobbyId): void;
     MatchFound(lobbyId: LobbyId): void;
     RequestLobbyId(): void;

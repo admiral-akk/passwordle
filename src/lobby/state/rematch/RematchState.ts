@@ -1,5 +1,5 @@
 import {LobbyState} from '../../../public/PlayerState';
-import {GenerateLobbyLink, LobbyId} from '../../LobbyId';
+import {LobbyId} from '../../LobbyId';
 import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
 import {MatchState} from '../match/MatchState';
 import {MenuState} from '../menu/MenuState';
@@ -17,25 +17,20 @@ export class RematchState extends LobbyState {
   }
 
   protected Register(socket: LobbyClientSocket): void {
-    socket.on('StartRematch', (lobbyId: LobbyId) => {
-      this.StartRematch(lobbyId);
+    socket.on('MatchFound', (lobbyId: LobbyId) => {
+      this.MatchFound(lobbyId);
     });
     socket.on('EnterMenu', (lobbyId: LobbyId) => {
       this.EnterMenu(lobbyId);
     });
   }
   protected Deregister(socket: LobbyClientSocket): void {
-    socket.removeAllListeners('StartRematch');
+    socket.removeAllListeners('MatchFound');
     socket.removeAllListeners('EnterMenu');
   }
 
-  constructor(private lobbyId: LobbyId) {
+  constructor() {
     super();
-  }
-
-  CopyLobbyLinkToClipboard() {
-    const url = GenerateLobbyLink(this.lobbyId);
-    navigator.clipboard.writeText(url);
   }
 
   private RequestRematch() {
@@ -45,7 +40,7 @@ export class RematchState extends LobbyState {
     this.socket?.emit('RequestLobbyId');
   }
 
-  StartRematch(lobbyId: LobbyId) {
+  MatchFound(lobbyId: LobbyId) {
     this.SwitchState(new MatchState(lobbyId));
   }
 

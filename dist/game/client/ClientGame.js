@@ -34,7 +34,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     }
     OpponentDisconnected() {
         this.board.OpponentDisconnected();
-        this.SwitchState(new LobbyManager_1.LobbyManager());
+        this.SwitchState(new LobbyManager_1.LobbyManager(false));
     }
     SetSecret(secret) {
         this.board.SetSecret(secret);
@@ -51,7 +51,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     UpdatedAnswerKnowledge(update) {
         this.board.UpdatedAnswerKnowledge(update);
         if (this.board.IsGameOver()) {
-            this.SwitchState(new LobbyManager_1.LobbyManager());
+            this.SwitchState(new LobbyManager_1.LobbyManager(true));
         }
     }
     AddChar(char) {

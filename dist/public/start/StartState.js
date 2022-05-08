@@ -18,7 +18,7 @@ class StartState extends PlayerState_1.PlayerState {
         socket.emit('ClientReady');
     }
     ServerReady() {
-        this.SwitchState(new LobbyManager_1.LobbyManager());
+        this.SwitchState(new LobbyManager_1.LobbyManager(false));
     }
 }
 exports.StartState = StartState;

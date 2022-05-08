@@ -24,6 +24,6 @@ export class StartState extends PlayerState implements StartClientRequests {
   }
 
   ServerReady() {
-    this.SwitchState(new LobbyManager());
+    this.SwitchState(new LobbyManager(false));
   }
 }

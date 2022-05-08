@@ -2,14 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RematchState = void 0;
 const PlayerState_1 = require("../../../public/PlayerState");
-const LobbyId_1 = require("../../LobbyId");
 const MatchState_1 = require("../match/MatchState");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");
 class RematchState extends PlayerState_1.LobbyState {
-    constructor(lobbyId) {
+    constructor() {
         super();
-        this.lobbyId = lobbyId;
         this.modal = new RematchModal(() => this.RequestRematch(), () => this.ReturnToMenu());
     }
     Enter() { }
@@ -17,20 +15,16 @@ class RematchState extends PlayerState_1.LobbyState {
         this.modal.Exit();
     }
     Register(socket) {
-        socket.on('StartRematch', (lobbyId) => {
-            this.StartRematch(lobbyId);
+        socket.on('MatchFound', (lobbyId) => {
+            this.MatchFound(lobbyId);
         });
         socket.on('EnterMenu', (lobbyId) => {
             this.EnterMenu(lobbyId);
         });
     }
     Deregister(socket) {
-        socket.removeAllListeners('StartRematch');
+        socket.removeAllListeners('MatchFound');
         socket.removeAllListeners('EnterMenu');
-    }
-    CopyLobbyLinkToClipboard() {
-        const url = (0, LobbyId_1.GenerateLobbyLink)(this.lobbyId);
-        navigator.clipboard.writeText(url);
     }
     RequestRematch() {
         var _a;
@@ -40,7 +34,7 @@ class RematchState extends PlayerState_1.LobbyState {
         var _a;
         (_a = this.socket) === null || _a === void 0 ? void 0 : _a.emit('RequestLobbyId');
     }
-    StartRematch(lobbyId) {
+    MatchFound(lobbyId) {
         this.SwitchState(new MatchState_1.MatchState(lobbyId));
     }
     EnterMenu(lobbyId) {

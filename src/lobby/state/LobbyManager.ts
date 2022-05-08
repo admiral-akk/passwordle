@@ -2,6 +2,7 @@ import {ClientSocket} from '../../public/ClientNetworking';
 import {LobbyState, PlayerState} from '../../public/PlayerState';
 import {ClientGame} from '../../game/client/ClientGame';
 import {LoadingState} from './loading/LoadingState';
+import {RematchState} from './rematch/RematchState';
 
 export class LobbyManager extends PlayerState {
   public Exit(): void {
@@ -18,7 +19,7 @@ export class LobbyManager extends PlayerState {
     socket.removeAllListeners('GameReady');
   }
 
-  constructor() {
+  constructor(private isRematch: boolean) {
     super();
   }
 
@@ -27,7 +28,12 @@ export class LobbyManager extends PlayerState {
   }
 
   protected Enter(): void {
-    this.state = new LoadingState(this.socket!, (nextState: LobbyState) =>
+    if (this.isRematch) {
+      this.state = new RematchState();
+    } else {
+      this.state = new LoadingState();
+    }
+    this.state.Initialize(this.socket!, (nextState: LobbyState) =>
       this.SetState(nextState)
     );
   }

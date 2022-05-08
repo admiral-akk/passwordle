@@ -2,17 +2,17 @@ import { PlayerId } from '../../PlayerId';
 import { LobbyServerSocket } from './LobbyNetworkTypes';
 export declare class LobbyServer {
     private EnterGame;
-    private privateLobbies;
+    private lobbies;
     private publicLobbies;
     private players;
-    private rematchRequests;
     constructor(EnterGame: (players: PlayerId[]) => void);
+    private RequestRematch;
     PlayerJoins(socket: LobbyServerSocket): void;
     PlayerDisconnected(playerId: PlayerId): void;
     EndGame(sockets: LobbyServerSocket[]): void;
     private FindMatch;
     private AddToLobby;
+    private StartGame;
     private RequestLobbyId;
-    private RequestRematch;
     private JoinLobby;
 }

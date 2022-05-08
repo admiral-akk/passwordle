@@ -9,7 +9,6 @@ export interface LobbyClientRequests {
     MatchFound: (lobbyId: LobbyId) => void;
     GameReady: () => void;
     FindingMatch: () => void;
-    StartRematch: (lobbyId: LobbyId) => void;
 }
 export interface LobbyServerRequests {
     RequestLobbyId: () => void;
