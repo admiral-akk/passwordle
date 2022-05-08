@@ -5,6 +5,7 @@ const LobbyView_1 = require("./view/LobbyView");
 const Lobby_1 = require("../server/Lobby");
 const EndGameView_1 = require("../../game/client/view/subview/EndGameView");
 const PlayerState_1 = require("../../public/PlayerState");
+const ClientGame_1 = require("../../game/client/ClientGame");
 class NewLobbyManager extends PlayerState_1.PlayerState {
     constructor() {
         super();
@@ -13,16 +14,28 @@ class NewLobbyManager extends PlayerState_1.PlayerState {
     }
     Register(socket) {
         socket.on('EnterMenu', (lobbyId) => {
-            this.model.EnterMenu(lobbyId);
+            this.EnterMenu(lobbyId);
         });
         socket.on('MatchFound', (lobbyId) => {
-            this.model.MatchFound(lobbyId);
+            this.MatchFound(lobbyId);
+        });
+        socket.on('GameEnded', (ending) => {
+            this.GameEnded(ending);
         });
     }
     Deregister(socket) {
         socket.removeAllListeners('EnterMenu');
         socket.removeAllListeners('MatchFound');
+        socket.removeAllListeners('GameEnded');
     }
+    EnterMenu(lobbyId) {
+        this.model.EnterMenu(lobbyId);
+    }
+    MatchFound(lobbyId) {
+        this.model.MatchFound(lobbyId);
+        this.Exit(new ClientGame_1.ClientGame(() => { }));
+    }
+    GameEnded(ending) { }
     JoinLobby(lobbyId) {
         this.socket.emit('JoinLobby', lobbyId);
     }

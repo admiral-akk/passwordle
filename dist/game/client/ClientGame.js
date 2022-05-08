@@ -8,6 +8,7 @@ const PlayerState_1 = require("../../public/PlayerState");
 class ClientGame extends PlayerState_1.PlayerState {
     constructor(showMenu) {
         super();
+        console.log('build game');
         this.board = new PlayerBoard_1.PlayerBoard(new GameView_1.GameView(), showMenu);
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }
