@@ -5,7 +5,7 @@ const InputManager_1 = require("./input/InputManager");
 const PlayerBoard_1 = require("../model/PlayerBoard");
 const Updates_1 = require("../network/updates/Updates");
 const PlayerState_1 = require("../../public/PlayerState");
-const LobbyManager_1 = require("../../lobby/client/LobbyManager");
+const LobbyManager_1 = require("../../lobby/state/LobbyManager");
 class ClientGame extends PlayerState_1.PlayerState {
     constructor() {
         super();

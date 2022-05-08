@@ -1,7 +1,7 @@
 import {ClientSocket} from '../../public/ClientNetworking';
 import {LobbyState, PlayerState} from '../../public/PlayerState';
 import {ClientGame} from '../../game/client/ClientGame';
-import {LoadingState} from '../state/loading/LoadingState';
+import {LoadingState} from './loading/LoadingState';
 
 export class LobbyManager extends PlayerState {
   public Exit(): void {

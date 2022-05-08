@@ -25,7 +25,7 @@ function EnterGame(players: PlayerId[]) {
 
 function ExitGame(players: PlayerId[], ending: Record<PlayerId, EndGameState>) {
   const lobbySockets = socketManager.GetSockets(players);
-  lobbyServer.EndGame(lobbySockets, ending);
+  lobbyServer.EndGame(lobbySockets);
 }
 
 app.get('/', async (req, res) => {

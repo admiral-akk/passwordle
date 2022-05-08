@@ -2,77 +2,99 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyServer = void 0;
 const LobbyId_1 = require("../LobbyId");
+const Lobby_1 = require("./Lobby");
 class LobbyServer {
     constructor(EnterGame) {
         this.EnterGame = EnterGame;
-        this.lobbies = {};
+        this.privateLobbies = {};
         this.publicLobbies = [];
+        this.players = {};
+        this.rematchRequests = {};
     }
     PlayerJoins(socket) {
         const playerId = socket.data.playerId;
-        this.lobbies[playerId] = new LobbySocketManager(socket, () => this.FindMatch(playerId), (lobbyId) => this.JoinLobby(playerId, lobbyId), () => this.RequestLobbyId(playerId), (playerId) => this.PlayerDisconnected(playerId));
+        this.players[playerId] = new LobbySocketManager(socket, () => this.FindMatch(playerId), (lobbyId) => this.JoinLobby(playerId, lobbyId), () => this.RequestLobbyId(playerId), (playerId) => this.PlayerDisconnected(playerId), () => this.RequestRematch(playerId));
     }
     PlayerDisconnected(playerId) {
+        const lobbyId = this.players[playerId].lobbyId;
+        if (lobbyId in this.privateLobbies) {
+            const index = this.privateLobbies[lobbyId].players.indexOf(playerId);
+            if (index !== -1) {
+                this.privateLobbies[lobbyId].players.splice(index, 1);
+            }
+            if (this.privateLobbies[lobbyId].players.length === 0) {
+                delete this.privateLobbies[lobbyId];
+            }
+        }
         for (let i = 0; i < this.publicLobbies.length; i++) {
-            if (this.publicLobbies[i].GetPlayer() === playerId) {
+            if (this.publicLobbies[i].players.indexOf(playerId) > -1) {
                 this.publicLobbies.splice(i);
                 break;
             }
         }
-        if (playerId in this.lobbies) {
-            delete this.lobbies[playerId];
+        if (playerId in this.players) {
+            delete this.players[playerId];
         }
     }
-    EndGame(sockets, ending) {
+    EndGame(sockets) {
         const players = sockets.map(socket => socket.data.playerId);
-        const lobbies = players.map(player => this.lobbies[player]);
+        const lobbies = players.map(player => this.players[player]);
     }
     FindMatch(playerId) {
-        const lobby = this.lobbies[playerId];
         if (this.publicLobbies.length === 0) {
+            const lobby = new Lobby_1.Lobby([playerId], this.players[playerId].lobbyId);
             this.publicLobbies.push(lobby);
-            lobby.FindingMatch();
+            this.players[playerId].FindingMatch();
         }
         else {
-            const other = this.publicLobbies.pop();
-            this.ConnectLobbies(lobby, other);
+            const lobby = this.publicLobbies.pop();
+            this.AddToLobby(lobby, playerId);
         }
+    }
+    AddToLobby(lobby, playerId) {
+        lobby.players.push(playerId);
+        this.players[playerId].lobbyId = lobby.lobbyId;
+        lobby.players.forEach(playerId => {
+            this.players[playerId].MatchFound(lobby.lobbyId);
+            this.players[playerId].GameReady();
+        });
+        this.EnterGame(lobby.players);
     }
     RequestLobbyId(playerId) {
-        this.lobbies[playerId].EnterMenu();
+        const lobby = new Lobby_1.Lobby([playerId], this.players[playerId].DefaultLobbyId());
+        this.privateLobbies[lobby.lobbyId] = lobby;
+        this.players[playerId].EnterMenu();
     }
+    RequestRematch(playerId) { }
     JoinLobby(playerId, lobbyId) {
-        const playerLobby = this.lobbies[playerId];
-        if (lobbyId in this.lobbies) {
-            this.ConnectLobbies(playerLobby, this.lobbies[lobbyId]);
+        if (lobbyId in this.privateLobbies) {
+            const lobby = this.privateLobbies[lobbyId];
+            this.AddToLobby(lobby, playerId);
         }
         else {
-            playerLobby.EnterMenu();
+            this.RequestLobbyId(playerId);
         }
-    }
-    ConnectLobbies(lobby, other) {
-        lobby.lobbyId = other.lobbyId;
-        lobby.MatchFound(lobby.lobbyId);
-        lobby.GameReady();
-        other.MatchFound(other.lobbyId);
-        other.GameReady();
-        this.EnterGame([lobby.GetPlayer(), other.GetPlayer()]);
     }
 }
 exports.LobbyServer = LobbyServer;
 class LobbySocketManager {
-    constructor(socket, FindMatch, JoinLobby, RequestLobbyId, PlayerDisconnect) {
+    constructor(socket, FindMatch, JoinLobby, RequestLobbyId, PlayerDisconnect, RequestRematch) {
         this.socket = socket;
         this.FindMatch = FindMatch;
         this.JoinLobby = JoinLobby;
         this.RequestLobbyId = RequestLobbyId;
         this.PlayerDisconnect = PlayerDisconnect;
+        this.RequestRematch = RequestRematch;
         this.lobbyId = (0, LobbyId_1.GenerateLobbyId)(socket);
         this.RegisterSocket(socket);
+    }
+    DefaultLobbyId() {
+        return (0, LobbyId_1.GenerateLobbyId)(this.socket);
     }
     GetPlayer() {
         return this.socket.data.playerId;
     }
+    StartRematch(lobbyId) { }
     // LobbyClientRequests
     EnterMenu() {
         this.lobbyId = (0, LobbyId_1.GenerateLobbyId)(this.socket);

@@ -19,6 +19,7 @@ export interface LobbyClientRequests {
   MatchFound: (lobbyId: LobbyId) => void;
   GameReady: () => void;
   FindingMatch: () => void;
+  StartRematch: (lobbyId: LobbyId) => void;
 }
 
 // Things to ask the server/view to do
@@ -26,4 +27,5 @@ export interface LobbyServerRequests {
   RequestLobbyId: () => void;
   JoinLobby: (lobbyId: LobbyId) => void;
   FindMatch: () => void;
+  RequestRematch: () => void;
 }

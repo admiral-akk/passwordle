@@ -32,7 +32,7 @@ function EnterGame(players) {
 }
 function ExitGame(players, ending) {
     const lobbySockets = socketManager.GetSockets(players);
-    lobbyServer.EndGame(lobbySockets, ending);
+    lobbyServer.EndGame(lobbySockets);
 }
 app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Return the articles to the rendering engine

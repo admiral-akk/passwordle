@@ -1,4 +1,4 @@
-import {LobbyManager} from '../../lobby/client/LobbyManager';
+import {LobbyManager} from '../../lobby/state/LobbyManager';
 import {ClientSocket} from '../ClientNetworking';
 import {PlayerState} from '../PlayerState';
 import {StartClientRequests} from './StartEvents';

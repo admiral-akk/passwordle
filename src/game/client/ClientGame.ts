@@ -9,7 +9,7 @@ import {
 } from '../network/updates/Updates';
 import {ClientSocket} from '../../public/ClientNetworking';
 import {PlayerState} from '../../public/PlayerState';
-import {LobbyManager} from '../../lobby/client/LobbyManager';
+import {LobbyManager} from '../../lobby/state/LobbyManager';
 
 export class ClientGame
   extends PlayerState

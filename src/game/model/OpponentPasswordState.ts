@@ -1,6 +1,5 @@
 import {TargetProgress} from '../client/structs/TargetProgress';
 import {OpponentPasswordView} from './view/OpponentPasswordView';
-import {Word} from '../structs/Word';
 
 enum State {
   WaitingForPassword,
