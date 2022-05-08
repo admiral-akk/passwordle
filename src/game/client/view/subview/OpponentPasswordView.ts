@@ -9,6 +9,7 @@ export class OpponentPasswordView extends Subview implements PasswordView {
   constructor(base: HTMLElement) {
     super(base, 'target', "Opponent's Password");
     this.answer = new TargetWordView(this.root);
+    this.AddSubview(this.answer);
   }
 
   GetAnimations(

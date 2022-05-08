@@ -11,7 +11,9 @@ class OpponentBoardView extends Subview_1.Subview {
         super(base, 'board', explanationText);
         this.words = [];
         for (let i = 0; i < 6; i++) {
-            this.words.push(new OpponentWordView(this.root));
+            const word = new OpponentWordView(this.root);
+            this.words.push(word);
+            this.AddSubview(word);
         }
     }
     SetCharKnowledge(wordIndex, charIndex, char, knowledge) {

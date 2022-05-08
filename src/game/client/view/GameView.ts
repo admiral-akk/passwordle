@@ -7,10 +7,10 @@ import {EndGameState, EndGameView} from './subview/EndGameView';
 import {KeyboardView} from './subview/KeyboardView';
 import {OpponentBoardView} from './subview/OpponentBoardView';
 import {YourBoardView} from './subview/PlayerBoardView';
-import {ExplanationView} from './subview/Subview';
 import {OpponentPasswordView} from './subview/OpponentPasswordView';
 import {TimerView} from './subview/TimerView';
 import {LockedGuessError} from '../../network/updates/Updates';
+import {ExplanationView} from './subview/ExplanationView';
 
 export class GameView {
   private yourBoard: YourBoardView;
@@ -19,6 +19,7 @@ export class GameView {
   private opponentPassword: OpponentPasswordView;
   private keyboard: KeyboardView;
   private timer: TimerView;
+  private explanation: ExplanationView;
   private endGame: EndGameView;
 
   constructor() {
@@ -37,7 +38,7 @@ export class GameView {
 
     this.keyboard = new KeyboardView(root);
     const explain = AddDiv(root, 'explain');
-    new ExplanationView(
+    this.explanation = new ExplanationView(
       explain,
       `Each red letter in your password is a revealed letter.\n
       Each green letter in your opponent's password is a revealed letter.\n
@@ -78,6 +79,15 @@ export class GameView {
     this.yourPassword.Reset();
     this.opponentPassword.Reset();
     this.endGame.Reset();
+  }
+
+  Exit() {
+    this.yourBoard.Exit();
+    this.opponentBoard.Exit();
+    this.yourPassword.Exit();
+    this.opponentPassword.Exit();
+    this.endGame.Exit();
+    this.explanation.Exit();
   }
 
   OpponentUpdate(update: OpponentUpdate) {

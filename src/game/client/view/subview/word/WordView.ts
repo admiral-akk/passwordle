@@ -10,7 +10,9 @@ export abstract class BaseWordView extends Subview {
     super(root, 'word');
     this.letters = [];
     for (let i = 0; i < WORD_LENGTH; i++) {
-      this.letters.push(new LetterView(this.root));
+      const letter = new LetterView(this.root);
+      this.letters.push(letter);
+      this.AddSubview(letter);
     }
   }
 

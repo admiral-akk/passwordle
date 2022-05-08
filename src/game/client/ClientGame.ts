@@ -16,8 +16,11 @@ export class ClientGame
   extends PlayerState
   implements GameServerToClientEvents
 {
-  protected Exit(): void {}
+  protected Exit(): void {
+    this.board.Exit();
+  }
   protected Enter(): void {}
+
   protected Register(socket: ClientSocket): void {
     socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
     socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>

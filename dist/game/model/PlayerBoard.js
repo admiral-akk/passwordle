@@ -24,6 +24,10 @@ class PlayerBoard {
         this.opponentCharCount = 0;
         this.secret = null;
     }
+    Exit() {
+        var _a;
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();
+    }
     GuessCount() {
         if (this.state === State.WaitingForKnowledge) {
             return this.guesses.length - 1;

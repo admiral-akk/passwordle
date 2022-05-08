@@ -9,6 +9,7 @@ declare enum State {
 }
 export declare class PlayerBoard implements GameClientToServerEvents, GameServerToClientEvents {
     private view;
+    Exit(): void;
     state: State;
     guesses: Word[];
     currentGuess: string;

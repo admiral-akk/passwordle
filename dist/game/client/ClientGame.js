@@ -12,7 +12,9 @@ class ClientGame extends PlayerState_1.PlayerState {
         this.board = new PlayerBoard_1.PlayerBoard(new GameView_1.GameView());
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }
-    Exit() { }
+    Exit() {
+        this.board.Exit();
+    }
     Enter() { }
     Register(socket) {
         socket.on('OpponentAddedChar', () => this.OpponentAddedChar());

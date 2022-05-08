@@ -7,9 +7,9 @@ const EndGameView_1 = require("./subview/EndGameView");
 const KeyboardView_1 = require("./subview/KeyboardView");
 const OpponentBoardView_1 = require("./subview/OpponentBoardView");
 const PlayerBoardView_1 = require("./subview/PlayerBoardView");
-const Subview_1 = require("./subview/Subview");
 const OpponentPasswordView_1 = require("./subview/OpponentPasswordView");
 const TimerView_1 = require("./subview/TimerView");
+const ExplanationView_1 = require("./subview/ExplanationView");
 class GameView {
     constructor() {
         const root = document.getElementById('game-board');
@@ -23,7 +23,7 @@ class GameView {
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
         this.keyboard = new KeyboardView_1.KeyboardView(root);
         const explain = AddDiv(root, 'explain');
-        new Subview_1.ExplanationView(explain, `Each red letter in your password is a revealed letter.\n
+        this.explanation = new ExplanationView_1.ExplanationView(explain, `Each red letter in your password is a revealed letter.\n
       Each green letter in your opponent's password is a revealed letter.\n
       Each guess you and your opponent make will reveal letters in both passwords.\n
        Win by revealing your opponent's password before they reveal yours.`);
@@ -48,6 +48,14 @@ class GameView {
         this.yourPassword.Reset();
         this.opponentPassword.Reset();
         this.endGame.Reset();
+    }
+    Exit() {
+        this.yourBoard.Exit();
+        this.opponentBoard.Exit();
+        this.yourPassword.Exit();
+        this.opponentPassword.Exit();
+        this.endGame.Exit();
+        this.explanation.Exit();
     }
     OpponentUpdate(update) {
         this.opponentBoard.OpponentUpdate(update);

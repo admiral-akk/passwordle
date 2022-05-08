@@ -9,6 +9,7 @@ export class YourPasswordView extends Subview implements PasswordView {
   constructor(base: HTMLElement) {
     super(base, 'answer', 'Your Password');
     this.answer = new AnswerWordView(this.root);
+    this.AddSubview(this.answer);
   }
 
   SetSecret(secret: string) {

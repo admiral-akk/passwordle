@@ -10,6 +10,7 @@ export declare class GameView {
     private opponentPassword;
     private keyboard;
     private timer;
+    private explanation;
     private endGame;
     constructor();
     SetSecret(secret: string): void;
@@ -17,6 +18,7 @@ export declare class GameView {
     HintUpdate(update: HintUpdate, updateComplete: () => void): void;
     GameOver(state: EndGameState): void;
     Reset(): void;
+    Exit(): void;
     OpponentUpdate(update: OpponentUpdate): void;
     LockedGuessError(error: LockedGuessError): void;
     WordTooShort(): void;

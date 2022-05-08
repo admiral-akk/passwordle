@@ -35,6 +35,10 @@ enum State {
 export class PlayerBoard
   implements GameClientToServerEvents, GameServerToClientEvents
 {
+  Exit() {
+    this.view?.Exit();
+  }
+
   state: State = State.WaitingForKnowledge;
   guesses: Word[] = [];
   currentGuess = '';

@@ -15,7 +15,9 @@ export class YourBoardView extends Subview implements BoardView {
     super(base, 'board', explanationText);
     this.words = [];
     for (let i = 0; i < 6; i++) {
-      this.words.push(new PlayerWordView(this.root));
+      const word = new PlayerWordView(this.root);
+      this.words.push(word);
+      this.AddSubview(word);
     }
   }
 

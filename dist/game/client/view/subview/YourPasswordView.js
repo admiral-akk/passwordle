@@ -8,6 +8,7 @@ class YourPasswordView extends Subview_1.Subview {
     constructor(base) {
         super(base, 'answer', 'Your Password');
         this.answer = new AnswerWordView(this.root);
+        this.AddSubview(this.answer);
     }
     SetSecret(secret) {
         this.answer.SetSecret(secret);
