@@ -10,6 +10,7 @@ var State;
 class YourPasswordState {
     constructor(hasView) {
         this.password = null;
+        this.knownCharacters = ['', '', '', '', ''];
         this.state = State.WaitingForPassword;
         this.view = null;
         if (hasView) {
@@ -27,11 +28,20 @@ class YourPasswordState {
     }
     Reset() {
         this.password = null;
+        this.knownCharacters = ['', '', '', '', ''];
         this.state = State.WaitingForPassword;
     }
     Update(target) {
         var _a;
+        for (let i = 0; i < target.knownCharacters.length; i++) {
+            if (target.knownCharacters[i] !== '') {
+                this.knownCharacters[i] = target.knownCharacters[i];
+            }
+        }
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Update(target);
+    }
+    Lost() {
+        return this.knownCharacters.filter(c => c === '').length === 0;
     }
 }
 exports.YourPasswordState = YourPasswordState;

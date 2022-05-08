@@ -46,7 +46,7 @@ class PlayerBoard {
         return this.yourBoard.LockedGuess();
     }
     IsGameOver() {
-        return this.state === State.GameEnded;
+        return this.yourPassword.Lost() || this.opponentPassword.Won();
     }
     OpponentAddedChar() {
         this.opponentBoard.OpponentAddedChar();

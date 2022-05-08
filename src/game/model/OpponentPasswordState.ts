@@ -8,7 +8,7 @@ enum State {
 }
 
 export class OpponentPasswordState {
-  private password: Word | null = null;
+  private password: string[] = ['', '', '', '', ''];
   private state: State = State.WaitingForPassword;
   private view: OpponentPasswordView | null = null;
 
@@ -22,11 +22,20 @@ export class OpponentPasswordState {
   }
 
   Reset() {
-    this.password = null;
+    this.password = ['', '', '', '', ''];
     this.state = State.WaitingForPassword;
   }
 
   Update(progress: TargetProgress) {
+    for (let i = 0; i < progress.knownCharacters.length; i++) {
+      if (progress.knownCharacters[i] !== '') {
+        this.password[i] = progress.knownCharacters[i];
+      }
+    }
     this.view?.Update(progress);
+  }
+
+  Won(): boolean {
+    return this.password.filter(c => c === '').length === 0;
   }
 }

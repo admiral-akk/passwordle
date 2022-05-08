@@ -62,7 +62,7 @@ export class PlayerBoard
   }
 
   IsGameOver(): boolean {
-    return this.state === State.GameEnded;
+    return this.yourPassword.Lost() || this.opponentPassword.Won();
   }
 
   OpponentAddedChar() {

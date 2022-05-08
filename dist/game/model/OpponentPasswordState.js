@@ -9,7 +9,7 @@ var State;
 })(State || (State = {}));
 class OpponentPasswordState {
     constructor(hasView) {
-        this.password = null;
+        this.password = ['', '', '', '', ''];
         this.state = State.WaitingForPassword;
         this.view = null;
         if (hasView) {
@@ -21,12 +21,20 @@ class OpponentPasswordState {
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();
     }
     Reset() {
-        this.password = null;
+        this.password = ['', '', '', '', ''];
         this.state = State.WaitingForPassword;
     }
     Update(progress) {
         var _a;
+        for (let i = 0; i < progress.knownCharacters.length; i++) {
+            if (progress.knownCharacters[i] !== '') {
+                this.password[i] = progress.knownCharacters[i];
+            }
+        }
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Update(progress);
+    }
+    Won() {
+        return this.password.filter(c => c === '').length === 0;
     }
 }
 exports.OpponentPasswordState = OpponentPasswordState;

@@ -7,4 +7,5 @@ export declare class OpponentPasswordState {
     Exit(): void;
     Reset(): void;
     Update(progress: TargetProgress): void;
+    Won(): boolean;
 }

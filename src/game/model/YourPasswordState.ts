@@ -9,6 +9,7 @@ enum State {
 
 export class YourPasswordState {
   private password: Word | null = null;
+  private knownCharacters: string[] = ['', '', '', '', ''];
   private state: State = State.WaitingForPassword;
   private view: YourPasswordView | null = null;
 
@@ -28,10 +29,20 @@ export class YourPasswordState {
 
   Reset() {
     this.password = null;
+    this.knownCharacters = ['', '', '', '', ''];
     this.state = State.WaitingForPassword;
   }
 
   Update(target: TargetProgress) {
+    for (let i = 0; i < target.knownCharacters.length; i++) {
+      if (target.knownCharacters[i] !== '') {
+        this.knownCharacters[i] = target.knownCharacters[i];
+      }
+    }
     this.view?.Update(target);
+  }
+
+  Lost(): boolean {
+    return this.knownCharacters.filter(c => c === '').length === 0;
   }
 }
