@@ -1,5 +1,4 @@
 import {ClientGame} from '../game/client/ClientGame';
-import {NewLobbyManager} from '../lobby/client/LobbyManager';
 import {ClientSocket, GetSocket} from './ClientNetworking';
 import {PlayerState} from './PlayerState';
 import {StartState} from './start/StartState';
@@ -11,11 +10,7 @@ export class Player {
     (nextState: PlayerState) => this.SetState(nextState)
   );
   constructor() {
-    const lobby = new NewLobbyManager();
-    lobby.Initialize(this.socket, (nextState: PlayerState) =>
-      this.SetState(nextState)
-    );
-    const client = new ClientGame(() => lobby.ShowMenu());
+    const client = new ClientGame(() => {});
     client.Initialize(this.socket, (nextState: PlayerState) =>
       this.SetState(nextState)
     );

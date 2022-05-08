@@ -1,3 +1,4 @@
+import {NewLobbyManager} from '../../lobby/client/LobbyManager';
 import {ClientSocket} from '../ClientNetworking';
 import {PlayerState} from '../PlayerState';
 
@@ -11,5 +12,6 @@ export class StartState extends PlayerState {
   ) {
     super();
     this.Initialize(socket, setState);
+    this.Exit(new NewLobbyManager());
   }
 }
