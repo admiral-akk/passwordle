@@ -20,7 +20,8 @@ class NewLobbyManager extends PlayerState_1.PlayerState {
         });
     }
     Deregister(socket) {
-        throw new Error('Method not implemented.');
+        socket.removeAllListeners('EnterMenu');
+        socket.removeAllListeners('MatchFound');
     }
     JoinLobby(lobbyId) {
         this.socket.emit('JoinLobby', lobbyId);

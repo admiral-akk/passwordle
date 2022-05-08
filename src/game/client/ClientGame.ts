@@ -26,7 +26,12 @@ export class ClientGame
     socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
   }
   protected Deregister(socket: ClientSocket): void {
-    throw new Error('Method not implemented.');
+    socket.removeAllListeners('OpponentAddedChar');
+    socket.removeAllListeners('UpdatedAnswerKnowledge');
+    socket.removeAllListeners('SetSecret');
+    socket.removeAllListeners('OpponentDeleted');
+    socket.removeAllListeners('OpponentLockedGuess');
+    socket.removeAllListeners('OpponentDisconnected');
   }
   private board: PlayerBoard;
   constructor(

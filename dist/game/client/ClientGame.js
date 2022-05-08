@@ -20,7 +20,12 @@ class ClientGame extends PlayerState_1.PlayerState {
         socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
     }
     Deregister(socket) {
-        throw new Error('Method not implemented.');
+        socket.removeAllListeners('OpponentAddedChar');
+        socket.removeAllListeners('UpdatedAnswerKnowledge');
+        socket.removeAllListeners('SetSecret');
+        socket.removeAllListeners('OpponentDeleted');
+        socket.removeAllListeners('OpponentLockedGuess');
+        socket.removeAllListeners('OpponentDisconnected');
     }
     OpponentDisconnected() {
         this.board.OpponentDisconnected();

@@ -18,7 +18,8 @@ export class NewLobbyManager
     });
   }
   protected Deregister(socket: ClientSocket): void {
-    throw new Error('Method not implemented.');
+    socket.removeAllListeners('EnterMenu');
+    socket.removeAllListeners('MatchFound');
   }
   private view: LobbyView = new LobbyView();
   private model: NewLobby = new NewLobby(this.view, this);
