@@ -1,0 +1,1 @@
+{"version":3,"file":"PlayerState.js","sourceRoot":"","sources":["../../src/public/PlayerState.ts"],"names":[],"mappings":";;;AAEA,MAAsB,WAAW;IAM/B,YACY,MAAoB,EACtB,QAA0C;QADxC,WAAM,GAAN,MAAM,CAAc;QACtB,aAAQ,GAAR,QAAQ,CAAkC;QAElD,IAAI,CAAC,QAAQ,CAAC,MAAM,CAAC,CAAC;IACxB,CAAC;IAVS,IAAI,CAAC,SAAsB;QACnC,IAAI,CAAC,QAAQ,CAAC,SAAS,CAAC,CAAC;IAC3B,CAAC;CASF;AAZD,kCAYC"}

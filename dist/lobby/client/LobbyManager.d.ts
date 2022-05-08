@@ -1,8 +1,7 @@
 import { LobbyServerRequests } from '../server/LobbyNetworkTypes';
-import { PlayerState } from '../../public/Player';
 import { ClientSocket } from '../../public/ClientNetworking';
-export declare class NewLobbyManager implements LobbyServerRequests {
-    private socket;
+import { PlayerState } from '../../public/PlayerState';
+export declare class NewLobbyManager extends PlayerState implements LobbyServerRequests {
     protected Register(socket: ClientSocket): void;
     protected Deregister(socket: ClientSocket): void;
     private view;

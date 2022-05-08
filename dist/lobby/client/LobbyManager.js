@@ -4,12 +4,12 @@ exports.NewLobbyManager = void 0;
 const LobbyView_1 = require("./view/LobbyView");
 const Lobby_1 = require("../server/Lobby");
 const EndGameView_1 = require("../../game/client/view/subview/EndGameView");
-class NewLobbyManager {
+const PlayerState_1 = require("../../public/PlayerState");
+class NewLobbyManager extends PlayerState_1.PlayerState {
     constructor(socket, setState) {
-        this.socket = socket;
+        super(socket, setState);
         this.view = new LobbyView_1.LobbyView();
         this.model = new Lobby_1.NewLobby(this.view, this);
-        this.Register(socket);
     }
     Register(socket) {
         socket.on('EnterMenu', (lobbyId) => {

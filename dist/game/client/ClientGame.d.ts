@@ -1,8 +1,8 @@
 import { Word } from '../structs/Word';
 import { GameServerToClientEvents } from '../network/GameNetworkTypes';
 import { UpdatedAnswerKnowledge } from '../network/updates/Updates';
-import { PlayerState } from '../../public/Player';
 import { ClientSocket } from '../../public/ClientNetworking';
+import { PlayerState } from '../../public/PlayerState';
 export declare class ClientGame implements GameServerToClientEvents {
     private socket;
     protected Register(socket: ClientSocket): void;

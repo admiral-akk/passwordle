@@ -8,8 +8,8 @@ import {
   LockedGuess,
   UpdatedAnswerKnowledge,
 } from '../network/updates/Updates';
-import {PlayerState} from '../../public/Player';
 import {ClientSocket} from '../../public/ClientNetworking';
+import {PlayerState} from '../../public/PlayerState';
 
 export class ClientGame implements GameServerToClientEvents {
   protected Register(socket: ClientSocket): void {

@@ -2,10 +2,13 @@ import {LobbyView} from './view/LobbyView';
 import {NewLobby} from '../server/Lobby';
 import {LobbyServerRequests} from '../server/LobbyNetworkTypes';
 import {EndGameState} from '../../game/client/view/subview/EndGameView';
-import {PlayerState} from '../../public/Player';
 import {ClientSocket} from '../../public/ClientNetworking';
+import {PlayerState} from '../../public/PlayerState';
 
-export class NewLobbyManager implements LobbyServerRequests {
+export class NewLobbyManager
+  extends PlayerState
+  implements LobbyServerRequests
+{
   protected Register(socket: ClientSocket): void {
     socket.on('EnterMenu', (lobbyId: string) => {
       this.model.EnterMenu(lobbyId);
@@ -21,10 +24,10 @@ export class NewLobbyManager implements LobbyServerRequests {
   private model: NewLobby = new NewLobby(this.view, this);
 
   constructor(
-    private socket: ClientSocket,
+    socket: ClientSocket,
     setState: (nextState: PlayerState) => void
   ) {
-    this.Register(socket);
+    super(socket, setState);
   }
 
   JoinLobby(lobbyId: string) {
