@@ -11,8 +11,9 @@ export class YourBoardView extends Subview implements BoardView {
     this.words.forEach(word => word.Reset());
   }
   protected words: PlayerWordView[];
-  constructor(base: HTMLElement, explanationText = 'Your Guesses') {
-    super(base, 'board', explanationText);
+  constructor() {
+    const base = document.getElementById('player')!;
+    super(base, 'board', 'Your Guesses');
     this.words = [];
     for (let i = 0; i < 6; i++) {
       const word = new PlayerWordView(this.root);

@@ -7,8 +7,9 @@ import {BaseWordView} from './word/WordView';
 
 export class OpponentBoardView extends Subview implements BoardView {
   protected words: OpponentWordView[];
-  constructor(base: HTMLElement, explanationText = 'Opponent Guesses') {
-    super(base, 'board', explanationText);
+  constructor() {
+    const base = document.getElementById('opponent')!;
+    super(base, 'board', 'Opponent Guesses');
     this.words = [];
     for (let i = 0; i < 6; i++) {
       const word = new OpponentWordView(this.root);

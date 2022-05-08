@@ -27,7 +27,7 @@ class ClientGameMirror {
     }
     LockedGuess(update) {
         var _a;
-        this.board.LockedGuess(update);
+        this.board.LockedGuess();
         (_a = this.otherPlayer) === null || _a === void 0 ? void 0 : _a.OpponentLockedGuess();
         this.lockedGuessCallback(update);
     }

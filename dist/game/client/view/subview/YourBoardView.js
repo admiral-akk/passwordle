@@ -1,43 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OpponentBoardView = void 0;
+exports.YourBoardView = void 0;
 const LetterState_1 = require("../../structs/LetterState");
-const OpponentUpdate_1 = require("../OpponentUpdate");
 const Subview_1 = require("./Subview");
 const LetterView_1 = require("./word/letter/LetterView");
 const WordView_1 = require("./word/WordView");
-class OpponentBoardView extends Subview_1.Subview {
+class YourBoardView extends Subview_1.Subview {
     constructor() {
-        const base = document.getElementById('opponent');
-        super(base, 'board', 'Opponent Guesses');
+        const base = document.getElementById('player');
+        super(base, 'board', 'Your Guesses');
         this.words = [];
         for (let i = 0; i < 6; i++) {
-            const word = new OpponentWordView(this.root);
+            const word = new PlayerWordView(this.root);
             this.words.push(word);
             this.AddSubview(word);
         }
     }
-    SetCharKnowledge(wordIndex, charIndex, char, knowledge) {
-        this.words[wordIndex].SetKnowledge(charIndex, char, knowledge);
-    }
-    OpponentUpdate(update) {
-        this.words[update.wordIndex].OpponentUpdate(update.type, update.charIndex);
-    }
     Reset() {
         this.words.forEach(word => word.Reset());
     }
+    SetCharKnowledge(wordIndex, charIndex, char, knowledge) {
+        this.words[wordIndex].SetKnowledge(charIndex, char, knowledge);
+    }
+    CharUpdate(update) {
+        this.words[update.wordIndex].AddChar(update.char, update.charIndex);
+    }
+    SubmitError(error) {
+        this.words[error.wordIndex].LockedGuessError(error);
+    }
 }
-exports.OpponentBoardView = OpponentBoardView;
-class OpponentWordView extends WordView_1.BaseWordView {
-    OpponentUpdate(type, charIndex) {
-        switch (type) {
-            case OpponentUpdate_1.OpponentUpdateType.AddChar:
-                this.letters[charIndex].SetColor(LetterView_1.LetterColor.LightGrey);
-                break;
-            case OpponentUpdate_1.OpponentUpdateType.Delete:
-                this.letters[charIndex].SetColor(LetterView_1.LetterColor.White);
-                break;
-        }
+exports.YourBoardView = YourBoardView;
+class PlayerWordView extends WordView_1.BaseWordView {
+    AddChar(char, index) {
+        this.letters[index].SetChar(char);
     }
     SetKnowledge(charIndex, char, knowledge) {
         const letter = this.letters[charIndex];
@@ -58,4 +53,4 @@ class OpponentWordView extends WordView_1.BaseWordView {
         }
     }
 }
-//# sourceMappingURL=OpponentBoardView.js.map
+//# sourceMappingURL=YourBoardView.js.map

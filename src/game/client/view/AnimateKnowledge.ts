@@ -4,7 +4,7 @@ import {HintUpdate} from './HintUpdate';
 import {BoardView} from './subview/BoardView';
 import {OpponentBoardView} from './subview/OpponentBoardView';
 import {OpponentPasswordView} from './subview/OpponentPasswordView';
-import {YourBoardView} from './subview/PlayerBoardView';
+import {YourBoardView} from './subview/YourBoardView';
 import {YourPasswordView} from './subview/YourPasswordView';
 
 export function AnimateHint(

@@ -5,10 +5,9 @@ export declare class YourBoardState {
     private state;
     private view;
     constructor(hasView: boolean);
-    AttemptAddChar(char: string): boolean;
-    AddChar(char: string): void;
-    AttemptDelete(): boolean;
-    Delete(): void;
-    AttemptLockedGuess(): boolean;
-    LockedGuess(): Word;
+    AddChar(char: string): boolean;
+    Delete(): boolean;
+    LockedGuess(): Word | null;
+    Exit(): void;
+    Reset(): void;
 }

@@ -42,7 +42,7 @@ export class ClientGameMirror
   }
 
   LockedGuess(update: LockedGuess) {
-    this.board.LockedGuess(update);
+    this.board.LockedGuess();
     this.otherPlayer?.OpponentLockedGuess();
     this.lockedGuessCallback(update);
   }

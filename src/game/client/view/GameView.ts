@@ -6,17 +6,13 @@ import {YourPasswordView} from './subview/YourPasswordView';
 import {EndGameState, EndGameView} from './subview/EndGameView';
 import {KeyboardView} from './subview/KeyboardView';
 import {OpponentBoardView} from './subview/OpponentBoardView';
-import {YourBoardView} from './subview/PlayerBoardView';
+import {YourBoardView} from './subview/YourBoardView';
 import {OpponentPasswordView} from './subview/OpponentPasswordView';
 import {TimerView} from './subview/TimerView';
 import {LockedGuessError} from '../../network/updates/Updates';
 import {ExplanationView} from './subview/ExplanationView';
 
 export class GameView {
-  private yourBoard: YourBoardView;
-  private yourPassword: YourPasswordView;
-  private opponentBoard: OpponentBoardView;
-  private opponentPassword: OpponentPasswordView;
   private keyboard: KeyboardView;
   private timer: TimerView;
   private explanation: ExplanationView;
@@ -25,15 +21,6 @@ export class GameView {
   constructor() {
     const root = document.getElementById('game-board')!;
     this.timer = new TimerView(root);
-
-    this.yourPassword = new YourPasswordView(root);
-    this.opponentPassword = new OpponentPasswordView(root);
-
-    const player = document.getElementById('player')!;
-    this.yourBoard = new YourBoardView(player);
-
-    const opponent = document.getElementById('opponent')!;
-    this.opponentBoard = new OpponentBoardView(opponent);
 
     this.keyboard = new KeyboardView(root);
     const explain = AddDiv(root, 'explain');
@@ -48,24 +35,8 @@ export class GameView {
     this.endGame = new EndGameView(root);
   }
 
-  SetSecret(secret: string) {
-    this.yourPassword.SetSecret(secret);
-  }
-
-  CharUpdate(update: CharUpdate) {
-    this.yourBoard.CharUpdate(update);
-  }
-
   HintUpdate(update: HintUpdate, updateComplete: () => void) {
     // Animated this.
-    AnimateHint(
-      update,
-      this.yourBoard,
-      this.opponentBoard,
-      this.yourPassword,
-      this.opponentPassword,
-      updateComplete
-    );
   }
 
   GameOver(state: EndGameState) {
@@ -73,28 +44,12 @@ export class GameView {
   }
 
   Reset() {
-    this.yourBoard.Reset();
-    this.opponentBoard.Reset();
-    this.yourPassword.Reset();
-    this.opponentPassword.Reset();
     this.endGame.Reset();
   }
 
   Exit() {
-    this.yourBoard.Exit();
-    this.opponentBoard.Exit();
-    this.yourPassword.Exit();
-    this.opponentPassword.Exit();
     this.endGame.Exit();
     this.explanation.Exit();
-  }
-
-  OpponentUpdate(update: OpponentUpdate) {
-    this.opponentBoard.OpponentUpdate(update);
-  }
-
-  LockedGuessError(error: LockedGuessError) {
-    this.yourBoard.SubmitError(error);
   }
 
   WordTooShort() {}

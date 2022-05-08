@@ -5,7 +5,8 @@ const Subview_1 = require("./Subview");
 const LetterView_1 = require("./word/letter/LetterView");
 const WordView_1 = require("./word/WordView");
 class YourPasswordView extends Subview_1.Subview {
-    constructor(base) {
+    constructor() {
+        const base = document.getElementById('answer');
         super(base, 'answer', 'Your Password');
         this.answer = new AnswerWordView(this.root);
         this.AddSubview(this.answer);

@@ -1,6 +1,7 @@
+import {CharUpdate} from '../client/view/CharUpdate';
+import {YourBoardView} from '../client/view/subview/YourBoardView';
 import {ToWord, Word} from '../structs/Word';
 import {IsValidWord} from '../Words';
-import {BoardState} from './BoardState';
 
 enum State {
   CanSubmit,
@@ -10,7 +11,7 @@ enum State {
 export class YourBoardState {
   private guesses: Word[] = [];
   private currentGuess = '';
-  private state: State = State.Locked;
+  private state: State = State.CanSubmit;
   private view: YourBoardView | null = null;
 
   constructor(hasView: boolean) {
@@ -19,69 +20,62 @@ export class YourBoardState {
     }
   }
 
-  AttemptAddChar(char: string): boolean {
+  AddChar(char: string): boolean {
     if (this.state !== State.CanSubmit) {
       return false;
     }
     if (this.currentGuess.length === 5) {
       return false;
     }
-    return true;
-  }
-
-  AddChar(char: string) {
+    const update = new CharUpdate(
+      char,
+      this.guesses.length,
+      this.currentGuess.length
+    );
     this.currentGuess += char;
-    this.view?.AddChar(char);
-  }
-
-  AttemptDelete(): boolean {
-    if (this.state !== State.CanSubmit) {
-      return false;
-    }
-    if (this.currentGuess.length === 0) {
-      return false;
-    }
+    this.view?.CharUpdate(update);
     return true;
   }
 
-  Delete() {
-    if (this.state !== State.CanSubmit) {
-      return;
-    }
-    if (this.currentGuess.length === 0) {
-      return;
-    }
-
-    this.currentGuess = this.currentGuess.slice(0, -1);
-    this.view?.Delete();
-  }
-
-  AttemptLockedGuess(): boolean {
+  Delete(): boolean {
     if (this.state !== State.CanSubmit) {
       return false;
+    }
+    if (this.currentGuess.length === 0) {
+      return false;
+    }
+    this.currentGuess = this.currentGuess.slice(0, -1);
+    const update = new CharUpdate(
+      '',
+      this.guesses.length,
+      this.currentGuess.length
+    );
+    this.view?.CharUpdate(update);
+    return true;
+  }
+
+  LockedGuess(): Word | null {
+    if (this.state !== State.CanSubmit) {
+      return null;
     }
     console.log('');
     if (this.currentGuess.length !== 5) {
-      this.view?.GuessTooShort();
-      return false;
+      return null;
     }
     const guess = ToWord(this.currentGuess);
     if (!IsValidWord(guess)) {
-      this.view?.GuessNotValid();
-      return false;
+      return null;
     }
-    return true;
-  }
-
-  LockedGuess(): Word {
     this.state = State.Locked;
     return ToWord(this.currentGuess);
   }
-}
+  Exit() {
+    this.view?.Exit();
+  }
 
-class YourBoardView {
-  AddChar(char: string) {}
-  Delete() {}
-  GuessTooShort() {}
-  GuessNotValid() {}
+  Reset() {
+    this.guesses = [];
+    this.currentGuess = '';
+    this.state = State.CanSubmit;
+  }
 }

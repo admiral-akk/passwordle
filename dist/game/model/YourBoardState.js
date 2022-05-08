@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.YourBoardState = void 0;
+const CharUpdate_1 = require("../client/view/CharUpdate");
+const YourBoardView_1 = require("../client/view/subview/YourBoardView");
 const Word_1 = require("../structs/Word");
 const Words_1 = require("../Words");
 var State;
@@ -12,73 +14,62 @@ class YourBoardState {
     constructor(hasView) {
         this.guesses = [];
         this.currentGuess = '';
-        this.state = State.Locked;
+        this.state = State.CanSubmit;
         this.view = null;
         if (hasView) {
-            this.view = new YourBoardView();
+            this.view = new YourBoardView_1.YourBoardView();
         }
     }
-    AttemptAddChar(char) {
+    AddChar(char) {
+        var _a;
         if (this.state !== State.CanSubmit) {
             return false;
         }
         if (this.currentGuess.length === 5) {
             return false;
         }
-        return true;
-    }
-    AddChar(char) {
-        var _a;
+        const update = new CharUpdate_1.CharUpdate(char, this.guesses.length, this.currentGuess.length);
         this.currentGuess += char;
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.AddChar(char);
-    }
-    AttemptDelete() {
-        if (this.state !== State.CanSubmit) {
-            return false;
-        }
-        if (this.currentGuess.length === 0) {
-            return false;
-        }
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.CharUpdate(update);
         return true;
     }
     Delete() {
         var _a;
         if (this.state !== State.CanSubmit) {
-            return;
+            return false;
         }
         if (this.currentGuess.length === 0) {
-            return;
+            return false;
         }
         this.currentGuess = this.currentGuess.slice(0, -1);
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Delete();
-    }
-    AttemptLockedGuess() {
-        var _a, _b;
-        if (this.state !== State.CanSubmit) {
-            return false;
-        }
-        console.log('');
-        if (this.currentGuess.length !== 5) {
-            (_a = this.view) === null || _a === void 0 ? void 0 : _a.GuessTooShort();
-            return false;
-        }
-        const guess = (0, Word_1.ToWord)(this.currentGuess);
-        if (!(0, Words_1.IsValidWord)(guess)) {
-            (_b = this.view) === null || _b === void 0 ? void 0 : _b.GuessNotValid();
-            return false;
-        }
+        const update = new CharUpdate_1.CharUpdate('', this.guesses.length, this.currentGuess.length);
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.CharUpdate(update);
         return true;
     }
     LockedGuess() {
+        if (this.state !== State.CanSubmit) {
+            return null;
+        }
+        console.log('');
+        if (this.currentGuess.length !== 5) {
+            return null;
+        }
+        const guess = (0, Word_1.ToWord)(this.currentGuess);
+        if (!(0, Words_1.IsValidWord)(guess)) {
+            return null;
+        }
         this.state = State.Locked;
         return (0, Word_1.ToWord)(this.currentGuess);
     }
+    Exit() {
+        var _a;
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();
+    }
+    Reset() {
+        this.guesses = [];
+        this.currentGuess = '';
+        this.state = State.CanSubmit;
+    }
 }
 exports.YourBoardState = YourBoardState;
-class YourBoardView {
-    AddChar(char) { }
-    Delete() { }
-    GuessTooShort() { }
-    GuessNotValid() { }
-}
 //# sourceMappingURL=YourBoardState.js.map

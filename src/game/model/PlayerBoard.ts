@@ -1,30 +1,13 @@
-import {Hint} from '../client/structs/Hint';
-import {CharUpdate} from '../client/view/CharUpdate';
-import {GameView} from '../client/view/GameView';
-import {HintUpdate} from '../client/view/HintUpdate';
-import {
-  OpponentUpdate,
-  OpponentUpdateType,
-} from '../client/view/OpponentUpdate';
-import {ToWord, Word} from '../structs/Word';
-import {IsValidWord} from '../Words';
+import {Word} from '../structs/Word';
 import {
   GameClientToServerEvents,
   GameServerToClientEvents,
 } from '../network/GameNetworkTypes';
-import {
-  AddedChar,
-  Deleted,
-  ErrorType,
-  Gameover,
-  LockedGuess,
-  LockedGuessError,
-  Loss,
-  Tie,
-  UpdatedAnswerKnowledge,
-  Win,
-} from '../network/updates/Updates';
-import {EndGameState} from '../client/view/subview/EndGameView';
+import {AddedChar, UpdatedAnswerKnowledge} from '../network/updates/Updates';
+import {YourBoardState} from './YourBoardState';
+import {YourPasswordState} from './YourPasswordState';
+import {OpponentBoardState} from './OpponentBoardState';
+import {OpponentPasswordState} from './OpponentPasswordState';
 
 enum State {
   WaitingForKnowledge,
@@ -35,184 +18,68 @@ enum State {
 export class PlayerBoard
   implements GameClientToServerEvents, GameServerToClientEvents
 {
+  private Reset() {
+    this.yourBoard.Reset();
+    this.yourPassword.Reset();
+    this.opponentBoard.Reset();
+    this.opponentPassword.Reset();
+  }
   Exit() {
-    this.view?.Exit();
+    this.yourBoard.Exit();
+    this.yourPassword.Exit();
+    this.opponentBoard.Exit();
+    this.opponentPassword.Exit();
   }
 
   state: State = State.WaitingForKnowledge;
-  guesses: Word[] = [];
-  currentGuess = '';
-  private GuessCount(): number {
-    if (this.state === State.WaitingForKnowledge) {
-      return this.guesses.length - 1;
-    }
-    return this.guesses.length;
-  }
-  opponentCharCount = 0;
-  secret: Word | null = null;
 
-  constructor(private view: GameView | null = null) {}
+  constructor(private hasView: boolean = false) {}
+
+  private yourBoard: YourBoardState = new YourBoardState(this.hasView);
+  private yourPassword: YourPasswordState = new YourPasswordState(this.hasView);
+  private opponentBoard: OpponentBoardState = new OpponentBoardState(
+    this.hasView
+  );
+  private opponentPassword: OpponentPasswordState = new OpponentPasswordState(
+    this.hasView
+  );
 
   OpponentDisconnected() {
     this.state = State.GameEnded;
   }
 
-  AddedChar(update: AddedChar) {
-    const viewUpdate = new CharUpdate(
-      update.char,
-      this.guesses.length,
-      this.currentGuess.length
-    );
-    this.view?.CharUpdate(viewUpdate);
-    this.currentGuess += update.char;
+  AddedChar(update: AddedChar): boolean {
+    return this.yourBoard.AddChar(update.char);
   }
 
-  Deleted() {
-    this.currentGuess = this.currentGuess.slice(0, -1);
-    const update = new CharUpdate(
-      '',
-      this.guesses.length,
-      this.currentGuess.length
-    );
-    this.view?.CharUpdate(update);
+  Deleted(): boolean {
+    return this.yourBoard.Delete();
   }
 
-  LockedGuess(update: LockedGuess) {
-    this.guesses.push(update.guess);
-    this.currentGuess = '';
+  LockedGuess(): Word | null {
     this.state = State.WaitingForKnowledge;
-  }
-
-  AddCharCommand(char: string): AddedChar | null {
-    if (this.state !== State.CanSubmit) {
-      return null;
-    }
-    if (this.currentGuess.length === 5) {
-      return null;
-    }
-    return new AddedChar(char);
+    return this.yourBoard.LockedGuess();
   }
 
   IsGameOver(): boolean {
     return this.state === State.GameEnded;
   }
 
-  DeleteCommand(): Deleted | null {
-    if (this.state !== State.CanSubmit) {
-      return null;
-    }
-    if (this.currentGuess.length === 0) {
-      return null;
-    }
-    return new Deleted();
-  }
-
-  SubmitCommand(): LockedGuess | null {
-    if (this.state !== State.CanSubmit) {
-      this.view?.LockedGuessError(
-        new LockedGuessError(
-          ErrorType.None,
-          this.guesses.length,
-          this.currentGuess.length
-        )
-      );
-      return null;
-    }
-    console.log('');
-    if (this.currentGuess.length !== 5) {
-      this.view?.LockedGuessError(
-        new LockedGuessError(
-          ErrorType.TooShort,
-          this.guesses.length,
-          this.currentGuess.length
-        )
-      );
-      return null;
-    }
-    const guess = ToWord(this.currentGuess);
-    if (!IsValidWord(guess)) {
-      this.view?.LockedGuessError(
-        new LockedGuessError(
-          ErrorType.NotValidWord,
-          this.guesses.length,
-          this.currentGuess.length
-        )
-      );
-      return null;
-    }
-    return new LockedGuess(guess);
-  }
-
   OpponentAddedChar() {
-    const update = new OpponentUpdate(
-      OpponentUpdateType.AddChar,
-      this.GuessCount(),
-      this.opponentCharCount
-    );
-    this.view?.OpponentUpdate(update);
-    this.opponentCharCount++;
+    this.opponentBoard.OpponentAddedChar();
   }
   OpponentDeleted() {
-    this.opponentCharCount--;
-    const update = new OpponentUpdate(
-      OpponentUpdateType.Delete,
-      this.GuessCount(),
-      this.opponentCharCount
-    );
-    this.view?.OpponentUpdate(update);
+    this.opponentBoard.OpponentDeleted();
   }
   OpponentLockedGuess() {
-    this.opponentCharCount = 0;
-    const update = new OpponentUpdate(
-      OpponentUpdateType.Submit,
-      this.GuessCount(),
-      this.opponentCharCount
-    );
-    this.view?.OpponentUpdate(update);
+    this.opponentBoard.OpponentLockedGuess();
   }
 
-  UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
-    this.state = State.CanSubmit;
-    const hint = new Hint(
-      update.playerKnowledge,
-      update.opponentKnowledge,
-      update.playerProgress,
-      update.opponentProgress
-    );
-    const hintUpdate = new HintUpdate(hint, this.guesses.length - 1);
-    this.view?.HintUpdate(hintUpdate, () => this.CheckGameOver(update));
-    if (Gameover(update)) {
-      this.state = State.GameEnded;
-    }
-  }
-
-  private CheckGameOver(update: UpdatedAnswerKnowledge) {
-    if (this.state !== State.GameEnded) {
-      return;
-    }
-    if (Win(update)) {
-      this.view?.GameOver(EndGameState.Won);
-    }
-    if (Loss(update)) {
-      this.view?.GameOver(EndGameState.Lost);
-    }
-    if (Tie(update)) {
-      this.view?.GameOver(EndGameState.Tied);
-    }
-  }
+  UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {}
 
   SetSecret(secret: Word) {
     this.Reset();
-    this.secret = secret;
-    this.view?.SetSecret(secret);
+    this.yourPassword.SetPassword(secret);
     this.state = State.CanSubmit;
-  }
-
-  private Reset() {
-    this.secret = null;
-    this.state = State.WaitingForKnowledge;
-    this.guesses = [];
-    this.currentGuess = '';
-    this.view?.Reset();
   }
 }
