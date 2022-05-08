@@ -4,10 +4,10 @@ exports.ClientGame = void 0;
 const InputManager_1 = require("./input/InputManager");
 const GameView_1 = require("./view/GameView");
 const PlayerBoard_1 = require("../model/PlayerBoard");
-class ClientGame {
+const PlayerState_1 = require("../../public/PlayerState");
+class ClientGame extends PlayerState_1.PlayerState {
     constructor(socket, setState, showMenu) {
-        this.socket = socket;
-        this.Register(socket);
+        super(socket, setState);
         this.board = new PlayerBoard_1.PlayerBoard(new GameView_1.GameView(), showMenu);
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }

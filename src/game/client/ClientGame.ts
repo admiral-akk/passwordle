@@ -11,7 +11,10 @@ import {
 import {ClientSocket} from '../../public/ClientNetworking';
 import {PlayerState} from '../../public/PlayerState';
 
-export class ClientGame implements GameServerToClientEvents {
+export class ClientGame
+  extends PlayerState
+  implements GameServerToClientEvents
+{
   protected Register(socket: ClientSocket): void {
     socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
     socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>
@@ -27,11 +30,11 @@ export class ClientGame implements GameServerToClientEvents {
   }
   private board: PlayerBoard;
   constructor(
-    private socket: ClientSocket,
+    socket: ClientSocket,
     setState: (nextState: PlayerState) => void,
     showMenu: () => void
   ) {
-    this.Register(socket);
+    super(socket, setState);
     this.board = new PlayerBoard(new GameView(), showMenu);
     new InputManager(
       (char: string) => this.AddChar(char),
