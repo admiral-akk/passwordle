@@ -42,7 +42,9 @@ class LobbyServer {
         }
     }
     DeleteLobby(lobbyId) {
-        delete this.lobbies[lobbyId];
+        if (lobbyId in this.lobbies) {
+            delete this.lobbies[lobbyId];
+        }
         if (this.publicLobbies.indexOf(lobbyId) > -1) {
             this.publicLobbies.splice(this.publicLobbies.indexOf(lobbyId));
         }
@@ -70,12 +72,7 @@ class LobbyServer {
     AddToLobby(lobby, playerId) {
         lobby.players.push(playerId);
         const oldLobbyId = this.players[playerId].lobbyId;
-        if (oldLobbyId in this.lobbies) {
-            delete this.lobbies[oldLobbyId];
-        }
-        if (this.publicLobbies.indexOf(oldLobbyId) > -1) {
-            this.publicLobbies.splice(this.publicLobbies.indexOf(oldLobbyId));
-        }
+        this.DeleteLobby(oldLobbyId);
         this.players[playerId].lobbyId = lobby.lobbyId;
         this.StartGame(lobby);
     }
