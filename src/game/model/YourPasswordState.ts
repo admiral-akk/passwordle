@@ -1,5 +1,5 @@
 import {TargetProgress} from '../client/structs/TargetProgress';
-import {YourPasswordView} from '../client/view/subview/YourPasswordView';
+import {YourPasswordView} from './view/YourPasswordView';
 import {Word} from '../structs/Word';
 
 enum State {

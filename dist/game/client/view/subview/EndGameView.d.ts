@@ -1,4 +1,4 @@
-import { Subview } from './Subview';
+import { Subview } from '../../../model/view/Subview';
 export declare enum EndGameState {
     Lost = 0,
     Won = 1,

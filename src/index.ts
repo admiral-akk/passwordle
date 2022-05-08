@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import {EndGameState} from './game/client/view/subview/EndGameView';
+import {EndGameState} from './game/EndGameState';
 import {GameServerManager} from './GameServerManager';
 import {LobbyServer} from './lobby/server/LobbyServer';
 import {GetServer} from './NetworkTypes';

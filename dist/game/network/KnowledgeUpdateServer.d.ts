@@ -1,7 +1,7 @@
 import { Word } from '../structs/Word';
 import { PlayerId } from '../../PlayerId';
 import { UpdatedAnswerKnowledge } from './updates/Updates';
-import { EndGameState } from '../client/view/subview/EndGameView';
+import { EndGameState } from '../EndGameState';
 export declare class KnowledgeExchangeServer {
     private players;
     private answers;

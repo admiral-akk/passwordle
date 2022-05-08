@@ -1,6 +1,5 @@
 import {Socket as ServerSocket} from 'socket.io';
 import {Socket as ClientSocket} from 'socket.io-client';
-import {EndGameState} from '../../game/client/view/subview/EndGameView';
 import {InterServerEvents, SocketData} from '../../NetworkTypes';
 import {LobbyId} from '../LobbyId';
 export type LobbyClientSocket = ClientSocket<

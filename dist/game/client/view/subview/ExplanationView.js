@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExplanationView = void 0;
-const Subview_1 = require("./Subview");
+const Subview_1 = require("../../../model/view/Subview");
 class ExplanationView extends Subview_1.Subview {
     Reset() {
         throw new Error('Method not implemented.');

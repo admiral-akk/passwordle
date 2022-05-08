@@ -5,7 +5,7 @@ import {Word} from '../structs/Word';
 import {GetRandomWord} from '../Words';
 import {KnowledgeExchangeServer} from './KnowledgeUpdateServer';
 import {LockedGuess, UpdatedAnswerKnowledge} from './updates/Updates';
-import {EndGameState} from '../client/view/subview/EndGameView';
+import {EndGameState} from '../EndGameState';
 
 export class ServerGame {
   playerClient: Record<PlayerId, ClientGameMirror> = {};

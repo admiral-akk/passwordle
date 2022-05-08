@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.YourBoardState = void 0;
-const CharUpdate_1 = require("../client/view/CharUpdate");
-const YourBoardView_1 = require("../client/view/subview/YourBoardView");
+const CharUpdate_1 = require("./CharUpdate");
+const YourBoardView_1 = require("./view/YourBoardView");
 const Word_1 = require("../structs/Word");
 const Words_1 = require("../Words");
 var State;

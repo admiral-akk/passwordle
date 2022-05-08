@@ -1,6 +1,6 @@
 import {WordKnowledge} from '../client/structs/WordKnowledge';
-import {CharUpdate} from '../client/view/CharUpdate';
-import {YourBoardView} from '../client/view/subview/YourBoardView';
+import {CharUpdate} from './CharUpdate';
+import {YourBoardView} from './view/YourBoardView';
 import {ToWord, Word} from '../structs/Word';
 import {IsValidWord} from '../Words';
 

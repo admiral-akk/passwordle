@@ -2,7 +2,7 @@ import { GameServerSocket } from './GameNetworkTypes';
 import { PlayerId } from '../../PlayerId';
 import { ClientGameMirror } from './ClientGameMirror';
 import { KnowledgeExchangeServer } from './KnowledgeUpdateServer';
-import { EndGameState } from '../client/view/subview/EndGameView';
+import { EndGameState } from '../EndGameState';
 export declare class ServerGame {
     private GameEnded;
     playerClient: Record<PlayerId, ClientGameMirror>;

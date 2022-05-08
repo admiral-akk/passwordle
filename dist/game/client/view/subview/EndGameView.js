@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EndGameView = exports.EndGameState = void 0;
-const Subview_1 = require("./Subview");
+const Subview_1 = require("../../../model/view/Subview");
 var EndGameState;
 (function (EndGameState) {
     EndGameState[EndGameState["Lost"] = 0] = "Lost";

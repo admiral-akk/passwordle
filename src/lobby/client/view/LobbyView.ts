@@ -1,4 +1,4 @@
-import {EndGameState} from '../../../game/client/view/subview/EndGameView';
+import {EndGameState} from '../../../game/EndGameState';
 import {FindingMatchModal} from './modal/FindingMatchModal';
 import {GameEndedModal} from './modal/GameEndedModal';
 import {LoadingModal} from './modal/LoadingModal';

@@ -1,4 +1,4 @@
-import { EndGameState } from '../../../game/client/view/subview/EndGameView';
+import { EndGameState } from '../../../game/EndGameState';
 export declare class LobbyView {
     private root;
     private background;

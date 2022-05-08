@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.YourPasswordState = void 0;
-const YourPasswordView_1 = require("../client/view/subview/YourPasswordView");
+const YourPasswordView_1 = require("./view/YourPasswordView");
 var State;
 (function (State) {
     State[State["WaitingForPassword"] = 0] = "WaitingForPassword";

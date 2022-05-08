@@ -1,4 +1,4 @@
-import { EndGameState } from '../../game/client/view/subview/EndGameView';
+import { EndGameState } from '../../game/EndGameState';
 import { LobbyView } from '../client/view/LobbyView';
 import { LobbyId } from '../LobbyId';
 import { LobbyClientRequests, LobbyServerRequests } from './LobbyNetworkTypes';

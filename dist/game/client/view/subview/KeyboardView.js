@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeyboardView = void 0;
-const Subview_1 = require("./Subview");
+const Subview_1 = require("../../../model/view/Subview");
 const KEYBOARD_KEYS = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],

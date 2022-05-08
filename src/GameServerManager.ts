@@ -1,4 +1,4 @@
-import {EndGameState} from './game/client/view/subview/EndGameView';
+import {EndGameState} from './game/EndGameState';
 import {GameServerSocket} from './game/network/GameNetworkTypes';
 import {ServerGame} from './game/network/ServerGame';
 import {PlayerId} from './PlayerId';

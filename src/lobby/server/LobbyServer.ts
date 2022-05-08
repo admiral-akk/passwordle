@@ -1,4 +1,4 @@
-import {EndGameState} from '../../game/client/view/subview/EndGameView';
+import {EndGameState} from '../../game/EndGameState';
 import {PlayerId} from '../../PlayerId';
 import {GenerateLobbyId, LobbyId} from '../LobbyId';
 import {

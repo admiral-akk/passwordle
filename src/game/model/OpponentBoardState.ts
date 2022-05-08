@@ -1,9 +1,6 @@
 import {WordKnowledge} from '../client/structs/WordKnowledge';
-import {
-  OpponentUpdate,
-  OpponentUpdateType,
-} from '../client/view/OpponentUpdate';
-import {OpponentBoardView} from '../client/view/subview/OpponentBoardView';
+import {OpponentUpdate, OpponentUpdateType} from './OpponentUpdate';
+import {OpponentBoardView} from './view/OpponentBoardView';
 import {ToWord, Word} from '../structs/Word';
 
 export class OpponentBoardState {

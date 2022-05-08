@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpponentBoardState = void 0;
-const OpponentUpdate_1 = require("../client/view/OpponentUpdate");
-const OpponentBoardView_1 = require("../client/view/subview/OpponentBoardView");
+const OpponentUpdate_1 = require("./OpponentUpdate");
+const OpponentBoardView_1 = require("./view/OpponentBoardView");
 const Word_1 = require("../structs/Word");
 class OpponentBoardState {
     constructor(hasView) {
