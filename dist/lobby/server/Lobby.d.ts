@@ -7,6 +7,7 @@ export declare class Lobby implements LobbyClientRequests {
     private server;
     private state;
     constructor(view: LobbyView, server: LobbyServerRequests);
+    GameReady(): void;
     Exit(): void;
     FindingMatch(): void;
     GameEnded(ending: EndGameState): void;

@@ -1,3 +1,4 @@
+import {LobbyClientSocket} from '../lobby/server/LobbyNetworkTypes';
 import {ClientSocket} from './ClientNetworking';
 
 abstract class State<SocketType> {
@@ -10,7 +11,7 @@ abstract class State<SocketType> {
     this.setState!(nextState);
   }
   protected abstract Enter(): void;
-  protected abstract Exit(): void;
+  public abstract Exit(): void;
   protected abstract Register(socket: SocketType): void;
   protected abstract Deregister(socket: SocketType): void;
   constructor() {}
@@ -26,3 +27,5 @@ abstract class State<SocketType> {
 }
 
 export abstract class PlayerState extends State<ClientSocket> {}
+
+export abstract class LobbyState extends State<LobbyClientSocket> {}

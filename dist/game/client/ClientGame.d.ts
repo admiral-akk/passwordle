@@ -4,7 +4,7 @@ import { UpdatedAnswerKnowledge } from '../network/updates/Updates';
 import { ClientSocket } from '../../public/ClientNetworking';
 import { PlayerState } from '../../public/PlayerState';
 export declare class ClientGame extends PlayerState implements GameServerToClientEvents {
-    protected Exit(): void;
+    Exit(): void;
     protected Enter(): void;
     protected Register(socket: ClientSocket): void;
     protected Deregister(socket: ClientSocket): void;

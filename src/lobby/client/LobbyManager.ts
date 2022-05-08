@@ -1,80 +1,38 @@
-import {LobbyView} from './view/LobbyView';
-import {Lobby} from '../server/Lobby';
-import {
-  LobbyClientRequests,
-  LobbyServerRequests,
-} from '../server/LobbyNetworkTypes';
-import {EndGameState} from '../../game/client/view/subview/EndGameView';
 import {ClientSocket} from '../../public/ClientNetworking';
-import {PlayerState} from '../../public/PlayerState';
+import {LobbyState, PlayerState} from '../../public/PlayerState';
 import {ClientGame} from '../../game/client/ClientGame';
-import {FindLobbyIdInURL, LobbyId} from '../LobbyId';
+import {LoadingState} from '../state/loading/LoadingState';
 
-export class LobbyManager
-  extends PlayerState
-  implements LobbyServerRequests, LobbyClientRequests
-{
+export class LobbyManager extends PlayerState {
+  public Exit(): void {
+    this.state?.Exit();
+  }
+  private state: LobbyState | null = null;
+
   protected Register(socket: ClientSocket): void {
-    socket.on('EnterMenu', (lobbyId: LobbyId) => {
-      this.EnterMenu(lobbyId);
-    });
-    socket.on('MatchFound', (lobbyId: LobbyId) => {
-      this.MatchFound(lobbyId);
-    });
-    socket.on('FindingMatch', () => {
-      this.FindingMatch();
+    socket.on('GameReady', () => {
+      this.GameReady();
     });
   }
   protected Deregister(socket: ClientSocket): void {
-    socket.removeAllListeners('EnterMenu');
-    socket.removeAllListeners('MatchFound');
-    socket.removeAllListeners('FindingMatch');
+    socket.removeAllListeners('GameReady');
   }
-  private view: LobbyView = new LobbyView();
-  private model: Lobby = new Lobby(this.view, this);
 
   constructor() {
     super();
   }
 
+  private SetState(nextState: LobbyState) {
+    this.state = nextState;
+  }
+
   protected Enter(): void {
-    const lobbyId = FindLobbyIdInURL();
-    if (lobbyId) {
-      this.JoinLobby(lobbyId!);
-    } else {
-      this.RequestLobbyId();
-    }
+    this.state = new LoadingState(this.socket!, (nextState: LobbyState) =>
+      this.SetState(nextState)
+    );
   }
 
-  protected Exit(): void {
-    this.model.Exit();
-  }
-
-  RequestLobbyId(): void {
-    this.socket!.emit('RequestLobbyId');
-  }
-
-  EnterMenu(lobbyId: LobbyId) {
-    this.model.EnterMenu(lobbyId);
-  }
-  MatchFound(lobbyId: LobbyId) {
-    this.model.MatchFound(lobbyId);
+  GameReady() {
     this.SwitchState(new ClientGame());
-  }
-
-  JoinLobby(lobbyId: LobbyId) {
-    this.socket!.emit('JoinLobby', lobbyId);
-  }
-
-  FindMatch() {
-    this.socket!.emit('FindMatch');
-  }
-
-  FindingMatch() {
-    this.model.FindingMatch();
-  }
-
-  ShowMenu() {
-    this.model.GameEnded(EndGameState.Won);
   }
 }

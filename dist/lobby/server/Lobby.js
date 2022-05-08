@@ -20,6 +20,7 @@ class Lobby {
         this.state = State.Loading;
         view.Loading();
     }
+    GameReady() { }
     Exit() {
         this.view.Exit();
     }

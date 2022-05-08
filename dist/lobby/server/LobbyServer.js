@@ -53,7 +53,9 @@ class LobbyServer {
     ConnectLobbies(lobby, other) {
         lobby.lobbyId = other.lobbyId;
         lobby.MatchFound(lobby.lobbyId);
+        lobby.GameReady();
         other.MatchFound(other.lobbyId);
+        other.GameReady();
         this.EnterGame([lobby.GetPlayer(), other.GetPlayer()]);
     }
 }
@@ -89,6 +91,9 @@ class LobbySocketManager {
         socket.on('disconnect', () => {
             this.PlayerDisconnect(this.GetPlayer());
         });
+    }
+    GameReady() {
+        this.socket.emit('GameReady');
     }
 }
 //# sourceMappingURL=LobbyServer.js.map

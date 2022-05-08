@@ -18,6 +18,7 @@ export type LobbyServerSocket = ServerSocket<
 export interface LobbyClientRequests {
   EnterMenu: (lobbyId: LobbyId) => void;
   MatchFound: (lobbyId: LobbyId) => void;
+  GameReady: () => void;
   FindingMatch: () => void;
 }
 

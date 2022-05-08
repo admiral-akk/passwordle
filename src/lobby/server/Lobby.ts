@@ -20,6 +20,8 @@ export class Lobby implements LobbyClientRequests {
     view.Loading();
   }
 
+  GameReady() {}
+
   Exit() {
     this.view.Exit();
   }

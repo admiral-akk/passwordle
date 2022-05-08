@@ -69,7 +69,9 @@ export class LobbyServer {
   private ConnectLobbies(lobby: LobbySocketManager, other: LobbySocketManager) {
     lobby.lobbyId = other.lobbyId;
     lobby.MatchFound(lobby.lobbyId);
+    lobby.GameReady();
     other.MatchFound(other.lobbyId);
+    other.GameReady();
     this.EnterGame([lobby.GetPlayer(), other.GetPlayer()]);
   }
 }
@@ -113,5 +115,9 @@ class LobbySocketManager implements LobbyServerRequests, LobbyClientRequests {
     socket.on('disconnect', () => {
       this.PlayerDisconnect(this.GetPlayer());
     });
+  }
+
+  GameReady() {
+    this.socket.emit('GameReady');
   }
 }
