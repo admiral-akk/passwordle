@@ -20,6 +20,10 @@ export class Lobby implements LobbyClientRequests {
     view.Loading();
   }
 
+  Exit() {
+    this.view.Exit();
+  }
+
   FindingMatch() {
     this.state = State.FindingMatch;
     this.view.FindingMatch();
@@ -33,14 +37,6 @@ export class Lobby implements LobbyClientRequests {
   MatchFound(lobbyId: LobbyId) {
     this.state = State.FoundMatch;
     this.view.LobbyReady();
-    setTimeout(() => {
-      this.EnterGame();
-    }, 1000);
-  }
-
-  EnterGame() {
-    this.state = State.InGame;
-    this.view.InGame();
   }
 
   EnterMenu(lobbyId: LobbyId) {

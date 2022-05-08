@@ -11,5 +11,5 @@ export declare class LobbyView {
     Menu(hostLobby: () => void, matchmake: () => void): void;
     FindingMatch(): void;
     LobbyReady(): void;
-    InGame(): void;
+    Exit(): void;
 }

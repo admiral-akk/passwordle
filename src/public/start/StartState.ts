@@ -5,6 +5,7 @@ import {StartClientRequests} from './StartEvents';
 
 export class StartState extends PlayerState implements StartClientRequests {
   protected Enter(): void {}
+  protected Exit(): void {}
   protected Register(socket: ClientSocket): void {
     socket.on('ServerReady', () => this.ServerReady());
   }
@@ -23,6 +24,6 @@ export class StartState extends PlayerState implements StartClientRequests {
   }
 
   ServerReady() {
-    this.Exit(new LobbyManager());
+    this.SwitchState(new LobbyManager());
   }
 }

@@ -42,7 +42,7 @@ class LobbyView {
     LobbyReady() {
         this.SetModal(new LobbyReadyModal_1.LobbyReadyModal(this.modal));
     }
-    InGame() {
+    Exit() {
         if (this.currentModal) {
             this.currentModal.Exit();
         }

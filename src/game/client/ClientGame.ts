@@ -16,6 +16,7 @@ export class ClientGame
   extends PlayerState
   implements GameServerToClientEvents
 {
+  protected Exit(): void {}
   protected Enter(): void {}
   protected Register(socket: ClientSocket): void {
     socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
@@ -48,7 +49,7 @@ export class ClientGame
 
   OpponentDisconnected() {
     this.board.OpponentDisconnected();
-    this.Exit(new LobbyManager());
+    this.SwitchState(new LobbyManager());
   }
 
   SetSecret(secret: Word) {
@@ -69,7 +70,7 @@ export class ClientGame
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
     this.board.UpdatedAnswerKnowledge(update);
     if (this.board.IsGameOver()) {
-      this.Exit(new LobbyManager());
+      this.SwitchState(new LobbyManager());
     }
   }
 

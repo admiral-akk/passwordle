@@ -38,6 +38,9 @@ class LobbyManager extends PlayerState_1.PlayerState {
             this.RequestLobbyId();
         }
     }
+    Exit() {
+        this.model.Exit();
+    }
     RequestLobbyId() {
         this.socket.emit('RequestLobbyId');
     }
@@ -46,7 +49,7 @@ class LobbyManager extends PlayerState_1.PlayerState {
     }
     MatchFound(lobbyId) {
         this.model.MatchFound(lobbyId);
-        this.Exit(new ClientGame_1.ClientGame());
+        this.SwitchState(new ClientGame_1.ClientGame());
     }
     JoinLobby(lobbyId) {
         this.socket.emit('JoinLobby', lobbyId);

@@ -57,7 +57,7 @@ export class LobbyView {
     this.SetModal(new LobbyReadyModal(this.modal));
   }
 
-  InGame() {
+  Exit() {
     if (this.currentModal) {
       this.currentModal.Exit();
     }

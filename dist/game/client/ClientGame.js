@@ -12,6 +12,7 @@ class ClientGame extends PlayerState_1.PlayerState {
         this.board = new PlayerBoard_1.PlayerBoard(new GameView_1.GameView());
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }
+    Exit() { }
     Enter() { }
     Register(socket) {
         socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
@@ -31,7 +32,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     }
     OpponentDisconnected() {
         this.board.OpponentDisconnected();
-        this.Exit(new LobbyManager_1.LobbyManager());
+        this.SwitchState(new LobbyManager_1.LobbyManager());
     }
     SetSecret(secret) {
         this.board.SetSecret(secret);
@@ -48,7 +49,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     UpdatedAnswerKnowledge(update) {
         this.board.UpdatedAnswerKnowledge(update);
         if (this.board.IsGameOver()) {
-            this.Exit(new LobbyManager_1.LobbyManager());
+            this.SwitchState(new LobbyManager_1.LobbyManager());
         }
     }
     AddChar(char) {

@@ -20,6 +20,9 @@ class Lobby {
         this.state = State.Loading;
         view.Loading();
     }
+    Exit() {
+        this.view.Exit();
+    }
     FindingMatch() {
         this.state = State.FindingMatch;
         this.view.FindingMatch();
@@ -31,13 +34,6 @@ class Lobby {
     MatchFound(lobbyId) {
         this.state = State.FoundMatch;
         this.view.LobbyReady();
-        setTimeout(() => {
-            this.EnterGame();
-        }, 1000);
-    }
-    EnterGame() {
-        this.state = State.InGame;
-        this.view.InGame();
     }
     EnterMenu(lobbyId) {
         const url = (0, LobbyId_1.GenerateLobbyLink)(lobbyId);

@@ -46,6 +46,10 @@ export class LobbyManager
     }
   }
 
+  protected Exit(): void {
+    this.model.Exit();
+  }
+
   RequestLobbyId(): void {
     this.socket!.emit('RequestLobbyId');
   }
@@ -55,7 +59,7 @@ export class LobbyManager
   }
   MatchFound(lobbyId: LobbyId) {
     this.model.MatchFound(lobbyId);
-    this.Exit(new ClientGame());
+    this.SwitchState(new ClientGame());
   }
 
   JoinLobby(lobbyId: LobbyId) {

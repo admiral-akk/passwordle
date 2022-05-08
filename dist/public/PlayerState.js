@@ -6,8 +6,9 @@ class PlayerState {
         this.socket = null;
         this.setState = null;
     }
-    Exit(nextState) {
+    SwitchState(nextState) {
         this.Deregister(this.socket);
+        this.Exit();
         nextState.Initialize(this.socket, this.setState);
         this.setState(nextState);
     }

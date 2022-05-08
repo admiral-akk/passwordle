@@ -9,6 +9,7 @@ export declare class LobbyManager extends PlayerState implements LobbyServerRequ
     private model;
     constructor();
     protected Enter(): void;
+    protected Exit(): void;
     RequestLobbyId(): void;
     EnterMenu(lobbyId: LobbyId): void;
     MatchFound(lobbyId: LobbyId): void;
