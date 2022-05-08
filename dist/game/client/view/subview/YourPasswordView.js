@@ -17,6 +17,17 @@ class YourPasswordView extends Subview_1.Subview {
     Reset() {
         this.answer.Reset();
     }
+    Update(target) {
+        for (let i = 0; i < target.knownCharacters.length; i++) {
+            if (target.knownCharacters[i] === '') {
+                continue;
+            }
+            const x = this.answer.UpdateProgress(i);
+            if (x) {
+                x();
+            }
+        }
+    }
     GetAnimations(guess, target) {
         const animations = [];
         for (let i = 0; i < target.knownCharacters.length; i++) {

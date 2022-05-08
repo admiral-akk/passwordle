@@ -11,6 +11,17 @@ class OpponentPasswordView extends Subview_1.Subview {
         this.answer = new TargetWordView(this.root);
         this.AddSubview(this.answer);
     }
+    Update(target) {
+        for (let i = 0; i < target.knownCharacters.length; i++) {
+            if (target.knownCharacters[i] === '') {
+                continue;
+            }
+            const x = this.answer.UpdateProgress(i, target.knownCharacters[i]);
+            if (x) {
+                x();
+            }
+        }
+    }
     GetAnimations(guess, target) {
         const animations = [];
         for (let i = 0; i < target.knownCharacters.length; i++) {

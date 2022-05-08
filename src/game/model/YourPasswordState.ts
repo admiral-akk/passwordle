@@ -1,3 +1,4 @@
+import {TargetProgress} from '../client/structs/TargetProgress';
 import {YourPasswordView} from '../client/view/subview/YourPasswordView';
 import {Word} from '../structs/Word';
 
@@ -28,5 +29,9 @@ export class YourPasswordState {
   Reset() {
     this.password = null;
     this.state = State.WaitingForPassword;
+  }
+
+  Update(target: TargetProgress) {
+    this.view?.Update(target);
   }
 }

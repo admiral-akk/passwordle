@@ -1,3 +1,4 @@
+import { WordKnowledge } from '../client/structs/WordKnowledge';
 import { Word } from '../structs/Word';
 export declare class YourBoardState {
     private guesses;
@@ -8,6 +9,7 @@ export declare class YourBoardState {
     AddChar(char: string): boolean;
     Delete(): boolean;
     LockedGuess(): Word | null;
+    Update(knowledge: WordKnowledge): void;
     Exit(): void;
     Reset(): void;
 }

@@ -29,6 +29,10 @@ class YourPasswordState {
         this.password = null;
         this.state = State.WaitingForPassword;
     }
+    Update(target) {
+        var _a;
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Update(target);
+    }
 }
 exports.YourPasswordState = YourPasswordState;
 //# sourceMappingURL=YourPasswordState.js.map

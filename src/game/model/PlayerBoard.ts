@@ -75,7 +75,13 @@ export class PlayerBoard
     this.opponentBoard.OpponentLockedGuess();
   }
 
-  UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {}
+  UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
+    this.yourBoard.Update(update.playerKnowledge);
+    this.opponentBoard.Update(update.opponentKnowledge);
+    this.yourPassword.Update(update.playerProgress);
+    this.opponentPassword.Update(update.opponentProgress);
+    this.state = State.CanSubmit;
+  }
 
   SetSecret(secret: Word) {
     this.Reset();

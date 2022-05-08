@@ -57,7 +57,13 @@ class PlayerBoard {
     OpponentLockedGuess() {
         this.opponentBoard.OpponentLockedGuess();
     }
-    UpdatedAnswerKnowledge(update) { }
+    UpdatedAnswerKnowledge(update) {
+        this.yourBoard.Update(update.playerKnowledge);
+        this.opponentBoard.Update(update.opponentKnowledge);
+        this.yourPassword.Update(update.playerProgress);
+        this.opponentPassword.Update(update.opponentProgress);
+        this.state = State.CanSubmit;
+    }
     SetSecret(secret) {
         this.Reset();
         this.yourPassword.SetPassword(secret);

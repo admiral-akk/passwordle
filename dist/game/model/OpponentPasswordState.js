@@ -24,6 +24,10 @@ class OpponentPasswordState {
         this.password = null;
         this.state = State.WaitingForPassword;
     }
+    Update(progress) {
+        var _a;
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Update(progress);
+    }
 }
 exports.OpponentPasswordState = OpponentPasswordState;
 //# sourceMappingURL=OpponentPasswordState.js.map

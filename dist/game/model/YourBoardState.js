@@ -61,6 +61,15 @@ class YourBoardState {
         this.state = State.Locked;
         return (0, Word_1.ToWord)(this.currentGuess);
     }
+    Update(knowledge) {
+        var _a;
+        this.guesses.push((0, Word_1.ToWord)(knowledge.guess));
+        for (let i = 0; i < knowledge.guess.length; i++) {
+            (_a = this.view) === null || _a === void 0 ? void 0 : _a.SetCharKnowledge(this.guesses.length - 1, i, knowledge.guess[i], knowledge.letterKnowledge[i]);
+        }
+        this.currentGuess = '';
+        this.state = State.CanSubmit;
+    }
     Exit() {
         var _a;
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();

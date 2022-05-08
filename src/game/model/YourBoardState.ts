@@ -1,3 +1,4 @@
+import {WordKnowledge} from '../client/structs/WordKnowledge';
 import {CharUpdate} from '../client/view/CharUpdate';
 import {YourBoardView} from '../client/view/subview/YourBoardView';
 import {ToWord, Word} from '../structs/Word';
@@ -69,6 +70,21 @@ export class YourBoardState {
     this.state = State.Locked;
     return ToWord(this.currentGuess);
   }
+
+  Update(knowledge: WordKnowledge) {
+    this.guesses.push(ToWord(knowledge.guess));
+    for (let i = 0; i < knowledge.guess.length; i++) {
+      this.view?.SetCharKnowledge(
+        this.guesses.length - 1,
+        i,
+        knowledge.guess[i],
+        knowledge.letterKnowledge[i]
+      );
+    }
+    this.currentGuess = '';
+    this.state = State.CanSubmit;
+  }
+
   Exit() {
     this.view?.Exit();
   }

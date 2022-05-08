@@ -1,5 +1,4 @@
 import {InputManager} from './input/InputManager';
-import {GameView} from './view/GameView';
 import {Word} from '../structs/Word';
 import {PlayerBoard} from '../model/PlayerBoard';
 import {GameServerToClientEvents} from '../network/GameNetworkTypes';

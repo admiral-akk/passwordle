@@ -13,6 +13,17 @@ export class OpponentPasswordView extends Subview implements PasswordView {
     this.AddSubview(this.answer);
   }
 
+  Update(target: TargetProgress) {
+    for (let i = 0; i < target.knownCharacters.length; i++) {
+      if (target.knownCharacters[i] === '') {
+        continue;
+      }
+      const x = this.answer.UpdateProgress(i, target.knownCharacters[i]);
+      if (x) {
+        x!();
+      }
+    }
+  }
   GetAnimations(
     guess: string,
     target: TargetProgress

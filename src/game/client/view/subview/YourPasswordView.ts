@@ -21,6 +21,18 @@ export class YourPasswordView extends Subview implements PasswordView {
     this.answer.Reset();
   }
 
+  Update(target: TargetProgress) {
+    for (let i = 0; i < target.knownCharacters.length; i++) {
+      if (target.knownCharacters[i] === '') {
+        continue;
+      }
+      const x = this.answer.UpdateProgress(i);
+      if (x) {
+        x!();
+      }
+    }
+  }
+
   GetAnimations(
     guess: string,
     target: TargetProgress
