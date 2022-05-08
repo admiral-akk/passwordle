@@ -1,12 +1,15 @@
 import { ClientSocket } from './ClientNetworking';
-export declare abstract class PlayerState {
-    protected socket: ClientSocket | null;
+declare abstract class State<SocketType> {
+    protected socket: SocketType | null;
     private setState;
-    protected SwitchState(nextState: PlayerState): void;
+    protected SwitchState(nextState: State<SocketType>): void;
     protected abstract Enter(): void;
     protected abstract Exit(): void;
-    protected abstract Register(socket: ClientSocket): void;
-    protected abstract Deregister(socket: ClientSocket): void;
+    protected abstract Register(socket: SocketType): void;
+    protected abstract Deregister(socket: SocketType): void;
     constructor();
-    Initialize(socket: ClientSocket, setState: (nextState: PlayerState) => void): void;
+    Initialize(socket: SocketType, setState: (nextState: State<SocketType>) => void): void;
 }
+export declare abstract class PlayerState extends State<ClientSocket> {
+}
+export {};

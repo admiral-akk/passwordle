@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlayerState = void 0;
-class PlayerState {
+class State {
     constructor() {
         this.socket = null;
         this.setState = null;
@@ -18,6 +18,8 @@ class PlayerState {
         this.Register(socket);
         this.Enter();
     }
+}
+class PlayerState extends State {
 }
 exports.PlayerState = PlayerState;
 //# sourceMappingURL=PlayerState.js.map

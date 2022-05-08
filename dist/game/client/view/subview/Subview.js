@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ExplanationView = exports.Subview = void 0;
+exports.Subview = void 0;
 class Subview {
     constructor(base, rootClassName, explanationText = '') {
         this.elements = [];
@@ -30,17 +30,4 @@ class Subview {
     }
 }
 exports.Subview = Subview;
-class ExplanationView {
-    constructor(base, text = '') {
-        this.root = this.AddDiv(base, 'explanation');
-        this.root.innerText = text;
-    }
-    AddDiv(parent, className) {
-        const div = document.createElement('div');
-        div.className = className;
-        parent.appendChild(div);
-        return div;
-    }
-}
-exports.ExplanationView = ExplanationView;
 //# sourceMappingURL=Subview.js.map

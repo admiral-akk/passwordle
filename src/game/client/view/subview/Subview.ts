@@ -33,17 +33,3 @@ export abstract class Subview {
     explanation.innerText = text;
   }
 }
-
-export class ExplanationView {
-  private root: HTMLDivElement;
-  constructor(base: HTMLElement, text = '') {
-    this.root = this.AddDiv(base, 'explanation');
-    this.root.innerText = text;
-  }
-  private AddDiv(parent: HTMLElement, className: string): HTMLDivElement {
-    const div = document.createElement('div');
-    div.className = className;
-    parent.appendChild(div);
-    return div;
-  }
-}

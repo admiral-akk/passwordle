@@ -9,8 +9,3 @@ export declare abstract class Subview {
     protected AddDiv(parent: HTMLElement, className: string): HTMLDivElement;
     private AddExplanation;
 }
-export declare class ExplanationView {
-    private root;
-    constructor(base: HTMLElement, text?: string);
-    private AddDiv;
-}

@@ -1,9 +1,9 @@
 import {ClientSocket} from './ClientNetworking';
 
-export abstract class PlayerState {
-  protected socket: ClientSocket | null = null;
-  private setState: ((nextState: PlayerState) => void) | null = null;
-  protected SwitchState(nextState: PlayerState) {
+abstract class State<SocketType> {
+  protected socket: SocketType | null = null;
+  private setState: ((nextState: State<SocketType>) => void) | null = null;
+  protected SwitchState(nextState: State<SocketType>) {
     this.Deregister(this.socket!);
     this.Exit();
     nextState.Initialize(this.socket!, this.setState!);
@@ -11,12 +11,12 @@ export abstract class PlayerState {
   }
   protected abstract Enter(): void;
   protected abstract Exit(): void;
-  protected abstract Register(socket: ClientSocket): void;
-  protected abstract Deregister(socket: ClientSocket): void;
+  protected abstract Register(socket: SocketType): void;
+  protected abstract Deregister(socket: SocketType): void;
   constructor() {}
   public Initialize(
-    socket: ClientSocket,
-    setState: (nextState: PlayerState) => void
+    socket: SocketType,
+    setState: (nextState: State<SocketType>) => void
   ) {
     this.socket = socket;
     this.setState = setState;
@@ -24,3 +24,5 @@ export abstract class PlayerState {
     this.Enter();
   }
 }
+
+export abstract class PlayerState extends State<ClientSocket> {}
