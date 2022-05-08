@@ -10,6 +10,7 @@ import {
 } from '../network/updates/Updates';
 import {ClientSocket} from '../../public/ClientNetworking';
 import {PlayerState} from '../../public/PlayerState';
+import {NewLobbyManager} from '../../lobby/client/LobbyManager';
 
 export class ClientGame
   extends PlayerState
@@ -34,9 +35,9 @@ export class ClientGame
     socket.removeAllListeners('OpponentDisconnected');
   }
   private board: PlayerBoard;
-  constructor(showMenu: () => void) {
+  constructor() {
     super();
-    this.board = new PlayerBoard(new GameView(), showMenu);
+    this.board = new PlayerBoard(new GameView());
     new InputManager(
       (char: string) => this.AddChar(char),
       () => this.Delete(),
@@ -46,6 +47,7 @@ export class ClientGame
 
   OpponentDisconnected() {
     this.board.OpponentDisconnected();
+    this.Exit(new NewLobbyManager());
   }
 
   SetSecret(secret: Word) {
@@ -65,6 +67,9 @@ export class ClientGame
 
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
     this.board.UpdatedAnswerKnowledge(update);
+    if (this.board.IsGameOver()) {
+      this.Exit(new NewLobbyManager());
+    }
   }
 
   AddChar(char: string) {

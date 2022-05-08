@@ -16,9 +16,8 @@ var State;
     State[State["GameEnded"] = 2] = "GameEnded";
 })(State || (State = {}));
 class PlayerBoard {
-    constructor(view = null, showMenu = () => { }) {
+    constructor(view = null) {
         this.view = view;
-        this.showMenu = showMenu;
         this.state = State.WaitingForKnowledge;
         this.guesses = [];
         this.currentGuess = '';
@@ -33,7 +32,6 @@ class PlayerBoard {
     }
     OpponentDisconnected() {
         this.state = State.GameEnded;
-        this.showMenu();
     }
     AddedChar(update) {
         var _a;
@@ -60,6 +58,9 @@ class PlayerBoard {
             return null;
         }
         return new Updates_1.AddedChar(char);
+    }
+    IsGameOver() {
+        return this.state === State.GameEnded;
     }
     DeleteCommand() {
         if (this.state !== State.CanSubmit) {
@@ -130,7 +131,6 @@ class PlayerBoard {
         if ((0, Updates_1.Tie)(update)) {
             (_c = this.view) === null || _c === void 0 ? void 0 : _c.GameOver(EndGameView_1.EndGameState.Tied);
         }
-        this.showMenu();
     }
     SetSecret(secret) {
         var _a;

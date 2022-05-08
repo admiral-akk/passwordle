@@ -47,14 +47,10 @@ export class PlayerBoard
   opponentCharCount = 0;
   secret: Word | null = null;
 
-  constructor(
-    private view: GameView | null = null,
-    private showMenu: () => void = () => {}
-  ) {}
+  constructor(private view: GameView | null = null) {}
 
   OpponentDisconnected() {
     this.state = State.GameEnded;
-    this.showMenu();
   }
 
   AddedChar(update: AddedChar) {
@@ -91,6 +87,10 @@ export class PlayerBoard
       return null;
     }
     return new AddedChar(char);
+  }
+
+  IsGameOver(): boolean {
+    return this.state === State.GameEnded;
   }
 
   DeleteCommand(): Deleted | null {
@@ -195,7 +195,6 @@ export class PlayerBoard
     if (Tie(update)) {
       this.view?.GameOver(EndGameState.Tied);
     }
-    this.showMenu();
   }
 
   SetSecret(secret: Word) {

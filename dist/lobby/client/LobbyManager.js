@@ -33,7 +33,7 @@ class NewLobbyManager extends PlayerState_1.PlayerState {
     }
     MatchFound(lobbyId) {
         this.model.MatchFound(lobbyId);
-        this.Exit(new ClientGame_1.ClientGame(() => { }));
+        this.Exit(new ClientGame_1.ClientGame());
     }
     GameEnded(ending) { }
     JoinLobby(lobbyId) {

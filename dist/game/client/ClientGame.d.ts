@@ -7,7 +7,7 @@ export declare class ClientGame extends PlayerState implements GameServerToClien
     protected Register(socket: ClientSocket): void;
     protected Deregister(socket: ClientSocket): void;
     private board;
-    constructor(showMenu: () => void);
+    constructor();
     OpponentDisconnected(): void;
     SetSecret(secret: Word): void;
     OpponentLockedGuess(): void;

@@ -9,19 +9,19 @@ declare enum State {
 }
 export declare class PlayerBoard implements GameClientToServerEvents, GameServerToClientEvents {
     private view;
-    private showMenu;
     state: State;
     guesses: Word[];
     currentGuess: string;
     private GuessCount;
     opponentCharCount: number;
     secret: Word | null;
-    constructor(view?: GameView | null, showMenu?: () => void);
+    constructor(view?: GameView | null);
     OpponentDisconnected(): void;
     AddedChar(update: AddedChar): void;
     Deleted(): void;
     LockedGuess(update: LockedGuess): void;
     AddCharCommand(char: string): AddedChar | null;
+    IsGameOver(): boolean;
     DeleteCommand(): Deleted | null;
     SubmitCommand(): LockedGuess | null;
     OpponentAddedChar(): void;

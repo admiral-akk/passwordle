@@ -5,11 +5,11 @@ const InputManager_1 = require("./input/InputManager");
 const GameView_1 = require("./view/GameView");
 const PlayerBoard_1 = require("../model/PlayerBoard");
 const PlayerState_1 = require("../../public/PlayerState");
+const LobbyManager_1 = require("../../lobby/client/LobbyManager");
 class ClientGame extends PlayerState_1.PlayerState {
-    constructor(showMenu) {
+    constructor() {
         super();
-        console.log('build game');
-        this.board = new PlayerBoard_1.PlayerBoard(new GameView_1.GameView(), showMenu);
+        this.board = new PlayerBoard_1.PlayerBoard(new GameView_1.GameView());
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }
     Register(socket) {
@@ -30,6 +30,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     }
     OpponentDisconnected() {
         this.board.OpponentDisconnected();
+        this.Exit(new LobbyManager_1.NewLobbyManager());
     }
     SetSecret(secret) {
         this.board.SetSecret(secret);
@@ -45,6 +46,9 @@ class ClientGame extends PlayerState_1.PlayerState {
     }
     UpdatedAnswerKnowledge(update) {
         this.board.UpdatedAnswerKnowledge(update);
+        if (this.board.IsGameOver()) {
+            this.Exit(new LobbyManager_1.NewLobbyManager());
+        }
     }
     AddChar(char) {
         const res = this.board.AddCharCommand(char);

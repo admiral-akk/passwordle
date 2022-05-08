@@ -40,7 +40,7 @@ export class NewLobbyManager
   }
   MatchFound(lobbyId: string) {
     this.model.MatchFound(lobbyId);
-    this.Exit(new ClientGame(() => {}));
+    this.Exit(new ClientGame());
   }
   GameEnded(ending: EndGameState) {}
 
