@@ -24,19 +24,16 @@ export class NewLobbyManager
   private view: LobbyView = new LobbyView();
   private model: NewLobby = new NewLobby(this.view, this);
 
-  constructor(
-    socket: ClientSocket,
-    setState: (nextState: PlayerState) => void
-  ) {
-    super(socket, setState);
+  constructor() {
+    super();
   }
 
   JoinLobby(lobbyId: string) {
-    this.socket.emit('JoinLobby', lobbyId);
+    this.socket!.emit('JoinLobby', lobbyId);
   }
 
   FindMatch() {
-    this.socket.emit('FindMatch');
+    this.socket!.emit('FindMatch');
   }
 
   ShowMenu() {

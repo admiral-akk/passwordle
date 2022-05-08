@@ -6,8 +6,8 @@ const Lobby_1 = require("../server/Lobby");
 const EndGameView_1 = require("../../game/client/view/subview/EndGameView");
 const PlayerState_1 = require("../../public/PlayerState");
 class NewLobbyManager extends PlayerState_1.PlayerState {
-    constructor(socket, setState) {
-        super(socket, setState);
+    constructor() {
+        super();
         this.view = new LobbyView_1.LobbyView();
         this.model = new Lobby_1.NewLobby(this.view, this);
     }

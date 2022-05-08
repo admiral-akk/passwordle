@@ -11,13 +11,13 @@ export class Player {
     (nextState: PlayerState) => this.SetState(nextState)
   );
   constructor() {
-    const lobby = new NewLobbyManager(this.socket, (nextState: PlayerState) =>
+    const lobby = new NewLobbyManager();
+    lobby.Initialize(this.socket, (nextState: PlayerState) =>
       this.SetState(nextState)
     );
-    new ClientGame(
-      this.socket,
-      (nextState: PlayerState) => this.SetState(nextState),
-      () => lobby.ShowMenu()
+    const client = new ClientGame(() => lobby.ShowMenu());
+    client.Initialize(this.socket, (nextState: PlayerState) =>
+      this.SetState(nextState)
     );
   }
 

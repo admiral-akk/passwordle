@@ -9,8 +9,10 @@ class Player {
     constructor() {
         this.socket = (0, ClientNetworking_1.GetSocket)();
         this.state = new StartState_1.StartState(this.socket, (nextState) => this.SetState(nextState));
-        const lobby = new LobbyManager_1.NewLobbyManager(this.socket, (nextState) => this.SetState(nextState));
-        new ClientGame_1.ClientGame(this.socket, (nextState) => this.SetState(nextState), () => lobby.ShowMenu());
+        const lobby = new LobbyManager_1.NewLobbyManager();
+        lobby.Initialize(this.socket, (nextState) => this.SetState(nextState));
+        const client = new ClientGame_1.ClientGame(() => lobby.ShowMenu());
+        client.Initialize(this.socket, (nextState) => this.SetState(nextState));
     }
     SetState(nextState) {
         this.state = nextState;

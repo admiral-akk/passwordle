@@ -1,9 +1,10 @@
 import { ClientSocket } from './ClientNetworking';
 export declare abstract class PlayerState {
-    protected socket: ClientSocket;
-    private SetState;
+    protected socket: ClientSocket | null;
+    private setState;
     protected Exit(nextState: PlayerState): void;
     protected abstract Register(socket: ClientSocket): void;
     protected abstract Deregister(socket: ClientSocket): void;
-    constructor(socket: ClientSocket, SetState: (nextState: PlayerState) => void);
+    constructor();
+    Initialize(socket: ClientSocket, setState: (nextState: PlayerState) => void): void;
 }

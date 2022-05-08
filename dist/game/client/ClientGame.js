@@ -6,8 +6,8 @@ const GameView_1 = require("./view/GameView");
 const PlayerBoard_1 = require("../model/PlayerBoard");
 const PlayerState_1 = require("../../public/PlayerState");
 class ClientGame extends PlayerState_1.PlayerState {
-    constructor(socket, setState, showMenu) {
-        super(socket, setState);
+    constructor(showMenu) {
+        super();
         this.board = new PlayerBoard_1.PlayerBoard(new GameView_1.GameView(), showMenu);
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }

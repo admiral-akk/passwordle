@@ -34,12 +34,8 @@ export class ClientGame
     socket.removeAllListeners('OpponentDisconnected');
   }
   private board: PlayerBoard;
-  constructor(
-    socket: ClientSocket,
-    setState: (nextState: PlayerState) => void,
-    showMenu: () => void
-  ) {
-    super(socket, setState);
+  constructor(showMenu: () => void) {
+    super();
     this.board = new PlayerBoard(new GameView(), showMenu);
     new InputManager(
       (char: string) => this.AddChar(char),
@@ -77,7 +73,7 @@ export class ClientGame
     if (res) {
       const command = res as AddedChar;
       this.board.AddedChar(command);
-      this.socket.emit('AddedChar', command);
+      this.socket!.emit('AddedChar', command);
     }
   }
 
@@ -86,7 +82,7 @@ export class ClientGame
     // success: tell the server/view about it
     if (res) {
       this.board.Deleted();
-      this.socket.emit('Deleted');
+      this.socket!.emit('Deleted');
     }
   }
 
@@ -96,7 +92,7 @@ export class ClientGame
     const command = res as LockedGuess;
     if (command) {
       this.board.LockedGuess(command);
-      this.socket.emit('LockedGuess', command);
+      this.socket!.emit('LockedGuess', command);
     }
   }
 }

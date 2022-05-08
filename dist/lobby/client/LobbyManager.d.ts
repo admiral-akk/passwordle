@@ -6,7 +6,7 @@ export declare class NewLobbyManager extends PlayerState implements LobbyServerR
     protected Deregister(socket: ClientSocket): void;
     private view;
     private model;
-    constructor(socket: ClientSocket, setState: (nextState: PlayerState) => void);
+    constructor();
     JoinLobby(lobbyId: string): void;
     FindMatch(): void;
     ShowMenu(): void;
