@@ -2,21 +2,17 @@ import {InputManager} from './input/InputManager';
 import {GameView} from './view/GameView';
 import {Word} from '../structs/Word';
 import {PlayerBoard} from '../model/PlayerBoard';
-import {
-  GameClientSocket,
-  GameServerToClientEvents,
-} from '../network/GameNetworkTypes';
+import {GameServerToClientEvents} from '../network/GameNetworkTypes';
 import {
   AddedChar,
   LockedGuess,
   UpdatedAnswerKnowledge,
 } from '../network/updates/Updates';
-import {ExitState, PlayerState} from '../../public/Player';
+import {PlayerState} from '../../public/Player';
+import {ClientSocket} from '../../public/ClientNetworking';
 
-export class ClientGame implements GameServerToClientEvents, PlayerState {
-  private board: PlayerBoard;
-  constructor(private socket: GameClientSocket, showMenu: () => void) {
-    this.board = new PlayerBoard(new GameView(), showMenu);
+export class ClientGame implements GameServerToClientEvents {
+  protected Register(socket: ClientSocket): void {
     socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
     socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>
       this.UpdatedAnswerKnowledge(update)
@@ -25,18 +21,23 @@ export class ClientGame implements GameServerToClientEvents, PlayerState {
     socket.on('OpponentDeleted', () => this.OpponentDeleted());
     socket.on('OpponentLockedGuess', () => this.OpponentLockedGuess());
     socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
+  }
+  protected Deregister(socket: ClientSocket): void {
+    throw new Error('Method not implemented.');
+  }
+  private board: PlayerBoard;
+  constructor(
+    private socket: ClientSocket,
+    setState: (nextState: PlayerState) => void,
+    showMenu: () => void
+  ) {
+    this.Register(socket);
+    this.board = new PlayerBoard(new GameView(), showMenu);
     new InputManager(
       (char: string) => this.AddChar(char),
       () => this.Delete(),
       () => this.Submit()
     );
-  }
-
-  Enter(prevState: ExitState): void {
-    throw new Error('Method not implemented.');
-  }
-  Exit(): ExitState {
-    throw new Error('Method not implemented.');
   }
 
   OpponentDisconnected() {

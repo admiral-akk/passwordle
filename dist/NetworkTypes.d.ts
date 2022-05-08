@@ -5,9 +5,9 @@ import { LobbyClientRequests, LobbyServerRequests } from './lobby/server/LobbyNe
 import { NewLobbyServer } from './lobby/server/LobbyServer';
 import { PlayerId } from './PlayerId';
 import { SocketManager } from './SocketManager';
-export interface ServerToClientEvents extends GameClientToServerEvents, LobbyClientRequests {
+export interface ServerToClientEvents extends GameServerToClientEvents, LobbyClientRequests {
 }
-export interface ClientToServerEvents extends GameServerToClientEvents, LobbyServerRequests {
+export interface ClientToServerEvents extends GameClientToServerEvents, LobbyServerRequests {
 }
 export interface InterServerEvents {
 }

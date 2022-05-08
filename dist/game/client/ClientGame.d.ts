@@ -1,13 +1,14 @@
 import { Word } from '../structs/Word';
-import { GameClientSocket, GameServerToClientEvents } from '../network/GameNetworkTypes';
+import { GameServerToClientEvents } from '../network/GameNetworkTypes';
 import { UpdatedAnswerKnowledge } from '../network/updates/Updates';
-import { ExitState, PlayerState } from '../../public/Player';
-export declare class ClientGame implements GameServerToClientEvents, PlayerState {
+import { PlayerState } from '../../public/Player';
+import { ClientSocket } from '../../public/ClientNetworking';
+export declare class ClientGame implements GameServerToClientEvents {
     private socket;
+    protected Register(socket: ClientSocket): void;
+    protected Deregister(socket: ClientSocket): void;
     private board;
-    constructor(socket: GameClientSocket, showMenu: () => void);
-    Enter(prevState: ExitState): void;
-    Exit(): ExitState;
+    constructor(socket: ClientSocket, setState: (nextState: PlayerState) => void, showMenu: () => void);
     OpponentDisconnected(): void;
     SetSecret(secret: Word): void;
     OpponentLockedGuess(): void;

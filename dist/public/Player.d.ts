@@ -1,18 +1,15 @@
-export declare enum PlayerStateEnum {
-    Start = 0,
-    Lobby = 1,
-    Game = 2
-}
-export declare class ExitState {
-    prevState: PlayerStateEnum;
-    constructor(prevState: PlayerStateEnum);
-}
-export interface PlayerState {
-    Enter(prevState: ExitState): void;
-    Exit(): ExitState;
+import { ClientSocket } from './ClientNetworking';
+export declare abstract class PlayerState {
+    protected socket: ClientSocket;
+    private SetState;
+    protected Exit(nextState: PlayerState): void;
+    protected abstract Register(socket: ClientSocket): void;
+    protected abstract Deregister(socket: ClientSocket): void;
+    constructor(socket: ClientSocket, SetState: (nextState: PlayerState) => void);
 }
 export declare class Player {
-    private state;
     private socket;
+    private state;
     constructor();
+    SetState(nextState: PlayerState): void;
 }

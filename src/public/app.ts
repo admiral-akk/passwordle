@@ -1,3 +1,3 @@
 import {Player} from './Player';
 
-new Player();
+const player = new Player();

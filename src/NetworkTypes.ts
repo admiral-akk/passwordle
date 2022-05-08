@@ -12,10 +12,10 @@ import {PlayerId, ToPlayerId} from './PlayerId';
 import {SocketManager} from './SocketManager';
 
 export interface ServerToClientEvents
-  extends GameClientToServerEvents,
+  extends GameServerToClientEvents,
     LobbyClientRequests {}
 export interface ClientToServerEvents
-  extends GameServerToClientEvents,
+  extends GameClientToServerEvents,
     LobbyServerRequests {}
 
 export interface InterServerEvents {}

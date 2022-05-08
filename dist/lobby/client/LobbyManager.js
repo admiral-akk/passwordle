@@ -5,16 +5,21 @@ const LobbyView_1 = require("./view/LobbyView");
 const Lobby_1 = require("../server/Lobby");
 const EndGameView_1 = require("../../game/client/view/subview/EndGameView");
 class NewLobbyManager {
-    constructor(socket) {
+    constructor(socket, setState) {
         this.socket = socket;
         this.view = new LobbyView_1.LobbyView();
         this.model = new Lobby_1.NewLobby(this.view, this);
-        RegisterSocket(socket, this.model);
+        this.Register(socket);
     }
-    Enter(prevState) {
-        throw new Error('Method not implemented.');
+    Register(socket) {
+        socket.on('EnterMenu', (lobbyId) => {
+            this.model.EnterMenu(lobbyId);
+        });
+        socket.on('MatchFound', (lobbyId) => {
+            this.model.MatchFound(lobbyId);
+        });
     }
-    Exit() {
+    Deregister(socket) {
         throw new Error('Method not implemented.');
     }
     JoinLobby(lobbyId) {
@@ -28,12 +33,4 @@ class NewLobbyManager {
     }
 }
 exports.NewLobbyManager = NewLobbyManager;
-function RegisterSocket(socket, model) {
-    socket.on('EnterMenu', (lobbyId) => {
-        model.EnterMenu(lobbyId);
-    });
-    socket.on('MatchFound', (lobbyId) => {
-        model.MatchFound(lobbyId);
-    });
-}
 //# sourceMappingURL=LobbyManager.js.map
