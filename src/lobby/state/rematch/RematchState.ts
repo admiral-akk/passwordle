@@ -37,7 +37,7 @@ export class RematchState extends LobbyState {
     this.socket?.emit('RequestRematch');
   }
   private ReturnToMenu() {
-    this.socket?.emit('RequestLobbyId');
+    this.socket?.emit('DeclineRematch');
   }
 
   MatchFound(lobbyId: LobbyId) {

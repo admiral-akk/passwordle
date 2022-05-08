@@ -9,6 +9,8 @@ export declare class LobbyServer {
     private RequestRematch;
     PlayerJoins(socket: LobbyServerSocket): void;
     PlayerDisconnected(playerId: PlayerId): void;
+    private DeleteLobby;
+    private DeclineRematch;
     EndGame(sockets: LobbyServerSocket[]): void;
     private FindMatch;
     private AddToLobby;

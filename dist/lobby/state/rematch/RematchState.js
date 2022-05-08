@@ -32,7 +32,7 @@ class RematchState extends PlayerState_1.LobbyState {
     }
     ReturnToMenu() {
         var _a;
-        (_a = this.socket) === null || _a === void 0 ? void 0 : _a.emit('RequestLobbyId');
+        (_a = this.socket) === null || _a === void 0 ? void 0 : _a.emit('DeclineRematch');
     }
     MatchFound(lobbyId) {
         this.SwitchState(new MatchState_1.MatchState(lobbyId));

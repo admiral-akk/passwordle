@@ -17,9 +17,7 @@ export class LobbyServer {
   private RequestRematch(playerId: PlayerId) {
     const lobbyId = this.players[playerId].lobbyId;
     const lobby = this.lobbies[lobbyId];
-    console.log(`rematch lenght ${lobby.rematchRequested.length}`);
     lobby.RequestRematch(playerId);
-    console.log(`rematch lenght ${lobby.rematchRequested.length}`);
     if (lobby.rematchRequested.length === 2) {
       lobby.rematchRequested = [];
       this.StartGame(lobby);
@@ -34,7 +32,8 @@ export class LobbyServer {
       (lobbyId: LobbyId) => this.JoinLobby(playerId, lobbyId),
       () => this.RequestLobbyId(playerId),
       (playerId: PlayerId) => this.PlayerDisconnected(playerId),
-      () => this.RequestRematch(playerId)
+      () => this.RequestRematch(playerId),
+      () => this.DeclineRematch(playerId)
     );
   }
 
@@ -57,6 +56,24 @@ export class LobbyServer {
     }
   }
 
+  private DeleteLobby(lobbyId: LobbyId) {
+    if (lobbyId in this.lobbies) {
+      delete this.lobbies[lobbyId];
+    }
+    if (this.publicLobbies.indexOf(lobbyId) > -1) {
+      this.publicLobbies.splice(this.publicLobbies.indexOf(lobbyId));
+    }
+  }
+
+  private DeclineRematch(playerId: PlayerId) {
+    const lobbyId = this.players[playerId].lobbyId;
+    const players = this.lobbies[lobbyId].players;
+    this.DeleteLobby(lobbyId);
+    players.forEach(playerId => {
+      this.RequestLobbyId(playerId);
+    });
+  }
+
   EndGame(sockets: LobbyServerSocket[]) {}
 
   private FindMatch(playerId: PlayerId) {
@@ -73,12 +90,7 @@ export class LobbyServer {
   private AddToLobby(lobby: Lobby, playerId: PlayerId) {
     lobby.players.push(playerId);
     const oldLobbyId = this.players[playerId].lobbyId;
-    if (oldLobbyId in this.lobbies) {
-      delete this.lobbies[oldLobbyId];
-    }
-    if (this.publicLobbies.indexOf(oldLobbyId) > -1) {
-      this.publicLobbies.splice(this.publicLobbies.indexOf(oldLobbyId));
-    }
+    this.DeleteLobby(oldLobbyId);
     this.players[playerId].lobbyId = lobby.lobbyId;
     this.StartGame(lobby);
   }
@@ -127,7 +139,8 @@ class LobbySocketManager implements LobbyServerRequests, LobbyClientRequests {
     public JoinLobby: (lobbyId: LobbyId) => void,
     public RequestLobbyId: () => void,
     public PlayerDisconnect: (playerId: PlayerId) => void,
-    public RequestRematch: () => void
+    public RequestRematch: () => void,
+    public DeclineRematch: () => void
   ) {
     this.lobbyId = GenerateLobbyId(socket);
     this.RegisterSocket(socket);
@@ -152,6 +165,7 @@ class LobbySocketManager implements LobbyServerRequests, LobbyClientRequests {
     socket.on('JoinLobby', (lobbyId: LobbyId) => this.JoinLobby(lobbyId));
     socket.on('RequestLobbyId', () => this.RequestLobbyId());
     socket.on('RequestRematch', () => this.RequestRematch());
+    socket.on('DeclineRematch', () => this.DeclineRematch());
     socket.on('disconnect', () => {
       this.PlayerDisconnect(this.GetPlayer());
     });

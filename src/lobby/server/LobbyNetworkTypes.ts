@@ -27,4 +27,5 @@ export interface LobbyServerRequests {
   JoinLobby: (lobbyId: LobbyId) => void;
   FindMatch: () => void;
   RequestRematch: () => void;
+  DeclineRematch: () => void;
 }
