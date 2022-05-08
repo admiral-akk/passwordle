@@ -22,7 +22,7 @@ const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.json());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
-const lobbyServer = new LobbyServer_1.NewLobbyServer(EnterGame);
+const lobbyServer = new LobbyServer_1.LobbyServer(EnterGame);
 const gameServer = new GameServerManager_1.GameServerManager(ExitGame);
 const socketManager = new SocketManager_1.SocketManager();
 (0, NetworkTypes_1.GetServer)(app, socketManager, lobbyServer);

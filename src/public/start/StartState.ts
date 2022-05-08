@@ -1,10 +1,17 @@
-import {NewLobbyManager} from '../../lobby/client/LobbyManager';
+import {LobbyManager} from '../../lobby/client/LobbyManager';
 import {ClientSocket} from '../ClientNetworking';
 import {PlayerState} from '../PlayerState';
+import {StartClientRequests} from './StartEvents';
 
-export class StartState extends PlayerState {
-  protected Register(socket: ClientSocket): void {}
-  protected Deregister(socket: ClientSocket): void {}
+export class StartState extends PlayerState implements StartClientRequests {
+  protected Enter(): void {}
+  protected Register(socket: ClientSocket): void {
+    socket.on('ServerReady', () => this.ServerReady());
+  }
+
+  protected Deregister(socket: ClientSocket): void {
+    socket.removeAllListeners('ServerReady');
+  }
 
   constructor(
     socket: ClientSocket,
@@ -12,6 +19,10 @@ export class StartState extends PlayerState {
   ) {
     super();
     this.Initialize(socket, setState);
-    this.Exit(new NewLobbyManager());
+    socket.emit('ClientReady');
+  }
+
+  ServerReady() {
+    this.Exit(new LobbyManager());
   }
 }

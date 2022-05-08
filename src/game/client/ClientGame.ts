@@ -10,12 +10,13 @@ import {
 } from '../network/updates/Updates';
 import {ClientSocket} from '../../public/ClientNetworking';
 import {PlayerState} from '../../public/PlayerState';
-import {NewLobbyManager} from '../../lobby/client/LobbyManager';
+import {LobbyManager} from '../../lobby/client/LobbyManager';
 
 export class ClientGame
   extends PlayerState
   implements GameServerToClientEvents
 {
+  protected Enter(): void {}
   protected Register(socket: ClientSocket): void {
     socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
     socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>
@@ -47,7 +48,7 @@ export class ClientGame
 
   OpponentDisconnected() {
     this.board.OpponentDisconnected();
-    this.Exit(new NewLobbyManager());
+    this.Exit(new LobbyManager());
   }
 
   SetSecret(secret: Word) {
@@ -68,7 +69,7 @@ export class ClientGame
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
     this.board.UpdatedAnswerKnowledge(update);
     if (this.board.IsGameOver()) {
-      this.Exit(new NewLobbyManager());
+      this.Exit(new LobbyManager());
     }
   }
 

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewLobby = void 0;
+exports.Lobby = void 0;
+const LobbyId_1 = require("../LobbyId");
 var State;
 (function (State) {
     State[State["Loading"] = 0] = "Loading";
@@ -12,23 +13,20 @@ var State;
     State[State["InGame"] = 6] = "InGame";
     State[State["EndGame"] = 7] = "EndGame";
 })(State || (State = {}));
-const LOBBY_ID_QUERY_NAME = 'lobbyId';
-class NewLobby {
+class Lobby {
     constructor(view, server) {
         this.view = view;
         this.server = server;
         this.state = State.Loading;
         view.Loading();
-        if (FindLobbyIdInURL()) {
-            server.JoinLobby(FindLobbyIdInURL());
-        }
+    }
+    FindingMatch() {
+        this.state = State.FindingMatch;
+        this.view.FindingMatch();
     }
     GameEnded(ending) {
         this.state = State.EndGame;
         this.view.GameEnded(ending);
-        setTimeout(() => {
-            this.EnterMenu('');
-        }, 3000);
     }
     MatchFound(lobbyId) {
         this.state = State.FoundMatch;
@@ -42,25 +40,12 @@ class NewLobby {
         this.view.InGame();
     }
     EnterMenu(lobbyId) {
-        const url = GenerateLobbyLink(lobbyId);
+        const url = (0, LobbyId_1.GenerateLobbyLink)(lobbyId);
         this.state = State.InMenu;
-        this.view.Menu(() => CopyToClipboard(url), () => this.FindMatch());
-    }
-    FindMatch() {
-        this.state = State.FindingMatch;
-        this.view.FindingMatch();
-        this.server.FindMatch();
+        this.view.Menu(() => CopyToClipboard(url), () => this.server.FindMatch());
     }
 }
-exports.NewLobby = NewLobby;
-function FindLobbyIdInURL() {
-    return new URLSearchParams(window.location.search).get(LOBBY_ID_QUERY_NAME);
-}
-function GenerateLobbyLink(lobbyId) {
-    const url = new URLSearchParams(window.location.search);
-    url.append(LOBBY_ID_QUERY_NAME, lobbyId);
-    return `${window.location.href}?${url.toString()}`;
-}
+exports.Lobby = Lobby;
 function CopyToClipboard(url) {
     navigator.clipboard.writeText(url);
 }

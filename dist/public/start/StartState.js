@@ -4,12 +4,20 @@ exports.StartState = void 0;
 const LobbyManager_1 = require("../../lobby/client/LobbyManager");
 const PlayerState_1 = require("../PlayerState");
 class StartState extends PlayerState_1.PlayerState {
-    Register(socket) { }
-    Deregister(socket) { }
+    Enter() { }
+    Register(socket) {
+        socket.on('ServerReady', () => this.ServerReady());
+    }
+    Deregister(socket) {
+        socket.removeAllListeners('ServerReady');
+    }
     constructor(socket, setState) {
         super();
         this.Initialize(socket, setState);
-        this.Exit(new LobbyManager_1.NewLobbyManager());
+        socket.emit('ClientReady');
+    }
+    ServerReady() {
+        this.Exit(new LobbyManager_1.LobbyManager());
     }
 }
 exports.StartState = StartState;

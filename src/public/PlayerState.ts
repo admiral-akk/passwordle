@@ -8,6 +8,7 @@ export abstract class PlayerState {
     nextState.Initialize(this.socket!, this.setState!);
     this.setState!(nextState);
   }
+  protected abstract Enter(): void;
   protected abstract Register(socket: ClientSocket): void;
   protected abstract Deregister(socket: ClientSocket): void;
   constructor() {}
@@ -18,5 +19,6 @@ export abstract class PlayerState {
     this.socket = socket;
     this.setState = setState;
     this.Register(socket);
+    this.Enter();
   }
 }

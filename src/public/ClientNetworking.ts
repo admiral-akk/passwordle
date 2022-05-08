@@ -10,6 +10,11 @@ export function GetSocket(): ClientSocket {
   } else {
     socket = io();
   }
+  socket.onAny((...args: any[]) => {
+    args.forEach(arg => {
+      console.log(`Arg: ${arg}`);
+    });
+  });
   socket.on('connect', () => {
     console.log(`connected: ${socket.id}`);
   });

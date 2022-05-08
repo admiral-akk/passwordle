@@ -1,5 +1,6 @@
 import {EndGameState} from '../../game/client/view/subview/EndGameView';
 import {LobbyView} from '../client/view/LobbyView';
+import {GenerateLobbyLink, LobbyId} from '../LobbyId';
 import {LobbyClientRequests, LobbyServerRequests} from './LobbyNetworkTypes';
 
 enum State {
@@ -13,25 +14,23 @@ enum State {
   EndGame,
 }
 
-const LOBBY_ID_QUERY_NAME = 'lobbyId';
-
-export class NewLobby implements LobbyClientRequests {
+export class Lobby implements LobbyClientRequests {
   private state: State = State.Loading;
   constructor(private view: LobbyView, private server: LobbyServerRequests) {
     view.Loading();
-    if (FindLobbyIdInURL()) {
-      server.JoinLobby(FindLobbyIdInURL()!);
-    }
   }
+
+  FindingMatch() {
+    this.state = State.FindingMatch;
+    this.view.FindingMatch();
+  }
+
   GameEnded(ending: EndGameState) {
     this.state = State.EndGame;
     this.view.GameEnded(ending);
-    setTimeout(() => {
-      this.EnterMenu('');
-    }, 3000);
   }
 
-  MatchFound(lobbyId: string) {
+  MatchFound(lobbyId: LobbyId) {
     this.state = State.FoundMatch;
     this.view.LobbyReady();
     setTimeout(() => {
@@ -44,30 +43,14 @@ export class NewLobby implements LobbyClientRequests {
     this.view.InGame();
   }
 
-  EnterMenu(lobbyId: string) {
+  EnterMenu(lobbyId: LobbyId) {
     const url = GenerateLobbyLink(lobbyId);
     this.state = State.InMenu;
     this.view.Menu(
       () => CopyToClipboard(url),
-      () => this.FindMatch()
+      () => this.server.FindMatch()
     );
   }
-
-  FindMatch() {
-    this.state = State.FindingMatch;
-    this.view.FindingMatch();
-    this.server.FindMatch();
-  }
-}
-
-function FindLobbyIdInURL(): string | null {
-  return new URLSearchParams(window.location.search).get(LOBBY_ID_QUERY_NAME);
-}
-
-function GenerateLobbyLink(lobbyId: string): string {
-  const url = new URLSearchParams(window.location.search);
-  url.append(LOBBY_ID_QUERY_NAME, lobbyId);
-  return `${window.location.href}?${url.toString()}`;
 }
 
 function CopyToClipboard(url: string) {

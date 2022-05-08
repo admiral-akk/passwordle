@@ -1,7 +1,7 @@
 import { EndGameState } from '../../game/client/view/subview/EndGameView';
 import { PlayerId } from '../../PlayerId';
 import { LobbyServerSocket } from './LobbyNetworkTypes';
-export declare class NewLobbyServer {
+export declare class LobbyServer {
     private EnterGame;
     private lobbies;
     private publicLobbies;
@@ -10,6 +10,7 @@ export declare class NewLobbyServer {
     PlayerDisconnected(playerId: PlayerId): void;
     EndGame(sockets: LobbyServerSocket[], ending: Record<PlayerId, EndGameState>): void;
     private FindMatch;
+    private RequestLobbyId;
     private JoinLobby;
     private ConnectLobbies;
 }

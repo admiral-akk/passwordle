@@ -7,16 +7,22 @@ import {
   LobbyClientRequests,
   LobbyServerRequests,
 } from './lobby/server/LobbyNetworkTypes';
-import {NewLobbyServer} from './lobby/server/LobbyServer';
+import {LobbyServer} from './lobby/server/LobbyServer';
 import {PlayerId, ToPlayerId} from './PlayerId';
+import {
+  StartClientRequests,
+  StartServerRequests,
+} from './public/start/StartEvents';
 import {SocketManager} from './SocketManager';
 
 export interface ServerToClientEvents
   extends GameServerToClientEvents,
-    LobbyClientRequests {}
+    LobbyClientRequests,
+    StartClientRequests {}
 export interface ClientToServerEvents
   extends GameClientToServerEvents,
-    LobbyServerRequests {}
+    LobbyServerRequests,
+    StartServerRequests {}
 
 export interface InterServerEvents {}
 export interface SocketData {
@@ -33,7 +39,7 @@ export type ServerSocket = Socket<
 export function GetServer(
   app: Express.Application,
   socketManager: SocketManager,
-  lobbyServer: NewLobbyServer
+  lobbyServer: LobbyServer
 ): Server<
   ClientToServerEvents,
   ServerToClientEvents,
@@ -49,9 +55,16 @@ export function GetServer(
   >(http);
 
   io.on('connection', socket => {
+    socket.onAny((...args: any[]) => {
+      args.forEach(arg => {
+        console.log(`Arg: ${arg}`);
+      });
+    });
     socket.data.playerId = ToPlayerId(socket.id);
     socketManager.AddSocket(socket);
     lobbyServer.PlayerJoins(socket);
+    socket.on('ClientReady', () => socket.emit('ServerReady'));
+    socket.emit('ServerReady');
   });
 
   http.listen(4000, () => {

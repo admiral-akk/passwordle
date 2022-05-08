@@ -1,16 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewLobbyManager = void 0;
+exports.LobbyManager = void 0;
 const LobbyView_1 = require("./view/LobbyView");
 const Lobby_1 = require("../server/Lobby");
 const EndGameView_1 = require("../../game/client/view/subview/EndGameView");
 const PlayerState_1 = require("../../public/PlayerState");
 const ClientGame_1 = require("../../game/client/ClientGame");
-class NewLobbyManager extends PlayerState_1.PlayerState {
+const LobbyId_1 = require("../LobbyId");
+class LobbyManager extends PlayerState_1.PlayerState {
     constructor() {
         super();
         this.view = new LobbyView_1.LobbyView();
-        this.model = new Lobby_1.NewLobby(this.view, this);
+        this.model = new Lobby_1.Lobby(this.view, this);
     }
     Register(socket) {
         socket.on('EnterMenu', (lobbyId) => {
@@ -19,14 +20,26 @@ class NewLobbyManager extends PlayerState_1.PlayerState {
         socket.on('MatchFound', (lobbyId) => {
             this.MatchFound(lobbyId);
         });
-        socket.on('GameEnded', (ending) => {
-            this.GameEnded(ending);
+        socket.on('FindingMatch', () => {
+            this.FindingMatch();
         });
     }
     Deregister(socket) {
         socket.removeAllListeners('EnterMenu');
         socket.removeAllListeners('MatchFound');
-        socket.removeAllListeners('GameEnded');
+        socket.removeAllListeners('FindingMatch');
+    }
+    Enter() {
+        const lobbyId = (0, LobbyId_1.FindLobbyIdInURL)();
+        if (lobbyId) {
+            this.JoinLobby(lobbyId);
+        }
+        else {
+            this.RequestLobbyId();
+        }
+    }
+    RequestLobbyId() {
+        this.socket.emit('RequestLobbyId');
     }
     EnterMenu(lobbyId) {
         this.model.EnterMenu(lobbyId);
@@ -35,16 +48,18 @@ class NewLobbyManager extends PlayerState_1.PlayerState {
         this.model.MatchFound(lobbyId);
         this.Exit(new ClientGame_1.ClientGame());
     }
-    GameEnded(ending) { }
     JoinLobby(lobbyId) {
         this.socket.emit('JoinLobby', lobbyId);
     }
     FindMatch() {
         this.socket.emit('FindMatch');
     }
+    FindingMatch() {
+        this.model.FindingMatch();
+    }
     ShowMenu() {
         this.model.GameEnded(EndGameView_1.EndGameState.Won);
     }
 }
-exports.NewLobbyManager = NewLobbyManager;
+exports.LobbyManager = LobbyManager;
 //# sourceMappingURL=LobbyManager.js.map

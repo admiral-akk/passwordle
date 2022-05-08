@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NewLobbyServer = void 0;
-class NewLobbyServer {
+exports.LobbyServer = void 0;
+const LobbyId_1 = require("../LobbyId");
+class LobbyServer {
     constructor(EnterGame) {
         this.EnterGame = EnterGame;
         this.lobbies = {};
@@ -9,7 +10,7 @@ class NewLobbyServer {
     }
     PlayerJoins(socket) {
         const playerId = socket.data.playerId;
-        this.lobbies[playerId] = new LobbySocketManager(socket, () => this.FindMatch(playerId), (lobbyId) => this.JoinLobby(playerId, lobbyId), (playerId) => this.PlayerDisconnected(playerId));
+        this.lobbies[playerId] = new LobbySocketManager(socket, () => this.FindMatch(playerId), (lobbyId) => this.JoinLobby(playerId, lobbyId), () => this.RequestLobbyId(playerId), (playerId) => this.PlayerDisconnected(playerId));
     }
     PlayerDisconnected(playerId) {
         for (let i = 0; i < this.publicLobbies.length; i++) {
@@ -25,19 +26,20 @@ class NewLobbyServer {
     EndGame(sockets, ending) {
         const players = sockets.map(socket => socket.data.playerId);
         const lobbies = players.map(player => this.lobbies[player]);
-        for (let i = 0; i < lobbies.length; i++) {
-            lobbies[i].GameEnded(ending[players[i]]);
-        }
     }
     FindMatch(playerId) {
         const lobby = this.lobbies[playerId];
         if (this.publicLobbies.length === 0) {
             this.publicLobbies.push(lobby);
+            lobby.FindingMatch();
         }
         else {
             const other = this.publicLobbies.pop();
             this.ConnectLobbies(lobby, other);
         }
+    }
+    RequestLobbyId(playerId) {
+        this.lobbies[playerId].EnterMenu();
     }
     JoinLobby(playerId, lobbyId) {
         const playerLobby = this.lobbies[playerId];
@@ -45,7 +47,7 @@ class NewLobbyServer {
             this.ConnectLobbies(playerLobby, this.lobbies[lobbyId]);
         }
         else {
-            playerLobby.EnterMenu(playerLobby.lobbyId);
+            playerLobby.EnterMenu();
         }
     }
     ConnectLobbies(lobby, other) {
@@ -55,25 +57,27 @@ class NewLobbyServer {
         this.EnterGame([lobby.GetPlayer(), other.GetPlayer()]);
     }
 }
-exports.NewLobbyServer = NewLobbyServer;
+exports.LobbyServer = LobbyServer;
 class LobbySocketManager {
-    constructor(socket, FindMatch, JoinLobby, PlayerDisconnect) {
+    constructor(socket, FindMatch, JoinLobby, RequestLobbyId, PlayerDisconnect) {
         this.socket = socket;
         this.FindMatch = FindMatch;
         this.JoinLobby = JoinLobby;
+        this.RequestLobbyId = RequestLobbyId;
         this.PlayerDisconnect = PlayerDisconnect;
-        this.lobbyId = socket.data.playerId;
+        this.lobbyId = (0, LobbyId_1.GenerateLobbyId)(socket);
         this.RegisterSocket(socket);
-        socket.emit('EnterMenu', socket.data.playerId);
     }
     GetPlayer() {
         return this.socket.data.playerId;
     }
-    GameEnded(ending) {
-        this.socket.emit('GameEnded', ending);
+    // LobbyClientRequests
+    EnterMenu() {
+        this.lobbyId = (0, LobbyId_1.GenerateLobbyId)(this.socket);
+        this.socket.emit('EnterMenu', this.lobbyId);
     }
-    EnterMenu(lobbyId) {
-        this.socket.emit('EnterMenu', lobbyId);
+    FindingMatch() {
+        this.socket.emit('FindingMatch');
     }
     MatchFound(lobbyId) {
         this.socket.emit('MatchFound', lobbyId);
@@ -81,6 +85,7 @@ class LobbySocketManager {
     RegisterSocket(socket) {
         socket.on('FindMatch', () => this.FindMatch());
         socket.on('JoinLobby', (lobbyId) => this.JoinLobby(lobbyId));
+        socket.on('RequestLobbyId', () => this.RequestLobbyId());
         socket.on('disconnect', () => {
             this.PlayerDisconnect(this.GetPlayer());
         });

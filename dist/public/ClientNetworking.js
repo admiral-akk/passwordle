@@ -10,6 +10,11 @@ function GetSocket() {
     else {
         socket = (0, socket_io_client_1.io)();
     }
+    socket.onAny((...args) => {
+        args.forEach(arg => {
+            console.log(`Arg: ${arg}`);
+        });
+    });
     socket.on('connect', () => {
         console.log(`connected: ${socket.id}`);
     });

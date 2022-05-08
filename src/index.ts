@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import {EndGameState} from './game/client/view/subview/EndGameView';
 import {GameServerManager} from './GameServerManager';
-import {NewLobbyServer} from './lobby/server/LobbyServer';
+import {LobbyServer} from './lobby/server/LobbyServer';
 import {GetServer} from './NetworkTypes';
 import {PlayerId} from './PlayerId';
 import {SocketManager} from './SocketManager';
@@ -12,7 +12,7 @@ const port = 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const lobbyServer = new NewLobbyServer(EnterGame);
+const lobbyServer = new LobbyServer(EnterGame);
 const gameServer = new GameServerManager(ExitGame);
 const socketManager = new SocketManager();
 

@@ -15,6 +15,7 @@ class PlayerState {
         this.socket = socket;
         this.setState = setState;
         this.Register(socket);
+        this.Enter();
     }
 }
 exports.PlayerState = PlayerState;

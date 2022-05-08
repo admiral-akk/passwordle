@@ -1,17 +1,19 @@
 import { LobbyClientRequests, LobbyServerRequests } from '../server/LobbyNetworkTypes';
-import { EndGameState } from '../../game/client/view/subview/EndGameView';
 import { ClientSocket } from '../../public/ClientNetworking';
 import { PlayerState } from '../../public/PlayerState';
-export declare class NewLobbyManager extends PlayerState implements LobbyServerRequests, LobbyClientRequests {
+import { LobbyId } from '../LobbyId';
+export declare class LobbyManager extends PlayerState implements LobbyServerRequests, LobbyClientRequests {
     protected Register(socket: ClientSocket): void;
     protected Deregister(socket: ClientSocket): void;
     private view;
     private model;
     constructor();
-    EnterMenu(lobbyId: string): void;
-    MatchFound(lobbyId: string): void;
-    GameEnded(ending: EndGameState): void;
-    JoinLobby(lobbyId: string): void;
+    protected Enter(): void;
+    RequestLobbyId(): void;
+    EnterMenu(lobbyId: LobbyId): void;
+    MatchFound(lobbyId: LobbyId): void;
+    JoinLobby(lobbyId: LobbyId): void;
     FindMatch(): void;
+    FindingMatch(): void;
     ShowMenu(): void;
 }

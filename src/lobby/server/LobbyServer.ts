@@ -1,12 +1,13 @@
 import {EndGameState} from '../../game/client/view/subview/EndGameView';
 import {PlayerId} from '../../PlayerId';
+import {GenerateLobbyId, LobbyId} from '../LobbyId';
 import {
   LobbyClientRequests,
   LobbyServerRequests,
   LobbyServerSocket,
 } from './LobbyNetworkTypes';
 
-export class NewLobbyServer {
+export class LobbyServer {
   private lobbies: Record<string, LobbySocketManager> = {};
   private publicLobbies: LobbySocketManager[] = [];
   constructor(private EnterGame: (players: PlayerId[]) => void) {}
@@ -16,6 +17,7 @@ export class NewLobbyServer {
       socket,
       () => this.FindMatch(playerId),
       (lobbyId: string) => this.JoinLobby(playerId, lobbyId),
+      () => this.RequestLobbyId(playerId),
       (playerId: PlayerId) => this.PlayerDisconnected(playerId)
     );
   }
@@ -38,19 +40,21 @@ export class NewLobbyServer {
   ) {
     const players = sockets.map(socket => socket.data.playerId!);
     const lobbies = players.map(player => this.lobbies[player]);
-    for (let i = 0; i < lobbies.length; i++) {
-      lobbies[i].GameEnded(ending[players[i]]);
-    }
   }
 
   private FindMatch(playerId: PlayerId) {
     const lobby = this.lobbies[playerId];
     if (this.publicLobbies.length === 0) {
       this.publicLobbies.push(lobby);
+      lobby.FindingMatch();
     } else {
       const other = this.publicLobbies.pop()!;
       this.ConnectLobbies(lobby, other);
     }
+  }
+
+  private RequestLobbyId(playerId: PlayerId) {
+    this.lobbies[playerId].EnterMenu();
   }
 
   private JoinLobby(playerId: PlayerId, lobbyId: string) {
@@ -58,7 +62,7 @@ export class NewLobbyServer {
     if (lobbyId in this.lobbies) {
       this.ConnectLobbies(playerLobby, this.lobbies[lobbyId]);
     } else {
-      playerLobby.EnterMenu(playerLobby.lobbyId);
+      playerLobby.EnterMenu();
     }
   }
 
@@ -71,7 +75,7 @@ export class NewLobbyServer {
 }
 
 class LobbySocketManager implements LobbyServerRequests, LobbyClientRequests {
-  lobbyId: string;
+  lobbyId: LobbyId;
 
   GetPlayer(): PlayerId {
     return this.socket.data.playerId!;
@@ -81,25 +85,31 @@ class LobbySocketManager implements LobbyServerRequests, LobbyClientRequests {
     private socket: LobbyServerSocket,
     public FindMatch: () => void,
     public JoinLobby: (lobbyId: string) => void,
+    public RequestLobbyId: () => void,
     public PlayerDisconnect: (playerId: PlayerId) => void
   ) {
-    this.lobbyId = socket.data.playerId!;
+    this.lobbyId = GenerateLobbyId(socket);
     this.RegisterSocket(socket);
-    socket.emit('EnterMenu', socket.data.playerId!);
   }
-  GameEnded(ending: EndGameState) {
-    this.socket.emit('GameEnded', ending);
+
+  // LobbyClientRequests
+  EnterMenu() {
+    this.lobbyId = GenerateLobbyId(this.socket);
+    this.socket.emit('EnterMenu', this.lobbyId);
   }
-  EnterMenu(lobbyId: string) {
-    this.socket.emit('EnterMenu', lobbyId);
+
+  FindingMatch() {
+    this.socket.emit('FindingMatch');
   }
-  MatchFound(lobbyId: string) {
+
+  MatchFound(lobbyId: LobbyId) {
     this.socket.emit('MatchFound', lobbyId);
   }
 
   private RegisterSocket(socket: LobbyServerSocket) {
     socket.on('FindMatch', () => this.FindMatch());
-    socket.on('JoinLobby', (lobbyId: string) => this.JoinLobby(lobbyId));
+    socket.on('JoinLobby', (lobbyId: LobbyId) => this.JoinLobby(lobbyId));
+    socket.on('RequestLobbyId', () => this.RequestLobbyId());
     socket.on('disconnect', () => {
       this.PlayerDisconnect(this.GetPlayer());
     });
