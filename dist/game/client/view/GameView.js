@@ -16,10 +16,9 @@ class GameView {
         this.timer = new TimerView_1.TimerView(root);
         this.yourPassword = new YourPasswordView_1.YourPasswordView(root);
         this.opponentPassword = new OpponentPasswordView_1.OpponentPasswordView(root);
-        const game = AddDiv(root, 'play-area');
-        const player = AddDiv(game, 'player');
+        const player = document.getElementById('player');
         this.yourBoard = new PlayerBoardView_1.YourBoardView(player);
-        const opponent = AddDiv(game, 'opponent');
+        const opponent = document.getElementById('opponent');
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(opponent);
         this.keyboard = new KeyboardView_1.KeyboardView(root);
         const explain = AddDiv(root, 'explain');

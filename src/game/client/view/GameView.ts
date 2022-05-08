@@ -28,12 +28,11 @@ export class GameView {
 
     this.yourPassword = new YourPasswordView(root);
     this.opponentPassword = new OpponentPasswordView(root);
-    const game = AddDiv(root, 'play-area');
 
-    const player = AddDiv(game, 'player');
+    const player = document.getElementById('player')!;
     this.yourBoard = new YourBoardView(player);
 
-    const opponent = AddDiv(game, 'opponent');
+    const opponent = document.getElementById('opponent')!;
     this.opponentBoard = new OpponentBoardView(opponent);
 
     this.keyboard = new KeyboardView(root);

@@ -7,7 +7,7 @@ import { BaseWordView } from './word/WordView';
 export declare class YourBoardView extends Subview implements BoardView {
     Reset(): void;
     protected words: PlayerWordView[];
-    constructor(base: HTMLDivElement, explanationText?: string);
+    constructor(base: HTMLElement, explanationText?: string);
     SetCharKnowledge(wordIndex: number, charIndex: number, char: string, knowledge: LetterState): void;
     CharUpdate(update: CharUpdate): void;
     SubmitError(error: LockedGuessError): void;
