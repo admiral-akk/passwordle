@@ -1,11 +1,14 @@
+import {resolve} from 'path';
 import {AnimateCSS, AnimationType} from '../../game/model/view/Animate';
 
 export abstract class Modal {
   private elements: HTMLElement[] = [];
   private popup: HTMLElement | null = null;
 
-  Exit() {
-    this.elements.forEach(element => element.remove());
+  Exit(): Promise<void> {
+    return new Promise(() =>
+      this.elements.forEach(element => element.remove())
+    );
   }
 
   protected base: HTMLElement;

@@ -1,7 +1,7 @@
 export declare abstract class Modal {
     private elements;
     private popup;
-    Exit(): void;
+    Exit(): Promise<void>;
     protected base: HTMLElement;
     constructor();
     protected AddButton(className: string, text: string, callback: () => void): HTMLButtonElement;

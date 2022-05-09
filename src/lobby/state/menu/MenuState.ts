@@ -5,11 +5,6 @@ import {FindingMatchState} from '../finding/FindingMatchState';
 import {MatchState} from '../match/MatchState';
 import {Modal} from '../Modal';
 
-enum State {
-  None,
-  EnteringMatchmaking,
-}
-
 export class MenuState extends LobbyState {
   private modal: MenuModal = new MenuModal(
     () => this.CopyLobbyLinkToClipboard(),

@@ -6,11 +6,6 @@ const LobbyId_1 = require("../../LobbyId");
 const FindingMatchState_1 = require("../finding/FindingMatchState");
 const MatchState_1 = require("../match/MatchState");
 const Modal_1 = require("../Modal");
-var State;
-(function (State) {
-    State[State["None"] = 0] = "None";
-    State[State["EnteringMatchmaking"] = 1] = "EnteringMatchmaking";
-})(State || (State = {}));
 class MenuState extends PlayerState_1.LobbyState {
     constructor(lobbyId) {
         super();
