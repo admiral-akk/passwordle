@@ -9,6 +9,8 @@ var AnimationType;
     AnimationType["HeartBeat"] = "heartBeat";
     AnimationType["ShakeX"] = "shakeX";
     AnimationType["ShakeY"] = "shakeY";
+    AnimationType["FadeIn"] = "fadeIn";
+    AnimationType["FadeOut"] = "fadeOut";
 })(AnimationType = exports.AnimationType || (exports.AnimationType = {}));
 const ANIMATION_DURATION_STR = '--animate-duration';
 const ANIMATION_CLASS_STR = 'animate__animated';

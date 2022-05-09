@@ -4,6 +4,8 @@ export declare enum AnimationType {
     FlipInX = "flipInX",
     HeartBeat = "heartBeat",
     ShakeX = "shakeX",
-    ShakeY = "shakeY"
+    ShakeY = "shakeY",
+    FadeIn = "fadeIn",
+    FadeOut = "fadeOut"
 }
 export declare function AnimateCSS(element: HTMLElement, animation: AnimationType, duration?: Number): Promise<string>;

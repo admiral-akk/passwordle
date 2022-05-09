@@ -5,6 +5,11 @@ import {FindingMatchState} from '../finding/FindingMatchState';
 import {MatchState} from '../match/MatchState';
 import {Modal} from '../Modal';
 
+enum State {
+  None,
+  EnteringMatchmaking,
+}
+
 export class MenuState extends LobbyState {
   private modal: MenuModal = new MenuModal(
     () => this.CopyLobbyLinkToClipboard(),
@@ -39,11 +44,12 @@ export class MenuState extends LobbyState {
   }
 
   private Matchmake() {
+    this.modal.EnterMatchmaking();
     this.socket?.emit('FindMatch');
   }
 
   FindingMatch() {
-    this.SwitchState(new FindingMatchState());
+    setTimeout(() => this.SwitchState(new FindingMatchState()), 1500);
   }
 
   MatchFound(lobbyId: LobbyId) {
@@ -52,9 +58,32 @@ export class MenuState extends LobbyState {
 }
 
 class MenuModal extends Modal {
+  private matchmakingButton: HTMLButtonElement;
+  private copyLinkButton: HTMLButtonElement;
+
   constructor(hostLobby: () => void, matchmake: () => void) {
     super();
-    this.AddButton('private-game', 'Copy Link to Clipboard', hostLobby);
-    this.AddButton('public-game', 'Join Random Game', matchmake);
+    this.copyLinkButton = this.AddButton(
+      'private-game',
+      'Copy Link to Clipboard',
+      () => {
+        hostLobby();
+        this.CopyLinkPopup();
+      }
+    );
+    this.matchmakingButton = this.AddButton(
+      'public-game',
+      'Join Random Game',
+      matchmake
+    );
+  }
+
+  CopyLinkPopup() {
+    this.AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1500);
+  }
+
+  EnterMatchmaking() {
+    this.matchmakingButton.disabled = true;
+    this.matchmakingButton.innerText = 'Looking for match...';
   }
 }

@@ -55,6 +55,37 @@
 .answer {
     margin:  12px;
 }
+.private-game {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup */
+.popup {
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    top: -70px;
+    right: 0px;
+    width: fit-content;
+    height: fit-content;   
+}
+
+.popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
 
 .explanation {
     margin:  2px;
@@ -114,7 +145,7 @@ body {
 }
 
  .modal {
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);

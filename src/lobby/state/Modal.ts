@@ -1,5 +1,8 @@
+import {AnimateCSS, AnimationType} from '../../game/model/view/Animate';
+
 export abstract class Modal {
   private elements: HTMLElement[] = [];
+  private popup: HTMLElement | null = null;
 
   Exit() {
     this.elements.forEach(element => element.remove());
@@ -41,5 +44,40 @@ export abstract class Modal {
 
   protected AddDiv(className: string, text = ''): HTMLDivElement {
     return this.AddRootDiv(this.base, className, text);
+  }
+
+  protected AddPopup(
+    target: HTMLElement,
+    text: string,
+    durationMilliseconds = 1500
+  ) {
+    if (this.popup) {
+      return;
+    }
+    this.popup = document.createElement('div');
+    this.popup.className = 'popup';
+    this.popup.innerText = text;
+    target.appendChild(this.popup);
+    this.elements.push(this.popup);
+    AnimateCSS(this.popup, AnimationType.BounceIn, 0.5);
+
+    new Promise(resolve => setTimeout(resolve, durationMilliseconds - 500))
+      .then(() => {
+        if (!this.popup) {
+          return;
+        }
+        AnimateCSS(this.popup, AnimationType.FadeOut, 0.5);
+        return new Promise(resolve => setTimeout(resolve, 450));
+      })
+      .then(() => {
+        if (!this.popup) {
+          return;
+        }
+        if (this.elements.indexOf(this.popup) > -1) {
+          this.elements.splice(this.elements.indexOf(this.popup));
+        }
+        this.popup.remove();
+        this.popup = null;
+      });
   }
 }

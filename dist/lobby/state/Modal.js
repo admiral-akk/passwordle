@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Modal = void 0;
+const Animate_1 = require("../../game/model/view/Animate");
 class Modal {
     constructor() {
         this.elements = [];
+        this.popup = null;
         const root = document.getElementById('lobby');
         const background = this.AddRootDiv(root, 'background');
         this.base = this.AddRootDiv(background, 'modal');
@@ -30,6 +32,32 @@ class Modal {
     }
     AddDiv(className, text = '') {
         return this.AddRootDiv(this.base, className, text);
+    }
+    AddPopup(target, text, durationMilliseconds = 1500) {
+        if (this.popup) {
+            return;
+        }
+        this.popup = document.createElement('div');
+        this.popup.className = 'popup';
+        this.popup.innerText = text;
+        target.appendChild(this.popup);
+        this.elements.push(this.popup);
+        (0, Animate_1.AnimateCSS)(this.popup, Animate_1.AnimationType.BounceIn, 0.5);
+        new Promise(resolve => setTimeout(resolve, durationMilliseconds - 500))
+            .then(() => {
+            (0, Animate_1.AnimateCSS)(this.popup, Animate_1.AnimationType.FadeOut, 0.5);
+            return new Promise(resolve => setTimeout(resolve, 450));
+        })
+            .then(() => {
+            if (!this.popup) {
+                return;
+            }
+            if (this.elements.indexOf(this.popup) > -1) {
+                this.elements.splice(this.elements.indexOf(this.popup));
+            }
+            this.popup.remove();
+            this.popup = null;
+        });
     }
 }
 exports.Modal = Modal;
