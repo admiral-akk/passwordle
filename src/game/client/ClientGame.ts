@@ -16,7 +16,9 @@ export class ClientGame
   implements GameServerToClientEvents
 {
   public Exit(): Promise<void> {
-    return Promise.resolve(this.board.Exit());
+    return new Promise(resolve => setTimeout(resolve, 2000)).then(() =>
+      this.board.Exit()
+    );
   }
   protected Enter(): void {
     this.socket!.emit('GameClientReady');

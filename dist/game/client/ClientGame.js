@@ -13,7 +13,7 @@ class ClientGame extends PlayerState_1.PlayerState {
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }
     Exit() {
-        return Promise.resolve(this.board.Exit());
+        return new Promise(resolve => setTimeout(resolve, 2000)).then(() => this.board.Exit());
     }
     Enter() {
         this.socket.emit('GameClientReady');
