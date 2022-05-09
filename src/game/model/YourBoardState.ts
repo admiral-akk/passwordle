@@ -3,6 +3,7 @@ import {CharUpdate} from './CharUpdate';
 import {YourBoardView} from './view/YourBoardView';
 import {ToWord, Word} from '../structs/Word';
 import {IsValidWord} from '../Words';
+import {ErrorType, LockedGuessError} from '../network/updates/Updates';
 
 enum State {
   CanSubmit,
@@ -60,10 +61,24 @@ export class YourBoardState {
       return null;
     }
     if (this.currentGuess.length !== 5) {
+      this.view?.SubmitError(
+        new LockedGuessError(
+          ErrorType.TooShort,
+          this.guesses.length,
+          this.currentGuess.length
+        )
+      );
       return null;
     }
     const guess = ToWord(this.currentGuess);
     if (!IsValidWord(guess)) {
+      this.view?.SubmitError(
+        new LockedGuessError(
+          ErrorType.NotValidWord,
+          this.guesses.length,
+          this.currentGuess.length
+        )
+      );
       return null;
     }
     this.state = State.Locked;

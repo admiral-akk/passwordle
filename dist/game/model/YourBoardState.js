@@ -5,6 +5,7 @@ const CharUpdate_1 = require("./CharUpdate");
 const YourBoardView_1 = require("./view/YourBoardView");
 const Word_1 = require("../structs/Word");
 const Words_1 = require("../Words");
+const Updates_1 = require("../network/updates/Updates");
 var State;
 (function (State) {
     State[State["CanSubmit"] = 0] = "CanSubmit";
@@ -47,14 +48,17 @@ class YourBoardState {
         return true;
     }
     LockedGuess() {
+        var _a, _b;
         if (this.state !== State.CanSubmit) {
             return null;
         }
         if (this.currentGuess.length !== 5) {
+            (_a = this.view) === null || _a === void 0 ? void 0 : _a.SubmitError(new Updates_1.LockedGuessError(Updates_1.ErrorType.TooShort, this.guesses.length, this.currentGuess.length));
             return null;
         }
         const guess = (0, Word_1.ToWord)(this.currentGuess);
         if (!(0, Words_1.IsValidWord)(guess)) {
+            (_b = this.view) === null || _b === void 0 ? void 0 : _b.SubmitError(new Updates_1.LockedGuessError(Updates_1.ErrorType.NotValidWord, this.guesses.length, this.currentGuess.length));
             return null;
         }
         this.state = State.Locked;

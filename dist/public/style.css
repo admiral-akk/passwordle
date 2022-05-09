@@ -32,6 +32,7 @@
 }
 
 .word {
+    position: relative;
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -57,8 +58,10 @@
 }
 .private-game {
     position: relative;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    margin: 2px;
 }
 
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup */
@@ -70,9 +73,12 @@
     padding: 8px 0;
     position: absolute;
     top: -70px;
-    right: 0px;
-    width: fit-content;
-    height: fit-content;   
+    width: fit-content;   
+    height: 30px;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
 }
 
 .popuptext::after {

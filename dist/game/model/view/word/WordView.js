@@ -4,6 +4,7 @@ exports.BaseWordView = void 0;
 const LetterView_1 = require("./letter/LetterView");
 const Subview_1 = require("../Subview");
 const Updates_1 = require("../../../network/updates/Updates");
+const Popup_1 = require("../Popup");
 const WORD_LENGTH = 5;
 class BaseWordView extends Subview_1.Subview {
     constructor(root) {
@@ -21,6 +22,7 @@ class BaseWordView extends Subview_1.Subview {
     LockedGuessError(error) {
         switch (error.type) {
             case Updates_1.ErrorType.NotValidWord:
+                (0, Popup_1.AddPopup)(this.root, 'Not valid word!', 1115);
                 this.letters.forEach(letter => letter.Error());
                 break;
             case Updates_1.ErrorType.TooShort:
