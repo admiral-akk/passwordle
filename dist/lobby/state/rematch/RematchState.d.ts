@@ -5,6 +5,7 @@ export declare class RematchState extends LobbyState {
     private modal;
     protected Enter(): void;
     Exit(): Promise<void>;
+    private state;
     protected Register(socket: LobbyClientSocket): void;
     protected Deregister(socket: LobbyClientSocket): void;
     constructor();
