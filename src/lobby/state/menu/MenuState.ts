@@ -1,8 +1,6 @@
 import {LobbyState} from '../../../public/PlayerState';
 import {GenerateLobbyLink, LobbyId} from '../../LobbyId';
 import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
-import {FindingMatchState} from '../finding/FindingMatchState';
-import {MatchState} from '../match/MatchState';
 import {Modal} from '../Modal';
 
 export class MenuState extends LobbyState {
@@ -16,18 +14,8 @@ export class MenuState extends LobbyState {
     return this.modal.Exit();
   }
 
-  protected Register(socket: LobbyClientSocket): void {
-    socket.on('FindingMatch', () => {
-      this.FindingMatch();
-    });
-    socket.on('MatchFound', (lobbyId: LobbyId) => {
-      this.MatchFound(lobbyId);
-    });
-  }
-  protected Deregister(socket: LobbyClientSocket): void {
-    socket.removeAllListeners('FindingMatch');
-    socket.removeAllListeners('MatchFound');
-  }
+  protected Register(socket: LobbyClientSocket): void {}
+  protected Deregister(socket: LobbyClientSocket): void {}
 
   constructor(private lobbyId: LobbyId) {
     super();
@@ -41,14 +29,6 @@ export class MenuState extends LobbyState {
   private Matchmake() {
     this.modal.EnterMatchmaking();
     this.socket!.emit('FindMatch');
-  }
-
-  FindingMatch() {
-    setTimeout(() => this.SwitchState(new FindingMatchState()), 1500);
-  }
-
-  MatchFound(lobbyId: LobbyId) {
-    this.SwitchState(new MatchState(lobbyId));
   }
 }
 

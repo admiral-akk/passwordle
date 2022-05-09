@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MenuState = void 0;
 const PlayerState_1 = require("../../../public/PlayerState");
 const LobbyId_1 = require("../../LobbyId");
-const FindingMatchState_1 = require("../finding/FindingMatchState");
-const MatchState_1 = require("../match/MatchState");
 const Modal_1 = require("../Modal");
 class MenuState extends PlayerState_1.LobbyState {
     constructor(lobbyId) {
@@ -16,18 +14,8 @@ class MenuState extends PlayerState_1.LobbyState {
     Exit() {
         return this.modal.Exit();
     }
-    Register(socket) {
-        socket.on('FindingMatch', () => {
-            this.FindingMatch();
-        });
-        socket.on('MatchFound', (lobbyId) => {
-            this.MatchFound(lobbyId);
-        });
-    }
-    Deregister(socket) {
-        socket.removeAllListeners('FindingMatch');
-        socket.removeAllListeners('MatchFound');
-    }
+    Register(socket) { }
+    Deregister(socket) { }
     CopyLobbyLinkToClipboard() {
         const url = (0, LobbyId_1.GenerateLobbyLink)(this.lobbyId);
         navigator.clipboard.writeText(url);
@@ -35,12 +23,6 @@ class MenuState extends PlayerState_1.LobbyState {
     Matchmake() {
         this.modal.EnterMatchmaking();
         this.socket.emit('FindMatch');
-    }
-    FindingMatch() {
-        setTimeout(() => this.SwitchState(new FindingMatchState_1.FindingMatchState()), 1500);
-    }
-    MatchFound(lobbyId) {
-        this.SwitchState(new MatchState_1.MatchState(lobbyId));
     }
 }
 exports.MenuState = MenuState;

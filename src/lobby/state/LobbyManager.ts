@@ -6,7 +6,12 @@ import {RematchState} from './rematch/RematchState';
 
 export class LobbyManager extends PlayerState {
   public Exit(): Promise<void> {
-    return this.state!.Exit();
+    console.log('exiting lobby');
+    if (this.state) {
+      return this.state.Exit();
+    } else {
+      return Promise.resolve();
+    }
   }
   private state: LobbyState | null = null;
 

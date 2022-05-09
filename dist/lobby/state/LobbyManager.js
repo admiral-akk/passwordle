@@ -12,7 +12,13 @@ class LobbyManager extends PlayerState_1.PlayerState {
         this.state = null;
     }
     Exit() {
-        return this.state.Exit();
+        console.log('exiting lobby');
+        if (this.state) {
+            return this.state.Exit();
+        }
+        else {
+            return Promise.resolve();
+        }
     }
     Register(socket) {
         socket.on('GameReady', () => {

@@ -11,6 +11,4 @@ export declare class MenuState extends LobbyState {
     constructor(lobbyId: LobbyId);
     CopyLobbyLinkToClipboard(): void;
     private Matchmake;
-    FindingMatch(): void;
-    MatchFound(lobbyId: LobbyId): void;
 }
