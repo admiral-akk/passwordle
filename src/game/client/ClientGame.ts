@@ -15,8 +15,8 @@ export class ClientGame
   extends PlayerState
   implements GameServerToClientEvents
 {
-  public Exit(): void {
-    this.board.Exit();
+  public Exit(): Promise<void> {
+    return new Promise(() => this.board.Exit());
   }
   protected Enter(): void {}
 

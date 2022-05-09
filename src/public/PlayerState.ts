@@ -11,7 +11,7 @@ abstract class State<SocketType> {
     this.setState!(nextState);
   }
   protected abstract Enter(): void;
-  public abstract Exit(): void;
+  public abstract Exit(): Promise<void>;
   protected abstract Register(socket: SocketType): void;
   protected abstract Deregister(socket: SocketType): void;
   constructor() {}

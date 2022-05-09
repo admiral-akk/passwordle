@@ -8,8 +8,8 @@ export class FindingMatchState extends LobbyState {
   private modal: FindingMatchModal = new FindingMatchModal();
 
   protected Enter(): void {}
-  public Exit(): void {
-    this.modal.Exit();
+  public Exit(): Promise<void> {
+    return this.modal.Exit();
   }
   protected Register(socket: LobbyClientSocket): void {
     socket.on('MatchFound', (lobbyId: LobbyId) => {

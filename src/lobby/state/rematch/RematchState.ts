@@ -12,8 +12,8 @@ export class RematchState extends LobbyState {
   );
 
   protected Enter(): void {}
-  public Exit(): void {
-    this.modal.Exit();
+  public Exit(): Promise<void> {
+    return this.modal.Exit();
   }
 
   protected Register(socket: LobbyClientSocket): void {

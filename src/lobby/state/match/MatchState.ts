@@ -7,8 +7,8 @@ export class MatchState extends LobbyState {
   private modal: MatchModal = new MatchModal();
 
   protected Enter(): void {}
-  public Exit(): void {
-    this.modal.Exit();
+  public Exit(): Promise<void> {
+    return this.modal.Exit();
   }
   protected Register(socket: LobbyClientSocket): void {}
   protected Deregister(socket: LobbyClientSocket): void {}

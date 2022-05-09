@@ -5,7 +5,7 @@ export declare class LoadingState extends LobbyState {
     private modal;
     private state;
     protected Enter(): void;
-    Exit(): void;
+    Exit(): Promise<void>;
     protected Register(socket: LobbyClientSocket): void;
     protected Deregister(socket: LobbyClientSocket): void;
     constructor();

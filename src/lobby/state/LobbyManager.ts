@@ -5,8 +5,8 @@ import {LoadingState} from './loading/LoadingState';
 import {RematchState} from './rematch/RematchState';
 
 export class LobbyManager extends PlayerState {
-  public Exit(): void {
-    this.state?.Exit();
+  public Exit(): Promise<void> {
+    return this.state!.Exit();
   }
   private state: LobbyState | null = null;
 

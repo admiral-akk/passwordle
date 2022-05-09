@@ -11,7 +11,7 @@ class MatchState extends PlayerState_1.LobbyState {
     }
     Enter() { }
     Exit() {
-        this.modal.Exit();
+        return this.modal.Exit();
     }
     Register(socket) { }
     Deregister(socket) { }

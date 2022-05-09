@@ -5,7 +5,9 @@ import {StartClientRequests} from './StartEvents';
 
 export class StartState extends PlayerState implements StartClientRequests {
   protected Enter(): void {}
-  public Exit(): void {}
+  public Exit(): Promise<void> {
+    return Promise.resolve();
+  }
   protected Register(socket: ClientSocket): void {
     socket.on('ServerReady', () => this.ServerReady());
   }

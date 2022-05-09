@@ -12,8 +12,7 @@ class LobbyManager extends PlayerState_1.PlayerState {
         this.state = null;
     }
     Exit() {
-        var _a;
-        (_a = this.state) === null || _a === void 0 ? void 0 : _a.Exit();
+        return this.state.Exit();
     }
     Register(socket) {
         socket.on('GameReady', () => {

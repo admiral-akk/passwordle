@@ -5,7 +5,7 @@ export declare class MenuState extends LobbyState {
     private lobbyId;
     private modal;
     protected Enter(): void;
-    Exit(): void;
+    Exit(): Promise<void>;
     protected Register(socket: LobbyClientSocket): void;
     protected Deregister(socket: LobbyClientSocket): void;
     constructor(lobbyId: LobbyId);

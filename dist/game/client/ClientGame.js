@@ -13,7 +13,7 @@ class ClientGame extends PlayerState_1.PlayerState {
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }
     Exit() {
-        this.board.Exit();
+        return new Promise(() => this.board.Exit());
     }
     Enter() { }
     Register(socket) {

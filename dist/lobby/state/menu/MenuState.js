@@ -14,7 +14,7 @@ class MenuState extends PlayerState_1.LobbyState {
     }
     Enter() { }
     Exit() {
-        this.modal.Exit();
+        return this.modal.Exit();
     }
     Register(socket) {
         socket.on('FindingMatch', () => {

@@ -25,8 +25,8 @@ export class LoadingState extends LobbyState {
       this.RequestLobbyId();
     }
   }
-  public Exit(): void {
-    this.modal.Exit();
+  public Exit(): Promise<void> {
+    return this.modal.Exit();
   }
   protected Register(socket: LobbyClientSocket): void {
     socket.on('EnterMenu', (lobbyId: LobbyId) => {

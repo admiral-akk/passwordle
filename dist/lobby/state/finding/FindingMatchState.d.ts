@@ -4,7 +4,7 @@ import { LobbyClientSocket } from '../../server/LobbyNetworkTypes';
 export declare class FindingMatchState extends LobbyState {
     private modal;
     protected Enter(): void;
-    Exit(): void;
+    Exit(): Promise<void>;
     protected Register(socket: LobbyClientSocket): void;
     protected Deregister(socket: LobbyClientSocket): void;
     MatchFound(lobbyId: LobbyId): void;

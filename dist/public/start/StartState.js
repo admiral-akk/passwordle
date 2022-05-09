@@ -5,7 +5,9 @@ const LobbyManager_1 = require("../../lobby/state/LobbyManager");
 const PlayerState_1 = require("../PlayerState");
 class StartState extends PlayerState_1.PlayerState {
     Enter() { }
-    Exit() { }
+    Exit() {
+        return Promise.resolve();
+    }
     Register(socket) {
         socket.on('ServerReady', () => this.ServerReady());
     }

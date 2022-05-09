@@ -30,7 +30,7 @@ class LoadingState extends PlayerState_1.LobbyState {
         }
     }
     Exit() {
-        this.modal.Exit();
+        return this.modal.Exit();
     }
     Register(socket) {
         socket.on('EnterMenu', (lobbyId) => {

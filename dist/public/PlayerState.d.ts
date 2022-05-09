@@ -5,7 +5,7 @@ declare abstract class State<SocketType> {
     private setState;
     protected SwitchState(nextState: State<SocketType>): void;
     protected abstract Enter(): void;
-    abstract Exit(): void;
+    abstract Exit(): Promise<void>;
     protected abstract Register(socket: SocketType): void;
     protected abstract Deregister(socket: SocketType): void;
     constructor();
