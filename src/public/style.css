@@ -64,6 +64,12 @@
     font-size: 1.5rem;
     font-weight: 700;
 }
+body {
+    overflow: hidden; /* Disable scroll */
+    min-width:700px;
+    width: auto !important;
+    width:700px;
+}
 .target {
     margin: 12px;
 }
@@ -102,7 +108,7 @@
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    overflow: hidden; /* Disable scroll */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
@@ -113,9 +119,9 @@
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 25px;
-    width: 200px; /* Full width */
-    height: 100px; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
+    width: 500px; /* Full width */
+    height: 700px; /* Full height */
+    overflow: hidden; /* Disable scroll */
     background-color: rgb(255, 255, 255); /* Fallback color */
     border: 2px solid gray;
     display: flex;

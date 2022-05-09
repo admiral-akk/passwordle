@@ -4,7 +4,6 @@ exports.GetKnowledge = void 0;
 const WordKnowledge_1 = require("../client/structs/WordKnowledge");
 const LetterState_1 = require("../client/structs/LetterState");
 function GetKnowledge(guess, answer) {
-    console.log(`testing: ${guess} v ${answer}`);
     const answer_state = [];
     for (let i = 0; i < guess.length; i++) {
         answer_state[i] = LetterState_1.LetterState.NoKnowledge;

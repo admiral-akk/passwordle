@@ -16,8 +16,11 @@ function FindLobbyIdInURL() {
 exports.FindLobbyIdInURL = FindLobbyIdInURL;
 function GenerateLobbyLink(lobbyId) {
     const url = new URLSearchParams(window.location.search);
+    while (url.has(LOBBY_ID_QUERY_NAME)) {
+        url.delete(LOBBY_ID_QUERY_NAME);
+    }
     url.append(LOBBY_ID_QUERY_NAME, lobbyId);
-    return `${window.location.href}?${url.toString()}`;
+    return `${window.location.href.split('?')[0]}?${url.toString()}`;
 }
 exports.GenerateLobbyLink = GenerateLobbyLink;
 function GenerateLobbyId(socket) {

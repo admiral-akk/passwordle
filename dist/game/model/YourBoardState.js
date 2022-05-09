@@ -50,7 +50,6 @@ class YourBoardState {
         if (this.state !== State.CanSubmit) {
             return null;
         }
-        console.log('');
         if (this.currentGuess.length !== 5) {
             return null;
         }

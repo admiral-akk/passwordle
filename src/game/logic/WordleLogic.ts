@@ -3,7 +3,6 @@ import {WordKnowledge} from '../client/structs/WordKnowledge';
 import {LetterState} from '../client/structs/LetterState';
 
 export function GetKnowledge(guess: Word, answer: Word): WordKnowledge {
-  console.log(`testing: ${guess} v ${answer}`);
   const answer_state: LetterState[] = [];
   for (let i = 0; i < guess.length; i++) {
     answer_state[i] = LetterState.NoKnowledge;

@@ -30,7 +30,6 @@ class LetterView extends Subview_1.Subview {
         return this.color;
     }
     SetColor(color) {
-        console.log(`setting color: ${color}`);
         this.root.style.backgroundColor = color;
         this.color = color;
         switch (color) {
