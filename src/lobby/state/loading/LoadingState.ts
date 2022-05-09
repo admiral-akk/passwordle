@@ -1,7 +1,6 @@
 import {LobbyState} from '../../../public/PlayerState';
 import {FindLobbyIdInURL, LobbyId} from '../../LobbyId';
 import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
-import {MatchState} from '../match/MatchState';
 import {MenuState} from '../menu/MenuState';
 import {Modal} from '../Modal';
 
@@ -9,6 +8,7 @@ enum State {
   None,
   LoadingMenu,
   JoiningLobby,
+  LobbyNotFound,
 }
 
 export class LoadingState extends LobbyState {
@@ -25,20 +25,21 @@ export class LoadingState extends LobbyState {
       this.RequestLobbyId();
     }
   }
+
   public Exit(): Promise<void> {
-    return this.modal.Exit();
+    return this.modal.LoadingExit(this.state);
   }
+
   protected Register(socket: LobbyClientSocket): void {
     socket.on('EnterMenu', (lobbyId: LobbyId) => {
+      if (this.state === State.JoiningLobby) {
+        this.state = State.LobbyNotFound;
+      }
       this.EnterMenu(lobbyId);
-    });
-    socket.on('MatchFound', (lobbyId: LobbyId) => {
-      this.MatchFound(lobbyId);
     });
   }
   protected Deregister(socket: LobbyClientSocket): void {
     socket.removeAllListeners('EnterMenu');
-    socket.removeAllListeners('MatchFound');
   }
 
   constructor() {
@@ -46,19 +47,7 @@ export class LoadingState extends LobbyState {
   }
 
   EnterMenu(lobbyId: LobbyId) {
-    switch (this.state) {
-      case State.JoiningLobby:
-        this.modal.LobbyNotFound();
-        break;
-      case State.LoadingMenu:
-        break;
-    }
-    setTimeout(() => this.SwitchState(new MenuState(lobbyId)), 1500);
-  }
-
-  MatchFound(lobbyId: LobbyId) {
-    this.modal.LobbyFound();
-    this.SwitchState(new MatchState(lobbyId));
+    this.SwitchState(new MenuState(lobbyId));
   }
 
   RequestLobbyId() {
@@ -74,6 +63,17 @@ export class LoadingState extends LobbyState {
 
 class LoadingModal extends Modal {
   private text: HTMLDivElement;
+
+  LoadingExit(state: State): Promise<void> {
+    return new Promise(resolve => {
+      switch (state) {
+        case State.LobbyNotFound:
+          this.LobbyNotFound();
+          break;
+      }
+      setTimeout(resolve, 1500);
+    }).then(() => super.Exit());
+  }
 
   constructor() {
     super();

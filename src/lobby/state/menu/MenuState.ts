@@ -4,14 +4,16 @@ import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
 import {Modal} from '../Modal';
 
 export class MenuState extends LobbyState {
-  private modal: MenuModal = new MenuModal(
-    () => this.CopyLobbyLinkToClipboard(),
-    () => this.Matchmake()
-  );
+  private modal: MenuModal | null = null;
 
-  protected Enter(): void {}
+  protected Enter(): void {
+    this.modal = new MenuModal(
+      () => this.CopyLobbyLinkToClipboard(),
+      () => this.Matchmake()
+    );
+  }
   public Exit(): Promise<void> {
-    return this.modal.Exit();
+    return this.modal!.Exit();
   }
 
   protected Register(socket: LobbyClientSocket): void {}
@@ -27,7 +29,7 @@ export class MenuState extends LobbyState {
   }
 
   private Matchmake() {
-    this.modal.EnterMatchmaking();
+    this.modal!.EnterMatchmaking();
     this.socket!.emit('FindMatch');
   }
 }

@@ -46,10 +46,6 @@ export class RematchState extends LobbyState {
     this.socket?.emit('DeclineRematch');
   }
 
-  MatchFound(lobbyId: LobbyId) {
-    this.SwitchState(new MatchState(lobbyId));
-  }
-
   EnterMenu(lobbyId: LobbyId) {
     this.SwitchState(new MenuState(lobbyId));
   }

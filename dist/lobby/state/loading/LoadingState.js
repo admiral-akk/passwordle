@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadingState = void 0;
 const PlayerState_1 = require("../../../public/PlayerState");
 const LobbyId_1 = require("../../LobbyId");
-const MatchState_1 = require("../match/MatchState");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");
 var State;
@@ -11,6 +10,7 @@ var State;
     State[State["None"] = 0] = "None";
     State[State["LoadingMenu"] = 1] = "LoadingMenu";
     State[State["JoiningLobby"] = 2] = "JoiningLobby";
+    State[State["LobbyNotFound"] = 3] = "LobbyNotFound";
 })(State || (State = {}));
 class LoadingState extends PlayerState_1.LobbyState {
     constructor() {
@@ -30,33 +30,21 @@ class LoadingState extends PlayerState_1.LobbyState {
         }
     }
     Exit() {
-        return this.modal.Exit();
+        return this.modal.LoadingExit(this.state);
     }
     Register(socket) {
         socket.on('EnterMenu', (lobbyId) => {
+            if (this.state === State.JoiningLobby) {
+                this.state = State.LobbyNotFound;
+            }
             this.EnterMenu(lobbyId);
-        });
-        socket.on('MatchFound', (lobbyId) => {
-            this.MatchFound(lobbyId);
         });
     }
     Deregister(socket) {
         socket.removeAllListeners('EnterMenu');
-        socket.removeAllListeners('MatchFound');
     }
     EnterMenu(lobbyId) {
-        switch (this.state) {
-            case State.JoiningLobby:
-                this.modal.LobbyNotFound();
-                break;
-            case State.LoadingMenu:
-                break;
-        }
-        setTimeout(() => this.SwitchState(new MenuState_1.MenuState(lobbyId)), 1500);
-    }
-    MatchFound(lobbyId) {
-        this.modal.LobbyFound();
-        this.SwitchState(new MatchState_1.MatchState(lobbyId));
+        this.SwitchState(new MenuState_1.MenuState(lobbyId));
     }
     RequestLobbyId() {
         var _a;
@@ -74,6 +62,16 @@ class LoadingModal extends Modal_1.Modal {
     constructor() {
         super();
         this.text = this.AddDiv('loading', 'Loading...');
+    }
+    LoadingExit(state) {
+        return new Promise(resolve => {
+            switch (state) {
+                case State.LobbyNotFound:
+                    this.LobbyNotFound();
+                    break;
+            }
+            setTimeout(resolve, 1500);
+        }).then(() => super.Exit());
     }
     LoadingMenu() {
         this.text.innerText = 'Loading main menu...';

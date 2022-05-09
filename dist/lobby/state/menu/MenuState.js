@@ -8,9 +8,11 @@ class MenuState extends PlayerState_1.LobbyState {
     constructor(lobbyId) {
         super();
         this.lobbyId = lobbyId;
+        this.modal = null;
+    }
+    Enter() {
         this.modal = new MenuModal(() => this.CopyLobbyLinkToClipboard(), () => this.Matchmake());
     }
-    Enter() { }
     Exit() {
         return this.modal.Exit();
     }

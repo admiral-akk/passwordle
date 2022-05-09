@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RematchState = void 0;
 const PlayerState_1 = require("../../../public/PlayerState");
-const MatchState_1 = require("../match/MatchState");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");
 var State;
@@ -39,9 +38,6 @@ class RematchState extends PlayerState_1.LobbyState {
         var _a;
         this.state = State.RematchDeclined;
         (_a = this.socket) === null || _a === void 0 ? void 0 : _a.emit('DeclineRematch');
-    }
-    MatchFound(lobbyId) {
-        this.SwitchState(new MatchState_1.MatchState(lobbyId));
     }
     EnterMenu(lobbyId) {
         this.SwitchState(new MenuState_1.MenuState(lobbyId));

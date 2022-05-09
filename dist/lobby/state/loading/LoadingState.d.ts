@@ -10,7 +10,6 @@ export declare class LoadingState extends LobbyState {
     protected Deregister(socket: LobbyClientSocket): void;
     constructor();
     EnterMenu(lobbyId: LobbyId): void;
-    MatchFound(lobbyId: LobbyId): void;
     RequestLobbyId(): void;
     JoinLobby(lobbyId: LobbyId): void;
 }

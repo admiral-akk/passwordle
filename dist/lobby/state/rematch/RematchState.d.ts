@@ -11,6 +11,5 @@ export declare class RematchState extends LobbyState {
     constructor();
     private RequestRematch;
     private ReturnToMenu;
-    MatchFound(lobbyId: LobbyId): void;
     EnterMenu(lobbyId: LobbyId): void;
 }
