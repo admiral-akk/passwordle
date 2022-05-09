@@ -12,6 +12,7 @@ export declare class PlayerBoard implements GameClientToServerEvents, GameServer
     Exit(): void;
     state: State;
     constructor(hasView?: boolean);
+    GameClientReady(): void;
     private yourBoard;
     private yourPassword;
     private opponentBoard;

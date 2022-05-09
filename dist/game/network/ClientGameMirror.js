@@ -5,21 +5,26 @@ const PlayerBoard_1 = require("../model/PlayerBoard");
 class ClientGameMirror {
     constructor(socket) {
         this.socket = socket;
+        this.secret = null;
         this.board = new PlayerBoard_1.PlayerBoard();
         this.otherPlayer = null;
         this.lockedGuessCallback = () => { };
         this.socket.removeAllListeners('AddedChar');
         this.socket.removeAllListeners('Deleted');
         this.socket.removeAllListeners('LockedGuess');
-        this.socket.removeAllListeners('disconnect');
+        this.socket.removeAllListeners('GameClientReady');
         this.socket.on('AddedChar', (update) => this.AddedChar(update));
         this.socket.on('Deleted', () => this.Deleted());
         this.socket.on('LockedGuess', (update) => this.LockedGuess(update));
+        this.socket.on('GameClientReady', () => this.GameClientReady());
+    }
+    GameClientReady() {
+        this.socket.emit('SetSecret', this.secret);
     }
     OpponentDisconnected() { }
     SetSecret(secret) {
         this.board.SetSecret(secret);
-        this.socket.emit('SetSecret', secret);
+        this.secret = secret;
     }
     OpponentLockedGuess() {
         this.board.OpponentLockedGuess();

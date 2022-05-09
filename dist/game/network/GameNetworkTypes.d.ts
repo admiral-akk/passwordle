@@ -17,4 +17,5 @@ export interface GameClientToServerEvents {
     AddedChar: (update: AddedChar) => void;
     Deleted: () => void;
     LockedGuess: (update: LockedGuess) => void;
+    GameClientReady: () => void;
 }

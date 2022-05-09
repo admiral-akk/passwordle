@@ -3,10 +3,12 @@ import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from './updates/Update
 import { Word } from '../structs/Word';
 export declare class ClientGameMirror implements GameClientToServerEvents, GameServerToClientEvents {
     private socket;
+    private secret;
     private board;
     private otherPlayer;
     private lockedGuessCallback;
     constructor(socket: GameServerSocket);
+    GameClientReady(): void;
     OpponentDisconnected(): void;
     SetSecret(secret: Word): void;
     OpponentLockedGuess(): void;

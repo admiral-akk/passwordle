@@ -32,6 +32,7 @@ class PlayerBoard {
         this.opponentBoard.Exit();
         this.opponentPassword.Exit();
     }
+    GameClientReady() { }
     OpponentDisconnected() {
         this.state = State.GameEnded;
     }

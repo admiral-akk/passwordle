@@ -18,7 +18,9 @@ export class ClientGame
   public Exit(): Promise<void> {
     return Promise.resolve(this.board.Exit());
   }
-  protected Enter(): void {}
+  protected Enter(): void {
+    this.socket!.emit('GameClientReady');
+  }
 
   protected Register(socket: ClientSocket): void {
     socket.on('OpponentAddedChar', () => this.OpponentAddedChar());

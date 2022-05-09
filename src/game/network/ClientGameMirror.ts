@@ -14,6 +14,7 @@ import {Word} from '../structs/Word';
 export class ClientGameMirror
   implements GameClientToServerEvents, GameServerToClientEvents
 {
+  private secret: Word | null = null;
   private board: PlayerBoard = new PlayerBoard();
   private otherPlayer: ClientGameMirror | null = null;
   private lockedGuessCallback: (update: LockedGuess) => void = () => {};
@@ -22,18 +23,24 @@ export class ClientGameMirror
     this.socket.removeAllListeners('AddedChar');
     this.socket.removeAllListeners('Deleted');
     this.socket.removeAllListeners('LockedGuess');
-    this.socket.removeAllListeners('disconnect');
+    this.socket.removeAllListeners('GameClientReady');
     this.socket.on('AddedChar', (update: AddedChar) => this.AddedChar(update));
     this.socket.on('Deleted', () => this.Deleted());
     this.socket.on('LockedGuess', (update: LockedGuess) =>
       this.LockedGuess(update)
     );
+    this.socket.on('GameClientReady', () => this.GameClientReady());
   }
+
+  GameClientReady() {
+    this.socket.emit('SetSecret', this.secret!);
+  }
+
   OpponentDisconnected() {}
 
   SetSecret(secret: Word) {
     this.board.SetSecret(secret);
-    this.socket.emit('SetSecret', secret);
+    this.secret = secret;
   }
 
   OpponentLockedGuess() {

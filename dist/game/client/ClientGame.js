@@ -15,7 +15,9 @@ class ClientGame extends PlayerState_1.PlayerState {
     Exit() {
         return Promise.resolve(this.board.Exit());
     }
-    Enter() { }
+    Enter() {
+        this.socket.emit('GameClientReady');
+    }
     Register(socket) {
         socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
         socket.on('UpdatedAnswerKnowledge', (update) => this.UpdatedAnswerKnowledge(update));

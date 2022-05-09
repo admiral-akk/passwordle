@@ -34,6 +34,7 @@ export class PlayerBoard
   state: State = State.WaitingForKnowledge;
 
   constructor(private hasView: boolean = false) {}
+  GameClientReady() {}
 
   private yourBoard: YourBoardState = new YourBoardState(this.hasView);
   private yourPassword: YourPasswordState = new YourPasswordState(this.hasView);
