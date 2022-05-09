@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MenuState = void 0;
+const Popup_1 = require("../../../game/model/view/Popup");
 const PlayerState_1 = require("../../../public/PlayerState");
 const LobbyId_1 = require("../../LobbyId");
 const Modal_1 = require("../Modal");
@@ -46,7 +47,7 @@ class MenuModal extends Modal_1.Modal {
         this.AddDiv('entering-match', 'Entering match. Good luck!');
     }
     CopyLinkPopup() {
-        this.AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1.5);
+        (0, Popup_1.AddPopup)(this.copyLinkButton, 'Link copied to clipboard!', 1.5);
     }
     EnterMatchmaking() {
         this.matchmakingButton.disabled = true;

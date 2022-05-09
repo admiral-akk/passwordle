@@ -1,3 +1,4 @@
+import {AddPopup} from '../../../game/model/view/Popup';
 import {LobbyState} from '../../../public/PlayerState';
 import {GenerateLobbyLink, LobbyId} from '../../LobbyId';
 import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
@@ -66,7 +67,7 @@ class MenuModal extends Modal {
   }
 
   CopyLinkPopup() {
-    this.AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1.5);
+    AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1.5);
   }
 
   EnterMatchmaking() {
