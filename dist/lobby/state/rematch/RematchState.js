@@ -50,18 +50,16 @@ class RematchState extends PlayerState_1.LobbyState {
 exports.RematchState = RematchState;
 class RematchModal extends Modal_1.Modal {
     RematchExit(state) {
-        let exitPromise = Promise.resolve();
-        switch (state) {
-            default:
-                break;
-            case State.RematchDeclined:
-                exitPromise = exitPromise.then(() => new Promise(resolve => resolve(this.RematchDeclined())));
-                break;
-            case State.RematchRequested:
-                exitPromise = exitPromise.then(() => new Promise(resolve => resolve(this.RematchAccepted())));
-                break;
-        }
-        return exitPromise.then(() => super.Exit());
+        return new Promise(resolve => {
+            if (state === State.RematchDeclined) {
+                resolve(this.RematchDeclined());
+            }
+            else {
+                resolve(this.RematchAccepted());
+            }
+        })
+            .then(() => new Promise(resolve => setTimeout(resolve, 1500)))
+            .then(() => super.Exit());
     }
     RematchDeclined() {
         this.AddDiv('rematch-text', 'Rematch declined, returning to menu.');

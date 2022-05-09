@@ -57,22 +57,15 @@ export class RematchState extends LobbyState {
 
 class RematchModal extends Modal {
   RematchExit(state: State): Promise<void> {
-    let exitPromise = Promise.resolve();
-    switch (state) {
-      default:
-        break;
-      case State.RematchDeclined:
-        exitPromise = exitPromise.then(
-          () => new Promise(resolve => resolve(this.RematchDeclined()))
-        );
-        break;
-      case State.RematchRequested:
-        exitPromise = exitPromise.then(
-          () => new Promise(resolve => resolve(this.RematchAccepted()))
-        );
-        break;
-    }
-    return exitPromise.then(() => super.Exit());
+    return new Promise(resolve => {
+      if (state === State.RematchDeclined) {
+        resolve(this.RematchDeclined());
+      } else {
+        resolve(this.RematchAccepted());
+      }
+    })
+      .then(() => new Promise(resolve => setTimeout(resolve, 1500)))
+      .then(() => super.Exit());
   }
 
   private RematchDeclined() {
