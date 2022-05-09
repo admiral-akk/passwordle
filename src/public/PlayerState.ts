@@ -6,9 +6,10 @@ abstract class State<SocketType> {
   private setState: ((nextState: State<SocketType>) => void) | null = null;
   protected SwitchState(nextState: State<SocketType>) {
     this.Deregister(this.socket!);
-    this.Exit();
-    nextState.Initialize(this.socket!, this.setState!);
-    this.setState!(nextState);
+    this.Exit().then(() => {
+      nextState.Initialize(this.socket!, this.setState!);
+      this.setState!(nextState);
+    });
   }
   protected abstract Enter(): void;
   public abstract Exit(): Promise<void>;

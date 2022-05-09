@@ -8,9 +8,10 @@ class State {
     }
     SwitchState(nextState) {
         this.Deregister(this.socket);
-        this.Exit();
-        nextState.Initialize(this.socket, this.setState);
-        this.setState(nextState);
+        this.Exit().then(() => {
+            nextState.Initialize(this.socket, this.setState);
+            this.setState(nextState);
+        });
     }
     Initialize(socket, setState) {
         this.socket = socket;
