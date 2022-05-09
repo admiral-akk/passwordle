@@ -16,7 +16,7 @@ export class ClientGame
   implements GameServerToClientEvents
 {
   public Exit(): Promise<void> {
-    return new Promise(() => this.board.Exit());
+    return Promise.resolve(this.board.Exit());
   }
   protected Enter(): void {}
 

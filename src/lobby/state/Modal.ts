@@ -1,4 +1,3 @@
-import {resolve} from 'path';
 import {AnimateCSS, AnimationType} from '../../game/model/view/Animate';
 
 export abstract class Modal {
@@ -6,9 +5,7 @@ export abstract class Modal {
   private popup: HTMLElement | null = null;
 
   Exit(): Promise<void> {
-    return new Promise(() =>
-      this.elements.forEach(element => element.remove())
-    );
+    return Promise.resolve(this.elements.forEach(element => element.remove()));
   }
 
   protected base: HTMLElement;
@@ -72,7 +69,7 @@ export abstract class Modal {
         AnimateCSS(this.popup, AnimationType.FadeOut, 0.5);
         return new Promise(resolve => setTimeout(resolve, 450));
       })
-      .then(() => {
+      .finally(() => {
         if (!this.popup) {
           return;
         }

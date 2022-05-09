@@ -40,7 +40,7 @@ export class MenuState extends LobbyState {
 
   private Matchmake() {
     this.modal.EnterMatchmaking();
-    this.socket?.emit('FindMatch');
+    this.socket!.emit('FindMatch');
   }
 
   FindingMatch() {
@@ -69,7 +69,7 @@ class MenuModal extends Modal {
     this.matchmakingButton = this.AddButton(
       'public-game',
       'Join Random Game',
-      matchmake
+      () => matchmake()
     );
   }
 

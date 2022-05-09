@@ -11,7 +11,7 @@ class Modal {
         this.base = this.AddRootDiv(background, 'modal');
     }
     Exit() {
-        return new Promise(() => this.elements.forEach(element => element.remove()));
+        return Promise.resolve(this.elements.forEach(element => element.remove()));
     }
     AddButton(className, text, callback) {
         const button = document.createElement('button');
@@ -51,7 +51,7 @@ class Modal {
             (0, Animate_1.AnimateCSS)(this.popup, Animate_1.AnimationType.FadeOut, 0.5);
             return new Promise(resolve => setTimeout(resolve, 450));
         })
-            .then(() => {
+            .finally(() => {
             if (!this.popup) {
                 return;
             }

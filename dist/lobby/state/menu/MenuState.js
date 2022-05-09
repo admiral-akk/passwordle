@@ -33,9 +33,8 @@ class MenuState extends PlayerState_1.LobbyState {
         navigator.clipboard.writeText(url);
     }
     Matchmake() {
-        var _a;
         this.modal.EnterMatchmaking();
-        (_a = this.socket) === null || _a === void 0 ? void 0 : _a.emit('FindMatch');
+        this.socket.emit('FindMatch');
     }
     FindingMatch() {
         setTimeout(() => this.SwitchState(new FindingMatchState_1.FindingMatchState()), 1500);
@@ -52,7 +51,7 @@ class MenuModal extends Modal_1.Modal {
             hostLobby();
             this.CopyLinkPopup();
         });
-        this.matchmakingButton = this.AddButton('public-game', 'Join Random Game', matchmake);
+        this.matchmakingButton = this.AddButton('public-game', 'Join Random Game', () => matchmake());
     }
     CopyLinkPopup() {
         this.AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1500);
