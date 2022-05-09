@@ -17,15 +17,11 @@ export class RematchState extends LobbyState {
   }
 
   protected Register(socket: LobbyClientSocket): void {
-    socket.on('MatchFound', (lobbyId: LobbyId) => {
-      this.MatchFound(lobbyId);
-    });
     socket.on('EnterMenu', (lobbyId: LobbyId) => {
       this.EnterMenu(lobbyId);
     });
   }
   protected Deregister(socket: LobbyClientSocket): void {
-    socket.removeAllListeners('MatchFound');
     socket.removeAllListeners('EnterMenu');
   }
 

@@ -35,6 +35,14 @@ class MenuModal extends Modal_1.Modal {
         });
         this.matchmakingButton = this.AddButton('public-game', 'Join Random Game', () => matchmake());
     }
+    Exit() {
+        return Promise.resolve(this.EnteringMatch())
+            .then(() => new Promise(resolve => setTimeout(resolve, 1000)))
+            .then(() => super.Exit());
+    }
+    EnteringMatch() {
+        this.AddDiv('entering-match', 'Entering match. Good luck!');
+    }
     CopyLinkPopup() {
         this.AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1.5);
     }

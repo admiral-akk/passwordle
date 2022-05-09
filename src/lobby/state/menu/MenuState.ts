@@ -36,6 +36,12 @@ class MenuModal extends Modal {
   private matchmakingButton: HTMLButtonElement;
   private copyLinkButton: HTMLButtonElement;
 
+  public Exit(): Promise<void> {
+    return Promise.resolve(this.EnteringMatch())
+      .then(() => new Promise(resolve => setTimeout(resolve, 1000)))
+      .then(() => super.Exit());
+  }
+
   constructor(hostLobby: () => void, matchmake: () => void) {
     super();
     this.copyLinkButton = this.AddButton(
@@ -51,6 +57,10 @@ class MenuModal extends Modal {
       'Join Random Game',
       () => matchmake()
     );
+  }
+
+  EnteringMatch() {
+    this.AddDiv('entering-match', 'Entering match. Good luck!');
   }
 
   CopyLinkPopup() {

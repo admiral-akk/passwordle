@@ -15,15 +15,11 @@ class RematchState extends PlayerState_1.LobbyState {
         return this.modal.Exit();
     }
     Register(socket) {
-        socket.on('MatchFound', (lobbyId) => {
-            this.MatchFound(lobbyId);
-        });
         socket.on('EnterMenu', (lobbyId) => {
             this.EnterMenu(lobbyId);
         });
     }
     Deregister(socket) {
-        socket.removeAllListeners('MatchFound');
         socket.removeAllListeners('EnterMenu');
     }
     RequestRematch() {
