@@ -33,7 +33,7 @@ class Modal {
     AddDiv(className, text = '') {
         return this.AddRootDiv(this.base, className, text);
     }
-    AddPopup(target, text, durationMilliseconds = 1500) {
+    AddPopup(target, text, durationSeconds = 1.5) {
         if (this.popup) {
             return;
         }
@@ -42,8 +42,8 @@ class Modal {
         this.popup.innerText = text;
         target.appendChild(this.popup);
         this.elements.push(this.popup);
-        (0, Animate_1.AnimateCSS)(this.popup, Animate_1.AnimationType.BounceIn, 0.5);
-        new Promise(resolve => setTimeout(resolve, durationMilliseconds - 500))
+        (0, Animate_1.AnimateCSS)(this.popup, Animate_1.AnimationType.BounceIn, 0.5)
+            .then(() => new Promise(resolve => setTimeout(resolve, 1000 * (durationSeconds - 1))))
             .then(() => {
             if (!this.popup) {
                 return;

@@ -54,7 +54,7 @@ class MenuModal extends Modal_1.Modal {
         this.matchmakingButton = this.AddButton('public-game', 'Join Random Game', () => matchmake());
     }
     CopyLinkPopup() {
-        this.AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1500);
+        this.AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1.5);
     }
     EnterMatchmaking() {
         this.matchmakingButton.disabled = true;

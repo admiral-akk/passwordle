@@ -46,11 +46,7 @@ export abstract class Modal {
     return this.AddRootDiv(this.base, className, text);
   }
 
-  protected AddPopup(
-    target: HTMLElement,
-    text: string,
-    durationMilliseconds = 1500
-  ) {
+  protected AddPopup(target: HTMLElement, text: string, durationSeconds = 1.5) {
     if (this.popup) {
       return;
     }
@@ -59,9 +55,13 @@ export abstract class Modal {
     this.popup.innerText = text;
     target.appendChild(this.popup);
     this.elements.push(this.popup);
-    AnimateCSS(this.popup, AnimationType.BounceIn, 0.5);
-
-    new Promise(resolve => setTimeout(resolve, durationMilliseconds - 500))
+    AnimateCSS(this.popup, AnimationType.BounceIn, 0.5)
+      .then(
+        () =>
+          new Promise(resolve =>
+            setTimeout(resolve, 1000 * (durationSeconds - 1))
+          )
+      )
       .then(() => {
         if (!this.popup) {
           return;

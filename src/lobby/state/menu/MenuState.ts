@@ -74,7 +74,7 @@ class MenuModal extends Modal {
   }
 
   CopyLinkPopup() {
-    this.AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1500);
+    this.AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1.5);
   }
 
   EnterMatchmaking() {

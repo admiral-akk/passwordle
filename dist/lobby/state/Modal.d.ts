@@ -7,5 +7,5 @@ export declare abstract class Modal {
     protected AddButton(className: string, text: string, callback: () => void): HTMLButtonElement;
     private AddRootDiv;
     protected AddDiv(className: string, text?: string): HTMLDivElement;
-    protected AddPopup(target: HTMLElement, text: string, durationMilliseconds?: number): void;
+    protected AddPopup(target: HTMLElement, text: string, durationSeconds?: number): void;
 }
