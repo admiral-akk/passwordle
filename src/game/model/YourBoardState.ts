@@ -8,6 +8,7 @@ import {
   GuessLocked,
   LockedGuessError,
 } from '../network/updates/Updates';
+import {LetterAnimation} from './view/struct/Animation';
 
 enum State {
   CanSubmit,
@@ -90,7 +91,7 @@ export class YourBoardState {
     return ToWord(this.currentGuess);
   }
 
-  Update(knowledge: WordKnowledge) {
+  Update(knowledge: WordKnowledge): LetterAnimation[] {
     this.guesses.push(ToWord(knowledge.guess));
     for (let i = 0; i < knowledge.guess.length; i++) {
       this.view?.SetCharKnowledge(
@@ -102,6 +103,7 @@ export class YourBoardState {
     }
     this.currentGuess = '';
     this.state = State.CanSubmit;
+    return [];
   }
 
   Exit() {

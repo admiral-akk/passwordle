@@ -8,6 +8,7 @@ import {YourBoardState} from './YourBoardState';
 import {YourPasswordState} from './YourPasswordState';
 import {OpponentBoardState} from './OpponentBoardState';
 import {OpponentPasswordState} from './OpponentPasswordState';
+import {LetterAnimation} from './view/struct/Animation';
 
 export class PlayerBoard
   implements GameClientToServerEvents, GameServerToClientEvents
@@ -65,11 +66,42 @@ export class PlayerBoard
     this.opponentBoard.OpponentLockedGuess();
   }
 
-  UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
-    this.yourBoard.Update(update.playerKnowledge);
-    this.opponentBoard.Update(update.opponentKnowledge);
-    this.yourPassword.Update(update.playerProgress);
-    this.opponentPassword.Update(update.opponentProgress);
+  UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void> {
+    // Gather animations
+    const animations: LetterAnimation[] = [];
+    animations.push(...this.yourPassword.Update(update.playerProgress));
+    animations.push(...this.yourBoard.Update(update.playerKnowledge));
+
+    animations.push(...this.opponentBoard.Update(update.opponentKnowledge));
+    animations.push(...this.opponentPassword.Update(update.opponentProgress));
+
+    // Sequence them
+    const sequence: Record<number, (() => void)[]> = {};
+    animations.forEach(animation => {
+      const index = animation.letterIndex;
+      if (!(index in sequence)) {
+        sequence[index] = [];
+      }
+      sequence[index].push(animation.animationStart);
+    });
+
+    // String them into a promise
+    let promise = new Promise<void>(resolve => resolve());
+    for (let i = 0; i < 10; i++) {
+      if (!(i in sequence)) {
+        continue;
+      }
+      sequence[i].forEach(animationCallback => {
+        promise = promise.then(() => {
+          animationCallback();
+          return Promise.resolve();
+        });
+      });
+      promise = promise.then(
+        () => new Promise(resolve => setTimeout(resolve, 400))
+      );
+    }
+    return promise;
   }
 
   SetSecret(secret: Word) {

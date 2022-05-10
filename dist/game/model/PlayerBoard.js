@@ -49,10 +49,36 @@ class PlayerBoard {
         this.opponentBoard.OpponentLockedGuess();
     }
     UpdatedAnswerKnowledge(update) {
-        this.yourBoard.Update(update.playerKnowledge);
-        this.opponentBoard.Update(update.opponentKnowledge);
-        this.yourPassword.Update(update.playerProgress);
-        this.opponentPassword.Update(update.opponentProgress);
+        // Gather animations
+        const animations = [];
+        animations.push(...this.yourPassword.Update(update.playerProgress));
+        animations.push(...this.yourBoard.Update(update.playerKnowledge));
+        animations.push(...this.opponentBoard.Update(update.opponentKnowledge));
+        animations.push(...this.opponentPassword.Update(update.opponentProgress));
+        // Sequence them
+        const sequence = {};
+        animations.forEach(animation => {
+            const index = animation.letterIndex;
+            if (!(index in sequence)) {
+                sequence[index] = [];
+            }
+            sequence[index].push(animation.animationStart);
+        });
+        // String them into a promise
+        let promise = new Promise(resolve => resolve());
+        for (let i = 0; i < 10; i++) {
+            if (!(i in sequence)) {
+                continue;
+            }
+            sequence[i].forEach(animationCallback => {
+                promise = promise.then(() => {
+                    animationCallback();
+                    return Promise.resolve();
+                });
+            });
+            promise = promise.then(() => new Promise(resolve => setTimeout(resolve, 400)));
+        }
+        return promise;
     }
     SetSecret(secret) {
         this.Reset();

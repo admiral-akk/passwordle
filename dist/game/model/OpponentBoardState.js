@@ -37,6 +37,7 @@ class OpponentBoardState {
         for (let i = 0; i < knowledge.guess.length; i++) {
             (_a = this.view) === null || _a === void 0 ? void 0 : _a.SetCharKnowledge(this.guesses.length - 1, i, knowledge.guess[i], knowledge.letterKnowledge[i]);
         }
+        return [];
     }
     Exit() {
         var _a;

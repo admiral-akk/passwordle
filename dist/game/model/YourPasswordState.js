@@ -39,6 +39,7 @@ class YourPasswordState {
             }
         }
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Update(target);
+        return [];
     }
     Lost() {
         return this.knownCharacters.filter(c => c === '').length === 0;

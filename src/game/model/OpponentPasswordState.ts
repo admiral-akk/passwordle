@@ -1,5 +1,6 @@
 import {TargetProgress} from '../client/structs/TargetProgress';
 import {OpponentPasswordView} from './view/OpponentPasswordView';
+import {LetterAnimation} from './view/struct/Animation';
 
 enum State {
   WaitingForPassword,
@@ -25,13 +26,14 @@ export class OpponentPasswordState {
     this.state = State.WaitingForPassword;
   }
 
-  Update(progress: TargetProgress) {
+  Update(progress: TargetProgress): LetterAnimation[] {
     for (let i = 0; i < progress.knownCharacters.length; i++) {
       if (progress.knownCharacters[i] !== '') {
         this.password[i] = progress.knownCharacters[i];
       }
     }
     this.view?.Update(progress);
+    return [];
   }
 
   Won(): boolean {

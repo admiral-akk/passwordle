@@ -73,6 +73,7 @@ class YourBoardState {
         }
         this.currentGuess = '';
         this.state = State.CanSubmit;
+        return [];
     }
     Exit() {
         var _a;

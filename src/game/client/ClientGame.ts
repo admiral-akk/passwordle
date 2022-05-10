@@ -74,7 +74,8 @@ export class ClientGame
   }
 
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
-    this.board.UpdatedAnswerKnowledge(update);
+    const animationPromise = this.board.UpdatedAnswerKnowledge(update);
+    Promise.resolve().then(() => animationPromise);
     if (this.board.IsGameOver()) {
       this.SwitchState(new LobbyManager(true));
     }

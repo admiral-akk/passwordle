@@ -51,7 +51,8 @@ class ClientGame extends PlayerState_1.PlayerState {
         this.board.OpponentAddedChar();
     }
     UpdatedAnswerKnowledge(update) {
-        this.board.UpdatedAnswerKnowledge(update);
+        const animationPromise = this.board.UpdatedAnswerKnowledge(update);
+        Promise.resolve().then(() => animationPromise);
         if (this.board.IsGameOver()) {
             this.SwitchState(new LobbyManager_1.LobbyManager(true));
         }

@@ -32,6 +32,7 @@ class OpponentPasswordState {
             }
         }
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Update(progress);
+        return [];
     }
     Won() {
         return this.password.filter(c => c === '').length === 0;
