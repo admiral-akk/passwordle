@@ -93,17 +93,22 @@ export class YourBoardState {
 
   Update(knowledge: WordKnowledge): LetterAnimation[] {
     this.guesses.push(ToWord(knowledge.guess));
+    const animations: LetterAnimation[] = [];
     for (let i = 0; i < knowledge.guess.length; i++) {
-      this.view?.SetCharKnowledge(
-        this.guesses.length - 1,
-        i,
-        knowledge.guess[i],
-        knowledge.letterKnowledge[i]
+      animations.push(
+        new LetterAnimation(i, () =>
+          this.view?.SetCharKnowledge(
+            this.guesses.length - 1,
+            i,
+            knowledge.guess[i],
+            knowledge.letterKnowledge[i]
+          )
+        )
       );
     }
     this.currentGuess = '';
     this.state = State.CanSubmit;
-    return [];
+    return animations;
   }
 
   Exit() {

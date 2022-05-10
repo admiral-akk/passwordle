@@ -45,15 +45,20 @@ export class OpponentBoardState {
 
   Update(knowledge: WordKnowledge): LetterAnimation[] {
     this.guesses.push(ToWord(knowledge.guess));
+    const animations: LetterAnimation[] = [];
     for (let i = 0; i < knowledge.guess.length; i++) {
-      this.view?.SetCharKnowledge(
-        this.guesses.length - 1,
-        i,
-        knowledge.guess[i],
-        knowledge.letterKnowledge[i]
+      animations.push(
+        new LetterAnimation(i + 5, () =>
+          this.view?.SetCharKnowledge(
+            this.guesses.length - 1,
+            i,
+            knowledge.guess[i],
+            knowledge.letterKnowledge[i]
+          )
+        )
       );
     }
-    return [];
+    return animations;
   }
 
   Exit() {

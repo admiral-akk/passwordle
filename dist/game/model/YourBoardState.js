@@ -6,6 +6,7 @@ const YourBoardView_1 = require("./view/YourBoardView");
 const Word_1 = require("../structs/Word");
 const Words_1 = require("../Words");
 const Updates_1 = require("../network/updates/Updates");
+const Animation_1 = require("./view/struct/Animation");
 var State;
 (function (State) {
     State[State["CanSubmit"] = 0] = "CanSubmit";
@@ -66,14 +67,17 @@ class YourBoardState {
         return (0, Word_1.ToWord)(this.currentGuess);
     }
     Update(knowledge) {
-        var _a;
         this.guesses.push((0, Word_1.ToWord)(knowledge.guess));
+        const animations = [];
         for (let i = 0; i < knowledge.guess.length; i++) {
-            (_a = this.view) === null || _a === void 0 ? void 0 : _a.SetCharKnowledge(this.guesses.length - 1, i, knowledge.guess[i], knowledge.letterKnowledge[i]);
+            animations.push(new Animation_1.LetterAnimation(i, () => {
+                var _a;
+                return (_a = this.view) === null || _a === void 0 ? void 0 : _a.SetCharKnowledge(this.guesses.length - 1, i, knowledge.guess[i], knowledge.letterKnowledge[i]);
+            }));
         }
         this.currentGuess = '';
         this.state = State.CanSubmit;
-        return [];
+        return animations;
     }
     Exit() {
         var _a;

@@ -4,6 +4,7 @@ exports.OpponentBoardState = void 0;
 const OpponentUpdate_1 = require("./OpponentUpdate");
 const OpponentBoardView_1 = require("./view/OpponentBoardView");
 const Word_1 = require("../structs/Word");
+const Animation_1 = require("./view/struct/Animation");
 class OpponentBoardState {
     constructor(hasView) {
         this.guesses = [];
@@ -32,12 +33,15 @@ class OpponentBoardState {
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.OpponentUpdate(update);
     }
     Update(knowledge) {
-        var _a;
         this.guesses.push((0, Word_1.ToWord)(knowledge.guess));
+        const animations = [];
         for (let i = 0; i < knowledge.guess.length; i++) {
-            (_a = this.view) === null || _a === void 0 ? void 0 : _a.SetCharKnowledge(this.guesses.length - 1, i, knowledge.guess[i], knowledge.letterKnowledge[i]);
+            animations.push(new Animation_1.LetterAnimation(i + 5, () => {
+                var _a;
+                return (_a = this.view) === null || _a === void 0 ? void 0 : _a.SetCharKnowledge(this.guesses.length - 1, i, knowledge.guess[i], knowledge.letterKnowledge[i]);
+            }));
         }
-        return [];
+        return animations;
     }
     Exit() {
         var _a;
