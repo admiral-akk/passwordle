@@ -7,5 +7,6 @@ export declare abstract class Subview {
     Exit(): void;
     protected AddSubview(subview: Subview): void;
     protected AddDiv(parent: HTMLElement, className: string): HTMLDivElement;
+    protected AddButton(parent: HTMLElement, className: string, text: string, callback: () => void): HTMLButtonElement;
     private AddExplanation;
 }

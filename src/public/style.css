@@ -24,6 +24,7 @@
     margin: 2px;
 }
 
+
 .board {
     margin: 2px;
     display: flex;
@@ -174,7 +175,7 @@ body {
     justify-content: center;
 }
 
-#keyboard {
+.keyboard {
     display: flex;
     align-items: center;
     flex-direction: column;

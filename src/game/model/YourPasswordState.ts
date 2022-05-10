@@ -2,30 +2,25 @@ import {TargetProgress} from '../client/structs/TargetProgress';
 import {YourPasswordView} from './view/YourPasswordView';
 import {Word} from '../structs/Word';
 import {LetterAnimation} from './view/struct/Animation';
+import {ModelState} from './ModelState';
 
 enum State {
   WaitingForPassword,
   PasswordRecieved,
 }
 
-export class YourPasswordState {
+export class YourPasswordState extends ModelState<YourPasswordView> {
   private password: Word | null = null;
   private knownCharacters: string[] = ['', '', '', '', ''];
   private state: State = State.WaitingForPassword;
-  private view: YourPasswordView | null = null;
 
   constructor(hasView: boolean) {
-    if (hasView) {
-      this.view = new YourPasswordView();
-    }
+    super(YourPasswordView, hasView);
   }
 
   SetPassword(password: Word) {
     this.password = password;
     this.view?.SetSecret(this.password);
-  }
-  Exit() {
-    this.view?.Exit();
   }
 
   Reset() {

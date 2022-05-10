@@ -24,6 +24,15 @@ class Subview {
         this.elements.push(div);
         return div;
     }
+    AddButton(parent, className, text, callback) {
+        const button = document.createElement('button');
+        button.className = className;
+        button.innerText = text;
+        button.onclick = callback;
+        parent.appendChild(button);
+        this.elements.push(button);
+        return button;
+    }
     AddExplanation(base, text) {
         const explanation = this.AddDiv(base, 'explanation');
         explanation.innerText = text;

@@ -6,6 +6,7 @@ const YourPasswordState_1 = require("./YourPasswordState");
 const OpponentBoardState_1 = require("./OpponentBoardState");
 const OpponentPasswordState_1 = require("./OpponentPasswordState");
 const NotificationState_1 = require("./NotificationState");
+const KeyboardState_1 = require("./KeyboardState");
 var GameOverState;
 (function (GameOverState) {
     GameOverState[GameOverState["None"] = 0] = "None";
@@ -15,13 +16,15 @@ var GameOverState;
     GameOverState[GameOverState["OpponentDisconnected"] = 4] = "OpponentDisconnected";
 })(GameOverState = exports.GameOverState || (exports.GameOverState = {}));
 class PlayerBoard {
-    constructor(hasView = false) {
+    constructor(hasView = false, input = () => { }) {
         this.hasView = hasView;
+        this.input = input;
         this.yourBoard = new YourBoardState_1.YourBoardState(this.hasView);
         this.yourPassword = new YourPasswordState_1.YourPasswordState(this.hasView);
         this.opponentBoard = new OpponentBoardState_1.OpponentBoardState(this.hasView);
         this.opponentPassword = new OpponentPasswordState_1.OpponentPasswordState(this.hasView);
         this.notification = new NotificationState_1.NotificationState(this.hasView);
+        this.keyboard = new KeyboardState_1.KeyboardState(this.hasView, this.input);
     }
     Reset() {
         this.yourBoard.Reset();
@@ -29,6 +32,7 @@ class PlayerBoard {
         this.opponentBoard.Reset();
         this.opponentPassword.Reset();
         this.notification.Reset();
+        this.keyboard.Reset();
     }
     Exit() {
         this.yourBoard.Exit();
@@ -36,6 +40,7 @@ class PlayerBoard {
         this.opponentBoard.Exit();
         this.opponentPassword.Exit();
         this.notification.Exit();
+        this.keyboard.Exit();
     }
     GameClientReady() { }
     OpponentDisconnected() { }

@@ -1,14 +1,14 @@
 import { TargetProgress } from '../client/structs/TargetProgress';
+import { YourPasswordView } from './view/YourPasswordView';
 import { Word } from '../structs/Word';
 import { LetterAnimation } from './view/struct/Animation';
-export declare class YourPasswordState {
+import { ModelState } from './ModelState';
+export declare class YourPasswordState extends ModelState<YourPasswordView> {
     private password;
     private knownCharacters;
     private state;
-    private view;
     constructor(hasView: boolean);
     SetPassword(password: Word): void;
-    Exit(): void;
     Reset(): void;
     Update(target: TargetProgress): LetterAnimation[];
     Lost(): boolean;

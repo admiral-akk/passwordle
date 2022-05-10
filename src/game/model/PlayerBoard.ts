@@ -10,6 +10,7 @@ import {OpponentBoardState} from './OpponentBoardState';
 import {OpponentPasswordState} from './OpponentPasswordState';
 import {LetterAnimation} from './view/struct/Animation';
 import {NotificationState} from './NotificationState';
+import {KeyboardState} from './KeyboardState';
 
 export enum GameOverState {
   None,
@@ -28,6 +29,7 @@ export class PlayerBoard
     this.opponentBoard.Reset();
     this.opponentPassword.Reset();
     this.notification.Reset();
+    this.keyboard.Reset();
   }
   Exit() {
     this.yourBoard.Exit();
@@ -35,9 +37,13 @@ export class PlayerBoard
     this.opponentBoard.Exit();
     this.opponentPassword.Exit();
     this.notification.Exit();
+    this.keyboard.Exit();
   }
 
-  constructor(private hasView: boolean = false) {}
+  constructor(
+    private hasView: boolean = false,
+    private input: (key: string) => void = () => {}
+  ) {}
   GameClientReady() {}
 
   private yourBoard: YourBoardState = new YourBoardState(this.hasView);
@@ -49,6 +55,7 @@ export class PlayerBoard
     this.hasView
   );
   private notification: NotificationState = new NotificationState(this.hasView);
+  private keyboard: KeyboardState = new KeyboardState(this.hasView, this.input);
 
   OpponentDisconnected() {}
 

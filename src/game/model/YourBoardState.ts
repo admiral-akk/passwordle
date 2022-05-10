@@ -9,22 +9,20 @@ import {
   LockedGuessError,
 } from '../network/updates/Updates';
 import {LetterAnimation} from './view/struct/Animation';
+import {ModelState} from './ModelState';
 
 enum State {
   CanSubmit,
   Locked,
 }
 
-export class YourBoardState {
+export class YourBoardState extends ModelState<YourBoardView> {
   private guesses: Word[] = [];
   private currentGuess = '';
   private state: State = State.CanSubmit;
-  private view: YourBoardView | null = null;
 
   constructor(hasView: boolean) {
-    if (hasView) {
-      this.view = new YourBoardView();
-    }
+    super(YourBoardView, hasView);
   }
 
   AddChar(char: string): boolean {
@@ -109,10 +107,6 @@ export class YourBoardState {
     this.currentGuess = '';
     this.state = State.CanSubmit;
     return animations;
-  }
-
-  Exit() {
-    this.view?.Exit();
   }
 
   Reset() {

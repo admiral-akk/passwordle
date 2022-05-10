@@ -28,6 +28,21 @@ export abstract class Subview {
     return div;
   }
 
+  protected AddButton(
+    parent: HTMLElement,
+    className: string,
+    text: string,
+    callback: () => void
+  ): HTMLButtonElement {
+    const button = document.createElement('button');
+    button.className = className;
+    button.innerText = text;
+    button.onclick = callback;
+    parent.appendChild(button);
+    this.elements.push(button);
+    return button;
+  }
+
   private AddExplanation(base: HTMLElement, text: string) {
     const explanation = this.AddDiv(base, 'explanation');
     explanation.innerText = text;

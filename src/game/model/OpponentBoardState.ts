@@ -3,16 +3,14 @@ import {OpponentUpdate, OpponentUpdateType} from './OpponentUpdate';
 import {OpponentBoardView} from './view/OpponentBoardView';
 import {ToWord, Word} from '../structs/Word';
 import {LetterAnimation} from './view/struct/Animation';
+import {ModelState} from './ModelState';
 
-export class OpponentBoardState {
+export class OpponentBoardState extends ModelState<OpponentBoardView> {
   private guesses: Word[] = [];
   private opponentCharCount = 0;
-  private view: OpponentBoardView | null = null;
 
   constructor(hasView: boolean) {
-    if (hasView) {
-      this.view = new OpponentBoardView();
-    }
+    super(OpponentBoardView, hasView);
   }
 
   OpponentAddedChar() {
@@ -59,10 +57,6 @@ export class OpponentBoardState {
       );
     }
     return animations;
-  }
-
-  Exit() {
-    this.view?.Exit();
   }
 
   Reset() {

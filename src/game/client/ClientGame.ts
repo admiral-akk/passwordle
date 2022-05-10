@@ -46,12 +46,22 @@ export class ClientGame
   private board: PlayerBoard;
   constructor() {
     super();
-    this.board = new PlayerBoard(true);
+    this.board = new PlayerBoard(true, (key: string) => this.Input(key));
     new InputManager(
       (char: string) => this.AddChar(char),
       () => this.Delete(),
       () => this.Submit()
     );
+  }
+
+  private Input(key: string) {
+    if (key.length === 1) {
+      this.AddChar(key);
+    } else if (key === 'ENTER') {
+      this.Submit();
+    } else {
+      this.Delete();
+    }
   }
 
   OpponentDisconnected() {

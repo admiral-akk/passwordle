@@ -10,15 +10,17 @@ export declare enum GameOverState {
 }
 export declare class PlayerBoard implements GameClientToServerEvents, GameServerToClientEvents {
     private hasView;
+    private input;
     private Reset;
     Exit(): void;
-    constructor(hasView?: boolean);
+    constructor(hasView?: boolean, input?: (key: string) => void);
     GameClientReady(): void;
     private yourBoard;
     private yourPassword;
     private opponentBoard;
     private opponentPassword;
     private notification;
+    private keyboard;
     OpponentDisconnected(): void;
     AddedChar(update: AddedChar): boolean;
     Deleted(): boolean;

@@ -7,20 +7,18 @@ const Word_1 = require("../structs/Word");
 const Words_1 = require("../Words");
 const Updates_1 = require("../network/updates/Updates");
 const Animation_1 = require("./view/struct/Animation");
+const ModelState_1 = require("./ModelState");
 var State;
 (function (State) {
     State[State["CanSubmit"] = 0] = "CanSubmit";
     State[State["Locked"] = 1] = "Locked";
 })(State || (State = {}));
-class YourBoardState {
+class YourBoardState extends ModelState_1.ModelState {
     constructor(hasView) {
+        super(YourBoardView_1.YourBoardView, hasView);
         this.guesses = [];
         this.currentGuess = '';
         this.state = State.CanSubmit;
-        this.view = null;
-        if (hasView) {
-            this.view = new YourBoardView_1.YourBoardView();
-        }
     }
     AddChar(char) {
         var _a;
@@ -78,10 +76,6 @@ class YourBoardState {
         this.currentGuess = '';
         this.state = State.CanSubmit;
         return animations;
-    }
-    Exit() {
-        var _a;
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();
     }
     Reset() {
         this.guesses = [];

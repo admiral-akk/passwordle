@@ -5,14 +5,12 @@ const OpponentUpdate_1 = require("./OpponentUpdate");
 const OpponentBoardView_1 = require("./view/OpponentBoardView");
 const Word_1 = require("../structs/Word");
 const Animation_1 = require("./view/struct/Animation");
-class OpponentBoardState {
+const ModelState_1 = require("./ModelState");
+class OpponentBoardState extends ModelState_1.ModelState {
     constructor(hasView) {
+        super(OpponentBoardView_1.OpponentBoardView, hasView);
         this.guesses = [];
         this.opponentCharCount = 0;
-        this.view = null;
-        if (hasView) {
-            this.view = new OpponentBoardView_1.OpponentBoardView();
-        }
     }
     OpponentAddedChar() {
         var _a;
@@ -42,10 +40,6 @@ class OpponentBoardState {
             }));
         }
         return animations;
-    }
-    Exit() {
-        var _a;
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();
     }
     Reset() {
         this.guesses = [];

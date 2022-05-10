@@ -1,17 +1,12 @@
+import {ModelState} from './ModelState';
 import {NotificationView} from './view/NotificationView';
 
-export class NotificationState {
-  private view: NotificationView | null = null;
+export class NotificationState extends ModelState<NotificationView> {
   constructor(hasView: boolean) {
-    if (hasView) {
-      this.view = new NotificationView();
-    }
+    super(NotificationView, hasView);
   }
   Reset() {
     this.view?.Reset();
-  }
-  Exit() {
-    this.view?.Exit();
   }
 
   Won(): Promise<void> {

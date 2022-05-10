@@ -9,7 +9,7 @@ const LobbyManager_1 = require("../../lobby/state/LobbyManager");
 class ClientGame extends PlayerState_1.PlayerState {
     constructor() {
         super();
-        this.board = new PlayerBoard_1.PlayerBoard(true);
+        this.board = new PlayerBoard_1.PlayerBoard(true, (key) => this.Input(key));
         new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
     }
     Exit() {
@@ -33,6 +33,17 @@ class ClientGame extends PlayerState_1.PlayerState {
         socket.removeAllListeners('OpponentDeleted');
         socket.removeAllListeners('OpponentLockedGuess');
         socket.removeAllListeners('OpponentDisconnected');
+    }
+    Input(key) {
+        if (key.length === 1) {
+            this.AddChar(key);
+        }
+        else if (key === 'ENTER') {
+            this.Submit();
+        }
+        else {
+            this.Delete();
+        }
     }
     OpponentDisconnected() {
         this.board.OpponentDisconnected();

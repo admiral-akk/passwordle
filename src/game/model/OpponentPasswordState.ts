@@ -1,4 +1,5 @@
 import {TargetProgress} from '../client/structs/TargetProgress';
+import {ModelState} from './ModelState';
 import {OpponentPasswordView} from './view/OpponentPasswordView';
 import {LetterAnimation} from './view/struct/Animation';
 
@@ -7,18 +8,12 @@ enum State {
   PasswordRecieved,
 }
 
-export class OpponentPasswordState {
+export class OpponentPasswordState extends ModelState<OpponentPasswordView> {
   private password: string[] = ['', '', '', '', ''];
   private state: State = State.WaitingForPassword;
-  private view: OpponentPasswordView | null = null;
 
   constructor(hasView: boolean) {
-    if (hasView) {
-      this.view = new OpponentPasswordView();
-    }
-  }
-  Exit() {
-    this.view?.Exit();
+    super(OpponentPasswordView, hasView);
   }
 
   Reset() {

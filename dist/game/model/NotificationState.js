@@ -1,21 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotificationState = void 0;
+const ModelState_1 = require("./ModelState");
 const NotificationView_1 = require("./view/NotificationView");
-class NotificationState {
+class NotificationState extends ModelState_1.ModelState {
     constructor(hasView) {
-        this.view = null;
-        if (hasView) {
-            this.view = new NotificationView_1.NotificationView();
-        }
+        super(NotificationView_1.NotificationView, hasView);
     }
     Reset() {
         var _a;
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Reset();
-    }
-    Exit() {
-        var _a;
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();
     }
     Won() {
         var _a;
