@@ -37,6 +37,9 @@ class OpponentWordView extends WordView_1.BaseWordView {
             case OpponentUpdate_1.OpponentUpdateType.Delete:
                 this.letters[charIndex].SetColor(LetterView_1.LetterColor.White);
                 break;
+            case OpponentUpdate_1.OpponentUpdateType.Submit:
+                this.letters.forEach(letter => letter.SetColor(LetterView_1.LetterColor.LightGrey));
+                break;
         }
     }
     SetKnowledge(charIndex, char, knowledge) {
