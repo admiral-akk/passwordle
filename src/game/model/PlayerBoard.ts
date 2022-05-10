@@ -9,6 +9,15 @@ import {YourPasswordState} from './YourPasswordState';
 import {OpponentBoardState} from './OpponentBoardState';
 import {OpponentPasswordState} from './OpponentPasswordState';
 import {LetterAnimation} from './view/struct/Animation';
+import {NotificationState} from './NotificationState';
+
+export enum GameOverState {
+  None,
+  Win,
+  Loss,
+  Tie,
+  OpponentDisconnected,
+}
 
 export class PlayerBoard
   implements GameClientToServerEvents, GameServerToClientEvents
@@ -18,12 +27,14 @@ export class PlayerBoard
     this.yourPassword.Reset();
     this.opponentBoard.Reset();
     this.opponentPassword.Reset();
+    this.notification.Reset();
   }
   Exit() {
     this.yourBoard.Exit();
     this.yourPassword.Exit();
     this.opponentBoard.Exit();
     this.opponentPassword.Exit();
+    this.notification.Exit();
   }
 
   constructor(private hasView: boolean = false) {}
@@ -37,6 +48,7 @@ export class PlayerBoard
   private opponentPassword: OpponentPasswordState = new OpponentPasswordState(
     this.hasView
   );
+  private notification: NotificationState = new NotificationState(this.hasView);
 
   OpponentDisconnected() {}
 
@@ -53,7 +65,23 @@ export class PlayerBoard
   }
 
   IsGameOver(): boolean {
-    return this.yourPassword.Lost() || this.opponentPassword.Won();
+    return this.GameOver() !== GameOverState.None;
+  }
+
+  private GameOver(): GameOverState {
+    if (!this.yourPassword.Lost() && !this.opponentPassword.Won()) {
+      return GameOverState.None;
+    }
+    if (this.yourPassword.Lost() && this.opponentPassword.Won()) {
+      return GameOverState.Tie;
+    }
+    if (this.yourPassword.Lost() && !this.opponentPassword.Won()) {
+      return GameOverState.Loss;
+    }
+    if (!this.yourPassword.Lost() && this.opponentPassword.Won()) {
+      return GameOverState.Win;
+    }
+    return GameOverState.None;
   }
 
   OpponentAddedChar() {
@@ -100,6 +128,20 @@ export class PlayerBoard
       promise = promise.then(
         () => new Promise(resolve => setTimeout(resolve, 400))
       );
+    }
+
+    // Check if the game is over
+    const gameOverState = this.GameOver();
+    switch (gameOverState) {
+      case GameOverState.Loss:
+        promise.then(() => this.notification.Lost());
+        break;
+      case GameOverState.Win:
+        promise.then(() => this.notification.Won());
+        break;
+      case GameOverState.Tie:
+        promise.then(() => this.notification.Tied());
+        break;
     }
     return promise;
   }

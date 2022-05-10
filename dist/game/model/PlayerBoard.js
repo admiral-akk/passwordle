@@ -1,10 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlayerBoard = void 0;
+exports.PlayerBoard = exports.GameOverState = void 0;
 const YourBoardState_1 = require("./YourBoardState");
 const YourPasswordState_1 = require("./YourPasswordState");
 const OpponentBoardState_1 = require("./OpponentBoardState");
 const OpponentPasswordState_1 = require("./OpponentPasswordState");
+const NotificationState_1 = require("./NotificationState");
+var GameOverState;
+(function (GameOverState) {
+    GameOverState[GameOverState["None"] = 0] = "None";
+    GameOverState[GameOverState["Win"] = 1] = "Win";
+    GameOverState[GameOverState["Loss"] = 2] = "Loss";
+    GameOverState[GameOverState["Tie"] = 3] = "Tie";
+    GameOverState[GameOverState["OpponentDisconnected"] = 4] = "OpponentDisconnected";
+})(GameOverState = exports.GameOverState || (exports.GameOverState = {}));
 class PlayerBoard {
     constructor(hasView = false) {
         this.hasView = hasView;
@@ -12,18 +21,21 @@ class PlayerBoard {
         this.yourPassword = new YourPasswordState_1.YourPasswordState(this.hasView);
         this.opponentBoard = new OpponentBoardState_1.OpponentBoardState(this.hasView);
         this.opponentPassword = new OpponentPasswordState_1.OpponentPasswordState(this.hasView);
+        this.notification = new NotificationState_1.NotificationState(this.hasView);
     }
     Reset() {
         this.yourBoard.Reset();
         this.yourPassword.Reset();
         this.opponentBoard.Reset();
         this.opponentPassword.Reset();
+        this.notification.Reset();
     }
     Exit() {
         this.yourBoard.Exit();
         this.yourPassword.Exit();
         this.opponentBoard.Exit();
         this.opponentPassword.Exit();
+        this.notification.Exit();
     }
     GameClientReady() { }
     OpponentDisconnected() { }
@@ -37,7 +49,22 @@ class PlayerBoard {
         return this.yourBoard.LockedGuess();
     }
     IsGameOver() {
-        return this.yourPassword.Lost() || this.opponentPassword.Won();
+        return this.GameOver() !== GameOverState.None;
+    }
+    GameOver() {
+        if (!this.yourPassword.Lost() && !this.opponentPassword.Won()) {
+            return GameOverState.None;
+        }
+        if (this.yourPassword.Lost() && this.opponentPassword.Won()) {
+            return GameOverState.Tie;
+        }
+        if (this.yourPassword.Lost() && !this.opponentPassword.Won()) {
+            return GameOverState.Loss;
+        }
+        if (!this.yourPassword.Lost() && this.opponentPassword.Won()) {
+            return GameOverState.Win;
+        }
+        return GameOverState.None;
     }
     OpponentAddedChar() {
         this.opponentBoard.OpponentAddedChar();
@@ -77,6 +104,19 @@ class PlayerBoard {
                 });
             });
             promise = promise.then(() => new Promise(resolve => setTimeout(resolve, 400)));
+        }
+        // Check if the game is over
+        const gameOverState = this.GameOver();
+        switch (gameOverState) {
+            case GameOverState.Loss:
+                promise.then(() => this.notification.Lost());
+                break;
+            case GameOverState.Win:
+                promise.then(() => this.notification.Won());
+                break;
+            case GameOverState.Tie:
+                promise.then(() => this.notification.Tied());
+                break;
         }
         return promise;
     }

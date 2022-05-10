@@ -15,6 +15,7 @@ export declare class ClientGame extends PlayerState implements GameServerToClien
     OpponentLockedGuess(): void;
     OpponentDeleted(): void;
     OpponentAddedChar(): void;
+    EndGame(): Promise<void>;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): void;
     AddChar(char: string): void;
     Delete(): void;

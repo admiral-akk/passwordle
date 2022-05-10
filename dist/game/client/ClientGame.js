@@ -50,12 +50,23 @@ class ClientGame extends PlayerState_1.PlayerState {
     OpponentAddedChar() {
         this.board.OpponentAddedChar();
     }
+    EndGame() {
+        return new Promise(resolve => {
+            this.SwitchState(new LobbyManager_1.LobbyManager(true));
+            resolve();
+        });
+    }
     UpdatedAnswerKnowledge(update) {
         const animationPromise = this.board.UpdatedAnswerKnowledge(update);
-        Promise.resolve().then(() => animationPromise);
-        if (this.board.IsGameOver()) {
-            this.SwitchState(new LobbyManager_1.LobbyManager(true));
-        }
+        Promise.resolve()
+            .then(() => animationPromise)
+            .then(() => {
+            const gameOver = this.board.IsGameOver();
+            if (!gameOver) {
+                return Promise.resolve();
+            }
+            return this.EndGame();
+        });
     }
     AddChar(char) {
         const command = new Updates_1.AddedChar(char);

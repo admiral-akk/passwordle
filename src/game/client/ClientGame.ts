@@ -1,6 +1,6 @@
 import {InputManager} from './input/InputManager';
 import {Word} from '../structs/Word';
-import {PlayerBoard} from '../model/PlayerBoard';
+import {GameOverState, PlayerBoard} from '../model/PlayerBoard';
 import {GameServerToClientEvents} from '../network/GameNetworkTypes';
 import {
   AddedChar,
@@ -10,6 +10,7 @@ import {
 import {ClientSocket} from '../../public/ClientNetworking';
 import {PlayerState} from '../../public/PlayerState';
 import {LobbyManager} from '../../lobby/state/LobbyManager';
+import {EndGameState} from '../EndGameState';
 
 export class ClientGame
   extends PlayerState
@@ -73,12 +74,24 @@ export class ClientGame
     this.board.OpponentAddedChar();
   }
 
+  EndGame(): Promise<void> {
+    return new Promise<void>(resolve => {
+      this.SwitchState(new LobbyManager(true));
+      resolve();
+    });
+  }
+
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
     const animationPromise = this.board.UpdatedAnswerKnowledge(update);
-    Promise.resolve().then(() => animationPromise);
-    if (this.board.IsGameOver()) {
-      this.SwitchState(new LobbyManager(true));
-    }
+    Promise.resolve()
+      .then(() => animationPromise)
+      .then(() => {
+        const gameOver = this.board.IsGameOver();
+        if (!gameOver) {
+          return Promise.resolve();
+        }
+        return this.EndGame();
+      });
   }
 
   AddChar(char: string) {
