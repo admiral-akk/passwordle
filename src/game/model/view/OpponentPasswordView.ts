@@ -1,5 +1,6 @@
 import {TargetProgress} from '../../client/structs/TargetProgress';
 import {PasswordView} from './PasswordView';
+import {LetterAnimation} from './struct/Animation';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
@@ -13,17 +14,23 @@ export class OpponentPasswordView extends Subview implements PasswordView {
     this.AddSubview(this.answer);
   }
 
-  Update(target: TargetProgress) {
+  Update(target: TargetProgress): LetterAnimation[] {
+    const animations: LetterAnimation[] = [];
     for (let i = 0; i < target.knownCharacters.length; i++) {
       if (target.knownCharacters[i] === '') {
         continue;
       }
-      const x = this.answer.UpdateProgress(i, target.knownCharacters[i]);
-      if (x) {
-        x!();
+      const animation = this.answer.UpdateProgress(
+        i,
+        target.knownCharacters[i]
+      );
+      if (animation) {
+        animations.push(new LetterAnimation(i + 5, animation));
       }
     }
+    return animations;
   }
+
   GetAnimations(
     guess: string,
     target: TargetProgress

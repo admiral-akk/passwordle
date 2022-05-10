@@ -40,7 +40,9 @@ export class YourPasswordState {
         this.knownCharacters[i] = target.knownCharacters[i];
       }
     }
-    this.view?.Update(target);
+    if (this.view) {
+      return this.view.Update(target);
+    }
     return [];
   }
 

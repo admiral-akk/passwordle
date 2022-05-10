@@ -32,13 +32,14 @@ class YourPasswordState {
         this.state = State.WaitingForPassword;
     }
     Update(target) {
-        var _a;
         for (let i = 0; i < target.knownCharacters.length; i++) {
             if (target.knownCharacters[i] !== '') {
                 this.knownCharacters[i] = target.knownCharacters[i];
             }
         }
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Update(target);
+        if (this.view) {
+            return this.view.Update(target);
+        }
         return [];
     }
     Lost() {

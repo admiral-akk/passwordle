@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpponentPasswordView = void 0;
+const Animation_1 = require("./struct/Animation");
 const Subview_1 = require("./Subview");
 const LetterView_1 = require("./word/letter/LetterView");
 const WordView_1 = require("./word/WordView");
@@ -12,15 +13,17 @@ class OpponentPasswordView extends Subview_1.Subview {
         this.AddSubview(this.answer);
     }
     Update(target) {
+        const animations = [];
         for (let i = 0; i < target.knownCharacters.length; i++) {
             if (target.knownCharacters[i] === '') {
                 continue;
             }
-            const x = this.answer.UpdateProgress(i, target.knownCharacters[i]);
-            if (x) {
-                x();
+            const animation = this.answer.UpdateProgress(i, target.knownCharacters[i]);
+            if (animation) {
+                animations.push(new Animation_1.LetterAnimation(i + 5, animation));
             }
         }
+        return animations;
     }
     GetAnimations(guess, target) {
         const animations = [];

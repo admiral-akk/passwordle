@@ -32,7 +32,9 @@ export class OpponentPasswordState {
         this.password[i] = progress.knownCharacters[i];
       }
     }
-    this.view?.Update(progress);
+    if (this.view) {
+      return this.view.Update(progress);
+    }
     return [];
   }
 

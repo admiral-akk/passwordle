@@ -25,13 +25,14 @@ class OpponentPasswordState {
         this.state = State.WaitingForPassword;
     }
     Update(progress) {
-        var _a;
         for (let i = 0; i < progress.knownCharacters.length; i++) {
             if (progress.knownCharacters[i] !== '') {
                 this.password[i] = progress.knownCharacters[i];
             }
         }
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Update(progress);
+        if (this.view) {
+            return this.view.Update(progress);
+        }
         return [];
     }
     Won() {
