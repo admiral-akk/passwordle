@@ -18,14 +18,14 @@ class OpponentPasswordState extends ModelState_1.ModelState {
         this.password = ['', '', '', '', ''];
         this.state = State.WaitingForPassword;
     }
-    Update(progress) {
+    Update(progress, playerGuess) {
         for (let i = 0; i < progress.knownCharacters.length; i++) {
             if (progress.knownCharacters[i] !== '') {
                 this.password[i] = progress.knownCharacters[i];
             }
         }
         if (this.view) {
-            return this.view.Update(progress);
+            return this.view.Update(progress, playerGuess);
         }
         return [];
     }

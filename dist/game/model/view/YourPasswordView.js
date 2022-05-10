@@ -18,7 +18,7 @@ class YourPasswordView extends Subview_1.Subview {
     Reset() {
         this.answer.Reset();
     }
-    Update(target) {
+    Update(target, playerGuess) {
         const animations = [];
         for (let i = 0; i < target.knownCharacters.length; i++) {
             if (target.knownCharacters[i] === '') {
@@ -26,7 +26,12 @@ class YourPasswordView extends Subview_1.Subview {
             }
             const animation = this.answer.UpdateProgress(i);
             if (animation) {
-                animations.push(new Animation_1.LetterAnimation(i, animation));
+                if (playerGuess[i] === target.knownCharacters[i]) {
+                    animations.push(new Animation_1.LetterAnimation(i, animation));
+                }
+                else {
+                    animations.push(new Animation_1.LetterAnimation(i + 5, animation));
+                }
             }
         }
         return animations;

@@ -7,6 +7,6 @@ export declare class YourPasswordView extends Subview implements PasswordView {
     constructor();
     SetSecret(secret: string): void;
     Reset(): void;
-    Update(target: TargetProgress): LetterAnimation[];
+    Update(target: TargetProgress, playerGuess: string): LetterAnimation[];
     GetAnimations(guess: string, target: TargetProgress): ((() => void) | null)[];
 }

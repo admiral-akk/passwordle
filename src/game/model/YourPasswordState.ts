@@ -29,14 +29,14 @@ export class YourPasswordState extends ModelState<YourPasswordView> {
     this.state = State.WaitingForPassword;
   }
 
-  Update(target: TargetProgress): LetterAnimation[] {
+  Update(target: TargetProgress, playerGuess: string): LetterAnimation[] {
     for (let i = 0; i < target.knownCharacters.length; i++) {
       if (target.knownCharacters[i] !== '') {
         this.knownCharacters[i] = target.knownCharacters[i];
       }
     }
     if (this.view) {
-      return this.view.Update(target);
+      return this.view.Update(target, playerGuess);
     }
     return [];
   }

@@ -25,14 +25,14 @@ class YourPasswordState extends ModelState_1.ModelState {
         this.knownCharacters = ['', '', '', '', ''];
         this.state = State.WaitingForPassword;
     }
-    Update(target) {
+    Update(target, playerGuess) {
         for (let i = 0; i < target.knownCharacters.length; i++) {
             if (target.knownCharacters[i] !== '') {
                 this.knownCharacters[i] = target.knownCharacters[i];
             }
         }
         if (this.view) {
-            return this.view.Update(target);
+            return this.view.Update(target, playerGuess);
         }
         return [];
     }

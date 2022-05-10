@@ -104,11 +104,21 @@ export class PlayerBoard
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void> {
     // Gather animations
     const animations: LetterAnimation[] = [];
-    animations.push(...this.yourPassword.Update(update.playerProgress));
     animations.push(...this.yourBoard.Update(update.playerKnowledge));
-
     animations.push(...this.opponentBoard.Update(update.opponentKnowledge));
-    animations.push(...this.opponentPassword.Update(update.opponentProgress));
+
+    animations.push(
+      ...this.yourPassword.Update(
+        update.playerProgress,
+        update.playerKnowledge.guess
+      )
+    );
+    animations.push(
+      ...this.opponentPassword.Update(
+        update.opponentProgress,
+        update.playerKnowledge.guess
+      )
+    );
 
     this.keyboard.Update([update.playerKnowledge, update.opponentKnowledge]);
 

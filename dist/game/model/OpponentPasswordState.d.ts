@@ -7,6 +7,6 @@ export declare class OpponentPasswordState extends ModelState<OpponentPasswordVi
     private state;
     constructor(hasView: boolean);
     Reset(): void;
-    Update(progress: TargetProgress): LetterAnimation[];
+    Update(progress: TargetProgress, playerGuess: string): LetterAnimation[];
     Won(): boolean;
 }

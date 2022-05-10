@@ -22,7 +22,7 @@ export class YourPasswordView extends Subview implements PasswordView {
     this.answer.Reset();
   }
 
-  Update(target: TargetProgress): LetterAnimation[] {
+  Update(target: TargetProgress, playerGuess: string): LetterAnimation[] {
     const animations: LetterAnimation[] = [];
     for (let i = 0; i < target.knownCharacters.length; i++) {
       if (target.knownCharacters[i] === '') {
@@ -30,7 +30,11 @@ export class YourPasswordView extends Subview implements PasswordView {
       }
       const animation = this.answer.UpdateProgress(i);
       if (animation) {
-        animations.push(new LetterAnimation(i, animation));
+        if (playerGuess[i] === target.knownCharacters[i]) {
+          animations.push(new LetterAnimation(i, animation));
+        } else {
+          animations.push(new LetterAnimation(i + 5, animation));
+        }
       }
     }
     return animations;
