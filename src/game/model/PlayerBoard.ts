@@ -110,6 +110,8 @@ export class PlayerBoard
     animations.push(...this.opponentBoard.Update(update.opponentKnowledge));
     animations.push(...this.opponentPassword.Update(update.opponentProgress));
 
+    this.keyboard.Update([update.playerKnowledge, update.opponentKnowledge]);
+
     // Sequence them
     const sequence: Record<number, (() => void)[]> = {};
     animations.forEach(animation => {

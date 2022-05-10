@@ -87,6 +87,7 @@ class PlayerBoard {
         animations.push(...this.yourBoard.Update(update.playerKnowledge));
         animations.push(...this.opponentBoard.Update(update.opponentKnowledge));
         animations.push(...this.opponentPassword.Update(update.opponentProgress));
+        this.keyboard.Update([update.playerKnowledge, update.opponentKnowledge]);
         // Sequence them
         const sequence = {};
         animations.forEach(animation => {
