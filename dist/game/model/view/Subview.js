@@ -2,10 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Subview = void 0;
 class Subview {
-    constructor(base, rootClassName, explanationText = '') {
+    constructor(base, rootClassName, explanationText = '', longFormExplanationText = '') {
         this.elements = [];
         this.subviews = [];
         this.root = this.AddDiv(base, rootClassName);
+        if (longFormExplanationText !== '') {
+            this.root.classList.add('explain-hover');
+            this.AddLongExplanation(base, longFormExplanationText);
+        }
         if (explanationText !== '') {
             this.AddExplanation(base, explanationText);
         }
@@ -35,6 +39,10 @@ class Subview {
     }
     AddExplanation(base, text) {
         const explanation = this.AddDiv(base, 'explanation');
+        explanation.innerText = text;
+    }
+    AddLongExplanation(base, text) {
+        const explanation = this.AddDiv(base, 'long-explanation');
         explanation.innerText = text;
     }
 }

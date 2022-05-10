@@ -202,3 +202,12 @@ body {
     cursor: pointer;
     text-transform: uppercase;
 }
+
+.long-explanation {
+    display: none;
+  }
+      
+.explain-hover:hover + .long-explanation {
+    display: block;
+    color: red;
+}

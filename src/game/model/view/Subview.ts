@@ -2,8 +2,17 @@ export abstract class Subview {
   protected root: HTMLDivElement;
   private elements: HTMLElement[] = [];
   private subviews: Subview[] = [];
-  constructor(base: HTMLElement, rootClassName: string, explanationText = '') {
+  constructor(
+    base: HTMLElement,
+    rootClassName: string,
+    explanationText = '',
+    longFormExplanationText = ''
+  ) {
     this.root = this.AddDiv(base, rootClassName);
+    if (longFormExplanationText !== '') {
+      this.root.classList.add('explain-hover');
+      this.AddLongExplanation(base, longFormExplanationText);
+    }
     if (explanationText !== '') {
       this.AddExplanation(base, explanationText);
     }
@@ -45,6 +54,11 @@ export abstract class Subview {
 
   private AddExplanation(base: HTMLElement, text: string) {
     const explanation = this.AddDiv(base, 'explanation');
+    explanation.innerText = text;
+  }
+
+  private AddLongExplanation(base: HTMLElement, text: string) {
+    const explanation = this.AddDiv(base, 'long-explanation');
     explanation.innerText = text;
   }
 }

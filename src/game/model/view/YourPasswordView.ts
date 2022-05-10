@@ -9,7 +9,7 @@ export class YourPasswordView extends Subview implements PasswordView {
   private answer: AnswerWordView;
   constructor() {
     const base = document.getElementById('answer')!;
-    super(base, 'answer', 'Your Password');
+    super(base, 'answer', 'Your Password', 'If these are all red, you lose!');
     this.answer = new AnswerWordView(this.root);
     this.AddSubview(this.answer);
   }
