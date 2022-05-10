@@ -8,6 +8,6 @@
       "source.fixAll.eslint": true
     },
     "eslint.validate": ["javascript"]
-    ,"files.exclude": {}
+    //,"files.exclude": {}
     // Uncomment the above to see the generated files/node_modules. Useful for when you want to debug.
   }
