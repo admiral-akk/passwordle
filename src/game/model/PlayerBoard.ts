@@ -68,7 +68,7 @@ export class PlayerBoard
     return this.GameOver() !== GameOverState.None;
   }
 
-  private GameOver(): GameOverState {
+  GameOver(): GameOverState {
     if (!this.yourPassword.Lost() && !this.opponentPassword.Won()) {
       return GameOverState.None;
     }

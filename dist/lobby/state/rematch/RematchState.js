@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RematchState = void 0;
+const PlayerBoard_1 = require("../../../game/model/PlayerBoard");
 const PlayerState_1 = require("../../../public/PlayerState");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");
@@ -11,10 +12,11 @@ var State;
     State[State["RematchRequested"] = 2] = "RematchRequested";
 })(State || (State = {}));
 class RematchState extends PlayerState_1.LobbyState {
-    constructor() {
+    constructor(endState) {
         super();
-        this.modal = new RematchModal(() => this.RequestRematch(), () => this.ReturnToMenu());
+        this.endState = endState;
         this.state = State.None;
+        this.modal = new RematchModal(() => this.RequestRematch(), () => this.ReturnToMenu(), this.endState);
     }
     Enter() { }
     Exit() {
@@ -63,10 +65,26 @@ class RematchModal extends Modal_1.Modal {
     RematchAccepted() {
         this.AddDiv('rematch-text', 'Rematch accepted. Good luck!');
     }
-    constructor(requestRematch, returnToMenu) {
+    constructor(requestRematch, returnToMenu, endState) {
         super();
         this.AddButton('request-rematch', 'Request Rematch', requestRematch);
         this.AddButton('to-menu', 'Return to Menu', returnToMenu);
+        let text;
+        switch (endState) {
+            default:
+                text = '';
+                break;
+            case PlayerBoard_1.GameOverState.Loss:
+                text = 'You lost!';
+                break;
+            case PlayerBoard_1.GameOverState.Win:
+                text = 'You won!';
+                break;
+            case PlayerBoard_1.GameOverState.Tie:
+                text = 'You tied!';
+                break;
+        }
+        this.AddDiv('match-outcome', text);
     }
 }
 //# sourceMappingURL=RematchState.js.map

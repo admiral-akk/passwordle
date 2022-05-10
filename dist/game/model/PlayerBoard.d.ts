@@ -24,7 +24,7 @@ export declare class PlayerBoard implements GameClientToServerEvents, GameServer
     Deleted(): boolean;
     LockedGuess(): Word | null;
     IsGameOver(): boolean;
-    private GameOver;
+    GameOver(): GameOverState;
     OpponentAddedChar(): void;
     OpponentDeleted(): void;
     OpponentLockedGuess(): void;

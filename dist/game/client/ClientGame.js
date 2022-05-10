@@ -36,7 +36,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     }
     OpponentDisconnected() {
         this.board.OpponentDisconnected();
-        this.SwitchState(new LobbyManager_1.LobbyManager(false));
+        this.SwitchState(new LobbyManager_1.LobbyManager(PlayerBoard_1.GameOverState.OpponentDisconnected));
     }
     SetSecret(secret) {
         this.board.SetSecret(secret);
@@ -52,7 +52,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     }
     EndGame() {
         return new Promise(resolve => {
-            this.SwitchState(new LobbyManager_1.LobbyManager(true));
+            this.SwitchState(new LobbyManager_1.LobbyManager(this.board.GameOver()));
             resolve();
         });
     }

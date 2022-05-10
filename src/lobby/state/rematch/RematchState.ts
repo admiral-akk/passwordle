@@ -1,3 +1,4 @@
+import {GameOverState} from '../../../game/model/PlayerBoard';
 import {LobbyState} from '../../../public/PlayerState';
 import {LobbyId} from '../../LobbyId';
 import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
@@ -12,11 +13,6 @@ enum State {
 }
 
 export class RematchState extends LobbyState {
-  private modal: RematchModal = new RematchModal(
-    () => this.RequestRematch(),
-    () => this.ReturnToMenu()
-  );
-
   protected Enter(): void {}
   public Exit(): Promise<void> {
     return this.modal.RematchExit(this.state);
@@ -33,9 +29,14 @@ export class RematchState extends LobbyState {
     socket.removeAllListeners('EnterMenu');
   }
 
-  constructor() {
+  constructor(private endState: GameOverState) {
     super();
   }
+  private modal: RematchModal = new RematchModal(
+    () => this.RequestRematch(),
+    () => this.ReturnToMenu(),
+    this.endState
+  );
 
   private RequestRematch() {
     this.state = State.RematchRequested;
@@ -72,9 +73,29 @@ class RematchModal extends Modal {
     this.AddDiv('rematch-text', 'Rematch accepted. Good luck!');
   }
 
-  constructor(requestRematch: () => void, returnToMenu: () => void) {
+  constructor(
+    requestRematch: () => void,
+    returnToMenu: () => void,
+    endState: GameOverState
+  ) {
     super();
     this.AddButton('request-rematch', 'Request Rematch', requestRematch);
     this.AddButton('to-menu', 'Return to Menu', returnToMenu);
+    let text: string;
+    switch (endState) {
+      default:
+        text = '';
+        break;
+      case GameOverState.Loss:
+        text = 'You lost!';
+        break;
+      case GameOverState.Win:
+        text = 'You won!';
+        break;
+      case GameOverState.Tie:
+        text = 'You tied!';
+        break;
+    }
+    this.AddDiv('match-outcome', text);
   }
 }

@@ -56,7 +56,7 @@ export class ClientGame
 
   OpponentDisconnected() {
     this.board.OpponentDisconnected();
-    this.SwitchState(new LobbyManager(false));
+    this.SwitchState(new LobbyManager(GameOverState.OpponentDisconnected));
   }
 
   SetSecret(secret: Word) {
@@ -76,7 +76,7 @@ export class ClientGame
 
   EndGame(): Promise<void> {
     return new Promise<void>(resolve => {
-      this.SwitchState(new LobbyManager(true));
+      this.SwitchState(new LobbyManager(this.board.GameOver()));
       resolve();
     });
   }
