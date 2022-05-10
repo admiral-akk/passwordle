@@ -3,7 +3,11 @@ import {CharUpdate} from './CharUpdate';
 import {YourBoardView} from './view/YourBoardView';
 import {ToWord, Word} from '../structs/Word';
 import {IsValidWord} from '../Words';
-import {ErrorType, LockedGuessError} from '../network/updates/Updates';
+import {
+  ErrorType,
+  GuessLocked,
+  LockedGuessError,
+} from '../network/updates/Updates';
 
 enum State {
   CanSubmit,
@@ -82,6 +86,7 @@ export class YourBoardState {
       return null;
     }
     this.state = State.Locked;
+    this.view?.GuessLocked(new GuessLocked(this.guesses.length));
     return ToWord(this.currentGuess);
   }
 

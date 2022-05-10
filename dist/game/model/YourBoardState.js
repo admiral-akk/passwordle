@@ -48,7 +48,7 @@ class YourBoardState {
         return true;
     }
     LockedGuess() {
-        var _a, _b;
+        var _a, _b, _c;
         if (this.state !== State.CanSubmit) {
             return null;
         }
@@ -62,6 +62,7 @@ class YourBoardState {
             return null;
         }
         this.state = State.Locked;
+        (_c = this.view) === null || _c === void 0 ? void 0 : _c.GuessLocked(new Updates_1.GuessLocked(this.guesses.length));
         return (0, Word_1.ToWord)(this.currentGuess);
     }
     Update(knowledge) {

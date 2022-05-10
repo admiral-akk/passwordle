@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Loss = exports.Win = exports.Tie = exports.Gameover = exports.LockedGuessError = exports.ErrorType = exports.LockedGuess = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
+exports.Loss = exports.Win = exports.Tie = exports.Gameover = exports.LockedGuessError = exports.ErrorType = exports.LockedGuess = exports.GuessLocked = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
 const TargetProgress_1 = require("../../client/structs/TargetProgress");
 class AddedChar {
     constructor(char) {
@@ -20,6 +20,12 @@ class UpdatedAnswerKnowledge {
     }
 }
 exports.UpdatedAnswerKnowledge = UpdatedAnswerKnowledge;
+class GuessLocked {
+    constructor(index) {
+        this.index = index;
+    }
+}
+exports.GuessLocked = GuessLocked;
 class LockedGuess {
     constructor(guess) {
         this.guess = guess;

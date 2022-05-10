@@ -5,16 +5,9 @@ const YourBoardState_1 = require("./YourBoardState");
 const YourPasswordState_1 = require("./YourPasswordState");
 const OpponentBoardState_1 = require("./OpponentBoardState");
 const OpponentPasswordState_1 = require("./OpponentPasswordState");
-var State;
-(function (State) {
-    State[State["WaitingForKnowledge"] = 0] = "WaitingForKnowledge";
-    State[State["CanSubmit"] = 1] = "CanSubmit";
-    State[State["GameEnded"] = 2] = "GameEnded";
-})(State || (State = {}));
 class PlayerBoard {
     constructor(hasView = false) {
         this.hasView = hasView;
-        this.state = State.WaitingForKnowledge;
         this.yourBoard = new YourBoardState_1.YourBoardState(this.hasView);
         this.yourPassword = new YourPasswordState_1.YourPasswordState(this.hasView);
         this.opponentBoard = new OpponentBoardState_1.OpponentBoardState(this.hasView);
@@ -33,9 +26,7 @@ class PlayerBoard {
         this.opponentPassword.Exit();
     }
     GameClientReady() { }
-    OpponentDisconnected() {
-        this.state = State.GameEnded;
-    }
+    OpponentDisconnected() { }
     AddedChar(update) {
         return this.yourBoard.AddChar(update.char);
     }
@@ -43,7 +34,6 @@ class PlayerBoard {
         return this.yourBoard.Delete();
     }
     LockedGuess() {
-        this.state = State.WaitingForKnowledge;
         return this.yourBoard.LockedGuess();
     }
     IsGameOver() {
@@ -63,12 +53,10 @@ class PlayerBoard {
         this.opponentBoard.Update(update.opponentKnowledge);
         this.yourPassword.Update(update.playerProgress);
         this.opponentPassword.Update(update.opponentProgress);
-        this.state = State.CanSubmit;
     }
     SetSecret(secret) {
         this.Reset();
         this.yourPassword.SetPassword(secret);
-        this.state = State.CanSubmit;
     }
 }
 exports.PlayerBoard = PlayerBoard;

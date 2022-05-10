@@ -17,6 +17,10 @@ export class UpdatedAnswerKnowledge {
   ) {}
 }
 
+export class GuessLocked {
+  constructor(public index: number) {}
+}
+
 export class LockedGuess {
   constructor(public guess: Word) {}
 }

@@ -28,6 +28,9 @@ class YourBoardView extends Subview_1.Subview {
     SubmitError(error) {
         this.words[error.wordIndex].LockedGuessError(error);
     }
+    GuessLocked(update) {
+        this.words[update.index].GuessLocked();
+    }
 }
 exports.YourBoardView = YourBoardView;
 class PlayerWordView extends WordView_1.BaseWordView {
@@ -51,6 +54,11 @@ class PlayerWordView extends WordView_1.BaseWordView {
                 letter.SetColor(LetterView_1.LetterColor.Yellow);
                 break;
         }
+    }
+    GuessLocked() {
+        this.letters.forEach(letter => {
+            letter.SetColor(LetterView_1.LetterColor.LightGrey);
+        });
     }
 }
 //# sourceMappingURL=YourBoardView.js.map

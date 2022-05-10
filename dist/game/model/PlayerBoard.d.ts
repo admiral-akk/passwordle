@@ -1,16 +1,10 @@
 import { Word } from '../structs/Word';
 import { GameClientToServerEvents, GameServerToClientEvents } from '../network/GameNetworkTypes';
 import { AddedChar, UpdatedAnswerKnowledge } from '../network/updates/Updates';
-declare enum State {
-    WaitingForKnowledge = 0,
-    CanSubmit = 1,
-    GameEnded = 2
-}
 export declare class PlayerBoard implements GameClientToServerEvents, GameServerToClientEvents {
     private hasView;
     private Reset;
     Exit(): void;
-    state: State;
     constructor(hasView?: boolean);
     GameClientReady(): void;
     private yourBoard;
@@ -28,4 +22,3 @@ export declare class PlayerBoard implements GameClientToServerEvents, GameServer
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): void;
     SetSecret(secret: Word): void;
 }
-export {};

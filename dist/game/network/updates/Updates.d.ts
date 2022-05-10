@@ -14,6 +14,10 @@ export declare class UpdatedAnswerKnowledge {
     opponentProgress: TargetProgress;
     constructor(playerKnowledge: WordKnowledge, opponentKnowledge: WordKnowledge, playerProgress: TargetProgress, opponentProgress: TargetProgress);
 }
+export declare class GuessLocked {
+    index: number;
+    constructor(index: number);
+}
 export declare class LockedGuess {
     guess: Word;
     constructor(guess: Word);

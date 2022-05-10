@@ -1,4 +1,4 @@
-import {LockedGuessError} from '../../network/updates/Updates';
+import {GuessLocked, LockedGuessError} from '../../network/updates/Updates';
 import {LetterState} from '../../client/structs/LetterState';
 import {CharUpdate} from '../CharUpdate';
 import {BoardView} from './BoardView';
@@ -38,6 +38,10 @@ export class YourBoardView extends Subview implements BoardView {
   SubmitError(error: LockedGuessError) {
     this.words[error.wordIndex].LockedGuessError(error);
   }
+
+  GuessLocked(update: GuessLocked) {
+    this.words[update.index].GuessLocked();
+  }
 }
 
 class PlayerWordView extends BaseWordView {
@@ -62,5 +66,11 @@ class PlayerWordView extends BaseWordView {
         letter.SetColor(LetterColor.Yellow);
         break;
     }
+  }
+
+  public GuessLocked() {
+    this.letters.forEach(letter => {
+      letter.SetColor(LetterColor.LightGrey);
+    });
   }
 }

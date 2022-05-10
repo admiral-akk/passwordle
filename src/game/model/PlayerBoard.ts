@@ -9,12 +9,6 @@ import {YourPasswordState} from './YourPasswordState';
 import {OpponentBoardState} from './OpponentBoardState';
 import {OpponentPasswordState} from './OpponentPasswordState';
 
-enum State {
-  WaitingForKnowledge,
-  CanSubmit,
-  GameEnded,
-}
-
 export class PlayerBoard
   implements GameClientToServerEvents, GameServerToClientEvents
 {
@@ -31,8 +25,6 @@ export class PlayerBoard
     this.opponentPassword.Exit();
   }
 
-  state: State = State.WaitingForKnowledge;
-
   constructor(private hasView: boolean = false) {}
   GameClientReady() {}
 
@@ -45,9 +37,7 @@ export class PlayerBoard
     this.hasView
   );
 
-  OpponentDisconnected() {
-    this.state = State.GameEnded;
-  }
+  OpponentDisconnected() {}
 
   AddedChar(update: AddedChar): boolean {
     return this.yourBoard.AddChar(update.char);
@@ -58,7 +48,6 @@ export class PlayerBoard
   }
 
   LockedGuess(): Word | null {
-    this.state = State.WaitingForKnowledge;
     return this.yourBoard.LockedGuess();
   }
 
@@ -81,12 +70,10 @@ export class PlayerBoard
     this.opponentBoard.Update(update.opponentKnowledge);
     this.yourPassword.Update(update.playerProgress);
     this.opponentPassword.Update(update.opponentProgress);
-    this.state = State.CanSubmit;
   }
 
   SetSecret(secret: Word) {
     this.Reset();
     this.yourPassword.SetPassword(secret);
-    this.state = State.CanSubmit;
   }
 }
