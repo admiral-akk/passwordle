@@ -39,6 +39,18 @@ export class YourBoardState extends ModelState<YourBoardView> {
     );
     this.currentGuess += char;
     this.view?.CharUpdate(update);
+    if (this.currentGuess.length === 5) {
+      const guess = ToWord(this.currentGuess);
+      if (!IsValidWord(guess)) {
+        this.view?.SubmitError(
+          new LockedGuessError(
+            ErrorType.NotValidWord,
+            this.guesses.length,
+            this.currentGuess.length
+          )
+        );
+      }
+    }
     return true;
   }
 

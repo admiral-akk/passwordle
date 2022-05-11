@@ -21,7 +21,7 @@ class YourBoardState extends ModelState_1.ModelState {
         this.state = State.CanSubmit;
     }
     AddChar(char) {
-        var _a;
+        var _a, _b;
         if (this.state !== State.CanSubmit) {
             return false;
         }
@@ -31,6 +31,12 @@ class YourBoardState extends ModelState_1.ModelState {
         const update = new CharUpdate_1.CharUpdate(char, this.guesses.length, this.currentGuess.length);
         this.currentGuess += char;
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.CharUpdate(update);
+        if (this.currentGuess.length === 5) {
+            const guess = (0, Word_1.ToWord)(this.currentGuess);
+            if (!(0, Words_1.IsValidWord)(guess)) {
+                (_b = this.view) === null || _b === void 0 ? void 0 : _b.SubmitError(new Updates_1.LockedGuessError(Updates_1.ErrorType.NotValidWord, this.guesses.length, this.currentGuess.length));
+            }
+        }
         return true;
     }
     Delete() {
