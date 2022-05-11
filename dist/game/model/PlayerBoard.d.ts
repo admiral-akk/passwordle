@@ -1,13 +1,7 @@
 import { Word } from '../structs/Word';
 import { GameClientToServerEvents, GameServerToClientEvents } from '../network/GameNetworkTypes';
 import { AddedChar, UpdatedAnswerKnowledge } from '../network/updates/Updates';
-export declare enum GameOverState {
-    None = 0,
-    Win = 1,
-    Loss = 2,
-    Tie = 3,
-    OpponentDisconnected = 4
-}
+import { EndGameSummary } from '../../util/struct/EndGameState';
 export declare class PlayerBoard implements GameClientToServerEvents, GameServerToClientEvents {
     private hasView;
     private input;
@@ -28,10 +22,11 @@ export declare class PlayerBoard implements GameClientToServerEvents, GameServer
     Deleted(): boolean;
     LockedGuess(): Word | null;
     IsGameOver(): boolean;
-    GameOver(): GameOverState;
+    GameOver(): EndGameSummary;
     OpponentAddedChar(): void;
     OpponentDeleted(): void;
     OpponentLockedGuess(): void;
+    private endGame;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void>;
     SetSecret(secret: Word): void;
 }

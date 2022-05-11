@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Loss = exports.Win = exports.Tie = exports.Gameover = exports.LockedGuessError = exports.ErrorType = exports.LockedGuess = exports.GuessLocked = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
-const TargetProgress_1 = require("../../client/structs/TargetProgress");
+exports.LockedGuessError = exports.ErrorType = exports.LockedGuess = exports.GuessLocked = exports.GameOverState = exports.IsGameOver = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
+const EndGameState_1 = require("../../../util/struct/EndGameState");
 class AddedChar {
     constructor(char) {
         this.char = char;
@@ -12,14 +12,23 @@ class Deleted {
 }
 exports.Deleted = Deleted;
 class UpdatedAnswerKnowledge {
-    constructor(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress) {
+    constructor(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress, endGameState) {
         this.playerKnowledge = playerKnowledge;
         this.opponentKnowledge = opponentKnowledge;
         this.playerProgress = playerProgress;
         this.opponentProgress = opponentProgress;
+        this.endGameState = endGameState;
     }
 }
 exports.UpdatedAnswerKnowledge = UpdatedAnswerKnowledge;
+function IsGameOver(knowledge) {
+    return knowledge.endGameState !== null;
+}
+exports.IsGameOver = IsGameOver;
+function GameOverState(knowledge) {
+    return (0, EndGameState_1.GetEndGameState)(knowledge.endGameState);
+}
+exports.GameOverState = GameOverState;
 class GuessLocked {
     constructor(index) {
         this.index = index;
@@ -46,20 +55,4 @@ class LockedGuessError {
     }
 }
 exports.LockedGuessError = LockedGuessError;
-function Gameover(update) {
-    return (0, TargetProgress_1.Complete)(update.playerProgress) || (0, TargetProgress_1.Complete)(update.opponentProgress);
-}
-exports.Gameover = Gameover;
-function Tie(update) {
-    return (0, TargetProgress_1.Complete)(update.playerProgress) && (0, TargetProgress_1.Complete)(update.opponentProgress);
-}
-exports.Tie = Tie;
-function Win(update) {
-    return !Tie(update) && (0, TargetProgress_1.Complete)(update.opponentProgress);
-}
-exports.Win = Win;
-function Loss(update) {
-    return !Tie(update) && (0, TargetProgress_1.Complete)(update.playerProgress);
-}
-exports.Loss = Loss;
 //# sourceMappingURL=Updates.js.map

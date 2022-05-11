@@ -4,6 +4,7 @@ exports.KnowledgeExchangeServer = void 0;
 const TargetProgress_1 = require("../client/structs/TargetProgress");
 const WordleLogic_1 = require("../logic/WordleLogic");
 const Updates_1 = require("./updates/Updates");
+const EndGameState_1 = require("../../util/struct/EndGameState");
 class KnowledgeExchangeServer {
     constructor(players, answers, updateKnowledgeCallback, GameEnded) {
         this.players = players;
@@ -44,6 +45,22 @@ class KnowledgeExchangeServer {
             UpdateTargetProgress(this.progress[player], opponentGuess, targetAnswer);
         });
     }
+    IsEndGame() {
+        if (this.players.filter(player => (0, TargetProgress_1.Complete)(this.progress[player])).length > 0) {
+            return true;
+        }
+        if (this.guessCount === 6) {
+            return true;
+        }
+        return false;
+    }
+    GenerateSummary(player) {
+        if (!this.IsEndGame()) {
+            return null;
+        }
+        const opponent = this.opponent[player];
+        return new EndGameState_1.EndGameSummary(this.answers[player], this.answers[opponent], this.progress[player], this.progress[opponent]);
+    }
     SendKnowledge(player) {
         const opponent = this.opponent[player];
         const targetAnswer = this.answers[opponent];
@@ -51,7 +68,8 @@ class KnowledgeExchangeServer {
         const opponentGuess = this.currentGuess[opponent];
         const playerKnowledge = (0, WordleLogic_1.GetKnowledge)(playerGuess, targetAnswer);
         const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(opponentGuess, targetAnswer);
-        const update = new Updates_1.UpdatedAnswerKnowledge(playerKnowledge, opponentKnowledge, this.progress[opponent], this.progress[player]);
+        const endgame = this.GenerateSummary(player);
+        const update = new Updates_1.UpdatedAnswerKnowledge(playerKnowledge, opponentKnowledge, this.progress[opponent], this.progress[player], endgame);
         this.updateKnowledgeCallback(player, update);
     }
     ClearGuesses() {
@@ -70,6 +88,6 @@ class KnowledgeExchangeServer {
 }
 exports.KnowledgeExchangeServer = KnowledgeExchangeServer;
 function UpdateTargetProgress(progress, guess, answer) {
-    progress.UpdateProgress((0, WordleLogic_1.GetKnowledge)(guess, answer));
+    (0, TargetProgress_1.UpdateProgress)(progress, (0, WordleLogic_1.GetKnowledge)(guess, answer));
 }
 //# sourceMappingURL=KnowledgeUpdateServer.js.map

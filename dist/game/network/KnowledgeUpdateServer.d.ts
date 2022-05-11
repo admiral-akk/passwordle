@@ -14,6 +14,8 @@ export declare class KnowledgeExchangeServer {
     private SendUpdatedKnowledge;
     private CheckEndGame;
     private UpdateProgress;
+    private IsEndGame;
+    private GenerateSummary;
     private SendKnowledge;
     private ClearGuesses;
     RegisterGuess(player: PlayerId, guess: Word): void;

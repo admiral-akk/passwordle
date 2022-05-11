@@ -1,8 +1,13 @@
-import {Complete, TargetProgress} from '../client/structs/TargetProgress';
+import {
+  Complete,
+  TargetProgress,
+  UpdateProgress,
+} from '../client/structs/TargetProgress';
 import {GetKnowledge} from '../logic/WordleLogic';
 import {Word} from '../structs/Word';
 import {PlayerId} from '../../PlayerId';
 import {UpdatedAnswerKnowledge} from './updates/Updates';
+import {EndGameSummary} from '../../util/struct/EndGameState';
 
 export class KnowledgeExchangeServer {
   private progress: Record<PlayerId, TargetProgress> = {};
@@ -53,6 +58,31 @@ export class KnowledgeExchangeServer {
     });
   }
 
+  private IsEndGame(): boolean {
+    if (
+      this.players.filter(player => Complete(this.progress[player])).length > 0
+    ) {
+      return true;
+    }
+    if (this.guessCount === 6) {
+      return true;
+    }
+    return false;
+  }
+
+  private GenerateSummary(player: PlayerId): EndGameSummary | null {
+    if (!this.IsEndGame()) {
+      return null;
+    }
+    const opponent = this.opponent[player];
+    return new EndGameSummary(
+      this.answers[player],
+      this.answers[opponent],
+      this.progress[player],
+      this.progress[opponent]
+    );
+  }
+
   private SendKnowledge(player: PlayerId) {
     const opponent = this.opponent[player];
     const targetAnswer = this.answers[opponent];
@@ -60,11 +90,13 @@ export class KnowledgeExchangeServer {
     const opponentGuess = this.currentGuess[opponent];
     const playerKnowledge = GetKnowledge(playerGuess, targetAnswer);
     const opponentKnowledge = GetKnowledge(opponentGuess, targetAnswer);
+    const endgame: EndGameSummary | null = this.GenerateSummary(player);
     const update = new UpdatedAnswerKnowledge(
       playerKnowledge,
       opponentKnowledge,
       this.progress[opponent],
-      this.progress[player]
+      this.progress[player],
+      endgame
     );
     this.updateKnowledgeCallback(player, update);
   }
@@ -90,5 +122,5 @@ function UpdateTargetProgress(
   guess: Word,
   answer: Word
 ) {
-  progress.UpdateProgress(GetKnowledge(guess, answer));
+  UpdateProgress(progress, GetKnowledge(guess, answer));
 }

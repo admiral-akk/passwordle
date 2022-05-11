@@ -3,7 +3,7 @@ import {LobbyState, PlayerState} from '../../public/PlayerState';
 import {ClientGame} from '../../game/client/ClientGame';
 import {LoadingState} from './loading/LoadingState';
 import {RematchState} from './rematch/RematchState';
-import {GameOverState} from '../../game/model/PlayerBoard';
+import {EndGameSummary} from '../../util/struct/EndGameState';
 
 export class LobbyManager extends PlayerState {
   public Exit(): Promise<void> {
@@ -24,7 +24,7 @@ export class LobbyManager extends PlayerState {
     socket.removeAllListeners('GameReady');
   }
 
-  constructor(private endState: GameOverState = GameOverState.None) {
+  constructor(private endState: EndGameSummary | null = null) {
     super();
   }
 
@@ -33,7 +33,7 @@ export class LobbyManager extends PlayerState {
   }
 
   protected Enter(): void {
-    if (this.endState !== GameOverState.None) {
+    if (this.endState !== null) {
       this.state = new RematchState(this.endState);
     } else {
       this.state = new LoadingState();

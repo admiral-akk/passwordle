@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlayerBoard = exports.GameOverState = void 0;
+exports.PlayerBoard = void 0;
+const Updates_1 = require("../network/updates/Updates");
 const YourBoardState_1 = require("./YourBoardState");
 const YourPasswordState_1 = require("./YourPasswordState");
 const OpponentBoardState_1 = require("./OpponentBoardState");
@@ -9,14 +10,7 @@ const NotificationState_1 = require("./NotificationState");
 const KeyboardState_1 = require("./KeyboardState");
 const TimerState_1 = require("./TimerState");
 const Words_1 = require("../Words");
-var GameOverState;
-(function (GameOverState) {
-    GameOverState[GameOverState["None"] = 0] = "None";
-    GameOverState[GameOverState["Win"] = 1] = "Win";
-    GameOverState[GameOverState["Loss"] = 2] = "Loss";
-    GameOverState[GameOverState["Tie"] = 3] = "Tie";
-    GameOverState[GameOverState["OpponentDisconnected"] = 4] = "OpponentDisconnected";
-})(GameOverState = exports.GameOverState || (exports.GameOverState = {}));
+const EndGameState_1 = require("../../util/struct/EndGameState");
 class PlayerBoard {
     constructor(hasView = false, input = () => { }) {
         this.hasView = hasView;
@@ -28,6 +22,7 @@ class PlayerBoard {
         this.notification = new NotificationState_1.NotificationState(this.hasView);
         this.keyboard = new KeyboardState_1.KeyboardState(this.hasView, this.input);
         this.timer = new TimerState_1.TimerState(this.hasView, () => this.TimerExhausted());
+        this.endGame = null;
     }
     Reset() {
         this.yourBoard.Reset();
@@ -73,22 +68,10 @@ class PlayerBoard {
         return res;
     }
     IsGameOver() {
-        return this.GameOver() !== GameOverState.None;
+        return this.endGame !== null;
     }
     GameOver() {
-        if (this.yourPassword.Lost() && this.opponentPassword.Won()) {
-            return GameOverState.Tie;
-        }
-        if (this.yourPassword.Lost() && !this.opponentPassword.Won()) {
-            return GameOverState.Loss;
-        }
-        if (!this.yourPassword.Lost() && this.opponentPassword.Won()) {
-            return GameOverState.Win;
-        }
-        if (this.yourBoard.GuessCount() === 6) {
-            return GameOverState.Tie;
-        }
-        return GameOverState.None;
+        return this.endGame;
     }
     OpponentAddedChar() {
         this.opponentBoard.OpponentAddedChar();
@@ -133,17 +116,19 @@ class PlayerBoard {
             promise = promise.then(() => new Promise(resolve => setTimeout(resolve, 400)));
         }
         // Check if the game is over
-        const gameOverState = this.GameOver();
-        switch (gameOverState) {
-            case GameOverState.Loss:
-                promise.then(() => this.notification.Lost());
-                break;
-            case GameOverState.Win:
-                promise.then(() => this.notification.Won());
-                break;
-            case GameOverState.Tie:
-                promise.then(() => this.notification.Tied());
-                break;
+        if ((0, Updates_1.IsGameOver)(update)) {
+            this.endGame = update.endGameState;
+            switch ((0, Updates_1.GameOverState)(update)) {
+                case EndGameState_1.EndGameState.Loss:
+                    promise.then(() => this.notification.Lost());
+                    break;
+                case EndGameState_1.EndGameState.Win:
+                    promise.then(() => this.notification.Won());
+                    break;
+                case EndGameState_1.EndGameState.Tie:
+                    promise.then(() => this.notification.Tied());
+                    break;
+            }
         }
         return promise;
     }

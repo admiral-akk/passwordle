@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RematchState = void 0;
-const PlayerBoard_1 = require("../../../game/model/PlayerBoard");
 const PlayerState_1 = require("../../../public/PlayerState");
+const EndGameState_1 = require("../../../util/struct/EndGameState");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");
 var State;
@@ -77,18 +77,27 @@ class RematchModal extends Modal_1.Modal {
         this.AddButton('request-rematch', 'Request Rematch', requestRematch);
         this.AddButton('to-menu', 'Return to Menu', returnToMenu);
         let text;
-        switch (endState) {
+        switch ((0, EndGameState_1.GetEndGameState)(endState)) {
             default:
                 text = '';
                 break;
-            case PlayerBoard_1.GameOverState.Loss:
-                text = 'You lost!';
+            case EndGameState_1.EndGameState.Loss:
+                text =
+                    'You lost!\n' +
+                        `Your password: ${endState.yourPassword}\n` +
+                        `Your opponent's password: ${endState.opponentPassword}`;
                 break;
-            case PlayerBoard_1.GameOverState.Win:
-                text = 'You won!';
+            case EndGameState_1.EndGameState.Win:
+                text =
+                    'You won!\n' +
+                        `Your password: ${endState.yourPassword}\n` +
+                        `Your opponent's password: ${endState.opponentPassword}`;
                 break;
-            case PlayerBoard_1.GameOverState.Tie:
-                text = 'You tied!';
+            case EndGameState_1.EndGameState.Tie:
+                text =
+                    'You tied!\n' +
+                        `Your password: ${endState.yourPassword}\n` +
+                        `Your opponent's password: ${endState.opponentPassword}`;
                 break;
         }
         this.AddDiv('match-outcome', text);

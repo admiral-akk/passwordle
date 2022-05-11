@@ -1,8 +1,11 @@
-import {GameOverState} from '../../../game/model/PlayerBoard';
 import {LobbyState} from '../../../public/PlayerState';
+import {
+  EndGameState,
+  EndGameSummary,
+  GetEndGameState,
+} from '../../../util/struct/EndGameState';
 import {LobbyId} from '../../LobbyId';
 import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
-import {MatchState} from '../match/MatchState';
 import {MenuState} from '../menu/MenuState';
 import {Modal} from '../Modal';
 
@@ -29,7 +32,7 @@ export class RematchState extends LobbyState {
     socket.removeAllListeners('EnterMenu');
   }
 
-  constructor(private endState: GameOverState) {
+  constructor(private endState: EndGameSummary) {
     super();
   }
   private modal: RematchModal = new RematchModal(
@@ -76,7 +79,7 @@ class RematchModal extends Modal {
   constructor(
     requestRematch: () => void,
     returnToMenu: () => void,
-    endState: GameOverState
+    endState: EndGameSummary
   ) {
     super();
     this.AddDiv(
@@ -92,18 +95,27 @@ class RematchModal extends Modal {
     this.AddButton('request-rematch', 'Request Rematch', requestRematch);
     this.AddButton('to-menu', 'Return to Menu', returnToMenu);
     let text: string;
-    switch (endState) {
+    switch (GetEndGameState(endState)) {
       default:
         text = '';
         break;
-      case GameOverState.Loss:
-        text = 'You lost!';
+      case EndGameState.Loss:
+        text =
+          'You lost!\n' +
+          `Your password: ${endState.yourPassword}\n` +
+          `Your opponent's password: ${endState.opponentPassword}`;
         break;
-      case GameOverState.Win:
-        text = 'You won!';
+      case EndGameState.Win:
+        text =
+          'You won!\n' +
+          `Your password: ${endState.yourPassword}\n` +
+          `Your opponent's password: ${endState.opponentPassword}`;
         break;
-      case GameOverState.Tie:
-        text = 'You tied!';
+      case EndGameState.Tie:
+        text =
+          'You tied!\n' +
+          `Your password: ${endState.yourPassword}\n` +
+          `Your opponent's password: ${endState.opponentPassword}`;
         break;
     }
     this.AddDiv('match-outcome', text);

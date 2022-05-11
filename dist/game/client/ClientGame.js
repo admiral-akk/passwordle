@@ -47,7 +47,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     }
     OpponentDisconnected() {
         this.board.OpponentDisconnected();
-        this.SwitchState(new LobbyManager_1.LobbyManager(PlayerBoard_1.GameOverState.OpponentDisconnected));
+        this.SwitchState(new LobbyManager_1.LobbyManager());
     }
     SetSecret(secret) {
         this.board.SetSecret(secret);

@@ -5,9 +5,8 @@ const PlayerState_1 = require("../../public/PlayerState");
 const ClientGame_1 = require("../../game/client/ClientGame");
 const LoadingState_1 = require("./loading/LoadingState");
 const RematchState_1 = require("./rematch/RematchState");
-const PlayerBoard_1 = require("../../game/model/PlayerBoard");
 class LobbyManager extends PlayerState_1.PlayerState {
-    constructor(endState = PlayerBoard_1.GameOverState.None) {
+    constructor(endState = null) {
         super();
         this.endState = endState;
         this.state = null;
@@ -32,7 +31,7 @@ class LobbyManager extends PlayerState_1.PlayerState {
         this.state = nextState;
     }
     Enter() {
-        if (this.endState !== PlayerBoard_1.GameOverState.None) {
+        if (this.endState !== null) {
             this.state = new RematchState_1.RematchState(this.endState);
         }
         else {

@@ -1,6 +1,6 @@
 import {InputManager} from './input/InputManager';
 import {Word} from '../structs/Word';
-import {GameOverState, PlayerBoard} from '../model/PlayerBoard';
+import {PlayerBoard} from '../model/PlayerBoard';
 import {GameServerToClientEvents} from '../network/GameNetworkTypes';
 import {
   AddedChar,
@@ -65,7 +65,7 @@ export class ClientGame
 
   OpponentDisconnected() {
     this.board.OpponentDisconnected();
-    this.SwitchState(new LobbyManager(GameOverState.OpponentDisconnected));
+    this.SwitchState(new LobbyManager());
   }
 
   SetSecret(secret: Word) {
