@@ -6,11 +6,18 @@ const PlayerBoard_1 = require("../model/PlayerBoard");
 const Updates_1 = require("../network/updates/Updates");
 const PlayerState_1 = require("../../public/PlayerState");
 const LobbyManager_1 = require("../../lobby/state/LobbyManager");
+var State;
+(function (State) {
+    State[State["None"] = 0] = "None";
+    State[State["SubmissionOpen"] = 1] = "SubmissionOpen";
+    State[State["EnteringRandomGuess"] = 2] = "EnteringRandomGuess";
+})(State || (State = {}));
 class ClientGame extends PlayerState_1.PlayerState {
     constructor() {
         super();
-        this.board = new PlayerBoard_1.PlayerBoard(true, (key) => this.Input(key));
-        new InputManager_1.InputManager((char) => this.AddChar(char), () => this.Delete(), () => this.Submit());
+        this.state = State.None;
+        this.board = new PlayerBoard_1.PlayerBoard(true, (key) => this.Input(key), (guess, currentGuessLength) => this.SubmitRandomGuess(guess, currentGuessLength));
+        new InputManager_1.InputManager((char) => this.Input(char), () => this.Input('DEL'), () => this.Input('ENT'));
     }
     Exit() {
         return new Promise(resolve => setTimeout(resolve, 2000)).then(() => this.board.Exit());
@@ -34,7 +41,37 @@ class ClientGame extends PlayerState_1.PlayerState {
         socket.removeAllListeners('OpponentLockedGuess');
         socket.removeAllListeners('OpponentDisconnected');
     }
+    SubmitRandomGuess(guess, currentGuessLength) {
+        this.state = State.EnteringRandomGuess;
+        let animations = new Promise(resolve => {
+            resolve();
+        });
+        for (let i = 0; i < currentGuessLength; i++) {
+            animations = animations
+                .then(() => {
+                this.Delete();
+                return Promise.resolve();
+            })
+                .then(() => new Promise(resolve => setTimeout(resolve, 300)));
+        }
+        for (let i = 0; i < guess.length; i++) {
+            animations = animations
+                .then(() => {
+                this.AddChar(guess[i]);
+                return Promise.resolve();
+            })
+                .then(() => new Promise(resolve => setTimeout(resolve, 300)));
+        }
+        animations.then(() => {
+            this.Submit();
+            this.state = State.SubmissionOpen;
+            return Promise.resolve();
+        });
+    }
     Input(key) {
+        if (this.state !== State.SubmissionOpen) {
+            return;
+        }
         if (key.length === 1) {
             this.AddChar(key);
         }
@@ -51,6 +88,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     }
     SetSecret(secret) {
         this.board.SetSecret(secret);
+        this.state = State.SubmissionOpen;
     }
     OpponentLockedGuess() {
         this.board.OpponentLockedGuess();
@@ -74,6 +112,7 @@ class ClientGame extends PlayerState_1.PlayerState {
             .then(() => {
             const gameOver = this.board.IsGameOver();
             if (!gameOver) {
+                this.state = State.SubmissionOpen;
                 return Promise.resolve();
             }
             return this.EndGame();

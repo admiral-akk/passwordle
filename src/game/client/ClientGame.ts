@@ -11,6 +11,12 @@ import {ClientSocket} from '../../public/ClientNetworking';
 import {PlayerState} from '../../public/PlayerState';
 import {LobbyManager} from '../../lobby/state/LobbyManager';
 
+enum State {
+  None,
+  SubmissionOpen,
+  EnteringRandomGuess,
+}
+
 export class ClientGame
   extends PlayerState
   implements GameServerToClientEvents
@@ -45,15 +51,53 @@ export class ClientGame
   private board: PlayerBoard;
   constructor() {
     super();
-    this.board = new PlayerBoard(true, (key: string) => this.Input(key));
+    this.board = new PlayerBoard(
+      true,
+      (key: string) => this.Input(key),
+      (guess: Word, currentGuessLength: number) =>
+        this.SubmitRandomGuess(guess, currentGuessLength)
+    );
     new InputManager(
-      (char: string) => this.AddChar(char),
-      () => this.Delete(),
-      () => this.Submit()
+      (char: string) => this.Input(char),
+      () => this.Input('DEL'),
+      () => this.Input('ENT')
     );
   }
 
+  private state: State = State.None;
+
+  private SubmitRandomGuess(guess: Word, currentGuessLength: number) {
+    this.state = State.EnteringRandomGuess;
+    let animations: Promise<void> = new Promise(resolve => {
+      resolve();
+    });
+    for (let i = 0; i < currentGuessLength; i++) {
+      animations = animations
+        .then(() => {
+          this.Delete();
+          return Promise.resolve();
+        })
+        .then(() => new Promise(resolve => setTimeout(resolve, 300)));
+    }
+    for (let i = 0; i < guess.length; i++) {
+      animations = animations
+        .then(() => {
+          this.AddChar(guess[i]);
+          return Promise.resolve();
+        })
+        .then(() => new Promise(resolve => setTimeout(resolve, 300)));
+    }
+    animations.then(() => {
+      this.Submit();
+      this.state = State.SubmissionOpen;
+      return Promise.resolve();
+    });
+  }
+
   private Input(key: string) {
+    if (this.state !== State.SubmissionOpen) {
+      return;
+    }
     if (key.length === 1) {
       this.AddChar(key);
     } else if (key === 'ENT') {
@@ -70,6 +114,7 @@ export class ClientGame
 
   SetSecret(secret: Word) {
     this.board.SetSecret(secret);
+    this.state = State.SubmissionOpen;
   }
   OpponentLockedGuess() {
     this.board.OpponentLockedGuess();
@@ -97,6 +142,7 @@ export class ClientGame
       .then(() => {
         const gameOver = this.board.IsGameOver();
         if (!gameOver) {
+          this.state = State.SubmissionOpen;
           return Promise.resolve();
         }
         return this.EndGame();

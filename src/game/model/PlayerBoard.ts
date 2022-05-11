@@ -20,9 +20,18 @@ import {TimerState} from './TimerState';
 import {GetRandomGuess} from '../Words';
 import {EndGameState, EndGameSummary} from '../../util/struct/EndGameState';
 
+enum State {
+  None,
+  SubmissionOpen,
+  GuessSubmitted,
+  RevealingHints,
+  GameOver,
+}
+
 export class PlayerBoard
   implements GameClientToServerEvents, GameServerToClientEvents
 {
+  private state: State = State.None;
   private Reset() {
     this.yourBoard.Reset();
     this.yourPassword.Reset();
@@ -44,7 +53,11 @@ export class PlayerBoard
 
   constructor(
     private hasView: boolean = false,
-    private input: (key: string) => void = () => {}
+    private input: (key: string) => void = () => {},
+    private submitRandomGuess: (
+      guess: Word,
+      currentGuessLength: number
+    ) => void = () => {}
   ) {}
   GameClientReady() {}
 
@@ -65,28 +78,34 @@ export class PlayerBoard
   OpponentDisconnected() {}
 
   TimerExhausted() {
-    const randomGuess = GetRandomGuess();
-    for (let i = 0; i < randomGuess.length; i++) {
-      this.input('DEL');
-    }
-    for (let i = 0; i < randomGuess.length; i++) {
-      this.input(randomGuess[i]);
-    }
-    this.input('ENT');
+    this.submitRandomGuess(
+      GetRandomGuess(),
+      this.yourBoard.CurrentGuessLength()
+    );
   }
 
   AddedChar(update: AddedChar): boolean {
+    if (this.state !== State.SubmissionOpen) {
+      return false;
+    }
     return this.yourBoard.AddChar(update.char);
   }
 
   Deleted(): boolean {
+    if (this.state !== State.SubmissionOpen) {
+      return false;
+    }
     return this.yourBoard.Delete();
   }
 
   LockedGuess(): Word | null {
+    if (this.state !== State.SubmissionOpen) {
+      return null;
+    }
     const res = this.yourBoard.LockedGuess();
     if (res) {
       this.timer.LockedGuess();
+      this.state = State.GuessSubmitted;
     }
     return res;
   }
@@ -113,6 +132,7 @@ export class PlayerBoard
   private endGame: EndGameSummary | null = null;
 
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void> {
+    this.state = State.RevealingHints;
     // Gather animations
     this.timer.UpdateKnowledge();
     const animations: LetterAnimation[] = [];
@@ -164,6 +184,7 @@ export class PlayerBoard
     // Check if the game is over
     if (IsGameOver(update)) {
       this.endGame = update.endGameState;
+      this.state = State.GameOver;
       switch (GameOverState(update)) {
         case EndGameState.Loss:
           promise.then(() => this.notification.Lost());
@@ -175,6 +196,12 @@ export class PlayerBoard
           promise.then(() => this.notification.Tied());
           break;
       }
+    } else {
+      // Enable submission
+      promise = promise.then(() => {
+        this.state = State.SubmissionOpen;
+        return Promise.resolve();
+      });
     }
 
     return promise;
@@ -183,5 +210,6 @@ export class PlayerBoard
   SetSecret(secret: Word) {
     this.Reset();
     this.yourPassword.SetPassword(secret);
+    this.state = State.SubmissionOpen;
   }
 }

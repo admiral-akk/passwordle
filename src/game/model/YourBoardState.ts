@@ -121,6 +121,9 @@ export class YourBoardState extends ModelState<YourBoardView> {
     return animations;
   }
 
+  CurrentGuessLength(): number {
+    return this.currentGuess.length;
+  }
   GuessCount(): number {
     return this.guesses.length;
   }

@@ -11,10 +11,20 @@ const KeyboardState_1 = require("./KeyboardState");
 const TimerState_1 = require("./TimerState");
 const Words_1 = require("../Words");
 const EndGameState_1 = require("../../util/struct/EndGameState");
+var State;
+(function (State) {
+    State[State["None"] = 0] = "None";
+    State[State["SubmissionOpen"] = 1] = "SubmissionOpen";
+    State[State["GuessSubmitted"] = 2] = "GuessSubmitted";
+    State[State["RevealingHints"] = 3] = "RevealingHints";
+    State[State["GameOver"] = 4] = "GameOver";
+})(State || (State = {}));
 class PlayerBoard {
-    constructor(hasView = false, input = () => { }) {
+    constructor(hasView = false, input = () => { }, submitRandomGuess = () => { }) {
         this.hasView = hasView;
         this.input = input;
+        this.submitRandomGuess = submitRandomGuess;
+        this.state = State.None;
         this.yourBoard = new YourBoardState_1.YourBoardState(this.hasView);
         this.yourPassword = new YourPasswordState_1.YourPasswordState(this.hasView);
         this.opponentBoard = new OpponentBoardState_1.OpponentBoardState(this.hasView);
@@ -45,25 +55,28 @@ class PlayerBoard {
     GameClientReady() { }
     OpponentDisconnected() { }
     TimerExhausted() {
-        const randomGuess = (0, Words_1.GetRandomGuess)();
-        for (let i = 0; i < randomGuess.length; i++) {
-            this.input('DEL');
-        }
-        for (let i = 0; i < randomGuess.length; i++) {
-            this.input(randomGuess[i]);
-        }
-        this.input('ENT');
+        this.submitRandomGuess((0, Words_1.GetRandomGuess)(), this.yourBoard.CurrentGuessLength());
     }
     AddedChar(update) {
+        if (this.state !== State.SubmissionOpen) {
+            return false;
+        }
         return this.yourBoard.AddChar(update.char);
     }
     Deleted() {
+        if (this.state !== State.SubmissionOpen) {
+            return false;
+        }
         return this.yourBoard.Delete();
     }
     LockedGuess() {
+        if (this.state !== State.SubmissionOpen) {
+            return null;
+        }
         const res = this.yourBoard.LockedGuess();
         if (res) {
             this.timer.LockedGuess();
+            this.state = State.GuessSubmitted;
         }
         return res;
     }
@@ -84,6 +97,7 @@ class PlayerBoard {
         this.timer.OpponentSubmitted();
     }
     UpdatedAnswerKnowledge(update) {
+        this.state = State.RevealingHints;
         // Gather animations
         this.timer.UpdateKnowledge();
         const animations = [];
@@ -118,6 +132,7 @@ class PlayerBoard {
         // Check if the game is over
         if ((0, Updates_1.IsGameOver)(update)) {
             this.endGame = update.endGameState;
+            this.state = State.GameOver;
             switch ((0, Updates_1.GameOverState)(update)) {
                 case EndGameState_1.EndGameState.Loss:
                     promise.then(() => this.notification.Lost());
@@ -130,11 +145,19 @@ class PlayerBoard {
                     break;
             }
         }
+        else {
+            // Enable submission
+            promise = promise.then(() => {
+                this.state = State.SubmissionOpen;
+                return Promise.resolve();
+            });
+        }
         return promise;
     }
     SetSecret(secret) {
         this.Reset();
         this.yourPassword.SetPassword(secret);
+        this.state = State.SubmissionOpen;
     }
 }
 exports.PlayerBoard = PlayerBoard;
