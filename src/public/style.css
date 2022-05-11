@@ -209,7 +209,6 @@
 body {
     overflow: hidden; /* Disable scroll */
     min-width:700px;
-    width: auto !important;
     width:700px;
 }
 .target {
