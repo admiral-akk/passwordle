@@ -8,6 +8,7 @@ const OpponentPasswordState_1 = require("./OpponentPasswordState");
 const NotificationState_1 = require("./NotificationState");
 const KeyboardState_1 = require("./KeyboardState");
 const TimerState_1 = require("./TimerState");
+const Words_1 = require("../Words");
 var GameOverState;
 (function (GameOverState) {
     GameOverState[GameOverState["None"] = 0] = "None";
@@ -26,7 +27,7 @@ class PlayerBoard {
         this.opponentPassword = new OpponentPasswordState_1.OpponentPasswordState(this.hasView);
         this.notification = new NotificationState_1.NotificationState(this.hasView);
         this.keyboard = new KeyboardState_1.KeyboardState(this.hasView, this.input);
-        this.timer = new TimerState_1.TimerState(this.hasView);
+        this.timer = new TimerState_1.TimerState(this.hasView, () => this.TimerExhausted());
     }
     Reset() {
         this.yourBoard.Reset();
@@ -48,6 +49,18 @@ class PlayerBoard {
     }
     GameClientReady() { }
     OpponentDisconnected() { }
+    TimerExhausted() {
+        const randomGuess = (0, Words_1.GetRandomGuess)();
+        this.input('DEL');
+        this.input('DEL');
+        this.input('DEL');
+        this.input('DEL');
+        this.input('DEL');
+        for (let i = 0; i < randomGuess.length; i++) {
+            this.input(randomGuess[i]);
+        }
+        this.input('ENT');
+    }
     AddedChar(update) {
         return this.yourBoard.AddChar(update.char);
     }

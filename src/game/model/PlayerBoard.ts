@@ -13,6 +13,7 @@ import {NotificationState} from './NotificationState';
 import {KeyboardState} from './KeyboardState';
 import {TimerState} from './TimerState';
 import {time} from 'console';
+import {GetRandomGuess} from '../Words';
 
 export enum GameOverState {
   None,
@@ -60,9 +61,24 @@ export class PlayerBoard
   );
   private notification: NotificationState = new NotificationState(this.hasView);
   private keyboard: KeyboardState = new KeyboardState(this.hasView, this.input);
-  private timer: TimerState = new TimerState(this.hasView);
+  private timer: TimerState = new TimerState(this.hasView, () =>
+    this.TimerExhausted()
+  );
 
   OpponentDisconnected() {}
+
+  TimerExhausted() {
+    const randomGuess = GetRandomGuess();
+    this.input('DEL');
+    this.input('DEL');
+    this.input('DEL');
+    this.input('DEL');
+    this.input('DEL');
+    for (let i = 0; i < randomGuess.length; i++) {
+      this.input(randomGuess[i]);
+    }
+    this.input('ENT');
+  }
 
   AddedChar(update: AddedChar): boolean {
     return this.yourBoard.AddChar(update.char);

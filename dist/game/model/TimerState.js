@@ -13,8 +13,10 @@ var State;
     State[State["BothGuessed"] = 4] = "BothGuessed";
 })(State || (State = {}));
 class TimerState extends ModelState_1.ModelState {
-    constructor(hasView) {
+    constructor(hasView, timeExhausted) {
         super(TimerView_1.TimerView, hasView);
+        this.hasView = hasView;
+        this.timeExhausted = timeExhausted;
         this.state = State.None;
         this.timeLeft = TIME_TILL_RANDOM_MILLIS;
         this.timeout = null;
@@ -65,6 +67,7 @@ class TimerState extends ModelState_1.ModelState {
         var _a;
         clearInterval(this.timeout);
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.TimeExhausted();
+        this.timeExhausted();
     }
     UpdateTimer() {
         var _a;
@@ -78,6 +81,9 @@ class TimerState extends ModelState_1.ModelState {
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.UpdateTime(this.timeLeft);
     }
     SetState(newState) {
+        if (!this.hasView) {
+            return;
+        }
         if (this.state === State.OpponentGuessed) {
             this.ResetTimer();
         }

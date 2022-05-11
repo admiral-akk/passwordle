@@ -23,6 +23,7 @@ export declare class PlayerBoard implements GameClientToServerEvents, GameServer
     private keyboard;
     private timer;
     OpponentDisconnected(): void;
+    TimerExhausted(): void;
     AddedChar(update: AddedChar): boolean;
     Deleted(): boolean;
     LockedGuess(): Word | null;
