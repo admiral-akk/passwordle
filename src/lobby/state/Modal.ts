@@ -16,6 +16,7 @@ export abstract class Modal {
   }
 
   protected AddButton(
+    base: HTMLElement = this.base,
     className: string,
     text: string,
     callback: () => void
@@ -24,7 +25,7 @@ export abstract class Modal {
     button.className = className;
     button.innerText = text;
     button.onclick = callback;
-    this.base.appendChild(button);
+    base.appendChild(button);
     this.elements.push(button);
     return button;
   }

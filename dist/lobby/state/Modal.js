@@ -13,12 +13,12 @@ class Modal {
     Exit() {
         return Promise.resolve(this.elements.forEach(element => element.remove()));
     }
-    AddButton(className, text, callback) {
+    AddButton(base = this.base, className, text, callback) {
         const button = document.createElement('button');
         button.className = className;
         button.innerText = text;
         button.onclick = callback;
-        this.base.appendChild(button);
+        base.appendChild(button);
         this.elements.push(button);
         return button;
     }

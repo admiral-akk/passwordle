@@ -59,11 +59,13 @@ class MenuModal extends Modal_1.Modal {
     However, each guess gives clues to both players. For example:
     
     If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`);
-        this.copyLinkButton = this.AddButton('private-game', 'Copy Link to Clipboard', () => {
+        this.AddDiv('menu-seperator');
+        const buttons = this.AddDiv('menu-buttons');
+        this.copyLinkButton = this.AddButton(buttons, 'private-game', 'Invite Friend', () => {
             hostLobby();
             this.CopyLinkPopup();
         });
-        this.matchmakingButton = this.AddButton('public-game', 'Join Random Game', () => matchmake());
+        this.matchmakingButton = this.AddButton(buttons, 'public-game', 'Find Game', () => matchmake());
     }
     Exit() {
         return Promise.resolve(this.EnteringMatch())

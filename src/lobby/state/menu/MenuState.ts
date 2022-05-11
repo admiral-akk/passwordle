@@ -80,17 +80,21 @@ class MenuModal extends Modal {
     
     If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`
     );
+    this.AddDiv('menu-seperator');
+    const buttons = this.AddDiv('menu-buttons');
     this.copyLinkButton = this.AddButton(
+      buttons,
       'private-game',
-      'Copy Link to Clipboard',
+      'Invite Friend',
       () => {
         hostLobby();
         this.CopyLinkPopup();
       }
     );
     this.matchmakingButton = this.AddButton(
+      buttons,
       'public-game',
-      'Join Random Game',
+      'Find Game',
       () => matchmake()
     );
   }

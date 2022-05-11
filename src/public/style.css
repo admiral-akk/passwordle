@@ -66,6 +66,53 @@
     margin: 2px;
 }
 
+
+/* Menu Styles */
+.explain-game {
+    margin:  10px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.menu-seperator {
+    width:  90%;
+    height: 10px;
+    align-items: center;
+    justify-content: center;
+    background-color: blue;
+}
+
+.menu-buttons {
+    display: flex;
+    width:  90%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.private-game {
+    width:  40%;
+    height: 70px;
+    margin:  10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.public-game {
+    width:  40%;
+    height: 70px;
+    margin:  10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup */
 .popup {
     background-color: #555;
@@ -81,6 +128,8 @@
     right: 0; 
     margin-left: auto; 
     margin-right: auto; 
+    font-size: 1rem;
+    font-weight: 400;
 }
 
 .popuptext::after {

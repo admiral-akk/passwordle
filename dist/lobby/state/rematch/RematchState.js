@@ -74,8 +74,8 @@ class RematchModal extends Modal_1.Modal {
     However, each guess gives clues to both players. For example:
     
     If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`);
-        this.AddButton('request-rematch', 'Request Rematch', requestRematch);
-        this.AddButton('to-menu', 'Return to Menu', returnToMenu);
+        this.AddButton(this.base, 'request-rematch', 'Request Rematch', requestRematch);
+        this.AddButton(this.base, 'to-menu', 'Return to Menu', returnToMenu);
         let text;
         switch ((0, EndGameState_1.GetEndGameState)(endState)) {
             default:
