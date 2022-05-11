@@ -7,7 +7,7 @@ import {LetterColor} from './word/letter/LetterView';
 const KEYS = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
   ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-  ['ENTER', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'DEL'],
+  ['ENT', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'DEL'],
 ];
 
 export class KeyboardView extends Subview {
@@ -26,6 +26,9 @@ export class KeyboardView extends Subview {
         this.keys[key] = this.AddButton(rowElement, 'keyboard-key', key, () =>
           input(key)
         );
+        if (key === 'ENT' || key === 'DEL') {
+          this.keys[key].classList.add('keyboard-command-key');
+        }
       });
     });
   }

@@ -38,7 +38,7 @@ class ClientGame extends PlayerState_1.PlayerState {
         if (key.length === 1) {
             this.AddChar(key);
         }
-        else if (key === 'ENTER') {
+        else if (key === 'ENT') {
             this.Submit();
         }
         else {

@@ -57,7 +57,7 @@ export class ClientGame
   private Input(key: string) {
     if (key.length === 1) {
       this.AddChar(key);
-    } else if (key === 'ENTER') {
+    } else if (key === 'ENT') {
       this.Submit();
     } else {
       this.Delete();

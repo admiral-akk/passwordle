@@ -8,7 +8,7 @@ const LetterView_1 = require("./word/letter/LetterView");
 const KEYS = [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-    ['ENTER', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'DEL'],
+    ['ENT', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'DEL'],
 ];
 class KeyboardView extends Subview_1.Subview {
     constructor() {
@@ -22,6 +22,9 @@ class KeyboardView extends Subview_1.Subview {
             row.forEach(key => {
                 key = key.toUpperCase();
                 this.keys[key] = this.AddButton(rowElement, 'keyboard-key', key, () => input(key));
+                if (key === 'ENT' || key === 'DEL') {
+                    this.keys[key].classList.add('keyboard-command-key');
+                }
             });
         });
     }
