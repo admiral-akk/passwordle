@@ -30,7 +30,7 @@ export abstract class Modal {
     return button;
   }
 
-  private AddRootDiv(
+  protected AddRootDiv(
     root: HTMLElement,
     className: string,
     text = ''

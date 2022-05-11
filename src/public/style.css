@@ -67,11 +67,16 @@
 }
 
 /* Rematch Styles */
+
+.match-answers > div { 
+    margin: 5px;
+}
 .match-outcome {
     margin:  10px;
+    text-align: center;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 2rem;
     font-weight: 700;
 }
 .rematch-text {
@@ -257,7 +262,6 @@ body {
 
 .modal div {
     align-items: center;
-    margin: 10px 10px;
     justify-content: center;
 }
 

@@ -1,3 +1,7 @@
+import {TargetProgress} from '../../../game/client/structs/TargetProgress';
+import {LetterColor} from '../../../game/model/view/word/letter/LetterView';
+import {BaseWordView} from '../../../game/model/view/word/WordView';
+import {Word} from '../../../game/structs/Word';
 import {LobbyState} from '../../../public/PlayerState';
 import {
   EndGameState,
@@ -120,31 +124,52 @@ class RematchModal extends Modal {
     );
   }
 
-  private AddMatchOutcome(endState: EndGameSummary): HTMLDivElement {
+  private AddMatchOutcome(endState: EndGameSummary) {
+    const answerDiv = this.AddDiv('match-answers');
+
     let text: string;
     switch (GetEndGameState(endState)) {
       default:
         text = '';
         break;
       case EndGameState.Loss:
-        text =
-          'You lost!\n' +
-          `Your password: ${endState.yourPassword}\n` +
-          `Your opponent's password: ${endState.opponentPassword}`;
+        text = 'You lost!';
         break;
       case EndGameState.Win:
-        text =
-          'You won!\n' +
-          `Your password: ${endState.yourPassword}\n` +
-          `Your opponent's password: ${endState.opponentPassword}`;
+        text = 'You won!';
         break;
       case EndGameState.Tie:
-        text =
-          'You tied!\n' +
-          `Your password: ${endState.yourPassword}\n` +
-          `Your opponent's password: ${endState.opponentPassword}`;
+        text = 'You tied!';
         break;
     }
-    return this.AddDiv('match-outcome', text);
+    this.AddRootDiv(answerDiv, 'match-outcome', text);
+
+    const yourPassword = new RematchWordView(answerDiv);
+    yourPassword.SetState(
+      endState.yourPassword,
+      endState.opponentProgress,
+      LetterColor.Red
+    );
+    const opponentPassword = new RematchWordView(answerDiv);
+    opponentPassword.SetState(
+      endState.opponentPassword,
+      endState.yourProgress,
+      LetterColor.Green
+    );
+  }
+}
+
+class RematchWordView extends BaseWordView {
+  public SetState(
+    password: Word,
+    progress: TargetProgress,
+    color: LetterColor
+  ) {
+    for (let i = 0; i < password.length; i++) {
+      this.letters[i].SetChar(password[i]);
+      if (progress.knownCharacters[i] !== '') {
+        this.letters[i].SetColor(color);
+      }
+    }
   }
 }

@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RematchState = void 0;
+const LetterView_1 = require("../../../game/model/view/word/letter/LetterView");
+const WordView_1 = require("../../../game/model/view/word/WordView");
 const PlayerState_1 = require("../../../public/PlayerState");
 const EndGameState_1 = require("../../../util/struct/EndGameState");
 const MenuState_1 = require("../menu/MenuState");
@@ -93,31 +95,37 @@ class RematchModal extends Modal_1.Modal {
         this.rematchDiv.innerText = 'Rematch requested. Waiting for opponent.';
     }
     AddMatchOutcome(endState) {
+        const answerDiv = this.AddDiv('match-answers');
         let text;
         switch ((0, EndGameState_1.GetEndGameState)(endState)) {
             default:
                 text = '';
                 break;
             case EndGameState_1.EndGameState.Loss:
-                text =
-                    'You lost!\n' +
-                        `Your password: ${endState.yourPassword}\n` +
-                        `Your opponent's password: ${endState.opponentPassword}`;
+                text = 'You lost!';
                 break;
             case EndGameState_1.EndGameState.Win:
-                text =
-                    'You won!\n' +
-                        `Your password: ${endState.yourPassword}\n` +
-                        `Your opponent's password: ${endState.opponentPassword}`;
+                text = 'You won!';
                 break;
             case EndGameState_1.EndGameState.Tie:
-                text =
-                    'You tied!\n' +
-                        `Your password: ${endState.yourPassword}\n` +
-                        `Your opponent's password: ${endState.opponentPassword}`;
+                text = 'You tied!';
                 break;
         }
-        return this.AddDiv('match-outcome', text);
+        this.AddRootDiv(answerDiv, 'match-outcome', text);
+        const yourPassword = new RematchWordView(answerDiv);
+        yourPassword.SetState(endState.yourPassword, endState.opponentProgress, LetterView_1.LetterColor.Red);
+        const opponentPassword = new RematchWordView(answerDiv);
+        opponentPassword.SetState(endState.opponentPassword, endState.yourProgress, LetterView_1.LetterColor.Green);
+    }
+}
+class RematchWordView extends WordView_1.BaseWordView {
+    SetState(password, progress, color) {
+        for (let i = 0; i < password.length; i++) {
+            this.letters[i].SetChar(password[i]);
+            if (progress.knownCharacters[i] !== '') {
+                this.letters[i].SetColor(color);
+            }
+        }
     }
 }
 //# sourceMappingURL=RematchState.js.map
