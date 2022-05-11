@@ -12,5 +12,6 @@ export declare class YourBoardState extends ModelState<YourBoardView> {
     Delete(): boolean;
     LockedGuess(): Word | null;
     Update(knowledge: WordKnowledge): LetterAnimation[];
+    GuessCount(): number;
     Reset(): void;
 }

@@ -51,11 +51,9 @@ class PlayerBoard {
     OpponentDisconnected() { }
     TimerExhausted() {
         const randomGuess = (0, Words_1.GetRandomGuess)();
-        this.input('DEL');
-        this.input('DEL');
-        this.input('DEL');
-        this.input('DEL');
-        this.input('DEL');
+        for (let i = 0; i < randomGuess.length; i++) {
+            this.input('DEL');
+        }
         for (let i = 0; i < randomGuess.length; i++) {
             this.input(randomGuess[i]);
         }
@@ -78,9 +76,6 @@ class PlayerBoard {
         return this.GameOver() !== GameOverState.None;
     }
     GameOver() {
-        if (!this.yourPassword.Lost() && !this.opponentPassword.Won()) {
-            return GameOverState.None;
-        }
         if (this.yourPassword.Lost() && this.opponentPassword.Won()) {
             return GameOverState.Tie;
         }
@@ -89,6 +84,9 @@ class PlayerBoard {
         }
         if (!this.yourPassword.Lost() && this.opponentPassword.Won()) {
             return GameOverState.Win;
+        }
+        if (this.yourBoard.GuessCount() === 6) {
+            return GameOverState.Tie;
         }
         return GameOverState.None;
     }

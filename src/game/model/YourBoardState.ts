@@ -109,6 +109,10 @@ export class YourBoardState extends ModelState<YourBoardView> {
     return animations;
   }
 
+  GuessCount(): number {
+    return this.guesses.length;
+  }
+
   Reset() {
     this.guesses = [];
     this.currentGuess = '';

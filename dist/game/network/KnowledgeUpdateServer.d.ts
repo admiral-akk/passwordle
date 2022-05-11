@@ -10,6 +10,7 @@ export declare class KnowledgeExchangeServer {
     private progress;
     private opponent;
     private currentGuess;
+    private guessCount;
     constructor(players: PlayerId[], answers: Record<PlayerId, Word>, updateKnowledgeCallback: (playerId: PlayerId, update: UpdatedAnswerKnowledge) => void, GameEnded: (ending: Record<PlayerId, EndGameState>) => void);
     private SendUpdatedKnowledge;
     private GenerateEndgame;

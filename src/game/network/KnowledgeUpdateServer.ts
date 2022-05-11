@@ -9,6 +9,7 @@ export class KnowledgeExchangeServer {
   private progress: Record<PlayerId, TargetProgress> = {};
   private opponent: Record<PlayerId, PlayerId> = {};
   private currentGuess: Record<PlayerId, Word> = {};
+  private guessCount = 0;
 
   constructor(
     private players: PlayerId[],
@@ -90,6 +91,7 @@ export class KnowledgeExchangeServer {
     if (Object.keys(this.currentGuess).length < 2) {
       return;
     }
+    this.guessCount++;
     this.SendUpdatedKnowledge();
   }
 }

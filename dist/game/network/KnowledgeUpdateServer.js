@@ -13,6 +13,7 @@ class KnowledgeExchangeServer {
         this.progress = {};
         this.opponent = {};
         this.currentGuess = {};
+        this.guessCount = 0;
         for (let i = 0; i < players.length; i++) {
             const player = players[i];
             this.opponent[player] = players[(i + 1) % 2];
@@ -72,6 +73,7 @@ class KnowledgeExchangeServer {
         if (Object.keys(this.currentGuess).length < 2) {
             return;
         }
+        this.guessCount++;
         this.SendUpdatedKnowledge();
     }
 }

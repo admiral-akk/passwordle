@@ -12,7 +12,6 @@ import {LetterAnimation} from './view/struct/Animation';
 import {NotificationState} from './NotificationState';
 import {KeyboardState} from './KeyboardState';
 import {TimerState} from './TimerState';
-import {time} from 'console';
 import {GetRandomGuess} from '../Words';
 
 export enum GameOverState {
@@ -69,11 +68,9 @@ export class PlayerBoard
 
   TimerExhausted() {
     const randomGuess = GetRandomGuess();
-    this.input('DEL');
-    this.input('DEL');
-    this.input('DEL');
-    this.input('DEL');
-    this.input('DEL');
+    for (let i = 0; i < randomGuess.length; i++) {
+      this.input('DEL');
+    }
     for (let i = 0; i < randomGuess.length; i++) {
       this.input(randomGuess[i]);
     }
@@ -101,9 +98,6 @@ export class PlayerBoard
   }
 
   GameOver(): GameOverState {
-    if (!this.yourPassword.Lost() && !this.opponentPassword.Won()) {
-      return GameOverState.None;
-    }
     if (this.yourPassword.Lost() && this.opponentPassword.Won()) {
       return GameOverState.Tie;
     }
@@ -112,6 +106,9 @@ export class PlayerBoard
     }
     if (!this.yourPassword.Lost() && this.opponentPassword.Won()) {
       return GameOverState.Win;
+    }
+    if (this.yourBoard.GuessCount() === 6) {
+      return GameOverState.Tie;
     }
     return GameOverState.None;
   }

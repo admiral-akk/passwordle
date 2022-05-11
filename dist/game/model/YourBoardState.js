@@ -77,6 +77,9 @@ class YourBoardState extends ModelState_1.ModelState {
         this.state = State.CanSubmit;
         return animations;
     }
+    GuessCount() {
+        return this.guesses.length;
+    }
     Reset() {
         this.guesses = [];
         this.currentGuess = '';
