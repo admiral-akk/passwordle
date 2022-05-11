@@ -30,7 +30,7 @@ function EnterGame(players) {
     const gameSockets = socketManager.GetSockets(players);
     gameServer.EnterGame(gameSockets);
 }
-function ExitGame(players, ending) {
+function ExitGame(players) {
     const lobbySockets = socketManager.GetSockets(players);
     lobbyServer.EndGame(lobbySockets);
 }

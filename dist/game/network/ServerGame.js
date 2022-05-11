@@ -17,7 +17,7 @@ class ServerGame {
         }
         this.exchangeServer = new KnowledgeUpdateServer_1.KnowledgeExchangeServer(players, secrets, (playerId, update) => {
             this.playerClient[playerId].UpdatedAnswerKnowledge(update);
-        }, (ending) => this.GameEnded(ending));
+        }, () => this.GameEnded());
         for (let i = 0; i < sockets.length; i++) {
             const player = sockets[i].data.playerId;
             const opponent = sockets[(i + 1) % 2].data.playerId;
@@ -30,7 +30,7 @@ class ServerGame {
             sockets[i].on('disconnect', () => {
                 console.log(`socket disconnected: ${player}`);
                 sockets[(i + 1) % 2].emit('OpponentDisconnected');
-                this.GameEnded({});
+                this.GameEnded();
             });
         }
     }

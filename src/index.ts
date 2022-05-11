@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import {EndGameState} from './game/EndGameState';
 import {GameServerManager} from './GameServerManager';
 import {LobbyServer} from './lobby/server/LobbyServer';
 import {GetServer} from './NetworkTypes';
@@ -23,7 +22,7 @@ function EnterGame(players: PlayerId[]) {
   gameServer.EnterGame(gameSockets);
 }
 
-function ExitGame(players: PlayerId[], ending: Record<PlayerId, EndGameState>) {
+function ExitGame(players: PlayerId[]) {
   const lobbySockets = socketManager.GetSockets(players);
   lobbyServer.EndGame(lobbySockets);
 }

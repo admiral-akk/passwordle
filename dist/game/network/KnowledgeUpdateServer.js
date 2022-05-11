@@ -26,19 +26,10 @@ class KnowledgeExchangeServer {
         this.ClearGuesses();
         this.CheckEndGame();
     }
-    GenerateEndgame() {
-        const endGame = {};
-        for (let i = 0; i < this.players.length; i++) {
-            const player = this.players[i];
-            const finished = (0, TargetProgress_1.Complete)(this.progress[player]);
-        }
-        return endGame;
-    }
     CheckEndGame() {
         this.players.forEach(player => {
             if ((0, TargetProgress_1.Complete)(this.progress[player])) {
-                const endgame = this.GenerateEndgame();
-                this.GameEnded(endgame);
+                this.GameEnded();
                 return;
             }
         });

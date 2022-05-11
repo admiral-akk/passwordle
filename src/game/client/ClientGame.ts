@@ -10,7 +10,6 @@ import {
 import {ClientSocket} from '../../public/ClientNetworking';
 import {PlayerState} from '../../public/PlayerState';
 import {LobbyManager} from '../../lobby/state/LobbyManager';
-import {EndGameState} from '../EndGameState';
 
 export class ClientGame
   extends PlayerState
