@@ -61,8 +61,15 @@ class RematchModal extends Modal_1.Modal {
         this.AddDiv('menu-seperator');
         this.rematchDiv = this.AddDiv('rematch-text');
         const buttons = this.AddDiv('menu-buttons');
-        this.AddButton(buttons, 'to-menu', 'Return to Menu', returnToMenu);
-        this.AddButton(buttons, 'request-rematch', 'Request Rematch', requestRematch);
+        this.AddButton(buttons, 'to-menu', 'Return to Menu', () => {
+            this.rematchButton.disabled = true;
+            returnToMenu();
+        });
+        this.rematchButton = this.AddButton(buttons, 'request-rematch', 'Request Rematch', () => {
+            requestRematch();
+            this.RematchRequested();
+            this.rematchButton.disabled = true;
+        });
     }
     RematchExit(state) {
         return new Promise(resolve => {
@@ -81,6 +88,9 @@ class RematchModal extends Modal_1.Modal {
     }
     RematchAccepted() {
         this.rematchDiv.innerText = 'Rematch accepted. Good luck!';
+    }
+    RematchRequested() {
+        this.rematchDiv.innerText = 'Rematch requested. Waiting for opponent.';
     }
     AddMatchOutcome(endState) {
         let text;

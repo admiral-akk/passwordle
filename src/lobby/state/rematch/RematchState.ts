@@ -76,7 +76,12 @@ class RematchModal extends Modal {
     this.rematchDiv.innerText = 'Rematch accepted. Good luck!';
   }
 
+  private RematchRequested() {
+    this.rematchDiv.innerText = 'Rematch requested. Waiting for opponent.';
+  }
+
   private rematchDiv: HTMLDivElement;
+  private rematchButton: HTMLButtonElement;
 
   constructor(
     requestRematch: () => void,
@@ -99,12 +104,19 @@ class RematchModal extends Modal {
     this.AddDiv('menu-seperator');
     this.rematchDiv = this.AddDiv('rematch-text');
     const buttons = this.AddDiv('menu-buttons');
-    this.AddButton(buttons, 'to-menu', 'Return to Menu', returnToMenu);
-    this.AddButton(
+    this.AddButton(buttons, 'to-menu', 'Return to Menu', () => {
+      this.rematchButton.disabled = true;
+      returnToMenu();
+    });
+    this.rematchButton = this.AddButton(
       buttons,
       'request-rematch',
       'Request Rematch',
-      requestRematch
+      () => {
+        requestRematch();
+        this.RematchRequested();
+        this.rematchButton.disabled = true;
+      }
     );
   }
 
