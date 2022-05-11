@@ -12,7 +12,7 @@ export class TimerView extends Subview {
   }
 
   UpdateTime(timeMillis: number) {
-    this.time.innerText = (timeMillis / 1000).toFixed(0) + 's left!';
+    this.time.innerText = Math.abs(timeMillis / 1000).toFixed(0) + 's left!';
   }
 
   TimeExhausted() {
