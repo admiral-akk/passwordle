@@ -2,7 +2,7 @@ import {GameServerSocket} from './GameNetworkTypes';
 import {PlayerId} from '../../PlayerId';
 import {ClientGameMirror} from './ClientGameMirror';
 import {Word} from '../structs/Word';
-import {GetRandomWord} from '../Words';
+import {GetRandomAnswer} from '../Words';
 import {KnowledgeExchangeServer} from './KnowledgeUpdateServer';
 import {LockedGuess, UpdatedAnswerKnowledge} from './updates/Updates';
 import {EndGameState} from '../EndGameState';
@@ -64,7 +64,7 @@ function GenerateSecrets(playerIds: PlayerId[]): Record<PlayerId, Word> {
 function GenerateSecret(answersUsed: Word[]): Word {
   let answer: Word;
   do {
-    answer = GetRandomWord();
+    answer = GetRandomAnswer();
   } while (answer in answersUsed);
-  return GetRandomWord();
+  return GetRandomAnswer();
 }

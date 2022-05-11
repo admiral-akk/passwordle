@@ -9,8 +9,12 @@ export function IsValidWord(word: Word): boolean {
   return false;
 }
 
-export function GetRandomWord(): Word {
+export function GetRandomAnswer(): Word {
   return ANSWERS[Math.floor(Math.random() * ANSWERS.length)];
+}
+
+export function GetRandomGuess(): Word {
+  return WORDS[Math.floor(Math.random() * WORDS.length)];
 }
 
 const RAW_ANSWERS = `aback

@@ -21,6 +21,7 @@ export declare class PlayerBoard implements GameClientToServerEvents, GameServer
     private opponentPassword;
     private notification;
     private keyboard;
+    private timer;
     OpponentDisconnected(): void;
     AddedChar(update: AddedChar): boolean;
     Deleted(): boolean;

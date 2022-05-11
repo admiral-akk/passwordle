@@ -7,6 +7,7 @@ const OpponentBoardState_1 = require("./OpponentBoardState");
 const OpponentPasswordState_1 = require("./OpponentPasswordState");
 const NotificationState_1 = require("./NotificationState");
 const KeyboardState_1 = require("./KeyboardState");
+const TimerState_1 = require("./TimerState");
 var GameOverState;
 (function (GameOverState) {
     GameOverState[GameOverState["None"] = 0] = "None";
@@ -25,6 +26,7 @@ class PlayerBoard {
         this.opponentPassword = new OpponentPasswordState_1.OpponentPasswordState(this.hasView);
         this.notification = new NotificationState_1.NotificationState(this.hasView);
         this.keyboard = new KeyboardState_1.KeyboardState(this.hasView, this.input);
+        this.timer = new TimerState_1.TimerState(this.hasView);
     }
     Reset() {
         this.yourBoard.Reset();
@@ -33,6 +35,7 @@ class PlayerBoard {
         this.opponentPassword.Reset();
         this.notification.Reset();
         this.keyboard.Reset();
+        this.timer.Reset();
     }
     Exit() {
         this.yourBoard.Exit();
@@ -41,6 +44,7 @@ class PlayerBoard {
         this.opponentPassword.Exit();
         this.notification.Exit();
         this.keyboard.Exit();
+        this.timer.Exit();
     }
     GameClientReady() { }
     OpponentDisconnected() { }
@@ -51,7 +55,11 @@ class PlayerBoard {
         return this.yourBoard.Delete();
     }
     LockedGuess() {
-        return this.yourBoard.LockedGuess();
+        const res = this.yourBoard.LockedGuess();
+        if (res) {
+            this.timer.LockedGuess();
+        }
+        return res;
     }
     IsGameOver() {
         return this.GameOver() !== GameOverState.None;
@@ -79,9 +87,11 @@ class PlayerBoard {
     }
     OpponentLockedGuess() {
         this.opponentBoard.OpponentLockedGuess();
+        this.timer.OpponentSubmitted();
     }
     UpdatedAnswerKnowledge(update) {
         // Gather animations
+        this.timer.UpdateKnowledge();
         const animations = [];
         animations.push(...this.yourBoard.Update(update.playerKnowledge));
         animations.push(...this.opponentBoard.Update(update.opponentKnowledge));

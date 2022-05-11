@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetRandomWord = exports.IsValidWord = void 0;
+exports.GetRandomGuess = exports.GetRandomAnswer = exports.IsValidWord = void 0;
 const Word_1 = require("./structs/Word");
 function IsValidWord(word) {
     for (let i = 0; i < WORDS.length; i++) {
@@ -11,10 +11,14 @@ function IsValidWord(word) {
     return false;
 }
 exports.IsValidWord = IsValidWord;
-function GetRandomWord() {
+function GetRandomAnswer() {
     return ANSWERS[Math.floor(Math.random() * ANSWERS.length)];
 }
-exports.GetRandomWord = GetRandomWord;
+exports.GetRandomAnswer = GetRandomAnswer;
+function GetRandomGuess() {
+    return WORDS[Math.floor(Math.random() * WORDS.length)];
+}
+exports.GetRandomGuess = GetRandomGuess;
 const RAW_ANSWERS = `aback
 abase
 abate

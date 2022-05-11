@@ -11,6 +11,8 @@ import {OpponentPasswordState} from './OpponentPasswordState';
 import {LetterAnimation} from './view/struct/Animation';
 import {NotificationState} from './NotificationState';
 import {KeyboardState} from './KeyboardState';
+import {TimerState} from './TimerState';
+import {time} from 'console';
 
 export enum GameOverState {
   None,
@@ -30,6 +32,7 @@ export class PlayerBoard
     this.opponentPassword.Reset();
     this.notification.Reset();
     this.keyboard.Reset();
+    this.timer.Reset();
   }
   Exit() {
     this.yourBoard.Exit();
@@ -38,6 +41,7 @@ export class PlayerBoard
     this.opponentPassword.Exit();
     this.notification.Exit();
     this.keyboard.Exit();
+    this.timer.Exit();
   }
 
   constructor(
@@ -56,6 +60,7 @@ export class PlayerBoard
   );
   private notification: NotificationState = new NotificationState(this.hasView);
   private keyboard: KeyboardState = new KeyboardState(this.hasView, this.input);
+  private timer: TimerState = new TimerState(this.hasView);
 
   OpponentDisconnected() {}
 
@@ -68,7 +73,11 @@ export class PlayerBoard
   }
 
   LockedGuess(): Word | null {
-    return this.yourBoard.LockedGuess();
+    const res = this.yourBoard.LockedGuess();
+    if (res) {
+      this.timer.LockedGuess();
+    }
+    return res;
   }
 
   IsGameOver(): boolean {
@@ -99,10 +108,12 @@ export class PlayerBoard
   }
   OpponentLockedGuess() {
     this.opponentBoard.OpponentLockedGuess();
+    this.timer.OpponentSubmitted();
   }
 
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void> {
     // Gather animations
+    this.timer.UpdateKnowledge();
     const animations: LetterAnimation[] = [];
     animations.push(...this.yourBoard.Update(update.playerKnowledge));
     animations.push(...this.opponentBoard.Update(update.opponentKnowledge));

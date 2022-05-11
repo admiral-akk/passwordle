@@ -49,8 +49,8 @@ function GenerateSecrets(playerIds) {
 function GenerateSecret(answersUsed) {
     let answer;
     do {
-        answer = (0, Words_1.GetRandomWord)();
+        answer = (0, Words_1.GetRandomAnswer)();
     } while (answer in answersUsed);
-    return (0, Words_1.GetRandomWord)();
+    return (0, Words_1.GetRandomAnswer)();
 }
 //# sourceMappingURL=ServerGame.js.map

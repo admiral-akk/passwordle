@@ -1,3 +1,4 @@
 import { Word } from './structs/Word';
 export declare function IsValidWord(word: Word): boolean;
-export declare function GetRandomWord(): Word;
+export declare function GetRandomAnswer(): Word;
+export declare function GetRandomGuess(): Word;
