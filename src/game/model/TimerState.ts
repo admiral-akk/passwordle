@@ -62,6 +62,7 @@ export class TimerState extends ModelState<TimerView> {
 
   private StartTimer() {
     this.lastUpdate = Date.now();
+    this.view?.StartTimer(TIME_TILL_RANDOM_MILLIS);
     this.timeout = setInterval(() => this.UpdateTimer(), 100);
   }
 
@@ -72,7 +73,7 @@ export class TimerState extends ModelState<TimerView> {
   }
 
   private UpdateTimer() {
-    if (this.timeLeft < 0) {
+    if (this.timeLeft <= 0) {
       this.TimeExhausted();
       return;
     }

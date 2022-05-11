@@ -11,6 +11,7 @@ var AnimationType;
     AnimationType["ShakeY"] = "shakeY";
     AnimationType["FadeIn"] = "fadeIn";
     AnimationType["FadeOut"] = "fadeOut";
+    AnimationType["Flash"] = "flash";
 })(AnimationType = exports.AnimationType || (exports.AnimationType = {}));
 const ANIMATION_DURATION_STR = '--animate-duration';
 const ANIMATION_CLASS_STR = 'animate__animated';

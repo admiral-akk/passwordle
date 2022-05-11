@@ -7,6 +7,7 @@ export enum AnimationType {
   ShakeY = 'shakeY',
   FadeIn = 'fadeIn',
   FadeOut = 'fadeOut',
+  Flash = 'flash',
 }
 
 const ANIMATION_DURATION_STR = '--animate-duration';

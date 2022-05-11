@@ -60,7 +60,9 @@ class TimerState extends ModelState_1.ModelState {
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Reset();
     }
     StartTimer() {
+        var _a;
         this.lastUpdate = Date.now();
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.StartTimer(TIME_TILL_RANDOM_MILLIS);
         this.timeout = setInterval(() => this.UpdateTimer(), 100);
     }
     TimeExhausted() {
@@ -71,7 +73,7 @@ class TimerState extends ModelState_1.ModelState {
     }
     UpdateTimer() {
         var _a;
-        if (this.timeLeft < 0) {
+        if (this.timeLeft <= 0) {
             this.TimeExhausted();
             return;
         }
