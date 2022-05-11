@@ -47,6 +47,23 @@ class RematchState extends PlayerState_1.LobbyState {
 }
 exports.RematchState = RematchState;
 class RematchModal extends Modal_1.Modal {
+    constructor(requestRematch, returnToMenu, endState) {
+        super();
+        this.AddDiv('explain-game', `In Passwordle, each player has a different password.
+
+    The winner is the first to figure out their opponent's password.
+    
+    However, each guess gives clues to both players. For example:
+    
+    If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`);
+        this.AddDiv('menu-seperator');
+        this.AddMatchOutcome(endState);
+        this.AddDiv('menu-seperator');
+        this.rematchDiv = this.AddDiv('rematch-text');
+        const buttons = this.AddDiv('menu-buttons');
+        this.AddButton(buttons, 'to-menu', 'Return to Menu', returnToMenu);
+        this.AddButton(buttons, 'request-rematch', 'Request Rematch', requestRematch);
+    }
     RematchExit(state) {
         return new Promise(resolve => {
             if (state === State.RematchDeclined) {
@@ -60,22 +77,12 @@ class RematchModal extends Modal_1.Modal {
             .then(() => super.Exit());
     }
     RematchDeclined() {
-        this.AddDiv('rematch-text', 'Rematch declined, returning to menu.');
+        this.rematchDiv.innerText = 'Rematch declined, returning to menu.';
     }
     RematchAccepted() {
-        this.AddDiv('rematch-text', 'Rematch accepted. Good luck!');
+        this.rematchDiv.innerText = 'Rematch accepted. Good luck!';
     }
-    constructor(requestRematch, returnToMenu, endState) {
-        super();
-        this.AddDiv('explain-game', `In Passwordle, each player has a different password.
-
-    The winner is the first to figure out their opponent's password.
-    
-    However, each guess gives clues to both players. For example:
-    
-    If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`);
-        this.AddButton(this.base, 'request-rematch', 'Request Rematch', requestRematch);
-        this.AddButton(this.base, 'to-menu', 'Return to Menu', returnToMenu);
+    AddMatchOutcome(endState) {
         let text;
         switch ((0, EndGameState_1.GetEndGameState)(endState)) {
             default:
@@ -100,7 +107,7 @@ class RematchModal extends Modal_1.Modal {
                         `Your opponent's password: ${endState.opponentPassword}`;
                 break;
         }
-        this.AddDiv('match-outcome', text);
+        return this.AddDiv('match-outcome', text);
     }
 }
 //# sourceMappingURL=RematchState.js.map

@@ -69,12 +69,14 @@ class RematchModal extends Modal {
   }
 
   private RematchDeclined() {
-    this.AddDiv('rematch-text', 'Rematch declined, returning to menu.');
+    this.rematchDiv.innerText = 'Rematch declined, returning to menu.';
   }
 
   private RematchAccepted() {
-    this.AddDiv('rematch-text', 'Rematch accepted. Good luck!');
+    this.rematchDiv.innerText = 'Rematch accepted. Good luck!';
   }
+
+  private rematchDiv: HTMLDivElement;
 
   constructor(
     requestRematch: () => void,
@@ -92,13 +94,21 @@ class RematchModal extends Modal {
     
     If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`
     );
+    this.AddDiv('menu-seperator');
+    this.AddMatchOutcome(endState);
+    this.AddDiv('menu-seperator');
+    this.rematchDiv = this.AddDiv('rematch-text');
+    const buttons = this.AddDiv('menu-buttons');
+    this.AddButton(buttons, 'to-menu', 'Return to Menu', returnToMenu);
     this.AddButton(
-      this.base,
+      buttons,
       'request-rematch',
       'Request Rematch',
       requestRematch
     );
-    this.AddButton(this.base, 'to-menu', 'Return to Menu', returnToMenu);
+  }
+
+  private AddMatchOutcome(endState: EndGameSummary): HTMLDivElement {
     let text: string;
     switch (GetEndGameState(endState)) {
       default:
@@ -123,6 +133,6 @@ class RematchModal extends Modal {
           `Your opponent's password: ${endState.opponentPassword}`;
         break;
     }
-    this.AddDiv('match-outcome', text);
+    return this.AddDiv('match-outcome', text);
   }
 }
