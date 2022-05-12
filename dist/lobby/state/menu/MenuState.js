@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MenuState = void 0;
 const Popup_1 = require("../../../game/model/view/Popup");
+const Subview_1 = require("../../../game/model/view/Subview");
 const PlayerState_1 = require("../../../public/PlayerState");
 const LobbyId_1 = require("../../LobbyId");
 const Modal_1 = require("../Modal");
@@ -52,6 +53,8 @@ exports.MenuState = MenuState;
 class MenuModal extends Modal_1.Modal {
     constructor(hostLobby, matchmake) {
         super();
+        const container = this.AddDiv('container');
+        this.explanation = new ExplanationView(container);
         this.AddDiv('explain-game', `In Passwordle, each player has a different password.
 
     The winner is the first to figure out their opponent's password.
@@ -70,7 +73,8 @@ class MenuModal extends Modal_1.Modal {
     Exit() {
         return Promise.resolve(this.EnteringMatch())
             .then(() => new Promise(resolve => setTimeout(resolve, 1000)))
-            .then(() => super.Exit());
+            .then(() => super.Exit())
+            .then(() => this.explanation.Exit());
     }
     EnteringMatch() {
         this.AddDiv('entering-match', 'Entering match. Good luck!');
@@ -82,5 +86,19 @@ class MenuModal extends Modal_1.Modal {
         this.matchmakingButton.disabled = true;
         this.matchmakingButton.innerText = 'Looking for match...';
     }
+}
+class DummyGame extends Subview_1.Subview {
+    constructor(container, name) {
+        super(container, name);
+    }
+    Reset() { }
+}
+class ExplanationView extends Subview_1.Subview {
+    constructor(container) {
+        super(container, 'tutorial-container');
+        this.player = new DummyGame(this.root, 'player-board');
+        this.opponent = new DummyGame(this.root, 'opponent-board');
+    }
+    Reset() { }
 }
 //# sourceMappingURL=MenuState.js.map

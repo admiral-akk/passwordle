@@ -1,10 +1,9 @@
 import { GuessLocked, LockedGuessError } from '../../network/updates/Updates';
 import { LetterState } from '../../client/structs/LetterState';
 import { CharUpdate } from '../CharUpdate';
-import { BoardView } from './BoardView';
 import { Subview } from './Subview';
 import { BaseWordView } from './word/WordView';
-export declare class YourBoardView extends Subview implements BoardView {
+export declare class YourBoardView extends Subview {
     Reset(): void;
     protected words: PlayerWordView[];
     constructor();

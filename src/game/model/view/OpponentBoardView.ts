@@ -1,11 +1,10 @@
 import {LetterState} from '../../client/structs/LetterState';
 import {OpponentUpdate, OpponentUpdateType} from '../OpponentUpdate';
-import {BoardView} from './BoardView';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
 
-export class OpponentBoardView extends Subview implements BoardView {
+export class OpponentBoardView extends Subview {
   protected words: OpponentWordView[];
   constructor() {
     const base = document.getElementById('opponent')!;

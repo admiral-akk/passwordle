@@ -1,12 +1,11 @@
 import {GuessLocked, LockedGuessError} from '../../network/updates/Updates';
 import {LetterState} from '../../client/structs/LetterState';
 import {CharUpdate} from '../CharUpdate';
-import {BoardView} from './BoardView';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
 
-export class YourBoardView extends Subview implements BoardView {
+export class YourBoardView extends Subview {
   Reset() {
     this.words.forEach(word => word.Reset());
   }
