@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MenuState = void 0;
 const Animate_1 = require("../../../game/model/view/Animate");
 const PlayerState_1 = require("../../../public/PlayerState");
+const TutorialState_1 = require("../../../tutorial/TutorialState");
 const LobbyId_1 = require("../../LobbyId");
 const Modal_1 = require("../Modal");
 class MenuState extends PlayerState_1.LobbyState {
@@ -52,13 +53,8 @@ exports.MenuState = MenuState;
 class MenuModal extends Modal_1.Modal {
     constructor(hostLobby, matchmake) {
         super();
-        this.AddDiv('explain-game', `In Passwordle, each player has a different password.
-
-    The winner is the first to figure out their opponent's password.
-    
-    However, each guess gives clues to both players. For example:
-    
-    If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`);
+        const tutorialDiv = this.AddDiv('tutorial');
+        this.tutorial = new TutorialState_1.TutorialState(tutorialDiv);
         this.AddDiv('menu-seperator');
         const buttons = this.AddDiv('menu-buttons');
         this.copyLinkButton = this.AddButton(buttons, 'private-game', 'Invite Friend', () => {

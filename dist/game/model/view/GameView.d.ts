@@ -6,8 +6,8 @@ import { TimerView } from './TimerView';
 import { YourBoardView } from './YourBoardView';
 import { YourPasswordView } from './YourPasswordView';
 export declare class GameView extends Subview {
-    private base;
-    constructor(base: HTMLElement);
+    constructor(base: HTMLElement, className?: string);
+    private gameboard;
     timer: TimerView;
     yourPassword: YourPasswordView;
     opponentPassword: OpponentPasswordView;

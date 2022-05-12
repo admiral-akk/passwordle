@@ -1,5 +1,6 @@
 import {AddPopup} from '../../../game/model/view/Animate';
 import {LobbyState} from '../../../public/PlayerState';
+import {TutorialState} from '../../../tutorial/TutorialState';
 import {GenerateLobbyLink, LobbyId} from '../../LobbyId';
 import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
 import {Modal} from '../Modal';
@@ -61,6 +62,7 @@ export class MenuState extends LobbyState {
 class MenuModal extends Modal {
   private matchmakingButton: HTMLButtonElement;
   private copyLinkButton: HTMLButtonElement;
+  private tutorial: TutorialState;
 
   public Exit(): Promise<void> {
     return Promise.resolve(this.EnteringMatch())
@@ -70,16 +72,8 @@ class MenuModal extends Modal {
 
   constructor(hostLobby: () => void, matchmake: () => void) {
     super();
-    this.AddDiv(
-      'explain-game',
-      `In Passwordle, each player has a different password.
-
-    The winner is the first to figure out their opponent's password.
-    
-    However, each guess gives clues to both players. For example:
-    
-    If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`
-    );
+    const tutorialDiv = this.AddDiv('tutorial');
+    this.tutorial = new TutorialState(tutorialDiv);
     this.AddDiv('menu-seperator');
     const buttons = this.AddDiv('menu-buttons');
     this.copyLinkButton = this.AddButton(

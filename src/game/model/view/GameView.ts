@@ -7,22 +7,25 @@ import {YourBoardView} from './YourBoardView';
 import {YourPasswordView} from './YourPasswordView';
 
 export class GameView extends Subview {
-  constructor(private base: HTMLElement) {
-    super(base, 'game-board');
+  constructor(base: HTMLElement, className = 'game-container') {
+    super(base, className);
   }
-  timer: TimerView = new TimerView(this.AddDiv(this.root, 'timer'));
+  private gameboard = this.AddDiv(this.root, 'game-board');
+  timer: TimerView = new TimerView(
+    this.AddDiv(this.gameboard, 'timer-container')
+  );
   yourPassword: YourPasswordView = new YourPasswordView(
-    this.AddDiv(this.root, 'answer')
+    this.AddDiv(this.gameboard, 'answer-container')
   );
   opponentPassword: OpponentPasswordView = new OpponentPasswordView(
-    this.AddDiv(this.root, 'target')
+    this.AddDiv(this.gameboard, 'target-container')
   );
-  private playArea = this.AddDiv(this.root, 'play-area');
+  private playArea = this.AddDiv(this.gameboard, 'play-area');
   yourBoard: YourBoardView = new YourBoardView(
     this.AddDiv(this.playArea, 'player')
   );
   opponentBoard: OpponentBoardView = new OpponentBoardView(
     this.AddDiv(this.playArea, 'opponent')
   );
-  keyboard: KeyboardView = new KeyboardView(this.AddDiv(this.root, 'keyboard'));
+  keyboard: KeyboardView = new KeyboardView(this.gameboard);
 }
