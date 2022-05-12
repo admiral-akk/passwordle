@@ -17,7 +17,7 @@ import {LetterAnimation} from './view/struct/Animation';
 import {KeyboardState} from './KeyboardState';
 import {TimerState} from './TimerState';
 import {GetRandomGuess} from '../Words';
-import {EndGameState, EndGameSummary} from '../../util/struct/EndGameState';
+import {EndGameSummary} from '../../util/struct/EndGameState';
 import {GameView} from './view/GameView';
 
 enum State {
@@ -41,6 +41,7 @@ export class GameState
     this.opponentPassword.Exit();
     this.keyboard.Exit();
     this.timer.Exit();
+    this.view?.Exit();
   }
 
   private yourBoard: YourBoardState;
@@ -67,7 +68,9 @@ export class GameState
         this.view!.opponentPassword!
       );
       this.keyboard = new KeyboardState(this.view!.keyboard!, this.input);
-      this.timer = new TimerState(this.view!.timer!, this.TimerExhausted);
+      this.timer = new TimerState(this.view!.timer!, () =>
+        this.TimerExhausted()
+      );
     } else {
       this.yourBoard = new YourBoardState();
       this.yourPassword = new YourPasswordState();

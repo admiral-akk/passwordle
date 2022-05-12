@@ -31,7 +31,7 @@ class GameState {
             this.opponentBoard = new OpponentBoardState_1.OpponentBoardState(this.view.opponentBoard);
             this.opponentPassword = new OpponentPasswordState_1.OpponentPasswordState(this.view.opponentPassword);
             this.keyboard = new KeyboardState_1.KeyboardState(this.view.keyboard, this.input);
-            this.timer = new TimerState_1.TimerState(this.view.timer, this.TimerExhausted);
+            this.timer = new TimerState_1.TimerState(this.view.timer, () => this.TimerExhausted());
         }
         else {
             this.yourBoard = new YourBoardState_1.YourBoardState();
@@ -43,12 +43,14 @@ class GameState {
         }
     }
     Exit() {
+        var _a;
         this.yourBoard.Exit();
         this.yourPassword.Exit();
         this.opponentBoard.Exit();
         this.opponentPassword.Exit();
         this.keyboard.Exit();
         this.timer.Exit();
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();
     }
     GameClientReady() { }
     OpponentDisconnected() { }
