@@ -1,4 +1,3 @@
-import {stat} from 'fs';
 import {LetterState} from '../../client/structs/LetterState';
 import {AnimateCSS, AnimationType} from './Animate';
 import {Subview} from './Subview';
@@ -11,11 +10,9 @@ const KEYS = [
 ];
 
 export class KeyboardView extends Subview {
-  constructor() {
-    const base = document.getElementById('keyboard')!;
+  constructor(base: HTMLElement) {
     super(base, 'keyboard');
   }
-
   private keys: Record<string, HTMLButtonElement> = {};
 
   Initialize(input: (key: string) => void): void {

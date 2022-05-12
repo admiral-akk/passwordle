@@ -3,14 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeyboardState = void 0;
 const LetterState_1 = require("../client/structs/LetterState");
 const ModelState_1 = require("./ModelState");
-const KeyboardView_1 = require("./view/KeyboardView");
 const ALPHABET = 'QWERTYUIOPASDFGHJKLZXCVBNM';
 class KeyboardState extends ModelState_1.ModelState {
-    constructor(hasView, input) {
+    constructor(view, input) {
         var _a;
-        super(KeyboardView_1.KeyboardView, hasView);
+        super(view);
         this.keyState = {};
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Initialize(input);
+        if (input) {
+            (_a = this.view) === null || _a === void 0 ? void 0 : _a.Initialize(input);
+        }
         this.Reset();
     }
     Reset() {

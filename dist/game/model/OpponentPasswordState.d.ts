@@ -5,7 +5,6 @@ import { LetterAnimation } from './view/struct/Animation';
 export declare class OpponentPasswordState extends ModelState<OpponentPasswordView> {
     private password;
     private state;
-    constructor(hasView: boolean);
     Update(progress: TargetProgress, playerGuess: string): LetterAnimation[];
     Won(): boolean;
 }

@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TimerState = void 0;
 const ModelState_1 = require("./ModelState");
-const TimerView_1 = require("./view/TimerView");
 const TIME_TILL_RANDOM_MILLIS = 30000;
 var State;
 (function (State) {
@@ -13,9 +12,8 @@ var State;
     State[State["BothGuessed"] = 4] = "BothGuessed";
 })(State || (State = {}));
 class TimerState extends ModelState_1.ModelState {
-    constructor(hasView, timeExhausted) {
-        super(TimerView_1.TimerView, hasView);
-        this.hasView = hasView;
+    constructor(view, timeExhausted) {
+        super(view);
         this.timeExhausted = timeExhausted;
         this.state = State.None;
         this.timeLeft = TIME_TILL_RANDOM_MILLIS;
@@ -69,7 +67,9 @@ class TimerState extends ModelState_1.ModelState {
         var _a;
         clearInterval(this.timeout);
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.TimeExhausted();
-        this.timeExhausted();
+        if (this.timeExhausted) {
+            this.timeExhausted();
+        }
     }
     UpdateTimer() {
         var _a;
@@ -83,7 +83,7 @@ class TimerState extends ModelState_1.ModelState {
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.UpdateTime(this.timeLeft);
     }
     SetState(newState) {
-        if (!this.hasView) {
+        if (!this.view) {
             return;
         }
         if (this.state === State.OpponentGuessed) {

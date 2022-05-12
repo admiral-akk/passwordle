@@ -1,6 +1,6 @@
 import {InputManager} from './input/InputManager';
 import {Word} from '../structs/Word';
-import {PlayerBoard} from '../model/PlayerBoard';
+import {GameState} from '../model/GameState';
 import {GameServerToClientEvents} from '../network/GameNetworkTypes';
 import {
   AddedChar,
@@ -48,11 +48,11 @@ export class ClientGame
     socket.removeAllListeners('OpponentLockedGuess');
     socket.removeAllListeners('OpponentDisconnected');
   }
-  private board: PlayerBoard;
+  private board: GameState;
   constructor() {
     super();
-    this.board = new PlayerBoard(
-      true,
+    this.board = new GameState(
+      document.getElementById('game-board')!,
       (key: string) => this.Input(key),
       (guess: Word, currentGuessLength: number) =>
         this.SubmitRandomGuess(guess, currentGuessLength)

@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.YourBoardState = void 0;
 const CharUpdate_1 = require("./CharUpdate");
-const YourBoardView_1 = require("./view/YourBoardView");
 const Word_1 = require("../structs/Word");
 const Words_1 = require("../Words");
 const Updates_1 = require("../network/updates/Updates");
@@ -14,8 +13,8 @@ var State;
     State[State["Locked"] = 1] = "Locked";
 })(State || (State = {}));
 class YourBoardState extends ModelState_1.ModelState {
-    constructor(hasView) {
-        super(YourBoardView_1.YourBoardView, hasView);
+    constructor() {
+        super(...arguments);
         this.guesses = [];
         this.currentGuess = '';
         this.state = State.CanSubmit;

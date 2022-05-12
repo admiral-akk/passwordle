@@ -7,7 +7,6 @@ export declare class YourPasswordState extends ModelState<YourPasswordView> {
     private password;
     private knownCharacters;
     private state;
-    constructor(hasView: boolean);
     SetPassword(password: Word): void;
     Update(target: TargetProgress, playerGuess: string): LetterAnimation[];
     Lost(): boolean;

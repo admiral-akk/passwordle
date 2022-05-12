@@ -1,13 +1,12 @@
 import { ModelState } from './ModelState';
 import { TimerView } from './view/TimerView';
 export declare class TimerState extends ModelState<TimerView> {
-    private hasView;
-    private timeExhausted;
+    private timeExhausted?;
     private state;
     private timeLeft;
     private timeout;
     private lastUpdate;
-    constructor(hasView: boolean, timeExhausted: () => void);
+    constructor(view?: TimerView, timeExhausted?: (() => void) | undefined);
     Exit(): void;
     Reset(): void;
     LockedGuess(): void;

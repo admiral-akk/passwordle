@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientGameMirror = void 0;
-const PlayerBoard_1 = require("../model/PlayerBoard");
+const GameState_1 = require("../model/GameState");
 class ClientGameMirror {
     constructor(socket) {
         this.socket = socket;
         this.secret = null;
-        this.board = new PlayerBoard_1.PlayerBoard();
+        this.board = new GameState_1.GameState();
         this.otherPlayer = null;
         this.lockedGuessCallback = () => { };
         this.socket.removeAllListeners('AddedChar');

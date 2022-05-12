@@ -4,7 +4,7 @@ import { Subview } from './Subview';
 import { BaseWordView } from './word/WordView';
 export declare class OpponentBoardView extends Subview {
     protected words: OpponentWordView[];
-    constructor();
+    constructor(base: HTMLElement);
     SetCharKnowledge(wordIndex: number, charIndex: number, char: string, knowledge: LetterState): void;
     OpponentUpdate(update: OpponentUpdate): void;
 }

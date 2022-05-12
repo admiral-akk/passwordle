@@ -5,6 +5,6 @@ export declare class KeyboardState extends ModelState<KeyboardView> {
     Reset(): void;
     private SetState;
     private keyState;
-    constructor(hasView: boolean, input: (key: string) => void);
+    constructor(view?: KeyboardView, input?: (key: string) => void);
     Update(knowledge: WordKnowledge[]): void;
 }

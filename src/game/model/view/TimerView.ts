@@ -9,8 +9,7 @@ export class TimerView extends Subview {
     this.time.innerText = '';
     this.currentTime = 0;
   }
-  constructor() {
-    const base = document.getElementById('timer')!;
+  constructor(base: HTMLElement) {
     super(base, 'timer');
     this.time = this.AddDiv(base, 'timer-div');
   }

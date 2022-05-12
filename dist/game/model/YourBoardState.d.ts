@@ -7,7 +7,6 @@ export declare class YourBoardState extends ModelState<YourBoardView> {
     private guesses;
     private currentGuess;
     private state;
-    constructor(hasView: boolean);
     AddChar(char: string): boolean;
     Delete(): boolean;
     LockedGuess(): Word | null;

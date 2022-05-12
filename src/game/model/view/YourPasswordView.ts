@@ -6,8 +6,7 @@ import {BaseWordView} from './word/WordView';
 
 export class YourPasswordView extends Subview {
   private answer: AnswerWordView;
-  constructor() {
-    const base = document.getElementById('answer')!;
+  constructor(base: HTMLElement) {
     super(base, 'answer', 'Your Password', 'If these are all red, you lose!');
     this.answer = new AnswerWordView(this.root);
     this.AddSubview(this.answer);

@@ -17,8 +17,8 @@ export class TimerState extends ModelState<TimerView> {
   private timeout: NodeJS.Timeout | null = null;
   private lastUpdate = 0;
 
-  constructor(private hasView: boolean, private timeExhausted: () => void) {
-    super(TimerView, hasView);
+  constructor(view?: TimerView, private timeExhausted?: () => void) {
+    super(view);
     this.SetState(State.NoGuesses);
   }
   Exit(): void {
@@ -69,7 +69,9 @@ export class TimerState extends ModelState<TimerView> {
   private TimeExhausted() {
     clearInterval(this.timeout!);
     this.view?.TimeExhausted();
-    this.timeExhausted();
+    if (this.timeExhausted) {
+      this.timeExhausted();
+    }
   }
 
   private UpdateTimer() {
@@ -84,7 +86,7 @@ export class TimerState extends ModelState<TimerView> {
   }
 
   private SetState(newState: State) {
-    if (!this.hasView) {
+    if (!this.view) {
       return;
     }
     if (this.state === State.OpponentGuessed) {

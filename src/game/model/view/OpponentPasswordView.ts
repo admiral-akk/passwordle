@@ -6,8 +6,7 @@ import {BaseWordView} from './word/WordView';
 
 export class OpponentPasswordView extends Subview {
   private answer: TargetWordView;
-  constructor() {
-    const base = document.getElementById('target')!;
+  constructor(base: HTMLElement) {
     super(
       base,
       'target',

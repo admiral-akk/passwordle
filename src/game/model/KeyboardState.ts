@@ -23,9 +23,11 @@ export class KeyboardState extends ModelState<KeyboardView> {
 
   private keyState: Record<string, LetterState> = {};
 
-  constructor(hasView: boolean, input: (key: string) => void) {
-    super(KeyboardView, hasView);
-    this.view?.Initialize(input);
+  constructor(view?: KeyboardView, input?: (key: string) => void) {
+    super(view);
+    if (input) {
+      this.view?.Initialize(input);
+    }
     this.Reset();
   }
 

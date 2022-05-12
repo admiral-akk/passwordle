@@ -21,10 +21,6 @@ export class YourBoardState extends ModelState<YourBoardView> {
   private currentGuess = '';
   private state: State = State.CanSubmit;
 
-  constructor(hasView: boolean) {
-    super(YourBoardView, hasView);
-  }
-
   AddChar(char: string): boolean {
     if (this.state !== State.CanSubmit) {
       return false;

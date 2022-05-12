@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientGame = void 0;
 const InputManager_1 = require("./input/InputManager");
-const PlayerBoard_1 = require("../model/PlayerBoard");
+const GameState_1 = require("../model/GameState");
 const Updates_1 = require("../network/updates/Updates");
 const PlayerState_1 = require("../../public/PlayerState");
 const LobbyManager_1 = require("../../lobby/state/LobbyManager");
@@ -16,7 +16,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     constructor() {
         super();
         this.state = State.None;
-        this.board = new PlayerBoard_1.PlayerBoard(true, (key) => this.Input(key), (guess, currentGuessLength) => this.SubmitRandomGuess(guess, currentGuessLength));
+        this.board = new GameState_1.GameState(document.getElementById('game-board'), (key) => this.Input(key), (guess, currentGuessLength) => this.SubmitRandomGuess(guess, currentGuessLength));
         new InputManager_1.InputManager((char) => this.Input(char), () => this.Input('DEL'), () => this.Input('ENT'));
     }
     Exit() {

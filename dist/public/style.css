@@ -1,21 +1,21 @@
-#game-board {
+.game-board {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-#play-area {
+.play-area {
     margin: 2px;
     display: flex;
     align-items: center;
     flex-direction: row;
 }
 
-#player {
+.player {
     margin: 12px;
 }
 
-#opponent {
+.opponent {
     margin: 12px;
 }
 

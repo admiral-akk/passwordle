@@ -5,7 +5,6 @@ import { ModelState } from './ModelState';
 export declare class OpponentBoardState extends ModelState<OpponentBoardView> {
     private guesses;
     private opponentCharCount;
-    constructor(hasView: boolean);
     OpponentAddedChar(): void;
     OpponentDeleted(): void;
     OpponentLockedGuess(): void;

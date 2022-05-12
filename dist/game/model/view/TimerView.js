@@ -4,8 +4,7 @@ exports.TimerView = void 0;
 const Animate_1 = require("./Animate");
 const Subview_1 = require("./Subview");
 class TimerView extends Subview_1.Subview {
-    constructor() {
-        const base = document.getElementById('timer');
+    constructor(base) {
         super(base, 'timer');
         this.currentTime = 0;
         this.time = this.AddDiv(base, 'timer-div');

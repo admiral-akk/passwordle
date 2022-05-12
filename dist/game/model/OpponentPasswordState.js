@@ -2,15 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpponentPasswordState = void 0;
 const ModelState_1 = require("./ModelState");
-const OpponentPasswordView_1 = require("./view/OpponentPasswordView");
 var State;
 (function (State) {
     State[State["WaitingForPassword"] = 0] = "WaitingForPassword";
     State[State["PasswordRecieved"] = 1] = "PasswordRecieved";
 })(State || (State = {}));
 class OpponentPasswordState extends ModelState_1.ModelState {
-    constructor(hasView) {
-        super(OpponentPasswordView_1.OpponentPasswordView, hasView);
+    constructor() {
+        super(...arguments);
         this.password = ['', '', '', '', ''];
         this.state = State.WaitingForPassword;
     }

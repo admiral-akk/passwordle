@@ -1,0 +1,32 @@
+import { Word } from '../structs/Word';
+import { GameClientToServerEvents, GameServerToClientEvents } from '../network/GameNetworkTypes';
+import { AddedChar, UpdatedAnswerKnowledge } from '../network/updates/Updates';
+import { EndGameSummary } from '../../util/struct/EndGameState';
+export declare class GameState implements GameClientToServerEvents, GameServerToClientEvents {
+    private input;
+    private submitRandomGuess;
+    private state;
+    private view?;
+    Exit(): void;
+    private yourBoard;
+    private yourPassword;
+    private opponentBoard;
+    private opponentPassword;
+    private keyboard;
+    private timer;
+    constructor(viewRoot?: HTMLElement, input?: (key: string) => void, submitRandomGuess?: (guess: Word, currentGuessLength: number) => void);
+    GameClientReady(): void;
+    OpponentDisconnected(): void;
+    TimerExhausted(): void;
+    AddedChar(update: AddedChar): boolean;
+    Deleted(): boolean;
+    LockedGuess(): Word | null;
+    IsGameOver(): boolean;
+    GameOver(): EndGameSummary;
+    OpponentAddedChar(): void;
+    OpponentDeleted(): void;
+    OpponentLockedGuess(): void;
+    private endGame;
+    UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void>;
+    SetSecret(secret: Word): void;
+}

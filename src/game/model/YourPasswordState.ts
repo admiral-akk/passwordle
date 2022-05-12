@@ -14,10 +14,6 @@ export class YourPasswordState extends ModelState<YourPasswordView> {
   private knownCharacters: string[] = ['', '', '', '', ''];
   private state: State = State.WaitingForPassword;
 
-  constructor(hasView: boolean) {
-    super(YourPasswordView, hasView);
-  }
-
   SetPassword(password: Word) {
     this.password = password;
     this.view?.SetSecret(this.password);

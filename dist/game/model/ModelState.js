@@ -2,12 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModelState = void 0;
 class ModelState {
-    constructor(makeView, hasView = false) {
-        this.makeView = makeView;
-        this.view = null;
-        if (hasView) {
-            this.view = new makeView();
-        }
+    constructor(view) {
+        this.view = view;
     }
     Exit() {
         var _a;

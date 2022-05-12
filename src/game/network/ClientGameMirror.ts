@@ -3,7 +3,7 @@ import {
   GameClientToServerEvents,
   GameServerToClientEvents,
 } from './GameNetworkTypes';
-import {PlayerBoard} from '../model/PlayerBoard';
+import {GameState} from '../model/GameState';
 import {
   AddedChar,
   LockedGuess,
@@ -15,7 +15,7 @@ export class ClientGameMirror
   implements GameClientToServerEvents, GameServerToClientEvents
 {
   private secret: Word | null = null;
-  private board: PlayerBoard = new PlayerBoard();
+  private board: GameState = new GameState();
   private otherPlayer: ClientGameMirror | null = null;
   private lockedGuessCallback: (update: LockedGuess) => void = () => {};
 

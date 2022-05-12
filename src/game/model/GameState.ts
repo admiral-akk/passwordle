@@ -14,11 +14,11 @@ import {YourPasswordState} from './YourPasswordState';
 import {OpponentBoardState} from './OpponentBoardState';
 import {OpponentPasswordState} from './OpponentPasswordState';
 import {LetterAnimation} from './view/struct/Animation';
-import {NotificationState} from './NotificationState';
 import {KeyboardState} from './KeyboardState';
 import {TimerState} from './TimerState';
 import {GetRandomGuess} from '../Words';
 import {EndGameState, EndGameSummary} from '../../util/struct/EndGameState';
+import {GameView} from './view/GameView';
 
 enum State {
   None,
@@ -28,44 +28,56 @@ enum State {
   GameOver,
 }
 
-export class PlayerBoard
+export class GameState
   implements GameClientToServerEvents, GameServerToClientEvents
 {
   private state: State = State.None;
+  private view?: GameView;
+
   Exit() {
     this.yourBoard.Exit();
     this.yourPassword.Exit();
     this.opponentBoard.Exit();
     this.opponentPassword.Exit();
-    this.notification.Exit();
     this.keyboard.Exit();
     this.timer.Exit();
   }
 
+  private yourBoard: YourBoardState;
+  private yourPassword: YourPasswordState;
+  private opponentBoard: OpponentBoardState;
+  private opponentPassword: OpponentPasswordState;
+  private keyboard: KeyboardState;
+  private timer: TimerState;
+
   constructor(
-    private hasView: boolean = false,
+    viewRoot?: HTMLElement,
     private input: (key: string) => void = () => {},
     private submitRandomGuess: (
       guess: Word,
       currentGuessLength: number
     ) => void = () => {}
-  ) {}
+  ) {
+    if (viewRoot) {
+      this.view = new GameView(viewRoot);
+      this.yourBoard = new YourBoardState(this.view!.yourBoard!);
+      this.yourPassword = new YourPasswordState(this.view!.yourPassword!);
+      this.opponentBoard = new OpponentBoardState(this.view!.opponentBoard!);
+      this.opponentPassword = new OpponentPasswordState(
+        this.view!.opponentPassword!
+      );
+      this.keyboard = new KeyboardState(this.view!.keyboard!, this.input);
+      this.timer = new TimerState(this.view!.timer!, this.TimerExhausted);
+    } else {
+      this.yourBoard = new YourBoardState();
+      this.yourPassword = new YourPasswordState();
+      this.opponentBoard = new OpponentBoardState();
+      this.opponentPassword = new OpponentPasswordState();
+      this.keyboard = new KeyboardState();
+      this.timer = new TimerState();
+    }
+  }
   GameClientReady() {}
-
-  private yourBoard: YourBoardState = new YourBoardState(this.hasView);
-  private yourPassword: YourPasswordState = new YourPasswordState(this.hasView);
-  private opponentBoard: OpponentBoardState = new OpponentBoardState(
-    this.hasView
-  );
-  private opponentPassword: OpponentPasswordState = new OpponentPasswordState(
-    this.hasView
-  );
-  private notification: NotificationState = new NotificationState(this.hasView);
-  private keyboard: KeyboardState = new KeyboardState(this.hasView, this.input);
-  private timer: TimerState = new TimerState(this.hasView, () =>
-    this.TimerExhausted()
-  );
-
   OpponentDisconnected() {}
 
   TimerExhausted() {
@@ -176,17 +188,6 @@ export class PlayerBoard
     if (IsGameOver(update)) {
       this.endGame = update.endGameState;
       this.state = State.GameOver;
-      switch (GameOverState(update)) {
-        case EndGameState.Loss:
-          promise.then(() => this.notification.Lost());
-          break;
-        case EndGameState.Win:
-          promise.then(() => this.notification.Won());
-          break;
-        case EndGameState.Tie:
-          promise.then(() => this.notification.Tied());
-          break;
-      }
     } else {
       // Enable submission
       promise = promise.then(() => {
