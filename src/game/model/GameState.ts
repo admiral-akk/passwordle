@@ -5,7 +5,6 @@ import {
 } from '../network/GameNetworkTypes';
 import {
   AddedChar,
-  GameOverState,
   IsGameOver,
   UpdatedAnswerKnowledge,
 } from '../network/updates/Updates';
