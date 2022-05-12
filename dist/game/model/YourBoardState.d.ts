@@ -14,5 +14,4 @@ export declare class YourBoardState extends ModelState<YourBoardView> {
     Update(knowledge: WordKnowledge): LetterAnimation[];
     CurrentGuessLength(): number;
     GuessCount(): number;
-    Reset(): void;
 }

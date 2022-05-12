@@ -6,5 +6,4 @@ export declare abstract class ModelState<ViewType extends Subview> {
         new (): ViewType;
     }, hasView?: boolean);
     Exit(): void;
-    abstract Reset(): void;
 }

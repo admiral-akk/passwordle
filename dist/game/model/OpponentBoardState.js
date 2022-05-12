@@ -41,10 +41,6 @@ class OpponentBoardState extends ModelState_1.ModelState {
         }
         return animations;
     }
-    Reset() {
-        this.guesses = [];
-        this.opponentCharCount = 0;
-    }
 }
 exports.OpponentBoardState = OpponentBoardState;
 //# sourceMappingURL=OpponentBoardState.js.map

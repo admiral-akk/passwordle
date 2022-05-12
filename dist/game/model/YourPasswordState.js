@@ -20,11 +20,6 @@ class YourPasswordState extends ModelState_1.ModelState {
         this.password = password;
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.SetSecret(this.password);
     }
-    Reset() {
-        this.password = null;
-        this.knownCharacters = ['', '', '', '', ''];
-        this.state = State.WaitingForPassword;
-    }
     Update(target, playerGuess) {
         for (let i = 0; i < target.knownCharacters.length; i++) {
             if (target.knownCharacters[i] !== '') {

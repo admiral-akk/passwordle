@@ -16,11 +16,6 @@ export class OpponentPasswordState extends ModelState<OpponentPasswordView> {
     super(OpponentPasswordView, hasView);
   }
 
-  Reset() {
-    this.password = ['', '', '', '', ''];
-    this.state = State.WaitingForPassword;
-  }
-
   Update(progress: TargetProgress, playerGuess: string): LetterAnimation[] {
     for (let i = 0; i < progress.knownCharacters.length; i++) {
       if (progress.knownCharacters[i] !== '') {

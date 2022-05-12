@@ -3,9 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotificationView = void 0;
 const Subview_1 = require("./Subview");
 class NotificationView extends Subview_1.Subview {
-    Reset() {
-        this.SetText('');
-    }
     constructor() {
         const base = document.getElementById('notification');
         super(base, 'notification');

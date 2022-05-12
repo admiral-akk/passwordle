@@ -43,7 +43,6 @@ class KeyboardView extends Subview_1.Subview {
                 break;
         }
     }
-    Reset() { }
 }
 exports.KeyboardView = KeyboardView;
 function ToColor(state) {

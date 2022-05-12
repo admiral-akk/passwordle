@@ -5,5 +5,4 @@ export declare class KeyboardView extends Subview {
     private keys;
     Initialize(input: (key: string) => void): void;
     SetColor(key: string, state: LetterState): void;
-    Reset(): void;
 }

@@ -7,7 +7,6 @@ export declare class PlayerBoard implements GameClientToServerEvents, GameServer
     private input;
     private submitRandomGuess;
     private state;
-    private Reset;
     Exit(): void;
     constructor(hasView?: boolean, input?: (key: string) => void, submitRandomGuess?: (guess: Word, currentGuessLength: number) => void);
     GameClientReady(): void;

@@ -58,9 +58,4 @@ export class OpponentBoardState extends ModelState<OpponentBoardView> {
     }
     return animations;
   }
-
-  Reset() {
-    this.guesses = [];
-    this.opponentCharCount = 0;
-  }
 }

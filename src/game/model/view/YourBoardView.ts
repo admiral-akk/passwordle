@@ -6,9 +6,6 @@ import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
 
 export class YourBoardView extends Subview {
-  Reset() {
-    this.words.forEach(word => word.Reset());
-  }
   protected words: PlayerWordView[];
   constructor() {
     const base = document.getElementById('player')!;

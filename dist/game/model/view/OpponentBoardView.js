@@ -23,9 +23,6 @@ class OpponentBoardView extends Subview_1.Subview {
     OpponentUpdate(update) {
         this.words[update.wordIndex].OpponentUpdate(update.type, update.charIndex);
     }
-    Reset() {
-        this.words.forEach(word => word.Reset());
-    }
 }
 exports.OpponentBoardView = OpponentBoardView;
 class OpponentWordView extends WordView_1.BaseWordView {

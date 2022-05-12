@@ -32,15 +32,6 @@ export class PlayerBoard
   implements GameClientToServerEvents, GameServerToClientEvents
 {
   private state: State = State.None;
-  private Reset() {
-    this.yourBoard.Reset();
-    this.yourPassword.Reset();
-    this.opponentBoard.Reset();
-    this.opponentPassword.Reset();
-    this.notification.Reset();
-    this.keyboard.Reset();
-    this.timer.Reset();
-  }
   Exit() {
     this.yourBoard.Exit();
     this.yourPassword.Exit();
@@ -208,7 +199,6 @@ export class PlayerBoard
   }
 
   SetSecret(secret: Word) {
-    this.Reset();
     this.yourPassword.SetPassword(secret);
     this.state = State.SubmissionOpen;
   }

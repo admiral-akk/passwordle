@@ -17,10 +17,6 @@ export class YourPasswordView extends Subview {
     this.answer.SetSecret(secret);
   }
 
-  Reset(): void {
-    this.answer.Reset();
-  }
-
   Update(target: TargetProgress, playerGuess: string): LetterAnimation[] {
     const animations: LetterAnimation[] = [];
     for (let i = 0; i < target.knownCharacters.length; i++) {

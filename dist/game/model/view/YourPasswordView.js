@@ -15,9 +15,6 @@ class YourPasswordView extends Subview_1.Subview {
     SetSecret(secret) {
         this.answer.SetSecret(secret);
     }
-    Reset() {
-        this.answer.Reset();
-    }
     Update(target, playerGuess) {
         const animations = [];
         for (let i = 0; i < target.knownCharacters.length; i++) {

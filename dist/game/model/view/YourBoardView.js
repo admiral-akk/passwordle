@@ -16,9 +16,6 @@ class YourBoardView extends Subview_1.Subview {
             this.AddSubview(word);
         }
     }
-    Reset() {
-        this.words.forEach(word => word.Reset());
-    }
     SetCharKnowledge(wordIndex, charIndex, char, knowledge) {
         this.words[wordIndex].SetKnowledge(charIndex, char, knowledge);
     }

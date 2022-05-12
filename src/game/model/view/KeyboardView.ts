@@ -48,8 +48,6 @@ export class KeyboardView extends Subview {
         break;
     }
   }
-
-  Reset(): void {}
 }
 
 function ToColor(state: LetterState): LetterColor {

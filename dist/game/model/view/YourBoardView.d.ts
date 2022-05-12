@@ -4,7 +4,6 @@ import { CharUpdate } from '../CharUpdate';
 import { Subview } from './Subview';
 import { BaseWordView } from './word/WordView';
 export declare class YourBoardView extends Subview {
-    Reset(): void;
     protected words: PlayerWordView[];
     constructor();
     SetCharKnowledge(wordIndex: number, charIndex: number, char: string, knowledge: LetterState): void;

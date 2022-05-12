@@ -14,8 +14,6 @@ class KeyboardState extends ModelState_1.ModelState {
         this.Reset();
     }
     Reset() {
-        var _a;
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Reset();
         this.keyState = {};
         for (let i = 0; i < ALPHABET.length; i++) {
             this.SetState(ALPHABET[i], LetterState_1.LetterState.NoKnowledge);

@@ -1,9 +1,6 @@
 import {Subview} from './Subview';
 
 export class NotificationView extends Subview {
-  Reset(): void {
-    this.SetText('');
-  }
   constructor() {
     const base = document.getElementById('notification')!;
     super(base, 'notification');

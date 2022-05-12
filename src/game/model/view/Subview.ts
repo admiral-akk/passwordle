@@ -18,8 +18,6 @@ export abstract class Subview {
     }
   }
 
-  abstract Reset(): void;
-
   Exit() {
     this.subviews.forEach(subview => subview.Exit());
     this.elements.forEach(element => element.remove());

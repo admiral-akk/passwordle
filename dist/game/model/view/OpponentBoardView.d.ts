@@ -7,7 +7,6 @@ export declare class OpponentBoardView extends Subview {
     constructor();
     SetCharKnowledge(wordIndex: number, charIndex: number, char: string, knowledge: LetterState): void;
     OpponentUpdate(update: OpponentUpdate): void;
-    Reset(): void;
 }
 declare class OpponentWordView extends BaseWordView {
     OpponentUpdate(type: OpponentUpdateType, charIndex: number): void;

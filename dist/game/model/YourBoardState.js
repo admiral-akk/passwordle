@@ -89,11 +89,6 @@ class YourBoardState extends ModelState_1.ModelState {
     GuessCount() {
         return this.guesses.length;
     }
-    Reset() {
-        this.guesses = [];
-        this.currentGuess = '';
-        this.state = State.CanSubmit;
-    }
 }
 exports.YourBoardState = YourBoardState;
 //# sourceMappingURL=YourBoardState.js.map

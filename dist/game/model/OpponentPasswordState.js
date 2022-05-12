@@ -14,10 +14,6 @@ class OpponentPasswordState extends ModelState_1.ModelState {
         this.password = ['', '', '', '', ''];
         this.state = State.WaitingForPassword;
     }
-    Reset() {
-        this.password = ['', '', '', '', ''];
-        this.state = State.WaitingForPassword;
-    }
     Update(progress, playerGuess) {
         for (let i = 0; i < progress.knownCharacters.length; i++) {
             if (progress.knownCharacters[i] !== '') {

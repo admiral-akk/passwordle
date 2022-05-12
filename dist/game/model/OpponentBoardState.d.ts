@@ -10,5 +10,4 @@ export declare class OpponentBoardState extends ModelState<OpponentBoardView> {
     OpponentDeleted(): void;
     OpponentLockedGuess(): void;
     Update(knowledge: WordKnowledge): LetterAnimation[];
-    Reset(): void;
 }

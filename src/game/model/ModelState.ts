@@ -11,6 +11,4 @@ export abstract class ModelState<ViewType extends Subview> {
   Exit() {
     this.view?.Exit();
   }
-
-  abstract Reset(): void;
 }

@@ -34,15 +34,6 @@ class PlayerBoard {
         this.timer = new TimerState_1.TimerState(this.hasView, () => this.TimerExhausted());
         this.endGame = null;
     }
-    Reset() {
-        this.yourBoard.Reset();
-        this.yourPassword.Reset();
-        this.opponentBoard.Reset();
-        this.opponentPassword.Reset();
-        this.notification.Reset();
-        this.keyboard.Reset();
-        this.timer.Reset();
-    }
     Exit() {
         this.yourBoard.Exit();
         this.yourPassword.Exit();
@@ -155,7 +146,6 @@ class PlayerBoard {
         return promise;
     }
     SetSecret(secret) {
-        this.Reset();
         this.yourPassword.SetPassword(secret);
         this.state = State.SubmissionOpen;
     }

@@ -23,12 +23,6 @@ export class YourPasswordState extends ModelState<YourPasswordView> {
     this.view?.SetSecret(this.password);
   }
 
-  Reset() {
-    this.password = null;
-    this.knownCharacters = ['', '', '', '', ''];
-    this.state = State.WaitingForPassword;
-  }
-
   Update(target: TargetProgress, playerGuess: string): LetterAnimation[] {
     for (let i = 0; i < target.knownCharacters.length; i++) {
       if (target.knownCharacters[i] !== '') {

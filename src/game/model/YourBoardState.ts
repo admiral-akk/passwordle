@@ -127,10 +127,4 @@ export class YourBoardState extends ModelState<YourBoardView> {
   GuessCount(): number {
     return this.guesses.length;
   }
-
-  Reset() {
-    this.guesses = [];
-    this.currentGuess = '';
-    this.state = State.CanSubmit;
-  }
 }

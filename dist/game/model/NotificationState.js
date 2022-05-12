@@ -7,10 +7,6 @@ class NotificationState extends ModelState_1.ModelState {
     constructor(hasView) {
         super(NotificationView_1.NotificationView, hasView);
     }
-    Reset() {
-        var _a;
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Reset();
-    }
     Won() {
         var _a;
         if (this.view) {
