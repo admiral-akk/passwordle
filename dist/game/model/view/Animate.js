@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AnimateCSS = exports.AnimationType = void 0;
+exports.AddPopup = exports.AnimateCSS = exports.AnimationType = void 0;
 var AnimationType;
 (function (AnimationType) {
     AnimationType["Pulse"] = "pulse";
@@ -31,4 +31,18 @@ function AnimateCSS(element, animation, duration = 0.5) {
     });
 }
 exports.AnimateCSS = AnimateCSS;
+function AddPopup(target, text, durationSeconds = 1.5) {
+    const popup = document.createElement('div');
+    popup.className = 'popup';
+    popup.innerText = text;
+    target.appendChild(popup);
+    AnimateCSS(popup, AnimationType.BounceIn, 0.5)
+        .then(() => new Promise(resolve => setTimeout(resolve, 1000 * (durationSeconds - 1))))
+        .then(() => {
+        AnimateCSS(popup, AnimationType.FadeOut, 0.5);
+        return new Promise(resolve => setTimeout(resolve, 450));
+    })
+        .finally(() => popup.remove());
+}
+exports.AddPopup = AddPopup;
 //# sourceMappingURL=Animate.js.map

@@ -1,4 +1,4 @@
-import {AddPopup} from '../../../game/model/view/Popup';
+import {AddPopup} from '../../../game/model/view/Animate';
 import {LobbyState} from '../../../public/PlayerState';
 import {GenerateLobbyLink, LobbyId} from '../../LobbyId';
 import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';

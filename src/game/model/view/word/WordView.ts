@@ -1,7 +1,7 @@
 import {LetterView} from './letter/LetterView';
 import {Subview} from '../Subview';
 import {ErrorType, LockedGuessError} from '../../../network/updates/Updates';
-import {AddPopup} from '../Popup';
+import {AddPopup} from '../Animate';
 
 const WORD_LENGTH = 5;
 

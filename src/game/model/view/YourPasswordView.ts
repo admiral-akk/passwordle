@@ -1,11 +1,10 @@
 import {TargetProgress} from '../../client/structs/TargetProgress';
-import {PasswordView} from './PasswordView';
 import {LetterAnimation} from './struct/Animation';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';
 import {BaseWordView} from './word/WordView';
 
-export class YourPasswordView extends Subview implements PasswordView {
+export class YourPasswordView extends Subview {
   private answer: AnswerWordView;
   constructor() {
     const base = document.getElementById('answer')!;

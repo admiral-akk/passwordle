@@ -1,8 +1,7 @@
 import { TargetProgress } from '../../client/structs/TargetProgress';
-import { PasswordView } from './PasswordView';
 import { LetterAnimation } from './struct/Animation';
 import { Subview } from './Subview';
-export declare class OpponentPasswordView extends Subview implements PasswordView {
+export declare class OpponentPasswordView extends Subview {
     private answer;
     constructor();
     Update(target: TargetProgress, playerGuess: string): LetterAnimation[];
