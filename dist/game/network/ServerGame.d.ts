@@ -1,5 +1,5 @@
 import { GameServerSocket } from './GameNetworkTypes';
-import { PlayerId } from '../../PlayerId';
+import { PlayerId } from '../../structs/PlayerId';
 import { ClientGameMirror } from './ClientGameMirror';
 import { KnowledgeExchangeServer } from './KnowledgeUpdateServer';
 export declare class ServerGame {

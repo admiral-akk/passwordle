@@ -1,4 +1,4 @@
-import {Word} from '../structs/Word';
+import {Word} from '../../structs/Word';
 import {
   GameClientToServerEvents,
   GameServerToClientEvents,
@@ -16,7 +16,7 @@ import {LetterAnimation} from './view/struct/Animation';
 import {KeyboardState} from './KeyboardState';
 import {TimerState} from './TimerState';
 import {GetRandomGuess} from '../Words';
-import {EndGameSummary} from '../../util/struct/EndGameState';
+import {EndGameSummary} from '../../structs/EndGameState';
 import {GameView} from './view/GameView';
 
 enum State {

@@ -1,6 +1,6 @@
 import { ClientSocket } from '../../public/ClientNetworking';
 import { PlayerState } from '../../public/PlayerState';
-import { EndGameSummary } from '../../util/struct/EndGameState';
+import { EndGameSummary } from '../../structs/EndGameState';
 export declare class LobbyManager extends PlayerState {
     private endState;
     Exit(): Promise<void>;

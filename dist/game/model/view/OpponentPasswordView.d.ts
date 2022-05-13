@@ -1,4 +1,4 @@
-import { TargetProgress } from '../../client/structs/TargetProgress';
+import { TargetProgress } from '../../../structs/TargetProgress';
 import { LetterAnimation } from './struct/Animation';
 import { Subview } from './Subview';
 export declare class OpponentPasswordView extends Subview {

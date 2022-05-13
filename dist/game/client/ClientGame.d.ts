@@ -1,4 +1,4 @@
-import { Word } from '../structs/Word';
+import { Word } from '../../structs/Word';
 import { GameServerToClientEvents } from '../network/GameNetworkTypes';
 import { UpdatedAnswerKnowledge } from '../network/updates/Updates';
 import { ClientSocket } from '../../public/ClientNetworking';

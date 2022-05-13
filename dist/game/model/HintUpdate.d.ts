@@ -1,4 +1,4 @@
-import { Hint } from '../client/structs/Hint';
+import { Hint } from '../../structs/Hint';
 export declare class HintUpdate {
     hint: Hint;
     guessIndex: number;

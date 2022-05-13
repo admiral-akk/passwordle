@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeyboardState = void 0;
-const LetterState_1 = require("../client/structs/LetterState");
+const LetterState_1 = require("../../structs/LetterState");
 const ModelState_1 = require("./ModelState");
 const ALPHABET = 'QWERTYUIOPASDFGHJKLZXCVBNM';
 class KeyboardState extends ModelState_1.ModelState {

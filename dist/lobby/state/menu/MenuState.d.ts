@@ -1,5 +1,5 @@
 import { LobbyState } from '../../../public/PlayerState';
-import { LobbyId } from '../../LobbyId';
+import { LobbyId } from '../../../structs/LobbyId';
 import { LobbyClientSocket } from '../../server/LobbyNetworkTypes';
 export declare class MenuState extends LobbyState {
     private lobbyId;

@@ -1,14 +1,14 @@
-import {TargetProgress} from '../../../game/client/structs/TargetProgress';
+import {TargetProgress} from '../../../structs/TargetProgress';
 import {LetterColor} from '../../../game/model/view/word/letter/LetterView';
 import {BaseWordView} from '../../../game/model/view/word/WordView';
-import {Word} from '../../../game/structs/Word';
+import {Word} from '../../../structs/Word';
 import {LobbyState} from '../../../public/PlayerState';
 import {
   EndGameState,
   EndGameSummary,
   GetEndGameState,
-} from '../../../util/struct/EndGameState';
-import {LobbyId} from '../../LobbyId';
+} from '../../../structs/EndGameState';
+import {LobbyId} from '../../../structs/LobbyId';
 import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
 import {MenuState} from '../menu/MenuState';
 import {Modal} from '../Modal';

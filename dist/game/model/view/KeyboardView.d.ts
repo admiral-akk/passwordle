@@ -1,4 +1,4 @@
-import { LetterState } from '../../client/structs/LetterState';
+import { LetterState } from '../../../structs/LetterState';
 import { Subview } from './Subview';
 export declare class KeyboardView extends Subview {
     constructor(base: HTMLElement);

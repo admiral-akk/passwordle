@@ -1,4 +1,4 @@
-import { WordKnowledge } from '../client/structs/WordKnowledge';
+import { WordKnowledge } from '../../structs/WordKnowledge';
 import { ModelState } from './ModelState';
 import { KeyboardView } from './view/KeyboardView';
 export declare class KeyboardState extends ModelState<KeyboardView> {

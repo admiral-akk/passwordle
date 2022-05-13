@@ -1,4 +1,4 @@
-import { LetterState } from '../../client/structs/LetterState';
+import { LetterState } from '../../../structs/LetterState';
 import { OpponentUpdate, OpponentUpdateType } from '../OpponentUpdate';
 import { Subview } from './Subview';
 import { BaseWordView } from './word/WordView';

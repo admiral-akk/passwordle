@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KnowledgeExchangeServer = void 0;
-const TargetProgress_1 = require("../client/structs/TargetProgress");
+const TargetProgress_1 = require("../../structs/TargetProgress");
 const WordleLogic_1 = require("../logic/WordleLogic");
 const Updates_1 = require("./updates/Updates");
-const EndGameState_1 = require("../../util/struct/EndGameState");
+const EndGameState_1 = require("../../structs/EndGameState");
 class KnowledgeExchangeServer {
     constructor(players, answers, updateKnowledgeCallback, GameEnded) {
         this.players = players;

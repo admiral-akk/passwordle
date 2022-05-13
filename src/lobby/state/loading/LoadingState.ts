@@ -1,5 +1,5 @@
 import {LobbyState} from '../../../public/PlayerState';
-import {FindLobbyIdInURL, LobbyId} from '../../LobbyId';
+import {FindLobbyIdInURL, LobbyId} from '../../../structs/LobbyId';
 import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
 import {MenuState} from '../menu/MenuState';
 import {Modal} from '../Modal';

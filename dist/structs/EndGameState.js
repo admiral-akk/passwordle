@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetEndGameState = exports.EndGameSummary = exports.EndGameState = void 0;
-const TargetProgress_1 = require("../../game/client/structs/TargetProgress");
+const TargetProgress_1 = require("./TargetProgress");
 var EndGameState;
 (function (EndGameState) {
     EndGameState[EndGameState["None"] = 0] = "None";

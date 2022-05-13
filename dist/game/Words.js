@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetRandomGuess = exports.GetRandomAnswer = exports.IsValidWord = void 0;
-const Word_1 = require("./structs/Word");
+const Word_1 = require("../structs/Word");
 function IsValidWord(word) {
     for (let i = 0; i < WORDS.length; i++) {
         if (word === WORDS[i]) {

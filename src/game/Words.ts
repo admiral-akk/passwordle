@@ -1,4 +1,4 @@
-import {ToWord, Word} from './structs/Word';
+import {ToWord, Word} from '../structs/Word';
 
 export function IsValidWord(word: Word): boolean {
   for (let i = 0; i < WORDS.length; i++) {

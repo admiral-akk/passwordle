@@ -3,7 +3,7 @@ import path from 'path';
 import {GameServerManager} from './GameServerManager';
 import {LobbyServer} from './lobby/server/LobbyServer';
 import {GetServer} from './NetworkTypes';
-import {PlayerId} from './PlayerId';
+import {PlayerId} from './structs/PlayerId';
 import {SocketManager} from './SocketManager';
 
 const app = express();

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpponentBoardState = void 0;
 const OpponentUpdate_1 = require("./OpponentUpdate");
-const Word_1 = require("../structs/Word");
+const Word_1 = require("../../structs/Word");
 const Animation_1 = require("./view/struct/Animation");
 const ModelState_1 = require("./ModelState");
 class OpponentBoardState extends ModelState_1.ModelState {

@@ -1,6 +1,6 @@
-import { WordKnowledge } from '../client/structs/WordKnowledge';
+import { WordKnowledge } from '../../structs/WordKnowledge';
 import { YourBoardView } from './view/YourBoardView';
-import { Word } from '../structs/Word';
+import { Word } from '../../structs/Word';
 import { LetterAnimation } from './view/struct/Animation';
 import { ModelState } from './ModelState';
 export declare class YourBoardState extends ModelState<YourBoardView> {

@@ -1,5 +1,5 @@
-import {LetterState} from '../client/structs/LetterState';
-import {WordKnowledge} from '../client/structs/WordKnowledge';
+import {LetterState} from '../../structs/LetterState';
+import {WordKnowledge} from '../../structs/WordKnowledge';
 import {ModelState} from './ModelState';
 import {KeyboardView} from './view/KeyboardView';
 

@@ -4,7 +4,7 @@ exports.RematchState = void 0;
 const LetterView_1 = require("../../../game/model/view/word/letter/LetterView");
 const WordView_1 = require("../../../game/model/view/word/WordView");
 const PlayerState_1 = require("../../../public/PlayerState");
-const EndGameState_1 = require("../../../util/struct/EndGameState");
+const EndGameState_1 = require("../../../structs/EndGameState");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");
 var State;

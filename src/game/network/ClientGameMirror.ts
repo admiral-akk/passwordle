@@ -9,7 +9,7 @@ import {
   LockedGuess,
   UpdatedAnswerKnowledge,
 } from './updates/Updates';
-import {Word} from '../structs/Word';
+import {Word} from '../../structs/Word';
 
 export class ClientGameMirror
   implements GameClientToServerEvents, GameServerToClientEvents

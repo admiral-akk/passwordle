@@ -1,7 +1,7 @@
-import { EndGameState, EndGameSummary } from '../../../util/struct/EndGameState';
-import { TargetProgress } from '../../client/structs/TargetProgress';
-import { WordKnowledge } from '../../client/structs/WordKnowledge';
-import { Word } from '../../structs/Word';
+import { EndGameState, EndGameSummary } from '../../../structs/EndGameState';
+import { TargetProgress } from '../../../structs/TargetProgress';
+import { WordKnowledge } from '../../../structs/WordKnowledge';
+import { Word } from '../../../structs/Word';
 export declare class AddedChar {
     char: string;
     constructor(char: string);

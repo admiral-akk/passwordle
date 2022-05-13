@@ -1,4 +1,4 @@
-import { WordKnowledge } from '../client/structs/WordKnowledge';
+import { WordKnowledge } from '../../structs/WordKnowledge';
 import { OpponentBoardView } from './view/OpponentBoardView';
 import { LetterAnimation } from './view/struct/Animation';
 import { ModelState } from './ModelState';

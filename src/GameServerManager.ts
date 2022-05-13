@@ -1,6 +1,6 @@
 import {GameServerSocket} from './game/network/GameNetworkTypes';
 import {ServerGame} from './game/network/ServerGame';
-import {PlayerId} from './PlayerId';
+import {PlayerId} from './structs/PlayerId';
 
 export class GameServerManager {
   private activeGames: Record<string, ServerGame>;

@@ -1,7 +1,7 @@
-import {WordKnowledge} from '../client/structs/WordKnowledge';
+import {WordKnowledge} from '../../structs/WordKnowledge';
 import {OpponentUpdate, OpponentUpdateType} from './OpponentUpdate';
 import {OpponentBoardView} from './view/OpponentBoardView';
-import {ToWord, Word} from '../structs/Word';
+import {ToWord, Word} from '../../structs/Word';
 import {LetterAnimation} from './view/struct/Animation';
 import {ModelState} from './ModelState';
 

@@ -1,5 +1,5 @@
-import { Word } from '../structs/Word';
-import { PlayerId } from '../../PlayerId';
+import { Word } from '../../structs/Word';
+import { PlayerId } from '../../structs/PlayerId';
 import { UpdatedAnswerKnowledge } from './updates/Updates';
 export declare class KnowledgeExchangeServer {
     private players;

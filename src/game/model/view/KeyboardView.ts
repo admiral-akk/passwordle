@@ -1,4 +1,4 @@
-import {LetterState} from '../../client/structs/LetterState';
+import {LetterState} from '../../../structs/LetterState';
 import {AnimateCSS, AnimationType} from './Animate';
 import {Subview} from './Subview';
 import {LetterColor} from './word/letter/LetterView';

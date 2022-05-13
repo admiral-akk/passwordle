@@ -1,5 +1,5 @@
 import {InputManager} from './input/InputManager';
-import {Word} from '../structs/Word';
+import {Word} from '../../structs/Word';
 import {GameState} from '../model/GameState';
 import {GameServerToClientEvents} from '../network/GameNetworkTypes';
 import {

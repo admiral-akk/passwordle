@@ -1,7 +1,7 @@
-import {WordKnowledge} from '../client/structs/WordKnowledge';
+import {WordKnowledge} from '../../structs/WordKnowledge';
 import {CharUpdate} from './CharUpdate';
 import {YourBoardView} from './view/YourBoardView';
-import {ToWord, Word} from '../structs/Word';
+import {ToWord, Word} from '../../structs/Word';
 import {IsValidWord} from '../Words';
 import {
   ErrorType,

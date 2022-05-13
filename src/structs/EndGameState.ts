@@ -1,8 +1,5 @@
-import {
-  Complete,
-  TargetProgress,
-} from '../../game/client/structs/TargetProgress';
-import {Word} from '../../game/structs/Word';
+import {Complete, TargetProgress} from './TargetProgress';
+import {Word} from './Word';
 
 export enum EndGameState {
   None,

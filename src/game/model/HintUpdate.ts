@@ -1,4 +1,4 @@
-import {Hint} from '../client/structs/Hint';
+import {Hint} from '../../structs/Hint';
 
 export class HintUpdate {
   hint: Hint;

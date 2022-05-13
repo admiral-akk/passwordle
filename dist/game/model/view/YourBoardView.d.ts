@@ -1,5 +1,5 @@
 import { GuessLocked, LockedGuessError } from '../../network/updates/Updates';
-import { LetterState } from '../../client/structs/LetterState';
+import { LetterState } from '../../../structs/LetterState';
 import { CharUpdate } from '../CharUpdate';
 import { Subview } from './Subview';
 import { BaseWordView } from './word/WordView';

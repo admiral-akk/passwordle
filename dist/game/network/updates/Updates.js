@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LockedGuessError = exports.ErrorType = exports.LockedGuess = exports.GuessLocked = exports.GameOverState = exports.IsGameOver = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
-const EndGameState_1 = require("../../../util/struct/EndGameState");
+const EndGameState_1 = require("../../../structs/EndGameState");
 class AddedChar {
     constructor(char) {
         this.char = char;

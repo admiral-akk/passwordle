@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetKnowledge = void 0;
-const WordKnowledge_1 = require("../client/structs/WordKnowledge");
-const LetterState_1 = require("../client/structs/LetterState");
+const WordKnowledge_1 = require("../../structs/WordKnowledge");
+const LetterState_1 = require("../../structs/LetterState");
 function GetKnowledge(guess, answer) {
     const answer_state = [];
     for (let i = 0; i < guess.length; i++) {

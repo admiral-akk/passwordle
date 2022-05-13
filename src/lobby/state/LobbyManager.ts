@@ -3,7 +3,7 @@ import {LobbyState, PlayerState} from '../../public/PlayerState';
 import {ClientGame} from '../../game/client/ClientGame';
 import {LoadingState} from './loading/LoadingState';
 import {RematchState} from './rematch/RematchState';
-import {EndGameSummary} from '../../util/struct/EndGameState';
+import {EndGameSummary} from '../../structs/EndGameState';
 
 export class LobbyManager extends PlayerState {
   public Exit(): Promise<void> {

@@ -1,7 +1,7 @@
 import {GameServerSocket} from './GameNetworkTypes';
-import {PlayerId} from '../../PlayerId';
+import {PlayerId} from '../../structs/PlayerId';
 import {ClientGameMirror} from './ClientGameMirror';
-import {Word} from '../structs/Word';
+import {Word} from '../../structs/Word';
 import {GetRandomAnswer} from '../Words';
 import {KnowledgeExchangeServer} from './KnowledgeUpdateServer';
 import {LockedGuess, UpdatedAnswerKnowledge} from './updates/Updates';

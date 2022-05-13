@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeyboardView = void 0;
-const LetterState_1 = require("../../client/structs/LetterState");
+const LetterState_1 = require("../../../structs/LetterState");
 const Animate_1 = require("./Animate");
 const Subview_1 = require("./Subview");
 const LetterView_1 = require("./word/letter/LetterView");

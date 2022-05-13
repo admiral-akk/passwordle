@@ -8,7 +8,7 @@ import {
   LobbyServerRequests,
 } from './lobby/server/LobbyNetworkTypes';
 import {LobbyServer} from './lobby/server/LobbyServer';
-import {PlayerId, ToPlayerId} from './PlayerId';
+import {PlayerId, ToPlayerId} from './structs/PlayerId';
 import {
   StartClientRequests,
   StartServerRequests,

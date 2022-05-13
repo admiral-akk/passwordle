@@ -1,5 +1,5 @@
-import { PlayerId } from '../../PlayerId';
-import { LobbyId } from '../LobbyId';
+import { PlayerId } from '../../structs/PlayerId';
+import { LobbyId } from '../../structs/LobbyId';
 export declare class Lobby {
     players: PlayerId[];
     lobbyId: LobbyId;

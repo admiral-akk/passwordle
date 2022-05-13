@@ -1,4 +1,4 @@
-import { TargetProgress } from '../client/structs/TargetProgress';
+import { TargetProgress } from '../../structs/TargetProgress';
 import { ModelState } from './ModelState';
 import { OpponentPasswordView } from './view/OpponentPasswordView';
 import { LetterAnimation } from './view/struct/Animation';

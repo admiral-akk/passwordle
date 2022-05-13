@@ -1,5 +1,5 @@
 import {ServerSocket} from './NetworkTypes';
-import {PlayerId} from './PlayerId';
+import {PlayerId} from './structs/PlayerId';
 
 export class SocketManager {
   private sockets: Record<PlayerId, ServerSocket> = {};

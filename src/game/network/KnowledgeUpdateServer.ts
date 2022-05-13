@@ -2,12 +2,12 @@ import {
   Complete,
   TargetProgress,
   UpdateProgress,
-} from '../client/structs/TargetProgress';
+} from '../../structs/TargetProgress';
 import {GetKnowledge} from '../logic/WordleLogic';
-import {Word} from '../structs/Word';
-import {PlayerId} from '../../PlayerId';
+import {Word} from '../../structs/Word';
+import {PlayerId} from '../../structs/PlayerId';
 import {UpdatedAnswerKnowledge} from './updates/Updates';
-import {EndGameSummary} from '../../util/struct/EndGameState';
+import {EndGameSummary} from '../../structs/EndGameState';
 
 export class KnowledgeExchangeServer {
   private progress: Record<PlayerId, TargetProgress> = {};

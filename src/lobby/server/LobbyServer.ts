@@ -1,5 +1,5 @@
-import {PlayerId} from '../../PlayerId';
-import {GenerateLobbyId, LobbyId} from '../LobbyId';
+import {PlayerId} from '../../structs/PlayerId';
+import {GenerateLobbyId, LobbyId} from '../../structs/LobbyId';
 import {Lobby} from './Lobby';
 import {
   LobbyClientRequests,

@@ -1,6 +1,6 @@
-import {Word} from '../structs/Word';
-import {WordKnowledge} from '../client/structs/WordKnowledge';
-import {LetterState} from '../client/structs/LetterState';
+import {Word} from '../../structs/Word';
+import {WordKnowledge} from '../../structs/WordKnowledge';
+import {LetterState} from '../../structs/LetterState';
 
 export function GetKnowledge(guess: Word, answer: Word): WordKnowledge {
   const answer_state: LetterState[] = [];

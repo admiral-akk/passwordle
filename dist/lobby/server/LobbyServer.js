@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyServer = void 0;
-const LobbyId_1 = require("../LobbyId");
+const LobbyId_1 = require("../../structs/LobbyId");
 const Lobby_1 = require("./Lobby");
 class LobbyServer {
     constructor(EnterGame) {
