@@ -9,7 +9,7 @@ enum State {
 }
 
 export class OpponentPasswordState extends ModelState<OpponentPasswordView> {
-  private password: string[] = ['', '', '', '', ''];
+  public password: string[] = ['', '', '', '', ''];
   private state: State = State.WaitingForPassword;
 
   Update(progress: TargetProgress, playerGuess: string): LetterAnimation[] {

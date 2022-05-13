@@ -52,6 +52,15 @@ class GameState {
         this.timer.Exit();
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();
     }
+    GuessSubmitted() {
+        return this.state === State.GuessSubmitted;
+    }
+    GetLatestGuess() {
+        return this.yourBoard.guesses[-1];
+    }
+    GetProgress() {
+        return this.yourPassword.knownCharacters;
+    }
     GameClientReady() { }
     OpponentDisconnected() { }
     TimerExhausted() {

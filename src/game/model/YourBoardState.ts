@@ -17,7 +17,7 @@ enum State {
 }
 
 export class YourBoardState extends ModelState<YourBoardView> {
-  private guesses: Word[] = [];
+  public guesses: Word[] = [];
   private currentGuess = '';
   private state: State = State.CanSubmit;
 

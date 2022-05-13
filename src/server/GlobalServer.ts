@@ -9,13 +9,11 @@ import {
 import {PlayerId, ToPlayerId} from '../structs/PlayerId';
 
 import {LobbyServer} from '../lobby/server/LobbyServer';
-import {PlayerState} from './PlayerState';
 import {GameServer} from './game/GameServer';
 
 export class GlobalServer {
   private server: Server<Actions, Updates, InterServerEvents, SocketData>;
   private playerSockets: Record<PlayerId, ServerSocket> = {};
-  private playerState: Record<PlayerId, PlayerState> = {};
   private lobbyServer: LobbyServer;
   private gameServer: GameServer;
 

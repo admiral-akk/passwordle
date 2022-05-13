@@ -14,6 +14,9 @@ export declare class GameState implements GameActions, GameUpdates {
     private opponentPassword;
     private keyboard;
     private timer;
+    GuessSubmitted(): boolean;
+    GetLatestGuess(): Word;
+    GetProgress(): string[];
     constructor(viewRoot?: HTMLElement, input?: (key: string) => void, submitRandomGuess?: (guess: Word, currentGuessLength: number) => void);
     GameClientReady(): void;
     OpponentDisconnected(): void;

@@ -8,7 +8,6 @@ const GameServer_1 = require("./game/GameServer");
 class GlobalServer {
     constructor(app) {
         this.playerSockets = {};
-        this.playerState = {};
         const http = require('http').Server(app);
         this.server = new socket_io_1.Server(http);
         this.lobbyServer = new LobbyServer_1.LobbyServer((players) => this.EnterGame(players));

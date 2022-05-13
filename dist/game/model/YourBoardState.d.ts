@@ -4,7 +4,7 @@ import { Word } from '../../structs/Word';
 import { LetterAnimation } from './view/struct/Animation';
 import { ModelState } from './ModelState';
 export declare class YourBoardState extends ModelState<YourBoardView> {
-    private guesses;
+    guesses: Word[];
     private currentGuess;
     private state;
     AddChar(char: string): boolean;

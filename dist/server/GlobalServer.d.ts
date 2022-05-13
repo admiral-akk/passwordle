@@ -3,7 +3,6 @@ import { PlayerId } from '../structs/PlayerId';
 export declare class GlobalServer {
     private server;
     private playerSockets;
-    private playerState;
     private lobbyServer;
     private gameServer;
     EnterGame(players: PlayerId[]): void;

@@ -10,8 +10,8 @@ enum State {
 }
 
 export class YourPasswordState extends ModelState<YourPasswordView> {
-  private password: Word | null = null;
-  private knownCharacters: string[] = ['', '', '', '', ''];
+  public password: Word | null = null;
+  public knownCharacters: string[] = ['', '', '', '', ''];
   private state: State = State.WaitingForPassword;
 
   SetPassword(password: Word) {

@@ -15,6 +15,7 @@ import {TimerState} from './TimerState';
 import {GetRandomGuess} from '../Words';
 import {EndGameSummary} from '../../structs/EndGameState';
 import {GameView} from './view/GameView';
+import {TargetProgress} from '../../structs/TargetProgress';
 
 enum State {
   None,
@@ -44,6 +45,16 @@ export class GameState implements GameActions, GameUpdates {
   private opponentPassword: OpponentPasswordState;
   private keyboard: KeyboardState;
   private timer: TimerState;
+
+  public GuessSubmitted(): boolean {
+    return this.state === State.GuessSubmitted;
+  }
+  public GetLatestGuess(): Word {
+    return this.yourBoard.guesses[-1];
+  }
+  public GetProgress(): string[] {
+    return this.yourPassword.knownCharacters;
+  }
 
   constructor(
     viewRoot?: HTMLElement,

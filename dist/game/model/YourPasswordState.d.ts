@@ -4,8 +4,8 @@ import { Word } from '../../structs/Word';
 import { LetterAnimation } from './view/struct/Animation';
 import { ModelState } from './ModelState';
 export declare class YourPasswordState extends ModelState<YourPasswordView> {
-    private password;
-    private knownCharacters;
+    password: Word | null;
+    knownCharacters: string[];
     private state;
     SetPassword(password: Word): void;
     Update(target: TargetProgress, playerGuess: string): LetterAnimation[];
