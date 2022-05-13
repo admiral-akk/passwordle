@@ -10,6 +10,7 @@ import {PlayerId, ToPlayerId} from '../structs/PlayerId';
 
 import {LobbyServer} from '../lobby/server/LobbyServer';
 import {GameServerManager} from './GameServerManager';
+import {PlayerState} from './PlayerState';
 
 export class GlobalServer {
   private server: Server<
@@ -18,23 +19,24 @@ export class GlobalServer {
     InterServerEvents,
     SocketData
   >;
-  private clients: Record<PlayerId, ServerSocket> = {};
+  private playerSockets: Record<PlayerId, ServerSocket> = {};
+  private playerState: Record<PlayerId, PlayerState> = {};
   private lobbyServer: LobbyServer;
   private gameServer: GameServerManager;
 
   EnterGame(players: PlayerId[]) {
-    const gameSockets = players.map(player => this.clients[player]);
+    const gameSockets = players.map(player => this.playerSockets[player]);
     this.gameServer.EnterGame(gameSockets);
   }
 
   ExitGame(players: PlayerId[]) {
-    const lobbySockets = players.map(player => this.clients[player]);
+    const lobbySockets = players.map(player => this.playerSockets[player]);
     this.lobbyServer.EndGame(lobbySockets);
   }
 
   private PlayerConnected(socket: ServerSocket) {
     socket.on('disconnect', () => this.PlayerDisconnected(socket));
-    this.clients[socket.data.playerId!] = socket;
+    this.playerSockets[socket.data.playerId!] = socket;
     this.lobbyServer.PlayerJoins(socket);
 
     socket.onAny((...args: any[]) => {
@@ -47,7 +49,7 @@ export class GlobalServer {
   }
 
   private PlayerDisconnected(socket: ServerSocket) {
-    delete this.clients[socket.data.playerId!];
+    delete this.playerSockets[socket.data.playerId!];
   }
 
   constructor(app: Express.Application) {
