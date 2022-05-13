@@ -1,1 +1,0 @@
-{"version":3,"file":"LoadingModal.js","sourceRoot":"","sources":["../../../../../src/lobby/client/view/modal/LoadingModal.ts"],"names":[],"mappings":";;;AAAA,mCAAkC;AAElC,MAAa,YAAa,SAAQ,iBAAS;IACzC,YAAY,KAAqB;QAC/B,KAAK,EAAE,CAAC;QACR,IAAI,CAAC,MAAM,CAAC,KAAK,EAAE,YAAY,CAAC,CAAC;IACnC,CAAC;CACF;AALD,oCAKC"}
