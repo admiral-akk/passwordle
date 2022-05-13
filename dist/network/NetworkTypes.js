@@ -1,10 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetServer = exports.DeregisterServer = exports.RegisterServer = exports.DeregisterClient = exports.RegisterClient = void 0;
-const socket_io_1 = require("socket.io");
+exports.DeregisterServer = exports.RegisterServer = exports.DeregisterClient = exports.RegisterClient = void 0;
 const GameNetworkTypes_1 = require("./GameNetworkTypes");
 const LobbyNetworkTypes_1 = require("./LobbyNetworkTypes");
-const PlayerId_1 = require("../structs/PlayerId");
 const StartNetworkTypes_1 = require("./StartNetworkTypes");
 function RegisterClient(socket, client) {
     (0, GameNetworkTypes_1.RegisterGameClient)(socket, client);
@@ -30,25 +28,4 @@ function DeregisterServer(socket) {
     (0, StartNetworkTypes_1.DeregisterStartServer)(socket);
 }
 exports.DeregisterServer = DeregisterServer;
-function GetServer(app, socketManager, lobbyServer) {
-    const http = require('http').Server(app);
-    const io = new socket_io_1.Server(http);
-    io.on('connection', socket => {
-        socket.onAny((...args) => {
-            args.forEach(arg => {
-                console.log(`Arg: ${arg}`);
-            });
-        });
-        socket.data.playerId = (0, PlayerId_1.ToPlayerId)(socket);
-        socketManager.AddSocket(socket);
-        lobbyServer.PlayerJoins(socket);
-        socket.on('ClientReady', () => socket.emit('ServerReady'));
-        socket.emit('ServerReady');
-    });
-    http.listen(4000, () => {
-        console.log('listening on *:4000');
-    });
-    return io;
-}
-exports.GetServer = GetServer;
 //# sourceMappingURL=NetworkTypes.js.map
