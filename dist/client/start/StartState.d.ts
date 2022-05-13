@@ -1,7 +1,7 @@
 import { ClientSocket } from '../ClientNetworking';
 import { PlayerState } from '../PlayerState';
-import { StartClientRequests } from '../../network/StartNetworkTypes';
-export declare class StartState extends PlayerState implements StartClientRequests {
+import { ToClientStartEvents } from '../../network/StartNetworkTypes';
+export declare class StartState extends PlayerState implements ToClientStartEvents {
     protected Enter(): void;
     Exit(): Promise<void>;
     protected Register(socket: ClientSocket): void;

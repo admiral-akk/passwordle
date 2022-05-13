@@ -5,7 +5,7 @@ export type StartClientSocket = ClientSocket<
   ToClientStartEvents,
   ToServerStartEvents
 >;
-export type LobbyServerSocket = ServerSocket<
+export type StartServerSocket = ServerSocket<
   ToServerStartEvents,
   ToClientStartEvents,
   InterServerEvents,

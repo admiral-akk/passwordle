@@ -1,9 +1,9 @@
 import { Word } from '../../structs/Word';
-import { GameServerToClientEvents } from '../../network/GameNetworkTypes';
+import { ToClientGameEvents } from '../../network/GameNetworkTypes';
 import { UpdatedAnswerKnowledge } from '../network/updates/Updates';
 import { ClientSocket } from '../../client/ClientNetworking';
 import { PlayerState } from '../../client/PlayerState';
-export declare class ClientGame extends PlayerState implements GameServerToClientEvents {
+export declare class ClientGame extends PlayerState implements ToClientGameEvents {
     Exit(): Promise<void>;
     protected Enter(): void;
     protected Register(socket: ClientSocket): void;

@@ -1,11 +1,11 @@
 import { Socket as ServerSocket } from 'socket.io';
 import { Socket as ClientSocket } from 'socket.io-client';
 import { InterServerEvents, SocketData } from './NetworkTypes';
-export declare type StartClientSocket = ClientSocket<StartClientRequests, StartServerRequests>;
-export declare type LobbyServerSocket = ServerSocket<StartServerRequests, StartClientRequests, InterServerEvents, SocketData>;
-export interface StartClientRequests {
+export declare type StartClientSocket = ClientSocket<ToClientStartEvents, ToServerStartEvents>;
+export declare type StartServerSocket = ServerSocket<ToServerStartEvents, ToClientStartEvents, InterServerEvents, SocketData>;
+export interface ToClientStartEvents {
     ServerReady: () => void;
 }
-export interface StartServerRequests {
+export interface ToServerStartEvents {
     ClientReady: () => void;
 }

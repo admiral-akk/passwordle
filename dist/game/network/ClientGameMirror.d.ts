@@ -1,7 +1,7 @@
-import { GameServerSocket, GameClientToServerEvents, GameServerToClientEvents } from '../../network/GameNetworkTypes';
+import { GameServerSocket, ToServerGameEvents, ToClientGameEvents } from '../../network/GameNetworkTypes';
 import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from './updates/Updates';
 import { Word } from '../../structs/Word';
-export declare class ClientGameMirror implements GameClientToServerEvents, GameServerToClientEvents {
+export declare class ClientGameMirror implements ToServerGameEvents, ToClientGameEvents {
     private socket;
     private secret;
     private board;

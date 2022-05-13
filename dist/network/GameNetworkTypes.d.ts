@@ -3,9 +3,9 @@ import { Socket as ClientSocket } from 'socket.io-client';
 import { Word } from '../structs/Word';
 import { InterServerEvents, SocketData } from './NetworkTypes';
 import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../game/network/updates/Updates';
-export declare type GameClientSocket = ClientSocket<GameServerToClientEvents, GameClientToServerEvents>;
-export declare type GameServerSocket = ServerSocket<GameClientToServerEvents, GameServerToClientEvents, InterServerEvents, SocketData>;
-export interface GameServerToClientEvents {
+export declare type GameClientSocket = ClientSocket<ToClientGameEvents, ToServerGameEvents>;
+export declare type GameServerSocket = ServerSocket<ToServerGameEvents, ToClientGameEvents, InterServerEvents, SocketData>;
+export interface ToClientGameEvents {
     OpponentAddedChar: () => void;
     OpponentDeleted: () => void;
     OpponentLockedGuess: () => void;
@@ -13,7 +13,7 @@ export interface GameServerToClientEvents {
     UpdatedAnswerKnowledge: (update: UpdatedAnswerKnowledge) => void;
     OpponentDisconnected: () => void;
 }
-export interface GameClientToServerEvents {
+export interface ToServerGameEvents {
     AddedChar: (update: AddedChar) => void;
     Deleted: () => void;
     LockedGuess: (update: LockedGuess) => void;
