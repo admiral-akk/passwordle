@@ -18,7 +18,7 @@ enum State {
 
 export class YourBoardState extends ModelState<YourBoardView> {
   public guesses: Word[] = [];
-  private currentGuess = '';
+  public currentGuess = '';
   private state: State = State.CanSubmit;
 
   AddChar(char: string): boolean {
@@ -98,7 +98,7 @@ export class YourBoardState extends ModelState<YourBoardView> {
   }
 
   Update(knowledge: WordKnowledge): LetterAnimation[] {
-    this.guesses.push(ToWord(knowledge.guess));
+    this.guesses.push(ToWord(this.currentGuess));
     const animations: LetterAnimation[] = [];
     for (let i = 0; i < knowledge.guess.length; i++) {
       animations.push(
@@ -120,7 +120,12 @@ export class YourBoardState extends ModelState<YourBoardView> {
   CurrentGuessLength(): number {
     return this.currentGuess.length;
   }
+
   GuessCount(): number {
     return this.guesses.length;
+  }
+
+  LatestGuess(): Word {
+    return this.guesses[-1];
   }
 }

@@ -1,7 +1,8 @@
 import { Word } from '../../structs/Word';
 import { GameActions, GameUpdates } from '../../network/GameNetworkTypes';
-import { AddedChar, UpdatedAnswerKnowledge } from '../network/updates/Updates';
+import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/updates/Updates';
 import { EndGameSummary } from '../../structs/EndGameState';
+import { TargetProgress } from '../../structs/TargetProgress';
 export declare class GameState implements GameActions, GameUpdates {
     private input;
     private submitRandomGuess;
@@ -15,14 +16,17 @@ export declare class GameState implements GameActions, GameUpdates {
     private keyboard;
     private timer;
     GuessSubmitted(): boolean;
-    GetLatestGuess(): Word;
-    GetProgress(): string[];
+    GetCurrentGuess(): Word;
+    GetPassword(): Word;
+    GetProgress(): TargetProgress;
     constructor(viewRoot?: HTMLElement, input?: (key: string) => void, submitRandomGuess?: (guess: Word, currentGuessLength: number) => void);
+    GenerateKnowledgeUpdate(opponentGuess: Word, opponentPassword: Word): UpdatedAnswerKnowledge;
     GameClientReady(): void;
     OpponentDisconnected(): void;
     TimerExhausted(): void;
     AddedChar(update: AddedChar): boolean;
     Deleted(): boolean;
+    PlayerLockedGuess(update: LockedGuess): void;
     LockedGuess(): Word | null;
     IsGameOver(): boolean;
     GameOver(): EndGameSummary;

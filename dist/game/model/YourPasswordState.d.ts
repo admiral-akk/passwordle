@@ -8,6 +8,8 @@ export declare class YourPasswordState extends ModelState<YourPasswordView> {
     knownCharacters: string[];
     private state;
     SetPassword(password: Word): void;
+    GetPassword(): Word;
     Update(target: TargetProgress, playerGuess: string): LetterAnimation[];
+    GetProgress(): TargetProgress;
     Lost(): boolean;
 }

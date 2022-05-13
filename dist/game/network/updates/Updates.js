@@ -22,7 +22,7 @@ class UpdatedAnswerKnowledge {
 }
 exports.UpdatedAnswerKnowledge = UpdatedAnswerKnowledge;
 function IsGameOver(knowledge) {
-    return knowledge.endGameState !== null;
+    return knowledge.endGameState !== undefined;
 }
 exports.IsGameOver = IsGameOver;
 function GameOverState(knowledge) {

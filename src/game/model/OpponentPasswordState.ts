@@ -24,6 +24,10 @@ export class OpponentPasswordState extends ModelState<OpponentPasswordView> {
     return [];
   }
 
+  GetProgress(): TargetProgress {
+    return new TargetProgress(this.password);
+  }
+
   Won(): boolean {
     return this.password.filter(c => c === '').length === 0;
   }

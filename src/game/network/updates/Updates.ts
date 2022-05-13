@@ -19,12 +19,12 @@ export class UpdatedAnswerKnowledge {
     public opponentKnowledge: WordKnowledge,
     public playerProgress: TargetProgress,
     public opponentProgress: TargetProgress,
-    public endGameState: EndGameSummary | null
+    public endGameState?: EndGameSummary
   ) {}
 }
 
 export function IsGameOver(knowledge: UpdatedAnswerKnowledge): boolean {
-  return knowledge.endGameState !== null;
+  return knowledge.endGameState !== undefined;
 }
 
 export function GameOverState(knowledge: UpdatedAnswerKnowledge): EndGameState {

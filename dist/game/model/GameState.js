@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameState = void 0;
+const Word_1 = require("../../structs/Word");
 const Updates_1 = require("../network/updates/Updates");
 const YourBoardState_1 = require("./YourBoardState");
 const YourPasswordState_1 = require("./YourPasswordState");
@@ -10,6 +11,8 @@ const KeyboardState_1 = require("./KeyboardState");
 const TimerState_1 = require("./TimerState");
 const Words_1 = require("../Words");
 const GameView_1 = require("./view/GameView");
+const TargetProgress_1 = require("../../structs/TargetProgress");
+const WordleLogic_1 = require("../logic/WordleLogic");
 var State;
 (function (State) {
     State[State["None"] = 0] = "None";
@@ -55,11 +58,27 @@ class GameState {
     GuessSubmitted() {
         return this.state === State.GuessSubmitted;
     }
-    GetLatestGuess() {
-        return this.yourBoard.guesses[-1];
+    GetCurrentGuess() {
+        return (0, Word_1.ToWord)(this.yourBoard.currentGuess);
+    }
+    GetPassword() {
+        return this.yourPassword.password;
     }
     GetProgress() {
-        return this.yourPassword.knownCharacters;
+        return this.yourPassword.GetProgress();
+    }
+    GenerateKnowledgeUpdate(opponentGuess, opponentPassword) {
+        const yourGuess = this.GetCurrentGuess();
+        const yourPassword = this.yourPassword.GetPassword();
+        const yourKnowledge = (0, WordleLogic_1.GetKnowledge)(yourGuess, yourPassword);
+        const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(opponentGuess, yourPassword);
+        const yourProgress = this.yourPassword.GetProgress();
+        (0, TargetProgress_1.UpdateProgress)(yourProgress, (0, WordleLogic_1.GetKnowledge)(yourGuess, yourPassword));
+        (0, TargetProgress_1.UpdateProgress)(yourProgress, (0, WordleLogic_1.GetKnowledge)(opponentGuess, yourPassword));
+        const opponentProgress = this.opponentPassword.GetProgress();
+        (0, TargetProgress_1.UpdateProgress)(opponentProgress, (0, WordleLogic_1.GetKnowledge)(yourGuess, opponentPassword));
+        (0, TargetProgress_1.UpdateProgress)(opponentProgress, (0, WordleLogic_1.GetKnowledge)(opponentGuess, opponentPassword));
+        return new Updates_1.UpdatedAnswerKnowledge(yourKnowledge, opponentKnowledge, yourProgress, opponentProgress);
     }
     GameClientReady() { }
     OpponentDisconnected() { }
@@ -77,6 +96,10 @@ class GameState {
             return false;
         }
         return this.yourBoard.Delete();
+    }
+    PlayerLockedGuess(update) {
+        this.state = State.GuessSubmitted;
+        this.yourBoard.LockedGuess();
     }
     LockedGuess() {
         if (this.state !== State.SubmissionOpen) {

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpponentPasswordState = void 0;
+const TargetProgress_1 = require("../../structs/TargetProgress");
 const ModelState_1 = require("./ModelState");
 var State;
 (function (State) {
@@ -23,6 +24,9 @@ class OpponentPasswordState extends ModelState_1.ModelState {
             return this.view.Update(progress, playerGuess);
         }
         return [];
+    }
+    GetProgress() {
+        return new TargetProgress_1.TargetProgress(this.password);
     }
     Won() {
         return this.password.filter(c => c === '').length === 0;

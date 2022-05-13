@@ -68,8 +68,10 @@ class KnowledgeExchangeServer {
         const opponentGuess = this.currentGuess[opponent];
         const playerKnowledge = (0, WordleLogic_1.GetKnowledge)(playerGuess, targetAnswer);
         const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(opponentGuess, targetAnswer);
-        const endgame = this.GenerateSummary(player);
-        const update = new Updates_1.UpdatedAnswerKnowledge(playerKnowledge, opponentKnowledge, this.progress[opponent], this.progress[player], endgame);
+        //const endgame: EndGameSummary = this.GenerateSummary(player);
+        const update = new Updates_1.UpdatedAnswerKnowledge(playerKnowledge, opponentKnowledge, this.progress[opponent], this.progress[player] //,
+        //endgame
+        );
         this.updateKnowledgeCallback(player, update);
     }
     ClearGuesses() {

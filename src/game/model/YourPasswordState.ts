@@ -19,6 +19,10 @@ export class YourPasswordState extends ModelState<YourPasswordView> {
     this.view?.SetSecret(this.password);
   }
 
+  GetPassword(): Word {
+    return this.password!;
+  }
+
   Update(target: TargetProgress, playerGuess: string): LetterAnimation[] {
     for (let i = 0; i < target.knownCharacters.length; i++) {
       if (target.knownCharacters[i] !== '') {
@@ -29,6 +33,10 @@ export class YourPasswordState extends ModelState<YourPasswordView> {
       return this.view.Update(target, playerGuess);
     }
     return [];
+  }
+
+  GetProgress(): TargetProgress {
+    return new TargetProgress(this.knownCharacters);
   }
 
   Lost(): boolean {

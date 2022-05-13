@@ -5,7 +5,7 @@ import { LetterAnimation } from './view/struct/Animation';
 import { ModelState } from './ModelState';
 export declare class YourBoardState extends ModelState<YourBoardView> {
     guesses: Word[];
-    private currentGuess;
+    currentGuess: string;
     private state;
     AddChar(char: string): boolean;
     Delete(): boolean;
@@ -13,4 +13,5 @@ export declare class YourBoardState extends ModelState<YourBoardView> {
     Update(knowledge: WordKnowledge): LetterAnimation[];
     CurrentGuessLength(): number;
     GuessCount(): number;
+    LatestGuess(): Word;
 }

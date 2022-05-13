@@ -1,8 +1,9 @@
-import {Word} from '../../structs/Word';
+import {ToWord, Word} from '../../structs/Word';
 import {GameActions, GameUpdates} from '../../network/GameNetworkTypes';
 import {
   AddedChar,
   IsGameOver,
+  LockedGuess,
   UpdatedAnswerKnowledge,
 } from '../network/updates/Updates';
 import {YourBoardState} from './YourBoardState';
@@ -15,7 +16,9 @@ import {TimerState} from './TimerState';
 import {GetRandomGuess} from '../Words';
 import {EndGameSummary} from '../../structs/EndGameState';
 import {GameView} from './view/GameView';
-import {TargetProgress} from '../../structs/TargetProgress';
+import {TargetProgress, UpdateProgress} from '../../structs/TargetProgress';
+import {WordKnowledge} from '../../structs/WordKnowledge';
+import {GetKnowledge} from '../logic/WordleLogic';
 
 enum State {
   None,
@@ -49,11 +52,14 @@ export class GameState implements GameActions, GameUpdates {
   public GuessSubmitted(): boolean {
     return this.state === State.GuessSubmitted;
   }
-  public GetLatestGuess(): Word {
-    return this.yourBoard.guesses[-1];
+  public GetCurrentGuess(): Word {
+    return ToWord(this.yourBoard.currentGuess);
   }
-  public GetProgress(): string[] {
-    return this.yourPassword.knownCharacters;
+  public GetPassword(): Word {
+    return this.yourPassword.password!;
+  }
+  public GetProgress(): TargetProgress {
+    return this.yourPassword.GetProgress();
   }
 
   constructor(
@@ -85,6 +91,36 @@ export class GameState implements GameActions, GameUpdates {
       this.timer = new TimerState();
     }
   }
+
+  GenerateKnowledgeUpdate(
+    opponentGuess: Word,
+    opponentPassword: Word
+  ): UpdatedAnswerKnowledge {
+    const yourGuess = this.GetCurrentGuess();
+    const yourPassword = this.yourPassword.GetPassword();
+
+    const yourKnowledge = GetKnowledge(yourGuess, yourPassword);
+    const opponentKnowledge = GetKnowledge(opponentGuess, yourPassword);
+
+    const yourProgress = this.yourPassword.GetProgress();
+    UpdateProgress(yourProgress, GetKnowledge(yourGuess, yourPassword));
+    UpdateProgress(yourProgress, GetKnowledge(opponentGuess, yourPassword));
+
+    const opponentProgress = this.opponentPassword.GetProgress();
+    UpdateProgress(opponentProgress, GetKnowledge(yourGuess, opponentPassword));
+    UpdateProgress(
+      opponentProgress,
+      GetKnowledge(opponentGuess, opponentPassword)
+    );
+
+    return new UpdatedAnswerKnowledge(
+      yourKnowledge,
+      opponentKnowledge,
+      yourProgress,
+      opponentProgress
+    );
+  }
+
   GameClientReady() {}
   OpponentDisconnected() {}
 
@@ -107,6 +143,11 @@ export class GameState implements GameActions, GameUpdates {
       return false;
     }
     return this.yourBoard.Delete();
+  }
+
+  PlayerLockedGuess(update: LockedGuess) {
+    this.state = State.GuessSubmitted;
+    this.yourBoard.LockedGuess();
   }
 
   LockedGuess(): Word | null {
@@ -194,7 +235,7 @@ export class GameState implements GameActions, GameUpdates {
 
     // Check if the game is over
     if (IsGameOver(update)) {
-      this.endGame = update.endGameState;
+      this.endGame = update.endGameState!;
       this.state = State.GameOver;
     } else {
       // Enable submission

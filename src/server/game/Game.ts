@@ -1,5 +1,9 @@
 import {GameState} from '../../game/model/GameState';
-import {AddedChar, LockedGuess} from '../../game/network/updates/Updates';
+import {
+  AddedChar,
+  LockedGuess,
+  UpdatedAnswerKnowledge,
+} from '../../game/network/updates/Updates';
 import {GetRandomAnswer} from '../../game/Words';
 import {GameActions} from '../../network/GameNetworkTypes';
 import {PlayerId} from '../../structs/PlayerId';
@@ -50,7 +54,22 @@ export class Game implements GameActions {
     }
   };
 
-  private UpdateKnowledge() {}
+  private UpdateKnowledge() {
+    const updates: Record<PlayerId, UpdatedAnswerKnowledge> = {};
+    this.players.forEach(player => {
+      // Update answer knowledge
+      const opponent = this.GetOpponent(player);
+      const opponentGuess = this.gameStates[opponent].GetCurrentGuess();
+      const opponentPassword = this.gameStates[opponent].GetPassword();
+      updates[player] = this.gameStates[player].GenerateKnowledgeUpdate(
+        opponentGuess,
+        opponentPassword
+      );
+    });
+    this.players.forEach(player => {
+      this.updaters[player].UpdatedAnswerKnowledge(updates[player]);
+    });
+  }
 
   GameClientReady = (playerId?: PlayerId) => {
     this.updaters[playerId!].SetSecret(GetRandomAnswer());

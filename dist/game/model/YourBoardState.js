@@ -70,7 +70,7 @@ class YourBoardState extends ModelState_1.ModelState {
         return (0, Word_1.ToWord)(this.currentGuess);
     }
     Update(knowledge) {
-        this.guesses.push((0, Word_1.ToWord)(knowledge.guess));
+        this.guesses.push((0, Word_1.ToWord)(this.currentGuess));
         const animations = [];
         for (let i = 0; i < knowledge.guess.length; i++) {
             animations.push(new Animation_1.LetterAnimation(i, () => {
@@ -87,6 +87,9 @@ class YourBoardState extends ModelState_1.ModelState {
     }
     GuessCount() {
         return this.guesses.length;
+    }
+    LatestGuess() {
+        return this.guesses[-1];
     }
 }
 exports.YourBoardState = YourBoardState;

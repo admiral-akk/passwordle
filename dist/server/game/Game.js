@@ -44,7 +44,19 @@ class Game {
             return this.players[0];
         }
     }
-    UpdateKnowledge() { }
+    UpdateKnowledge() {
+        const updates = {};
+        this.players.forEach(player => {
+            // Update answer knowledge
+            const opponent = this.GetOpponent(player);
+            const opponentGuess = this.gameStates[opponent].GetCurrentGuess();
+            const opponentPassword = this.gameStates[opponent].GetPassword();
+            updates[player] = this.gameStates[player].GenerateKnowledgeUpdate(opponentGuess, opponentPassword);
+        });
+        this.players.forEach(player => {
+            this.updaters[player].UpdatedAnswerKnowledge(updates[player]);
+        });
+    }
 }
 exports.Game = Game;
 //# sourceMappingURL=Game.js.map

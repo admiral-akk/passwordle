@@ -13,8 +13,8 @@ export declare class UpdatedAnswerKnowledge {
     opponentKnowledge: WordKnowledge;
     playerProgress: TargetProgress;
     opponentProgress: TargetProgress;
-    endGameState: EndGameSummary | null;
-    constructor(playerKnowledge: WordKnowledge, opponentKnowledge: WordKnowledge, playerProgress: TargetProgress, opponentProgress: TargetProgress, endGameState: EndGameSummary | null);
+    endGameState?: EndGameSummary | undefined;
+    constructor(playerKnowledge: WordKnowledge, opponentKnowledge: WordKnowledge, playerProgress: TargetProgress, opponentProgress: TargetProgress, endGameState?: EndGameSummary | undefined);
 }
 export declare function IsGameOver(knowledge: UpdatedAnswerKnowledge): boolean;
 export declare function GameOverState(knowledge: UpdatedAnswerKnowledge): EndGameState;

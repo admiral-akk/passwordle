@@ -90,13 +90,13 @@ export class KnowledgeExchangeServer {
     const opponentGuess = this.currentGuess[opponent];
     const playerKnowledge = GetKnowledge(playerGuess, targetAnswer);
     const opponentKnowledge = GetKnowledge(opponentGuess, targetAnswer);
-    const endgame: EndGameSummary | null = this.GenerateSummary(player);
+    //const endgame: EndGameSummary = this.GenerateSummary(player);
     const update = new UpdatedAnswerKnowledge(
       playerKnowledge,
       opponentKnowledge,
       this.progress[opponent],
-      this.progress[player],
-      endgame
+      this.progress[player] //,
+      //endgame
     );
     this.updateKnowledgeCallback(player, update);
   }
