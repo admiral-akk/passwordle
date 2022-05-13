@@ -1,7 +1,7 @@
-import {UpdatedAnswerKnowledge} from '../game/network/updates/Updates';
-import {ToClientEvents} from '../network/NetworkTypes';
-import {LobbyId} from '../structs/LobbyId';
-import {Word} from '../structs/Word';
+import {GameState} from './GameState';
+import {LobbyState} from './LobbyState';
+import {RematchState} from './RematchState';
+import {StartState} from './StartState';
 
 enum State {
   None,
@@ -12,4 +12,8 @@ enum State {
 
 export class ClientState {
   private state: State = State.None;
+  private game: GameState = new GameState();
+  private lobby: LobbyState = new LobbyState();
+  private rematch: RematchState = new RematchState();
+  private start: StartState = new StartState();
 }
