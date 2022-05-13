@@ -3,18 +3,18 @@ import {Socket as ClientSocket} from 'socket.io-client';
 import {InterServerEvents, SocketData} from './NetworkTypes';
 import {LobbyId} from '../structs/LobbyId';
 export type LobbyClientSocket = ClientSocket<
-  LobbyClientRequests,
-  LobbyServerRequests
+  ToClientLobbyEvents,
+  ToServerLobbyEvents
 >;
 export type LobbyServerSocket = ServerSocket<
-  LobbyServerRequests,
-  LobbyClientRequests,
+  ToServerLobbyEvents,
+  ToClientLobbyEvents,
   InterServerEvents,
   SocketData
 >;
 
 // Things to ask the client/view to do
-export interface LobbyClientRequests {
+export interface ToClientLobbyEvents {
   EnterMenu: (lobbyId: LobbyId) => void;
   MatchFound: (lobbyId: LobbyId) => void;
   GameReady: () => void;
@@ -22,7 +22,7 @@ export interface LobbyClientRequests {
 }
 
 // Things to ask the server/view to do
-export interface LobbyServerRequests {
+export interface ToServerLobbyEvents {
   RequestLobbyId: () => void;
   JoinLobby: (lobbyId: LobbyId) => void;
   FindMatch: () => void;

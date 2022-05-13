@@ -1,9 +1,9 @@
 import {LobbyManager} from '../../lobby/state/LobbyManager';
 import {ClientSocket} from '../ClientNetworking';
 import {PlayerState} from '../PlayerState';
-import {StartClientRequests} from '../../network/StartNetworkTypes';
+import {ToClientStartEvents} from '../../network/StartNetworkTypes';
 
-export class StartState extends PlayerState implements StartClientRequests {
+export class StartState extends PlayerState implements ToClientStartEvents {
   protected Enter(): void {}
   public Exit(): Promise<void> {
     return Promise.resolve();

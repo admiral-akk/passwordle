@@ -1,7 +1,7 @@
 import {Word} from '../../structs/Word';
 import {
-  GameClientToServerEvents,
-  GameServerToClientEvents,
+  ToServerGameEvents,
+  ToClientGameEvents,
 } from '../../network/GameNetworkTypes';
 import {
   AddedChar,
@@ -28,7 +28,7 @@ enum State {
 }
 
 export class GameState
-  implements GameClientToServerEvents, GameServerToClientEvents
+  implements ToServerGameEvents, ToClientGameEvents
 {
   private state: State = State.None;
   private view?: GameView;

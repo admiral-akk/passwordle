@@ -1,10 +1,10 @@
 import {io, Socket} from 'socket.io-client';
 import {
-  ServerToClientEvents,
-  ClientToServerEvents,
+  ToClientEvents,
+  ToServerEvents,
 } from '../network/NetworkTypes';
 
-export type ClientSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
+export type ClientSocket = Socket<ToClientEvents, ToServerEvents>;
 
 export function GetSocket(): ClientSocket {
   let socket: ClientSocket;

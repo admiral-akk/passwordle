@@ -1,7 +1,7 @@
 import {InputManager} from './input/InputManager';
 import {Word} from '../../structs/Word';
 import {GameState} from '../model/GameState';
-import {GameServerToClientEvents} from '../../network/GameNetworkTypes';
+import {ToClientGameEvents} from '../../network/GameNetworkTypes';
 import {
   AddedChar,
   LockedGuess,
@@ -19,7 +19,7 @@ enum State {
 
 export class ClientGame
   extends PlayerState
-  implements GameServerToClientEvents
+  implements ToClientGameEvents
 {
   public Exit(): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, 2000)).then(() =>

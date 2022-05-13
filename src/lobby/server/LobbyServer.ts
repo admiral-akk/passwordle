@@ -2,8 +2,8 @@ import {PlayerId} from '../../structs/PlayerId';
 import {GenerateLobbyId, LobbyId} from '../../structs/LobbyId';
 import {Lobby} from './Lobby';
 import {
-  LobbyClientRequests,
-  LobbyServerRequests,
+  ToClientLobbyEvents,
+  ToServerLobbyEvents,
   LobbyServerSocket,
 } from '../../network/LobbyNetworkTypes';
 
@@ -122,7 +122,7 @@ export class LobbyServer {
   }
 }
 
-class LobbySocketManager implements LobbyServerRequests, LobbyClientRequests {
+class LobbySocketManager implements ToServerLobbyEvents, ToClientLobbyEvents {
   lobbyId: LobbyId;
 
   DefaultLobbyId(): LobbyId {

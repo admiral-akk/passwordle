@@ -9,17 +9,17 @@ import {
 } from '../game/network/updates/Updates';
 
 export type GameClientSocket = ClientSocket<
-  GameServerToClientEvents,
-  GameClientToServerEvents
+  ToClientGameEvents,
+  ToServerGameEvents
 >;
 export type GameServerSocket = ServerSocket<
-  GameClientToServerEvents,
-  GameServerToClientEvents,
+  ToServerGameEvents,
+  ToClientGameEvents,
   InterServerEvents,
   SocketData
 >;
 
-export interface GameServerToClientEvents {
+export interface ToClientGameEvents {
   OpponentAddedChar: () => void;
   OpponentDeleted: () => void;
   OpponentLockedGuess: () => void;
@@ -28,7 +28,7 @@ export interface GameServerToClientEvents {
   OpponentDisconnected: () => void;
 }
 
-export interface GameClientToServerEvents {
+export interface ToServerGameEvents {
   AddedChar: (update: AddedChar) => void;
   Deleted: () => void;
   LockedGuess: (update: LockedGuess) => void;
