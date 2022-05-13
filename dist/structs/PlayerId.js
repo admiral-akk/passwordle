@@ -4,9 +4,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ToPlayerId = void 0;
 function assertValidPlayerId(input) { }
-function ToPlayerId(s) {
-    assertValidPlayerId(s);
-    return s;
+function ToPlayerId(socket) {
+    assertValidPlayerId(socket.id);
+    return socket.id;
 }
 exports.ToPlayerId = ToPlayerId;
 //# sourceMappingURL=PlayerId.js.map

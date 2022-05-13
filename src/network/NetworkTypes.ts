@@ -92,7 +92,7 @@ export function GetServer(
         console.log(`Arg: ${arg}`);
       });
     });
-    socket.data.playerId = ToPlayerId(socket.id);
+    socket.data.playerId = ToPlayerId(socket);
     socketManager.AddSocket(socket);
     lobbyServer.PlayerJoins(socket);
     socket.on('ClientReady', () => socket.emit('ServerReady'));

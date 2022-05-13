@@ -39,7 +39,7 @@ function GetServer(app, socketManager, lobbyServer) {
                 console.log(`Arg: ${arg}`);
             });
         });
-        socket.data.playerId = (0, PlayerId_1.ToPlayerId)(socket.id);
+        socket.data.playerId = (0, PlayerId_1.ToPlayerId)(socket);
         socketManager.AddSocket(socket);
         lobbyServer.PlayerJoins(socket);
         socket.on('ClientReady', () => socket.emit('ServerReady'));
