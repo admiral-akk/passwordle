@@ -10,6 +10,9 @@ export declare function DeregisterGameClient(socket: GameClientSocket): void;
 export declare function RegisterGameServer(socket: GameServerSocket, server: ToServerGameEvents): void;
 export declare function DeregisterGameServer(socket: GameServerSocket): void;
 export interface ToClientGameEvents {
+    AddedChar: (update: AddedChar) => void;
+    Deleted: () => void;
+    LockedGuess: (update: LockedGuess) => void;
     OpponentAddedChar: () => void;
     OpponentDeleted: () => void;
     OpponentLockedGuess: () => void;

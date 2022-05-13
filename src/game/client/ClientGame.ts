@@ -52,6 +52,9 @@ export class ClientGame extends PlayerState implements ToClientGameEvents {
       () => this.Input('ENT')
     );
   }
+  AddedChar(update: AddedChar) {}
+  Deleted() {}
+  LockedGuess(update: LockedGuess) {}
 
   private state: State = State.None;
 

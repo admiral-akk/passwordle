@@ -24,6 +24,10 @@ export function RegisterGameClient(
   socket: GameClientSocket,
   client: ToClientGameEvents
 ) {
+  socket.on('AddedChar', (update: AddedChar) => client.AddedChar(update));
+  socket.on('Deleted', () => client.Deleted());
+  socket.on('LockedGuess', (update: LockedGuess) => client.LockedGuess(update));
+
   socket.on('OpponentAddedChar', () => client.OpponentAddedChar());
   socket.on('OpponentDeleted', () => client.OpponentDeleted());
   socket.on('OpponentLockedGuess', () => client.OpponentLockedGuess());
@@ -34,6 +38,9 @@ export function RegisterGameClient(
   socket.on('OpponentDisconnected', () => client.OpponentDisconnected());
 }
 export function DeregisterGameClient(socket: GameClientSocket) {
+  socket.removeAllListeners('AddedChar');
+  socket.removeAllListeners('Deleted');
+  socket.removeAllListeners('LockedGuess');
   socket.removeAllListeners('OpponentAddedChar');
   socket.removeAllListeners('OpponentDeleted');
   socket.removeAllListeners('OpponentLockedGuess');
@@ -60,6 +67,9 @@ export function DeregisterGameServer(socket: GameServerSocket) {
 }
 
 export interface ToClientGameEvents {
+  AddedChar: (update: AddedChar) => void;
+  Deleted: () => void;
+  LockedGuess: (update: LockedGuess) => void;
   OpponentAddedChar: () => void;
   OpponentDeleted: () => void;
   OpponentLockedGuess: () => void;

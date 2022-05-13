@@ -1,6 +1,6 @@
 import { Word } from '../../structs/Word';
 import { ToClientGameEvents } from '../../network/GameNetworkTypes';
-import { UpdatedAnswerKnowledge } from '../network/updates/Updates';
+import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/updates/Updates';
 import { ClientSocket } from '../../client/ClientNetworking';
 import { PlayerState } from '../../client/PlayerState';
 export declare class ClientGame extends PlayerState implements ToClientGameEvents {
@@ -10,6 +10,9 @@ export declare class ClientGame extends PlayerState implements ToClientGameEvent
     protected Deregister(socket: ClientSocket): void;
     private board;
     constructor();
+    AddedChar(update: AddedChar): void;
+    Deleted(): void;
+    LockedGuess(update: LockedGuess): void;
     private state;
     private SubmitRandomGuess;
     private Input;

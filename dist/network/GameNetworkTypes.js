@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeregisterGameServer = exports.RegisterGameServer = exports.DeregisterGameClient = exports.RegisterGameClient = void 0;
 // How can we automate this so it simply registers every function in the interface?
 function RegisterGameClient(socket, client) {
+    socket.on('AddedChar', (update) => client.AddedChar(update));
+    socket.on('Deleted', () => client.Deleted());
+    socket.on('LockedGuess', (update) => client.LockedGuess(update));
     socket.on('OpponentAddedChar', () => client.OpponentAddedChar());
     socket.on('OpponentDeleted', () => client.OpponentDeleted());
     socket.on('OpponentLockedGuess', () => client.OpponentLockedGuess());
@@ -12,6 +15,9 @@ function RegisterGameClient(socket, client) {
 }
 exports.RegisterGameClient = RegisterGameClient;
 function DeregisterGameClient(socket) {
+    socket.removeAllListeners('AddedChar');
+    socket.removeAllListeners('Deleted');
+    socket.removeAllListeners('LockedGuess');
     socket.removeAllListeners('OpponentAddedChar');
     socket.removeAllListeners('OpponentDeleted');
     socket.removeAllListeners('OpponentLockedGuess');

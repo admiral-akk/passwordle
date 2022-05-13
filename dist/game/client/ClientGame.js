@@ -32,6 +32,9 @@ class ClientGame extends PlayerState_1.PlayerState {
     Deregister(socket) {
         (0, GameNetworkTypes_1.DeregisterGameClient)(socket);
     }
+    AddedChar(update) { }
+    Deleted() { }
+    LockedGuess(update) { }
     SubmitRandomGuess(guess, currentGuessLength) {
         this.state = State.EnteringRandomGuess;
         let animations = new Promise(resolve => {
