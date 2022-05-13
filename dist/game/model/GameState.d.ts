@@ -1,5 +1,5 @@
 import { Word } from '../../structs/Word';
-import { GameClientToServerEvents, GameServerToClientEvents } from '../network/GameNetworkTypes';
+import { GameClientToServerEvents, GameServerToClientEvents } from '../../network/GameNetworkTypes';
 import { AddedChar, UpdatedAnswerKnowledge } from '../network/updates/Updates';
 import { EndGameSummary } from '../../structs/EndGameState';
 export declare class GameState implements GameClientToServerEvents, GameServerToClientEvents {

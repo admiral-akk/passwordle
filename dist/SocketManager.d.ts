@@ -1,4 +1,4 @@
-import { ServerSocket } from './NetworkTypes';
+import { ServerSocket } from './network/NetworkTypes';
 import { PlayerId } from './structs/PlayerId';
 export declare class SocketManager {
     private sockets;

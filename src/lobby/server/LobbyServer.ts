@@ -5,7 +5,7 @@ import {
   LobbyClientRequests,
   LobbyServerRequests,
   LobbyServerSocket,
-} from './LobbyNetworkTypes';
+} from '../../network/LobbyNetworkTypes';
 
 export class LobbyServer {
   private lobbies: Record<LobbyId, Lobby> = {};

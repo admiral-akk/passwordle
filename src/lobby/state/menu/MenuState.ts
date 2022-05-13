@@ -1,7 +1,7 @@
 import {AddPopup} from '../../../game/model/view/Animate';
 import {LobbyState} from '../../../public/PlayerState';
 import {GenerateLobbyLink, LobbyId} from '../../../structs/LobbyId';
-import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
+import {LobbyClientSocket} from '../../../network/LobbyNetworkTypes';
 import {Modal} from '../Modal';
 
 export class MenuState extends LobbyState {

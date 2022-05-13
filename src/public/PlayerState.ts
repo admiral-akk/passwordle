@@ -1,4 +1,4 @@
-import {LobbyClientSocket} from '../lobby/server/LobbyNetworkTypes';
+import {LobbyClientSocket} from '../network/LobbyNetworkTypes';
 import {ClientSocket} from './ClientNetworking';
 
 abstract class State<SocketType> {

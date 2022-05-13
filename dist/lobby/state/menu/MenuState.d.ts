@@ -1,6 +1,6 @@
 import { LobbyState } from '../../../public/PlayerState';
 import { LobbyId } from '../../../structs/LobbyId';
-import { LobbyClientSocket } from '../../server/LobbyNetworkTypes';
+import { LobbyClientSocket } from '../../../network/LobbyNetworkTypes';
 export declare class MenuState extends LobbyState {
     private lobbyId;
     private modal;

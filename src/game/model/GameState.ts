@@ -2,7 +2,7 @@ import {Word} from '../../structs/Word';
 import {
   GameClientToServerEvents,
   GameServerToClientEvents,
-} from '../network/GameNetworkTypes';
+} from '../../network/GameNetworkTypes';
 import {
   AddedChar,
   IsGameOver,

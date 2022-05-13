@@ -1,12 +1,12 @@
 import {Socket as ServerSocket} from 'socket.io';
 import {Socket as ClientSocket} from 'socket.io-client';
-import {Word} from '../../structs/Word';
-import {InterServerEvents, SocketData} from '../../NetworkTypes';
+import {Word} from '../structs/Word';
+import {InterServerEvents, SocketData} from './NetworkTypes';
 import {
   AddedChar,
   LockedGuess,
   UpdatedAnswerKnowledge,
-} from './updates/Updates';
+} from '../game/network/updates/Updates';
 
 export type GameClientSocket = ClientSocket<
   GameServerToClientEvents,

@@ -1,7 +1,7 @@
 import { LobbyState } from '../../../public/PlayerState';
 import { EndGameSummary } from '../../../structs/EndGameState';
 import { LobbyId } from '../../../structs/LobbyId';
-import { LobbyClientSocket } from '../../server/LobbyNetworkTypes';
+import { LobbyClientSocket } from '../../../network/LobbyNetworkTypes';
 export declare class RematchState extends LobbyState {
     private endState;
     protected Enter(): void;

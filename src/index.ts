@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import {GameServerManager} from './GameServerManager';
 import {LobbyServer} from './lobby/server/LobbyServer';
-import {GetServer} from './NetworkTypes';
+import {GetServer} from './network/NetworkTypes';
 import {PlayerId} from './structs/PlayerId';
 import {SocketManager} from './SocketManager';
 

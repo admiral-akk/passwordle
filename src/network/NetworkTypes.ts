@@ -2,18 +2,12 @@ import {Server, Socket} from 'socket.io';
 import {
   GameClientToServerEvents,
   GameServerToClientEvents,
-} from './game/network/GameNetworkTypes';
-import {
-  LobbyClientRequests,
-  LobbyServerRequests,
-} from './lobby/server/LobbyNetworkTypes';
-import {LobbyServer} from './lobby/server/LobbyServer';
-import {PlayerId, ToPlayerId} from './structs/PlayerId';
-import {
-  StartClientRequests,
-  StartServerRequests,
-} from './public/start/StartEvents';
-import {SocketManager} from './SocketManager';
+} from './GameNetworkTypes';
+import {LobbyClientRequests, LobbyServerRequests} from './LobbyNetworkTypes';
+import {LobbyServer} from '../lobby/server/LobbyServer';
+import {PlayerId, ToPlayerId} from '../structs/PlayerId';
+import {StartClientRequests, StartServerRequests} from './StartNetworkTypes';
+import {SocketManager} from '../SocketManager';
 
 export interface ServerToClientEvents
   extends GameServerToClientEvents,

@@ -2,7 +2,7 @@ import {
   GameServerSocket,
   GameClientToServerEvents,
   GameServerToClientEvents,
-} from './GameNetworkTypes';
+} from '../../network/GameNetworkTypes';
 import {GameState} from '../model/GameState';
 import {
   AddedChar,

@@ -1,5 +1,5 @@
 import { PlayerId } from '../../structs/PlayerId';
-import { LobbyServerSocket } from './LobbyNetworkTypes';
+import { LobbyServerSocket } from '../../network/LobbyNetworkTypes';
 export declare class LobbyServer {
     private EnterGame;
     private lobbies;

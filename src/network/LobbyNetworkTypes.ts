@@ -1,7 +1,7 @@
 import {Socket as ServerSocket} from 'socket.io';
 import {Socket as ClientSocket} from 'socket.io-client';
-import {InterServerEvents, SocketData} from '../../NetworkTypes';
-import {LobbyId} from '../../structs/LobbyId';
+import {InterServerEvents, SocketData} from './NetworkTypes';
+import {LobbyId} from '../structs/LobbyId';
 export type LobbyClientSocket = ClientSocket<
   LobbyClientRequests,
   LobbyServerRequests

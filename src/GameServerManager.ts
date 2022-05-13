@@ -1,4 +1,4 @@
-import {GameServerSocket} from './game/network/GameNetworkTypes';
+import {GameServerSocket} from './network/GameNetworkTypes';
 import {ServerGame} from './game/network/ServerGame';
 import {PlayerId} from './structs/PlayerId';
 

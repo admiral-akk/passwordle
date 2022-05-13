@@ -1,5 +1,8 @@
 import {io, Socket} from 'socket.io-client';
-import {ServerToClientEvents, ClientToServerEvents} from '../NetworkTypes';
+import {
+  ServerToClientEvents,
+  ClientToServerEvents,
+} from '../network/NetworkTypes';
 
 export type ClientSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 

@@ -1,4 +1,4 @@
-import { LobbyServerSocket } from '../lobby/server/LobbyNetworkTypes';
+import { LobbyServerSocket } from '../network/LobbyNetworkTypes';
 declare const validLobbyId: unique symbol;
 export declare type LobbyId = string & {
     [validLobbyId]: true;

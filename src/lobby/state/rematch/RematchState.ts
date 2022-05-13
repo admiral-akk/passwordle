@@ -9,7 +9,7 @@ import {
   GetEndGameState,
 } from '../../../structs/EndGameState';
 import {LobbyId} from '../../../structs/LobbyId';
-import {LobbyClientSocket} from '../../server/LobbyNetworkTypes';
+import {LobbyClientSocket} from '../../../network/LobbyNetworkTypes';
 import {MenuState} from '../menu/MenuState';
 import {Modal} from '../Modal';
 

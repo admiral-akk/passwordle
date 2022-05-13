@@ -1,4 +1,4 @@
-import {GameServerSocket} from './GameNetworkTypes';
+import {GameServerSocket} from '../../network/GameNetworkTypes';
 import {PlayerId} from '../../structs/PlayerId';
 import {ClientGameMirror} from './ClientGameMirror';
 import {Word} from '../../structs/Word';
