@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LockedGuessError = exports.ErrorType = exports.LockedGuess = exports.GuessLocked = exports.GameOverState = exports.IsGameOver = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
 const EndGameState_1 = require("../../../structs/EndGameState");
+const TargetProgress_1 = require("../../../structs/TargetProgress");
+const Word_1 = require("../../../structs/Word");
 class AddedChar {
     constructor(char) {
         this.char = char;
@@ -12,15 +14,21 @@ class Deleted {
 }
 exports.Deleted = Deleted;
 class UpdatedAnswerKnowledge {
-    constructor(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress, endGameState) {
+    constructor(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress) {
         this.playerKnowledge = playerKnowledge;
         this.opponentKnowledge = opponentKnowledge;
         this.playerProgress = playerProgress;
         this.opponentProgress = opponentProgress;
-        this.endGameState = endGameState;
+        this.endGameState = GenerateSummary(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress);
     }
 }
 exports.UpdatedAnswerKnowledge = UpdatedAnswerKnowledge;
+function GenerateSummary(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress) {
+    if (!(0, TargetProgress_1.Complete)(playerProgress) && !(0, TargetProgress_1.Complete)(opponentProgress)) {
+        return undefined;
+    }
+    return new EndGameState_1.EndGameSummary((0, Word_1.ToWord)(playerKnowledge.guess), (0, Word_1.ToWord)(opponentKnowledge.guess), playerProgress, opponentProgress);
+}
 function IsGameOver(knowledge) {
     return knowledge.endGameState !== undefined;
 }

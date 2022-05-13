@@ -7,6 +7,7 @@ import {
 import {GetRandomAnswer} from '../../game/Words';
 import {GameActions} from '../../network/GameNetworkTypes';
 import {PlayerId} from '../../structs/PlayerId';
+import {Complete} from '../../structs/TargetProgress';
 import {GameUpdater} from './GameUpdater';
 
 // Takes in action, outputs updates

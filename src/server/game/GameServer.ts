@@ -1,6 +1,7 @@
 // Server: Takes Action, passes PlayerId, GameId, Action to central server.
 
 import {
+  DeregisterGameServer,
   GameServerSocket,
   GameUpdateEmitter,
   RegisterGameServer,
@@ -28,6 +29,7 @@ export class GameServer {
         game.gameStates[player],
         game
       );
+      DeregisterGameServer(socket);
       RegisterGameServer(socket, this.gameValidators[player]);
       this.gameUpdaters[player] = new GameUpdater(
         game.gameStates[player],

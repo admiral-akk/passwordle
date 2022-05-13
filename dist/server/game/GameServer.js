@@ -20,6 +20,7 @@ class GameServer {
             const player = socket.data.playerId;
             this.games[player] = game;
             this.gameValidators[player] = new GameValidator_1.GameValidator(player, game.gameStates[player], game);
+            (0, GameNetworkTypes_1.DeregisterGameServer)(socket);
             (0, GameNetworkTypes_1.RegisterGameServer)(socket, this.gameValidators[player]);
             this.gameUpdaters[player] = new GameUpdater_1.GameUpdater(game.gameStates[player], new GameNetworkTypes_1.GameUpdateEmitter(socket));
             game.RegisterUpdater(player, this.gameUpdaters[player]);
