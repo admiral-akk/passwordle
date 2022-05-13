@@ -1,7 +1,8 @@
-import {Server, Socket as SSocket} from 'socket.io';
+import {Socket as SSocket} from 'socket.io';
+import {Socket as CSocket} from 'socket.io-client';
 import {
-  ToServerGameEvents,
-  ToClientGameEvents,
+  GameActions,
+  GameUpdates,
   RegisterGameClient,
   DeregisterGameServer,
   RegisterGameServer,
@@ -12,44 +13,38 @@ import {
   DeregisterLobbyServer,
   RegisterLobbyClient,
   RegisterLobbyServer,
-  ToClientLobbyEvents,
-  ToServerLobbyEvents,
+  LobbyUpdates,
+  LobbyActions,
 } from './LobbyNetworkTypes';
-import {LobbyServer} from '../lobby/server/LobbyServer';
-import {PlayerId, ToPlayerId} from '../structs/PlayerId';
+import {PlayerId} from '../structs/PlayerId';
 import {
   DeregisterStartClient,
   DeregisterStartServer,
   RegisterStartClient,
   RegisterStartServer,
-  ToClientStartEvents,
-  ToServerStartEvents,
+  StartUpdates,
+  StartActions,
 } from './StartNetworkTypes';
-import {Socket as CSocket} from 'socket.io-client';
 
-export interface ToClientEvents
-  extends ToClientGameEvents,
-    ToClientLobbyEvents,
-    ToClientStartEvents {}
-export interface ToServerEvents
-  extends ToServerGameEvents,
-    ToServerLobbyEvents,
-    ToServerStartEvents {}
+// Actions are things that the client tries to do.
+export interface Actions extends GameActions, LobbyActions, StartActions {}
+// Updates are state changes that the server indicates have happened.
+export interface Updates extends GameUpdates, LobbyUpdates, StartUpdates {}
 
 export interface InterServerEvents {}
 export interface SocketData {
   playerId: PlayerId;
 }
 
-export type ClientSocket = CSocket<ToClientEvents, ToServerEvents>;
+export type ClientSocket = CSocket<Updates, Actions>;
 export type ServerSocket = SSocket<
-  ToServerEvents,
-  ToClientEvents,
+  Actions,
+  Updates,
   InterServerEvents,
   SocketData
 >;
 
-export function RegisterClient(socket: ClientSocket, client: ToClientEvents) {
+export function RegisterClient(socket: ClientSocket, client: Updates) {
   RegisterGameClient(socket, client);
   RegisterLobbyClient(socket, client);
   RegisterStartClient(socket, client);
@@ -60,7 +55,7 @@ export function DeregisterClient(socket: ClientSocket) {
   DeregisterStartClient(socket);
 }
 
-export function RegisterServer(socket: ServerSocket, server: ToServerEvents) {
+export function RegisterServer(socket: ServerSocket, server: Actions) {
   RegisterGameServer(socket, server);
   RegisterLobbyServer(socket, server);
   RegisterStartServer(socket, server);

@@ -3,8 +3,8 @@ import {
   InterServerEvents,
   ServerSocket,
   SocketData,
-  ToClientEvents,
-  ToServerEvents,
+  Updates,
+  Actions,
 } from '../network/NetworkTypes';
 import {PlayerId, ToPlayerId} from '../structs/PlayerId';
 
@@ -13,12 +13,7 @@ import {GameServerManager} from './GameServerManager';
 import {PlayerState} from './PlayerState';
 
 export class GlobalServer {
-  private server: Server<
-    ToServerEvents,
-    ToClientEvents,
-    InterServerEvents,
-    SocketData
-  >;
+  private server: Server<Actions, Updates, InterServerEvents, SocketData>;
   private playerSockets: Record<PlayerId, ServerSocket> = {};
   private playerState: Record<PlayerId, PlayerState> = {};
   private lobbyServer: LobbyServer;
@@ -54,12 +49,9 @@ export class GlobalServer {
 
   constructor(app: Express.Application) {
     const http = require('http').Server(app);
-    this.server = new Server<
-      ToServerEvents,
-      ToClientEvents,
-      InterServerEvents,
-      SocketData
-    >(http);
+    this.server = new Server<Actions, Updates, InterServerEvents, SocketData>(
+      http
+    );
     this.lobbyServer = new LobbyServer((players: PlayerId[]) =>
       this.EnterGame(players)
     );

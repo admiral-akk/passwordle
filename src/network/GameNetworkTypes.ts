@@ -8,13 +8,10 @@ import {
   UpdatedAnswerKnowledge,
 } from '../game/network/updates/Updates';
 
-export type GameClientSocket = ClientSocket<
-  ToClientGameEvents,
-  ToServerGameEvents
->;
+export type GameClientSocket = ClientSocket<GameUpdates, GameActions>;
 export type GameServerSocket = ServerSocket<
-  ToServerGameEvents,
-  ToClientGameEvents,
+  GameActions,
+  GameUpdates,
   InterServerEvents,
   SocketData
 >;
@@ -22,7 +19,7 @@ export type GameServerSocket = ServerSocket<
 // How can we automate this so it simply registers every function in the interface?
 export function RegisterGameClient(
   socket: GameClientSocket,
-  client: ToClientGameEvents
+  client: GameUpdates
 ) {
   socket.on('AddedChar', (update: AddedChar) => client.AddedChar(update));
   socket.on('Deleted', () => client.Deleted());
@@ -51,7 +48,7 @@ export function DeregisterGameClient(socket: GameClientSocket) {
 
 export function RegisterGameServer(
   socket: GameServerSocket,
-  server: ToServerGameEvents
+  server: GameActions
 ) {
   socket.on('AddedChar', (update: AddedChar) => server.AddedChar(update));
   socket.on('Deleted', () => server.Deleted());
@@ -66,7 +63,7 @@ export function DeregisterGameServer(socket: GameServerSocket) {
   socket.removeAllListeners('GameClientReady');
 }
 
-export interface ToClientGameEvents {
+export interface GameUpdates {
   AddedChar: (update: AddedChar) => void;
   Deleted: () => void;
   LockedGuess: (update: LockedGuess) => void;
@@ -78,7 +75,7 @@ export interface ToClientGameEvents {
   OpponentDisconnected: () => void;
 }
 
-export interface ToServerGameEvents {
+export interface GameActions {
   AddedChar: (update: AddedChar) => void;
   Deleted: () => void;
   LockedGuess: (update: LockedGuess) => void;

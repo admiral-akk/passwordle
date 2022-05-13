@@ -2,13 +2,10 @@ import {Socket as ServerSocket} from 'socket.io';
 import {Socket as ClientSocket} from 'socket.io-client';
 import {InterServerEvents, SocketData} from './NetworkTypes';
 import {LobbyId} from '../structs/LobbyId';
-export type LobbyClientSocket = ClientSocket<
-  ToClientLobbyEvents,
-  ToServerLobbyEvents
->;
+export type LobbyClientSocket = ClientSocket<LobbyUpdates, LobbyActions>;
 export type LobbyServerSocket = ServerSocket<
-  ToServerLobbyEvents,
-  ToClientLobbyEvents,
+  LobbyActions,
+  LobbyUpdates,
   InterServerEvents,
   SocketData
 >;
@@ -16,7 +13,7 @@ export type LobbyServerSocket = ServerSocket<
 // How can we automate this so it simply registers every function in the interface?
 export function RegisterLobbyClient(
   socket: LobbyClientSocket,
-  client: ToClientLobbyEvents
+  client: LobbyUpdates
 ) {
   socket.on('EnterMenu', (lobbyId: LobbyId) => client.EnterMenu(lobbyId));
   socket.on('MatchFound', (lobbyId: LobbyId) => client.MatchFound(lobbyId));
@@ -32,7 +29,7 @@ export function DeregisterLobbyClient(socket: LobbyClientSocket) {
 
 export function RegisterLobbyServer(
   socket: LobbyServerSocket,
-  server: ToServerLobbyEvents
+  server: LobbyActions
 ) {
   socket.on('RequestLobbyId', () => server.RequestLobbyId());
   socket.on('JoinLobby', (lobbyId: LobbyId) => server.JoinLobby(lobbyId));
@@ -50,7 +47,7 @@ export function DeregisterLobbyServer(socket: LobbyServerSocket) {
 }
 
 // Things to ask the client/view to do
-export interface ToClientLobbyEvents {
+export interface LobbyUpdates {
   EnterMenu: (lobbyId: LobbyId) => void;
   MatchFound: (lobbyId: LobbyId) => void;
   GameReady: () => void;
@@ -58,7 +55,7 @@ export interface ToClientLobbyEvents {
 }
 
 // Things to ask the server/view to do
-export interface ToServerLobbyEvents {
+export interface LobbyActions {
   RequestLobbyId: () => void;
   JoinLobby: (lobbyId: LobbyId) => void;
   FindMatch: () => void;

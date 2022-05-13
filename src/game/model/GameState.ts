@@ -1,8 +1,5 @@
 import {Word} from '../../structs/Word';
-import {
-  ToServerGameEvents,
-  ToClientGameEvents,
-} from '../../network/GameNetworkTypes';
+import {GameActions, GameUpdates} from '../../network/GameNetworkTypes';
 import {
   AddedChar,
   IsGameOver,
@@ -27,9 +24,7 @@ enum State {
   GameOver,
 }
 
-export class GameState
-  implements ToServerGameEvents, ToClientGameEvents
-{
+export class GameState implements GameActions, GameUpdates {
   private state: State = State.None;
   private view?: GameView;
 

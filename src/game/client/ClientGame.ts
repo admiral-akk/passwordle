@@ -4,7 +4,7 @@ import {GameState} from '../model/GameState';
 import {
   DeregisterGameClient,
   RegisterGameClient,
-  ToClientGameEvents,
+  GameUpdates,
 } from '../../network/GameNetworkTypes';
 import {
   AddedChar,
@@ -21,7 +21,7 @@ enum State {
   EnteringRandomGuess,
 }
 
-export class ClientGame extends PlayerState implements ToClientGameEvents {
+export class ClientGame extends PlayerState implements GameUpdates {
   public Exit(): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, 2000)).then(() =>
       this.board.Exit()

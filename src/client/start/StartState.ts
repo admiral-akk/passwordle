@@ -4,10 +4,10 @@ import {PlayerState} from '../PlayerState';
 import {
   DeregisterStartClient,
   RegisterStartClient,
-  ToClientStartEvents,
+  StartUpdates,
 } from '../../network/StartNetworkTypes';
 
-export class StartState extends PlayerState implements ToClientStartEvents {
+export class StartState extends PlayerState implements StartUpdates {
   protected Enter(): void {}
   public Exit(): Promise<void> {
     return Promise.resolve();

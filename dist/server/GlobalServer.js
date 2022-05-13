@@ -7,7 +7,8 @@ const LobbyServer_1 = require("../lobby/server/LobbyServer");
 const GameServerManager_1 = require("./GameServerManager");
 class GlobalServer {
     constructor(app) {
-        this.clients = {};
+        this.playerSockets = {};
+        this.playerState = {};
         const http = require('http').Server(app);
         this.server = new socket_io_1.Server(http);
         this.lobbyServer = new LobbyServer_1.LobbyServer((players) => this.EnterGame(players));
@@ -21,16 +22,16 @@ class GlobalServer {
         });
     }
     EnterGame(players) {
-        const gameSockets = players.map(player => this.clients[player]);
+        const gameSockets = players.map(player => this.playerSockets[player]);
         this.gameServer.EnterGame(gameSockets);
     }
     ExitGame(players) {
-        const lobbySockets = players.map(player => this.clients[player]);
+        const lobbySockets = players.map(player => this.playerSockets[player]);
         this.lobbyServer.EndGame(lobbySockets);
     }
     PlayerConnected(socket) {
         socket.on('disconnect', () => this.PlayerDisconnected(socket));
-        this.clients[socket.data.playerId] = socket;
+        this.playerSockets[socket.data.playerId] = socket;
         this.lobbyServer.PlayerJoins(socket);
         socket.onAny((...args) => {
             args.forEach(arg => {
@@ -41,7 +42,7 @@ class GlobalServer {
         socket.emit('ServerReady');
     }
     PlayerDisconnected(socket) {
-        delete this.clients[socket.data.playerId];
+        delete this.playerSockets[socket.data.playerId];
     }
 }
 exports.GlobalServer = GlobalServer;

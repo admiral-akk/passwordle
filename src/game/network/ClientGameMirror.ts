@@ -1,7 +1,7 @@
 import {
   GameServerSocket,
-  ToServerGameEvents,
-  ToClientGameEvents,
+  GameActions,
+  GameUpdates,
 } from '../../network/GameNetworkTypes';
 import {GameState} from '../model/GameState';
 import {
@@ -11,9 +11,7 @@ import {
 } from './updates/Updates';
 import {Word} from '../../structs/Word';
 
-export class ClientGameMirror
-  implements ToServerGameEvents, ToClientGameEvents
-{
+export class ClientGameMirror implements GameActions, GameUpdates {
   private secret: Word | null = null;
   private board: GameState = new GameState();
   private otherPlayer: ClientGameMirror | null = null;
