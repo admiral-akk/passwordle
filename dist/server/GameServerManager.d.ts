@@ -1,5 +1,5 @@
-import { GameServerSocket } from './network/GameNetworkTypes';
-import { PlayerId } from './structs/PlayerId';
+import { GameServerSocket } from '../network/GameNetworkTypes';
+import { PlayerId } from '../structs/PlayerId';
 export declare class GameServerManager {
     private ExitGame;
     private activeGames;

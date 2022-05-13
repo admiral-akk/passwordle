@@ -1,5 +1,5 @@
-import {ClientSocket} from '../../public/ClientNetworking';
-import {LobbyState, PlayerState} from '../../public/PlayerState';
+import {ClientSocket} from '../../client/ClientNetworking';
+import {LobbyState, PlayerState} from '../../client/PlayerState';
 import {ClientGame} from '../../game/client/ClientGame';
 import {LoadingState} from './loading/LoadingState';
 import {RematchState} from './rematch/RematchState';

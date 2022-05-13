@@ -7,7 +7,7 @@ import {LobbyClientRequests, LobbyServerRequests} from './LobbyNetworkTypes';
 import {LobbyServer} from '../lobby/server/LobbyServer';
 import {PlayerId, ToPlayerId} from '../structs/PlayerId';
 import {StartClientRequests, StartServerRequests} from './StartNetworkTypes';
-import {SocketManager} from '../SocketManager';
+import {SocketManager} from '../server/SocketManager';
 
 export interface ServerToClientEvents
   extends GameServerToClientEvents,

@@ -7,8 +7,8 @@ import {
   LockedGuess,
   UpdatedAnswerKnowledge,
 } from '../network/updates/Updates';
-import {ClientSocket} from '../../public/ClientNetworking';
-import {PlayerState} from '../../public/PlayerState';
+import {ClientSocket} from '../../client/ClientNetworking';
+import {PlayerState} from '../../client/PlayerState';
 import {LobbyManager} from '../../lobby/state/LobbyManager';
 
 enum State {

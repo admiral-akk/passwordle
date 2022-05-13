@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadingState = void 0;
-const PlayerState_1 = require("../../../public/PlayerState");
+const PlayerState_1 = require("../../../client/PlayerState");
 const LobbyId_1 = require("../../../structs/LobbyId");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");

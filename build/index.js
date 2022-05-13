@@ -14,10 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
-const GameServerManager_1 = require("./GameServerManager");
+const GameServerManager_1 = require("./server/GameServerManager");
 const LobbyServer_1 = require("./lobby/server/LobbyServer");
 const NetworkTypes_1 = require("./network/NetworkTypes");
-const SocketManager_1 = require("./SocketManager");
+const SocketManager_1 = require("./server/SocketManager");
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.json());

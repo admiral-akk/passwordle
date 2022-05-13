@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyManager = void 0;
-const PlayerState_1 = require("../../public/PlayerState");
+const PlayerState_1 = require("../../client/PlayerState");
 const ClientGame_1 = require("../../game/client/ClientGame");
 const LoadingState_1 = require("./loading/LoadingState");
 const RematchState_1 = require("./rematch/RematchState");

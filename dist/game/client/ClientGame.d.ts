@@ -1,8 +1,8 @@
 import { Word } from '../../structs/Word';
 import { GameServerToClientEvents } from '../../network/GameNetworkTypes';
 import { UpdatedAnswerKnowledge } from '../network/updates/Updates';
-import { ClientSocket } from '../../public/ClientNetworking';
-import { PlayerState } from '../../public/PlayerState';
+import { ClientSocket } from '../../client/ClientNetworking';
+import { PlayerState } from '../../client/PlayerState';
 export declare class ClientGame extends PlayerState implements GameServerToClientEvents {
     Exit(): Promise<void>;
     protected Enter(): void;

@@ -1,4 +1,4 @@
-import { LobbyState } from '../../../public/PlayerState';
+import { LobbyState } from '../../../client/PlayerState';
 import { EndGameSummary } from '../../../structs/EndGameState';
 import { LobbyId } from '../../../structs/LobbyId';
 import { LobbyClientSocket } from '../../../network/LobbyNetworkTypes';

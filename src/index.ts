@@ -1,10 +1,10 @@
 import express from 'express';
 import path from 'path';
-import {GameServerManager} from './GameServerManager';
+import {GameServerManager} from './server/GameServerManager';
 import {LobbyServer} from './lobby/server/LobbyServer';
 import {GetServer} from './network/NetworkTypes';
 import {PlayerId} from './structs/PlayerId';
-import {SocketManager} from './SocketManager';
+import {SocketManager} from './server/SocketManager';
 
 const app = express();
 const port = 3000;

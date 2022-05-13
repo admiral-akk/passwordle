@@ -1,3 +1,3 @@
-import {Player} from './Player';
+import {Player} from '../client/Player';
 
 const player = new Player();
