@@ -9,3 +9,7 @@ export interface ToClientStartEvents {
 export interface ToServerStartEvents {
     ClientReady: () => void;
 }
+export declare function RegisterStartClient(socket: StartClientSocket, client: ToClientStartEvents): void;
+export declare function DeregisterStartClient(socket: StartClientSocket): void;
+export declare function RegisterStartServer(socket: StartServerSocket, server: ToServerStartEvents): void;
+export declare function DeregisterStartServer(socket: StartServerSocket): void;

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientGame = void 0;
 const InputManager_1 = require("./input/InputManager");
 const GameState_1 = require("../model/GameState");
+const GameNetworkTypes_1 = require("../../network/GameNetworkTypes");
 const Updates_1 = require("../network/updates/Updates");
 const PlayerState_1 = require("../../client/PlayerState");
 const LobbyManager_1 = require("../../lobby/state/LobbyManager");
@@ -26,20 +27,10 @@ class ClientGame extends PlayerState_1.PlayerState {
         this.socket.emit('GameClientReady');
     }
     Register(socket) {
-        socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
-        socket.on('UpdatedAnswerKnowledge', (update) => this.UpdatedAnswerKnowledge(update));
-        socket.on('SetSecret', (secret) => this.SetSecret(secret));
-        socket.on('OpponentDeleted', () => this.OpponentDeleted());
-        socket.on('OpponentLockedGuess', () => this.OpponentLockedGuess());
-        socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
+        (0, GameNetworkTypes_1.RegisterGameClient)(socket, this);
     }
     Deregister(socket) {
-        socket.removeAllListeners('OpponentAddedChar');
-        socket.removeAllListeners('UpdatedAnswerKnowledge');
-        socket.removeAllListeners('SetSecret');
-        socket.removeAllListeners('OpponentDeleted');
-        socket.removeAllListeners('OpponentLockedGuess');
-        socket.removeAllListeners('OpponentDisconnected');
+        (0, GameNetworkTypes_1.DeregisterGameClient)(socket);
     }
     SubmitRandomGuess(guess, currentGuessLength) {
         this.state = State.EnteringRandomGuess;

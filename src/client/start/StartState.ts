@@ -1,7 +1,11 @@
 import {LobbyManager} from '../../lobby/state/LobbyManager';
 import {ClientSocket} from '../ClientNetworking';
 import {PlayerState} from '../PlayerState';
-import {ToClientStartEvents} from '../../network/StartNetworkTypes';
+import {
+  DeregisterStartClient,
+  RegisterStartClient,
+  ToClientStartEvents,
+} from '../../network/StartNetworkTypes';
 
 export class StartState extends PlayerState implements ToClientStartEvents {
   protected Enter(): void {}
@@ -9,11 +13,11 @@ export class StartState extends PlayerState implements ToClientStartEvents {
     return Promise.resolve();
   }
   protected Register(socket: ClientSocket): void {
-    socket.on('ServerReady', () => this.ServerReady());
+    RegisterStartClient(socket, this);
   }
 
   protected Deregister(socket: ClientSocket): void {
-    socket.removeAllListeners('ServerReady');
+    DeregisterStartClient(socket);
   }
 
   constructor(

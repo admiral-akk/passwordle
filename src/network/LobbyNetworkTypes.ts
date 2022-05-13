@@ -13,6 +13,42 @@ export type LobbyServerSocket = ServerSocket<
   SocketData
 >;
 
+// How can we automate this so it simply registers every function in the interface?
+export function RegisterLobbyClient(
+  socket: LobbyClientSocket,
+  client: ToClientLobbyEvents
+) {
+  socket.on('EnterMenu', (lobbyId: LobbyId) => client.EnterMenu(lobbyId));
+  socket.on('MatchFound', (lobbyId: LobbyId) => client.MatchFound(lobbyId));
+  socket.on('GameReady', () => client.GameReady());
+  socket.on('FindingMatch', () => client.FindingMatch());
+}
+export function DeregisterLobbyClient(socket: LobbyClientSocket) {
+  socket.removeAllListeners('EnterMenu');
+  socket.removeAllListeners('MatchFound');
+  socket.removeAllListeners('GameReady');
+  socket.removeAllListeners('FindingMatch');
+}
+
+export function RegisterLobbyServer(
+  socket: LobbyServerSocket,
+  server: ToServerLobbyEvents
+) {
+  socket.on('RequestLobbyId', () => server.RequestLobbyId());
+  socket.on('JoinLobby', (lobbyId: LobbyId) => server.JoinLobby(lobbyId));
+  socket.on('FindMatch', () => server.FindMatch());
+  socket.on('RequestRematch', () => server.RequestRematch());
+  socket.on('DeclineRematch', () => server.DeclineRematch());
+}
+
+export function DeregisterLobbyServer(socket: LobbyServerSocket) {
+  socket.removeAllListeners('RequestLobbyId');
+  socket.removeAllListeners('JoinLobby');
+  socket.removeAllListeners('FindMatch');
+  socket.removeAllListeners('RequestRematch');
+  socket.removeAllListeners('DeclineRematch');
+}
+
 // Things to ask the client/view to do
 export interface ToClientLobbyEvents {
   EnterMenu: (lobbyId: LobbyId) => void;

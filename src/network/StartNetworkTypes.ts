@@ -21,3 +21,24 @@ export interface ToClientStartEvents {
 export interface ToServerStartEvents {
   ClientReady: () => void;
 }
+
+export function RegisterStartClient(
+  socket: StartClientSocket,
+  client: ToClientStartEvents
+) {
+  socket.on('ServerReady', () => client.ServerReady());
+}
+export function DeregisterStartClient(socket: StartClientSocket) {
+  socket.removeAllListeners('ServerReady');
+}
+
+export function RegisterStartServer(
+  socket: StartServerSocket,
+  server: ToServerStartEvents
+) {
+  socket.on('ClientReady', () => server.ClientReady());
+}
+
+export function DeregisterStartServer(socket: StartServerSocket) {
+  socket.removeAllListeners('ClientReady');
+}

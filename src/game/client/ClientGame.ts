@@ -1,7 +1,11 @@
 import {InputManager} from './input/InputManager';
 import {Word} from '../../structs/Word';
 import {GameState} from '../model/GameState';
-import {ToClientGameEvents} from '../../network/GameNetworkTypes';
+import {
+  DeregisterGameClient,
+  RegisterGameClient,
+  ToClientGameEvents,
+} from '../../network/GameNetworkTypes';
 import {
   AddedChar,
   LockedGuess,
@@ -17,10 +21,7 @@ enum State {
   EnteringRandomGuess,
 }
 
-export class ClientGame
-  extends PlayerState
-  implements ToClientGameEvents
-{
+export class ClientGame extends PlayerState implements ToClientGameEvents {
   public Exit(): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, 2000)).then(() =>
       this.board.Exit()
@@ -31,22 +32,10 @@ export class ClientGame
   }
 
   protected Register(socket: ClientSocket): void {
-    socket.on('OpponentAddedChar', () => this.OpponentAddedChar());
-    socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>
-      this.UpdatedAnswerKnowledge(update)
-    );
-    socket.on('SetSecret', (secret: Word) => this.SetSecret(secret));
-    socket.on('OpponentDeleted', () => this.OpponentDeleted());
-    socket.on('OpponentLockedGuess', () => this.OpponentLockedGuess());
-    socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
+    RegisterGameClient(socket, this);
   }
   protected Deregister(socket: ClientSocket): void {
-    socket.removeAllListeners('OpponentAddedChar');
-    socket.removeAllListeners('UpdatedAnswerKnowledge');
-    socket.removeAllListeners('SetSecret');
-    socket.removeAllListeners('OpponentDeleted');
-    socket.removeAllListeners('OpponentLockedGuess');
-    socket.removeAllListeners('OpponentDisconnected');
+    DeregisterGameClient(socket);
   }
   private board: GameState;
   constructor() {

@@ -19,6 +19,46 @@ export type GameServerSocket = ServerSocket<
   SocketData
 >;
 
+// How can we automate this so it simply registers every function in the interface?
+export function RegisterGameClient(
+  socket: GameClientSocket,
+  client: ToClientGameEvents
+) {
+  socket.on('OpponentAddedChar', () => client.OpponentAddedChar());
+  socket.on('OpponentDeleted', () => client.OpponentDeleted());
+  socket.on('OpponentLockedGuess', () => client.OpponentLockedGuess());
+  socket.on('SetSecret', (secret: Word) => client.SetSecret(secret));
+  socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>
+    client.UpdatedAnswerKnowledge(update)
+  );
+  socket.on('OpponentDisconnected', () => client.OpponentDisconnected());
+}
+export function DeregisterGameClient(socket: GameClientSocket) {
+  socket.removeAllListeners('OpponentAddedChar');
+  socket.removeAllListeners('OpponentDeleted');
+  socket.removeAllListeners('OpponentLockedGuess');
+  socket.removeAllListeners('SetSecret');
+  socket.removeAllListeners('UpdatedAnswerKnowledge');
+  socket.removeAllListeners('OpponentDisconnected');
+}
+
+export function RegisterGameServer(
+  socket: GameServerSocket,
+  server: ToServerGameEvents
+) {
+  socket.on('AddedChar', (update: AddedChar) => server.AddedChar(update));
+  socket.on('Deleted', () => server.Deleted());
+  socket.on('LockedGuess', (update: LockedGuess) => server.LockedGuess(update));
+  socket.on('GameClientReady', () => server.GameClientReady());
+}
+
+export function DeregisterGameServer(socket: GameServerSocket) {
+  socket.removeAllListeners('AddedChar');
+  socket.removeAllListeners('Deleted');
+  socket.removeAllListeners('LockedGuess');
+  socket.removeAllListeners('GameClientReady');
+}
+
 export interface ToClientGameEvents {
   OpponentAddedChar: () => void;
   OpponentDeleted: () => void;
