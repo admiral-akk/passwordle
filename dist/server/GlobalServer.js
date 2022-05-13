@@ -4,7 +4,7 @@ exports.GlobalServer = void 0;
 const socket_io_1 = require("socket.io");
 const PlayerId_1 = require("../structs/PlayerId");
 const LobbyServer_1 = require("../lobby/server/LobbyServer");
-const GameServerManager_1 = require("./GameServerManager");
+const GameServer_1 = require("./game/GameServer");
 class GlobalServer {
     constructor(app) {
         this.playerSockets = {};
@@ -12,7 +12,7 @@ class GlobalServer {
         const http = require('http').Server(app);
         this.server = new socket_io_1.Server(http);
         this.lobbyServer = new LobbyServer_1.LobbyServer((players) => this.EnterGame(players));
-        this.gameServer = new GameServerManager_1.GameServerManager((players) => this.ExitGame(players));
+        this.gameServer = new GameServer_1.GameServer((players) => this.ExitGame(players));
         this.server.on('connection', socket => {
             socket.data.playerId = (0, PlayerId_1.ToPlayerId)(socket);
             this.PlayerConnected(socket);
@@ -23,7 +23,7 @@ class GlobalServer {
     }
     EnterGame(players) {
         const gameSockets = players.map(player => this.playerSockets[player]);
-        this.gameServer.EnterGame(gameSockets);
+        this.gameServer.StartGame(gameSockets);
     }
     ExitGame(players) {
         const lobbySockets = players.map(player => this.playerSockets[player]);

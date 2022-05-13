@@ -7,6 +7,7 @@ import {
   LockedGuess,
   UpdatedAnswerKnowledge,
 } from '../game/network/updates/Updates';
+import {PlayerId} from '../structs/PlayerId';
 
 export type GameClientSocket = ClientSocket<GameUpdates, GameActions>;
 export type GameServerSocket = ServerSocket<
@@ -75,9 +76,24 @@ export interface GameUpdates {
   OpponentDisconnected: () => void;
 }
 
+export class GameUpdateEmitter implements GameUpdates {
+  constructor(private socket: GameServerSocket) {}
+  AddedChar = (update: AddedChar) => this.socket.emit('AddedChar', update);
+  Deleted = () => this.socket.emit('Deleted');
+  LockedGuess = (update: LockedGuess) =>
+    this.socket.emit('LockedGuess', update);
+  OpponentAddedChar = () => this.socket.emit('OpponentAddedChar');
+  OpponentDeleted = () => this.socket.emit('OpponentDeleted');
+  OpponentLockedGuess = () => this.socket.emit('OpponentLockedGuess');
+  SetSecret = (secret: Word) => this.socket.emit('SetSecret', secret);
+  UpdatedAnswerKnowledge = (update: UpdatedAnswerKnowledge) =>
+    this.socket.emit('UpdatedAnswerKnowledge', update);
+  OpponentDisconnected = () => this.socket.emit('OpponentDisconnected');
+}
+
 export interface GameActions {
-  AddedChar: (update: AddedChar) => void;
-  Deleted: () => void;
-  LockedGuess: (update: LockedGuess) => void;
-  GameClientReady: () => void;
+  AddedChar: (update: AddedChar, playerId?: PlayerId) => void;
+  Deleted: (playerId?: PlayerId) => void;
+  LockedGuess: (update: LockedGuess, playerId?: PlayerId) => void;
+  GameClientReady: (playerId?: PlayerId) => void;
 }

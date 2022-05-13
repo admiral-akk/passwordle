@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeregisterGameServer = exports.RegisterGameServer = exports.DeregisterGameClient = exports.RegisterGameClient = void 0;
+exports.GameUpdateEmitter = exports.DeregisterGameServer = exports.RegisterGameServer = exports.DeregisterGameClient = exports.RegisterGameClient = void 0;
 // How can we automate this so it simply registers every function in the interface?
 function RegisterGameClient(socket, client) {
     socket.on('AddedChar', (update) => client.AddedChar(update));
@@ -40,4 +40,19 @@ function DeregisterGameServer(socket) {
     socket.removeAllListeners('GameClientReady');
 }
 exports.DeregisterGameServer = DeregisterGameServer;
+class GameUpdateEmitter {
+    constructor(socket) {
+        this.socket = socket;
+        this.AddedChar = (update) => this.socket.emit('AddedChar', update);
+        this.Deleted = () => this.socket.emit('Deleted');
+        this.LockedGuess = (update) => this.socket.emit('LockedGuess', update);
+        this.OpponentAddedChar = () => this.socket.emit('OpponentAddedChar');
+        this.OpponentDeleted = () => this.socket.emit('OpponentDeleted');
+        this.OpponentLockedGuess = () => this.socket.emit('OpponentLockedGuess');
+        this.SetSecret = (secret) => this.socket.emit('SetSecret', secret);
+        this.UpdatedAnswerKnowledge = (update) => this.socket.emit('UpdatedAnswerKnowledge', update);
+        this.OpponentDisconnected = () => this.socket.emit('OpponentDisconnected');
+    }
+}
+exports.GameUpdateEmitter = GameUpdateEmitter;
 //# sourceMappingURL=GameNetworkTypes.js.map
