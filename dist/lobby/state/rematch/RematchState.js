@@ -107,11 +107,11 @@ class RematchModal extends Modal_1.Modal {
         const yourPasswordContainer = this.AddRootDiv(answerDiv, 'rematch-answer');
         const yourContainer = this.AddRootDiv(yourPasswordContainer, 'rematch-password-container');
         const yourPassword = new RematchWordView(yourContainer);
-        yourPassword.SetState(endState.yourPassword, endState.opponentProgress, LetterView_1.LetterColor.Red);
+        yourPassword.SetState(endState.yourPassword, endState.yourProgress, LetterView_1.LetterColor.Red);
         const opponentPasswordContainer = this.AddRootDiv(answerDiv, 'rematch-answer');
         const opponentContainer = this.AddRootDiv(opponentPasswordContainer, 'rematch-password-container');
         const opponentPassword = new RematchWordView(opponentContainer);
-        opponentPassword.SetState(endState.opponentPassword, endState.yourProgress, LetterView_1.LetterColor.Green);
+        opponentPassword.SetState(endState.opponentPassword, endState.opponentProgress, LetterView_1.LetterColor.Green);
     }
 }
 class RematchWordView extends WordView_1.BaseWordView {

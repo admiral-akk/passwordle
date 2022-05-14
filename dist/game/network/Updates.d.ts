@@ -14,7 +14,7 @@ export declare class UpdatedAnswerKnowledge {
     playerProgress: TargetProgress;
     opponentProgress: TargetProgress;
     endGameState?: EndGameSummary;
-    constructor(playerKnowledge: WordKnowledge, opponentKnowledge: WordKnowledge, playerProgress: TargetProgress, opponentProgress: TargetProgress);
+    constructor(playerKnowledge: WordKnowledge, opponentKnowledge: WordKnowledge, playerProgress: TargetProgress, opponentProgress: TargetProgress, playerPassword: Word, opponentPassword: Word);
 }
 export declare function IsGameOver(knowledge: UpdatedAnswerKnowledge): boolean;
 export declare function GameOverState(knowledge: UpdatedAnswerKnowledge): EndGameState;

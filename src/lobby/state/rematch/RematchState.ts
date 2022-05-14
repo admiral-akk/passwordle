@@ -142,7 +142,7 @@ class RematchModal extends Modal {
     const yourPassword = new RematchWordView(yourContainer);
     yourPassword.SetState(
       endState.yourPassword,
-      endState.opponentProgress,
+      endState.yourProgress,
       LetterColor.Red
     );
 
@@ -157,7 +157,7 @@ class RematchModal extends Modal {
     const opponentPassword = new RematchWordView(opponentContainer);
     opponentPassword.SetState(
       endState.opponentPassword,
-      endState.yourProgress,
+      endState.opponentProgress,
       LetterColor.Green
     );
   }

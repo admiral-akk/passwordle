@@ -116,7 +116,9 @@ export class GameState implements GameActions, GameUpdates {
       yourKnowledge,
       opponentKnowledge,
       yourProgress,
-      opponentProgress
+      opponentProgress,
+      yourPassword,
+      opponentPassword
     );
   }
 

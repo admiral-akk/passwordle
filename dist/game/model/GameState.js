@@ -76,7 +76,7 @@ class GameState {
         const opponentProgress = this.opponentPassword.GetProgress();
         (0, TargetProgress_1.UpdateProgress)(opponentProgress, (0, WordleLogic_1.GetKnowledge)(yourGuess, opponentPassword));
         (0, TargetProgress_1.UpdateProgress)(opponentProgress, (0, WordleLogic_1.GetKnowledge)(opponentGuess, opponentPassword));
-        return new Updates_1.UpdatedAnswerKnowledge(yourKnowledge, opponentKnowledge, yourProgress, opponentProgress);
+        return new Updates_1.UpdatedAnswerKnowledge(yourKnowledge, opponentKnowledge, yourProgress, opponentProgress, yourPassword, opponentPassword);
     }
     GameClientReady() { }
     OpponentDisconnected() { }

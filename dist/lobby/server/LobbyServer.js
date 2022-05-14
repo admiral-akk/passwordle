@@ -9,6 +9,7 @@ class LobbyServer {
         this.lobbies = {};
         this.publicLobbies = [];
         this.players = {};
+        this.inGameLobbies = {};
     }
     RequestRematch(playerId) {
         const lobbyId = this.players[playerId].lobbyId;
@@ -44,6 +45,9 @@ class LobbyServer {
     DeleteLobby(lobbyId) {
         if (lobbyId in this.lobbies) {
             delete this.lobbies[lobbyId];
+        }
+        if (lobbyId in this.inGameLobbies) {
+            delete this.inGameLobbies[lobbyId];
         }
         if (this.publicLobbies.indexOf(lobbyId) > -1) {
             this.publicLobbies.splice(this.publicLobbies.indexOf(lobbyId));
@@ -81,6 +85,7 @@ class LobbyServer {
             this.players[playerId].MatchFound(lobby.lobbyId);
             this.players[playerId].GameReady();
         });
+        this.inGameLobbies[lobby.lobbyId] = true;
         this.EnterGame(lobby.players);
     }
     RequestLobbyId(playerId) {
@@ -89,7 +94,7 @@ class LobbyServer {
         this.players[playerId].EnterMenu();
     }
     JoinLobby(playerId, lobbyId) {
-        if (lobbyId in this.lobbies) {
+        if (lobbyId in this.lobbies && !(lobbyId in this.inGameLobbies)) {
             const lobby = this.lobbies[lobbyId];
             this.AddToLobby(lobby, playerId);
         }

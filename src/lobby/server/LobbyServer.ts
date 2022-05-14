@@ -11,6 +11,7 @@ export class LobbyServer {
   private lobbies: Record<LobbyId, Lobby> = {};
   private publicLobbies: LobbyId[] = [];
   private players: Record<PlayerId, LobbySocketManager> = {};
+  private inGameLobbies: Record<LobbyId, boolean> = {};
 
   constructor(private EnterGame: (players: PlayerId[]) => void) {}
 
@@ -60,6 +61,9 @@ export class LobbyServer {
     if (lobbyId in this.lobbies) {
       delete this.lobbies[lobbyId];
     }
+    if (lobbyId in this.inGameLobbies) {
+      delete this.inGameLobbies[lobbyId];
+    }
     if (this.publicLobbies.indexOf(lobbyId) > -1) {
       this.publicLobbies.splice(this.publicLobbies.indexOf(lobbyId));
     }
@@ -100,6 +104,7 @@ export class LobbyServer {
       this.players[playerId].MatchFound(lobby.lobbyId);
       this.players[playerId].GameReady();
     });
+    this.inGameLobbies[lobby.lobbyId] = true;
     this.EnterGame(lobby.players);
   }
 
@@ -113,7 +118,7 @@ export class LobbyServer {
   }
 
   private JoinLobby(playerId: PlayerId, lobbyId: LobbyId) {
-    if (lobbyId in this.lobbies) {
+    if (lobbyId in this.lobbies && !(lobbyId in this.inGameLobbies)) {
       const lobby = this.lobbies[lobbyId];
       this.AddToLobby(lobby, playerId);
     } else {

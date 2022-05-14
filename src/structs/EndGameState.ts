@@ -24,7 +24,7 @@ export function GetEndGameState(summary: EndGameSummary): EndGameState {
     return EndGameState.Tie;
   }
   if (playerComplete) {
-    return EndGameState.Win;
+    return EndGameState.Loss;
   }
-  return EndGameState.Loss;
+  return EndGameState.Win;
 }

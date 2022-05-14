@@ -1,3 +1,7 @@
+* {
+    font-family: 'Arial';
+}
+
 .game-board {
     display: flex;
     align-items: center;
@@ -128,21 +132,8 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 2.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.letter-box {
-    border: 2px solid gray;
-    height: 3rem;
-    width: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    margin: 2px;
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 2.3rem;
+    font-weight: bold;
     text-transform: uppercase;
 }
   
@@ -173,6 +164,7 @@ body {
     transform: translate(-50%, -50%);
     border-radius: 10px;
     min-width: 300px; 
+    min-height: 200px; 
     height: fit-content; 
     width: fit-content; 
     background-color: rgb(255, 255, 255); /* Fallback color */
@@ -247,12 +239,12 @@ body {
     display: flex;
     height:  100%;
     width:  100%;
-    gap: 40px;
+    gap: 35px;
     flex-direction: column;
 }
 
 .menu-state {
-    margin:  10px;
+    margin: 20px 15px;
     display: flex;
     justify-content: left;
     align-self: flex-start;
@@ -285,8 +277,7 @@ body {
     height: 36px;
     font-size: 16px;
     line-height: 16px;
-    padding: 8px;
-    margin: 0;
+    margin: 4px 10px;
     transition: background-color 280ms cubic-bezier(.4,0,.2,1);
     font-weight: 500;
 }

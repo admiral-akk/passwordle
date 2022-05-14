@@ -25,9 +25,9 @@ function GetEndGameState(summary) {
         return EndGameState.Tie;
     }
     if (playerComplete) {
-        return EndGameState.Win;
+        return EndGameState.Loss;
     }
-    return EndGameState.Loss;
+    return EndGameState.Win;
 }
 exports.GetEndGameState = GetEndGameState;
 //# sourceMappingURL=EndGameState.js.map

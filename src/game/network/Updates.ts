@@ -19,13 +19,17 @@ export class UpdatedAnswerKnowledge {
     public playerKnowledge: WordKnowledge,
     public opponentKnowledge: WordKnowledge,
     public playerProgress: TargetProgress,
-    public opponentProgress: TargetProgress
+    public opponentProgress: TargetProgress,
+    playerPassword: Word,
+    opponentPassword: Word
   ) {
     this.endGameState = GenerateSummary(
       playerKnowledge,
       opponentKnowledge,
       playerProgress,
-      opponentProgress
+      opponentProgress,
+      playerPassword,
+      opponentPassword
     );
   }
 }
@@ -33,14 +37,16 @@ function GenerateSummary(
   playerKnowledge: WordKnowledge,
   opponentKnowledge: WordKnowledge,
   playerProgress: TargetProgress,
-  opponentProgress: TargetProgress
+  opponentProgress: TargetProgress,
+  playerPassword: Word,
+  opponentPassword: Word
 ): EndGameSummary | undefined {
   if (!Complete(playerProgress) && !Complete(opponentProgress)) {
     return undefined;
   }
   return new EndGameSummary(
-    ToWord(playerKnowledge.guess),
-    ToWord(opponentKnowledge.guess),
+    playerPassword,
+    opponentPassword,
     playerProgress,
     opponentProgress
   );

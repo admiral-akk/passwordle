@@ -5,6 +5,7 @@ export declare class LobbyServer {
     private lobbies;
     private publicLobbies;
     private players;
+    private inGameLobbies;
     constructor(EnterGame: (players: PlayerId[]) => void);
     private RequestRematch;
     PlayerJoins(socket: LobbyServerSocket): void;
