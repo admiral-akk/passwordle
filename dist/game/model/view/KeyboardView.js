@@ -27,6 +27,14 @@ class KeyboardView extends Subview_1.Subview {
             });
         });
     }
+    Reset() {
+        super.Reset();
+        KEYS.forEach(row => {
+            row.forEach(key => {
+                this.SetColor(key, LetterState_1.LetterState.NoKnowledge);
+            });
+        });
+    }
     SetColor(key, state) {
         key = key.toUpperCase();
         const color = ToColor(state);

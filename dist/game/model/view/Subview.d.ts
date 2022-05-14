@@ -3,6 +3,7 @@ export declare abstract class Subview {
     private elements;
     private subviews;
     constructor(base: HTMLElement, rootClassName: string, explanationText?: string, longFormExplanationText?: string);
+    Reset(): void;
     Exit(): void;
     protected AddSubview(subview: Subview): void;
     protected AddDiv(parent: HTMLElement, className: string): HTMLDivElement;

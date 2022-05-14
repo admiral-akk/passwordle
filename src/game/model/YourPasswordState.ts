@@ -4,15 +4,15 @@ import {Word} from '../../structs/Word';
 import {LetterAnimation} from './view/struct/Animation';
 import {ModelState} from './ModelState';
 
-enum State {
-  WaitingForPassword,
-  PasswordRecieved,
-}
-
 export class YourPasswordState extends ModelState<YourPasswordView> {
-  public password: Word | null = null;
+  public password?: Word;
   public knownCharacters: string[] = ['', '', '', '', ''];
-  private state: State = State.WaitingForPassword;
+
+  Reset(): void {
+    super.Reset();
+    this.knownCharacters = ['', '', '', '', ''];
+    this.password = undefined;
+  }
 
   SetPassword(password: Word) {
     this.password = password;

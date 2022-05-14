@@ -16,9 +16,6 @@ class BaseWordView extends Subview_1.Subview {
             this.AddSubview(letter);
         }
     }
-    Reset() {
-        this.letters.forEach(letter => letter.Reset());
-    }
     LockedGuessError(error) {
         switch (error.type) {
             case Updates_1.ErrorType.NotValidWord:

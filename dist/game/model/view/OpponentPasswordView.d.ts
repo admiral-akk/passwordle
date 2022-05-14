@@ -6,5 +6,4 @@ export declare class OpponentPasswordView extends Subview {
     constructor(base: HTMLElement);
     Update(target: TargetProgress, playerGuess: string): LetterAnimation[];
     GetAnimations(guess: string, target: TargetProgress): ((() => void) | null)[];
-    Reset(): void;
 }

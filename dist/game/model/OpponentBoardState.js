@@ -11,6 +11,11 @@ class OpponentBoardState extends ModelState_1.ModelState {
         this.guesses = [];
         this.opponentCharCount = 0;
     }
+    Reset() {
+        super.Reset();
+        this.guesses = [];
+        this.opponentCharCount = 0;
+    }
     OpponentAddedChar() {
         var _a;
         const update = new OpponentUpdate_1.OpponentUpdate(OpponentUpdate_1.OpponentUpdateType.AddChar, this.guesses.length, this.opponentCharCount);

@@ -8,7 +8,7 @@ export declare class GameState implements GameActions, GameUpdates {
     private submitRandomGuess;
     private state;
     private view?;
-    Exit(): void;
+    Reset(): void;
     private yourBoard;
     private yourPassword;
     private opponentBoard;

@@ -45,15 +45,13 @@ class GameState {
             this.timer = new TimerState_1.TimerState();
         }
     }
-    Exit() {
-        var _a;
-        this.yourBoard.Exit();
-        this.yourPassword.Exit();
-        this.opponentBoard.Exit();
-        this.opponentPassword.Exit();
-        this.keyboard.Exit();
-        this.timer.Exit();
-        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();
+    Reset() {
+        this.yourBoard.Reset();
+        this.yourPassword.Reset();
+        this.opponentBoard.Reset();
+        this.opponentPassword.Reset();
+        this.keyboard.Reset();
+        this.timer.Reset();
     }
     GuessSubmitted() {
         return this.state === State.GuessSubmitted;

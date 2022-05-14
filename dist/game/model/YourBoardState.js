@@ -19,6 +19,12 @@ class YourBoardState extends ModelState_1.ModelState {
         this.currentGuess = '';
         this.state = State.CanSubmit;
     }
+    Reset() {
+        super.Reset();
+        this.guesses = [];
+        this.currentGuess = '';
+        this.state = State.CanSubmit;
+    }
     AddChar(char) {
         var _a, _b;
         if (this.state !== State.CanSubmit) {

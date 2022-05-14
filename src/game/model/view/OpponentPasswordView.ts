@@ -56,9 +56,6 @@ export class OpponentPasswordView extends Subview {
     }
     return animations;
   }
-  Reset(): void {
-    this.answer.Reset();
-  }
 }
 
 class TargetWordView extends BaseWordView {

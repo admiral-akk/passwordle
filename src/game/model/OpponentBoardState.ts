@@ -9,6 +9,11 @@ export class OpponentBoardState extends ModelState<OpponentBoardView> {
   private guesses: Word[] = [];
   private opponentCharCount = 0;
 
+  Reset(): void {
+    super.Reset();
+    this.guesses = [];
+    this.opponentCharCount = 0;
+  }
   OpponentAddedChar() {
     const update = new OpponentUpdate(
       OpponentUpdateType.AddChar,

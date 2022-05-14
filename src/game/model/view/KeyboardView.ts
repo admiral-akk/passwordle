@@ -30,6 +30,15 @@ export class KeyboardView extends Subview {
     });
   }
 
+  Reset(): void {
+    super.Reset();
+    KEYS.forEach(row => {
+      row.forEach(key => {
+        this.SetColor(key, LetterState.NoKnowledge);
+      });
+    });
+  }
+
   SetColor(key: string, state: LetterState) {
     key = key.toUpperCase();
     const color = ToColor(state);

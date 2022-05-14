@@ -5,6 +5,10 @@ class ModelState {
     constructor(view) {
         this.view = view;
     }
+    Reset() {
+        var _a;
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.Reset();
+    }
     Exit() {
         var _a;
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.Exit();

@@ -3,17 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.YourPasswordState = void 0;
 const TargetProgress_1 = require("../../structs/TargetProgress");
 const ModelState_1 = require("./ModelState");
-var State;
-(function (State) {
-    State[State["WaitingForPassword"] = 0] = "WaitingForPassword";
-    State[State["PasswordRecieved"] = 1] = "PasswordRecieved";
-})(State || (State = {}));
 class YourPasswordState extends ModelState_1.ModelState {
     constructor() {
         super(...arguments);
-        this.password = null;
         this.knownCharacters = ['', '', '', '', ''];
-        this.state = State.WaitingForPassword;
+    }
+    Reset() {
+        super.Reset();
+        this.knownCharacters = ['', '', '', '', ''];
+        this.password = undefined;
     }
     SetPassword(password) {
         var _a;

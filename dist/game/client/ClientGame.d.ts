@@ -5,6 +5,7 @@ import { ClientSocket } from '../../client/ClientNetworking';
 export declare class ClientGame implements GameUpdates {
     private socket;
     protected Register(socket: ClientSocket): void;
+    private Reset;
     StartGame(): void;
     private board;
     constructor(socket: ClientSocket);

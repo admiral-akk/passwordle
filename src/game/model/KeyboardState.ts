@@ -7,6 +7,7 @@ const ALPHABET = 'QWERTYUIOPASDFGHJKLZXCVBNM';
 
 export class KeyboardState extends ModelState<KeyboardView> {
   Reset(): void {
+    super.Reset();
     this.keyState = {};
     for (let i = 0; i < ALPHABET.length; i++) {
       this.SetState(ALPHABET[i], LetterState.NoKnowledge);

@@ -3,14 +3,13 @@ import {ModelState} from './ModelState';
 import {OpponentPasswordView} from './view/OpponentPasswordView';
 import {LetterAnimation} from './view/struct/Animation';
 
-enum State {
-  WaitingForPassword,
-  PasswordRecieved,
-}
-
 export class OpponentPasswordState extends ModelState<OpponentPasswordView> {
   public password: string[] = ['', '', '', '', ''];
-  private state: State = State.WaitingForPassword;
+
+  Reset(): void {
+    super.Reset();
+    this.password = ['', '', '', '', ''];
+  }
 
   Update(progress: TargetProgress, playerGuess: string): LetterAnimation[] {
     for (let i = 0; i < progress.knownCharacters.length; i++) {

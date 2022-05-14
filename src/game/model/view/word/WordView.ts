@@ -17,10 +17,6 @@ export abstract class BaseWordView extends Subview {
     }
   }
 
-  Reset(): void {
-    this.letters.forEach(letter => letter.Reset());
-  }
-
   LockedGuessError(error: LockedGuessError) {
     switch (error.type) {
       case ErrorType.NotValidWord:

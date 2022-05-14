@@ -20,7 +20,12 @@ export class ClientGame implements GameUpdates {
     RegisterGameClient(socket, this);
   }
 
+  private Reset() {
+    this.board.Reset();
+  }
+
   StartGame() {
+    this.Reset();
     this.socket!.emit('GameClientReady');
   }
 

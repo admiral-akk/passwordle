@@ -22,7 +22,11 @@ class ClientGame {
     Register(socket) {
         (0, GameNetworkTypes_1.RegisterGameClient)(socket, this);
     }
+    Reset() {
+        this.board.Reset();
+    }
     StartGame() {
+        this.Reset();
         this.socket.emit('GameClientReady');
     }
     AddedChar(update) { }

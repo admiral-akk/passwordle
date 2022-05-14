@@ -13,6 +13,12 @@ enum State {
 }
 
 export class YourBoardState extends ModelState<YourBoardView> {
+  Reset(): void {
+    super.Reset();
+    this.guesses = [];
+    this.currentGuess = '';
+    this.state = State.CanSubmit;
+  }
   public guesses: Word[] = [];
   public currentGuess = '';
   private state: State = State.CanSubmit;

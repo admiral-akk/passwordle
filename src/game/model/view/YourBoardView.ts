@@ -17,6 +17,11 @@ export class YourBoardView extends Subview {
     }
   }
 
+  Reset(): void {
+    super.Reset();
+    this.words.forEach(word => word.Reset());
+  }
+
   SetCharKnowledge(
     wordIndex: number,
     charIndex: number,

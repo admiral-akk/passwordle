@@ -32,14 +32,13 @@ export class GameState implements GameActions, GameUpdates {
   private state: State = State.None;
   private view?: GameView;
 
-  Exit() {
-    this.yourBoard.Exit();
-    this.yourPassword.Exit();
-    this.opponentBoard.Exit();
-    this.opponentPassword.Exit();
-    this.keyboard.Exit();
-    this.timer.Exit();
-    this.view?.Exit();
+  Reset() {
+    this.yourBoard.Reset();
+    this.yourPassword.Reset();
+    this.opponentBoard.Reset();
+    this.opponentPassword.Reset();
+    this.keyboard.Reset();
+    this.timer.Reset();
   }
 
   private yourBoard: YourBoardState;

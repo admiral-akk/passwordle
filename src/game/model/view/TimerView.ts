@@ -6,9 +6,11 @@ export class TimerView extends Subview {
   private currentTime = 0;
 
   Reset(): void {
+    super.Reset();
     this.time.innerText = '';
     this.currentTime = 0;
   }
+
   constructor(base: HTMLElement) {
     super(base, 'timer');
     this.time = this.AddDiv(base, 'timer-div');

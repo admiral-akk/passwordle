@@ -4,5 +4,6 @@ export declare class KeyboardView extends Subview {
     constructor(base: HTMLElement);
     private keys;
     Initialize(input: (key: string) => void): void;
+    Reset(): void;
     SetColor(key: string, state: LetterState): void;
 }

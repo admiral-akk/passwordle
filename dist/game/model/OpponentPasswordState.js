@@ -3,16 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpponentPasswordState = void 0;
 const TargetProgress_1 = require("../../structs/TargetProgress");
 const ModelState_1 = require("./ModelState");
-var State;
-(function (State) {
-    State[State["WaitingForPassword"] = 0] = "WaitingForPassword";
-    State[State["PasswordRecieved"] = 1] = "PasswordRecieved";
-})(State || (State = {}));
 class OpponentPasswordState extends ModelState_1.ModelState {
     constructor() {
         super(...arguments);
         this.password = ['', '', '', '', ''];
-        this.state = State.WaitingForPassword;
+    }
+    Reset() {
+        super.Reset();
+        this.password = ['', '', '', '', ''];
     }
     Update(progress, playerGuess) {
         for (let i = 0; i < progress.knownCharacters.length; i++) {

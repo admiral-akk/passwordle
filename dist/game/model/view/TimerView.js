@@ -10,6 +10,7 @@ class TimerView extends Subview_1.Subview {
         this.time = this.AddDiv(base, 'timer-div');
     }
     Reset() {
+        super.Reset();
         this.time.innerText = '';
         this.currentTime = 0;
     }
