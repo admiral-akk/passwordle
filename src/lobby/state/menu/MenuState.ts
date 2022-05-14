@@ -61,6 +61,7 @@ export class MenuState extends LobbyState {
 class MenuModal extends Modal {
   private matchmakingButton: HTMLButtonElement;
   private copyLinkButton: HTMLButtonElement;
+  private stateText: HTMLDivElement;
 
   public Exit(): Promise<void> {
     return Promise.resolve(this.EnteringMatch())
@@ -70,21 +71,26 @@ class MenuModal extends Modal {
 
   constructor(hostLobby: () => void, matchmake: () => void) {
     super();
-    this.AddDiv(
-      'explain-game',
-      `In Passwordle, each player has a different password.
+    // this.AddDiv(
+    //   'explain-game',
+    //   `In Passwordle, each player has a different password.
 
-    The winner is the first to figure out their opponent's password.
-    
-    However, each guess gives clues to both players. For example:
-    
-    If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`
+    // The winner is the first to figure out their opponent's password.
+
+    // However, each guess gives clues to both players. For example:
+
+    // If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`
+    // );
+    const menuContainer = this.AddDiv('menu-container');
+    this.stateText = this.AddRootDiv(
+      menuContainer,
+      'menu-state',
+      'Waiting for opponent'
     );
-    this.AddDiv('menu-seperator');
-    const buttons = this.AddDiv('menu-buttons');
+    const buttons = this.AddRootDiv(menuContainer, 'menu-button-container');
     this.copyLinkButton = this.AddButton(
       buttons,
-      'private-game',
+      'menu-button',
       'Invite Friend',
       () => {
         hostLobby();
@@ -93,14 +99,14 @@ class MenuModal extends Modal {
     );
     this.matchmakingButton = this.AddButton(
       buttons,
-      'public-game',
+      'menu-button',
       'Find Game',
       () => matchmake()
     );
   }
 
   EnteringMatch() {
-    this.AddDiv('entering-match', 'Entering match. Good luck!');
+    this.stateText.innerText = 'Entering match. Good luck!';
   }
 
   CopyLinkPopup() {
@@ -109,6 +115,6 @@ class MenuModal extends Modal {
 
   EnterMatchmaking() {
     this.matchmakingButton.disabled = true;
-    this.matchmakingButton.innerText = 'Looking for match...';
+    this.stateText.innerText = 'Looking for match...';
   }
 }

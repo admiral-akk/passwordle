@@ -93,19 +93,18 @@ class RematchModal extends Modal {
     endState: EndGameSummary
   ) {
     super();
-    this.AddDiv(
-      'explain-game',
-      `In Passwordle, each player has a different password.
+    // this.AddDiv(
+    //   'explain-game',
+    //   `In Passwordle, each player has a different password.
 
-    The winner is the first to figure out their opponent's password.
-    
-    However, each guess gives clues to both players. For example:
-    
-    If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`
-    );
+    // The winner is the first to figure out their opponent's password.
+
+    // However, each guess gives clues to both players. For example:
+
+    // If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`
+    // );
     this.AddDiv('menu-seperator');
     this.AddMatchOutcome(endState);
-    this.AddDiv('menu-seperator');
     this.rematchDiv = this.AddDiv('rematch-text');
     const buttons = this.AddDiv('menu-buttons');
     this.AddButton(buttons, 'to-menu', 'Return to Menu', () => {

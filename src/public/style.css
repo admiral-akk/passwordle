@@ -57,13 +57,6 @@
 .answer {
     margin:  12px;
 }
-.private-game {
-    position: relative;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    margin: 2px;
-}
 
 /* Timer Styles */
 
@@ -120,51 +113,6 @@
     background-color: crimson;
 }
 
-/* Menu Styles */
-.explain-game {
-    margin:  10px;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    font-size: 1.5rem;
-    font-weight: 700;
-}
-
-.menu-seperator {
-    width:  90%;
-    height: 10px;
-    align-items: center;
-    justify-content: center;
-    background-color: blue;
-}
-
-.menu-buttons {
-    display: flex;
-    width:  90%;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-}
-
-.private-game {
-    width:  40%;
-    height: 70px;
-    margin:  10px;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-}
-
-.public-game {
-    width:  40%;
-    height: 70px;
-    margin:  10px;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-}
 
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup */
 .popup {
@@ -205,11 +153,13 @@
     font-size: 1.5rem;
     font-weight: 700;
 }
+
 body {
     overflow: hidden; /* Disable scroll */
     min-width:700px;
     width:700px;
 }
+
 .target {
     margin: 12px;
 }
@@ -241,6 +191,8 @@ body {
     border: 2px solid black;
 }
 
+/* Modal */
+
 #lobby .background {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -253,27 +205,72 @@ body {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+
  .modal {
     position: fixed;
     left: 50%;
     top: 50%;
+    box-shadow: 0px 0px 20px 20px rgb(0 0 0 / 20%);
     transform: translate(-50%, -50%);
-    border-radius: 25px;
-    width: 500px; /* Full width */
-    height: 700px; /* Full height */
+    border-radius: 10px;
+    width: 300px; 
+    height: fit-content; 
     overflow: hidden; /* Disable scroll */
     background-color: rgb(255, 255, 255); /* Fallback color */
-    border: 2px solid gray;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
-.modal div {
-    align-items: center;
-    justify-content: center;
+/* Menu  */
+
+.menu-container {
+    display: flex;
+    height:  100%;
+    width:  100%;
+    gap: 40px;
+    flex-direction: column;
 }
+
+.menu-state {
+    margin:  10px;
+    display: flex;
+    justify-content: left;
+    align-self: flex-start;
+    font-size: 1.5rem;
+    width: fit-content;
+    height: 36px;
+    font-weight: 700;
+}
+
+.menu-button-container {
+    display: flex;
+    flex-grow: 1;
+    align-self: flex-end;
+    gap: 0;
+    width:  90%;
+    align-items: right;
+    justify-content: right;
+    flex-direction: column;
+}
+
+.menu-button {
+    border: none;
+    display: flex;
+    align-self: flex-end;
+    background: 0 0;
+    width: fit-content;
+    color:#2e7d32;
+    cursor: pointer;
+    text-transform: uppercase;
+    height: 36px;
+    font-size: 16px;
+    line-height: 16px;
+    padding: 8px;
+    margin: 0;
+    transition: background-color 280ms cubic-bezier(.4,0,.2,1);
+    font-weight: 500;
+}
+
+
+/* Keyboard */
 
 .keyboard {
     display: flex;
@@ -285,10 +282,11 @@ body {
     display: flex;
     align-items: center;
     flex-direction: row;
-    padding: 0.5rem 0rem;
+    padding: 3px 0rem;
 }
 
 .keyboard-key {
+    border: 0px solid gray;
     background-color: lightgray;
     padding: 0.5rem;
     height: 4rem;
@@ -297,8 +295,8 @@ body {
     min-width: 1rem;
     align-items: center;
     justify-content: center;
-    border-radius: 3px;
-    margin: 0 6px;
+    border-radius: 5px;
+    margin: 3px 3px;
     font-size: 1.5rem;
     font-weight: 700;
     cursor: pointer;
@@ -308,6 +306,8 @@ body {
 .keyboard-command-key {
     width: 5.5rem;
 }
+
+/* Explanation */
 
 .long-explanation {
     display: none;
