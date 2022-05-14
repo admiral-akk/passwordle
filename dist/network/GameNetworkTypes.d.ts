@@ -2,7 +2,7 @@ import { Socket as ServerSocket } from 'socket.io';
 import { Socket as ClientSocket } from 'socket.io-client';
 import { Word } from '../structs/Word';
 import { InterServerEvents, SocketData } from './NetworkTypes';
-import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../game/network/updates/Updates';
+import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../game/network/Updates';
 import { PlayerId } from '../structs/PlayerId';
 export declare type GameClientSocket = ClientSocket<GameUpdates, GameActions>;
 export declare type GameServerSocket = ServerSocket<GameActions, GameUpdates, InterServerEvents, SocketData>;

@@ -10,7 +10,7 @@ import {
   AddedChar,
   LockedGuess,
   UpdatedAnswerKnowledge,
-} from '../network/updates/Updates';
+} from '../network/Updates';
 import {ClientSocket} from '../../client/ClientNetworking';
 import {PlayerState} from '../../client/PlayerState';
 import {LobbyManager} from '../../lobby/state/LobbyManager';

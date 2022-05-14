@@ -1,6 +1,6 @@
 import { Word } from '../../structs/Word';
 import { GameActions, GameUpdates } from '../../network/GameNetworkTypes';
-import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/updates/Updates';
+import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/Updates';
 import { EndGameSummary } from '../../structs/EndGameState';
 import { TargetProgress } from '../../structs/TargetProgress';
 export declare class GameState implements GameActions, GameUpdates {

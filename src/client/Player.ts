@@ -1,5 +1,6 @@
+import {GameState} from '../game/model/GameState';
 import {ClientSocket, GetSocket} from './ClientNetworking';
-import {PlayerState} from './PlayerState';
+import {LobbyState, PlayerState} from './PlayerState';
 import {StartState} from './start/StartState';
 
 export class Player {

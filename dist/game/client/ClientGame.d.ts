@@ -1,6 +1,6 @@
 import { Word } from '../../structs/Word';
 import { GameUpdates } from '../../network/GameNetworkTypes';
-import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/updates/Updates';
+import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/Updates';
 import { ClientSocket } from '../../client/ClientNetworking';
 import { PlayerState } from '../../client/PlayerState';
 export declare class ClientGame extends PlayerState implements GameUpdates {

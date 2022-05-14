@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameState = void 0;
 const Word_1 = require("../../structs/Word");
-const Updates_1 = require("../network/updates/Updates");
+const Updates_1 = require("../network/Updates");
 const YourBoardState_1 = require("./YourBoardState");
 const YourPasswordState_1 = require("./YourPasswordState");
 const OpponentBoardState_1 = require("./OpponentBoardState");

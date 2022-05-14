@@ -1,5 +1,5 @@
 import { GameState } from '../../game/model/GameState';
-import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../../game/network/updates/Updates';
+import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../../game/network/Updates';
 import { GameUpdateEmitter, GameUpdates } from '../../network/GameNetworkTypes';
 import { Word } from '../../structs/Word';
 export declare class GameUpdater implements GameUpdates {

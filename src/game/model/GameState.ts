@@ -5,7 +5,7 @@ import {
   IsGameOver,
   LockedGuess,
   UpdatedAnswerKnowledge,
-} from '../network/updates/Updates';
+} from '../network/Updates';
 import {YourBoardState} from './YourBoardState';
 import {YourPasswordState} from './YourPasswordState';
 import {OpponentBoardState} from './OpponentBoardState';

@@ -4,7 +4,7 @@ exports.ClientGame = void 0;
 const InputManager_1 = require("./input/InputManager");
 const GameState_1 = require("../model/GameState");
 const GameNetworkTypes_1 = require("../../network/GameNetworkTypes");
-const Updates_1 = require("../network/updates/Updates");
+const Updates_1 = require("../network/Updates");
 const PlayerState_1 = require("../../client/PlayerState");
 const LobbyManager_1 = require("../../lobby/state/LobbyManager");
 var State;

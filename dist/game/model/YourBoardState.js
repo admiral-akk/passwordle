@@ -4,7 +4,7 @@ exports.YourBoardState = void 0;
 const CharUpdate_1 = require("./CharUpdate");
 const Word_1 = require("../../structs/Word");
 const Words_1 = require("../Words");
-const Updates_1 = require("../network/updates/Updates");
+const Updates_1 = require("../network/Updates");
 const Animation_1 = require("./view/struct/Animation");
 const ModelState_1 = require("./ModelState");
 var State;

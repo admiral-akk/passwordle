@@ -1,5 +1,5 @@
 import {GameState} from '../../game/model/GameState';
-import {AddedChar, LockedGuess} from '../../game/network/updates/Updates';
+import {AddedChar, LockedGuess} from '../../game/network/Updates';
 import {GameActions} from '../../network/GameNetworkTypes';
 import {PlayerId} from '../../structs/PlayerId';
 

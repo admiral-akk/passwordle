@@ -3,7 +3,7 @@ import {
   AddedChar,
   LockedGuess,
   UpdatedAnswerKnowledge,
-} from '../../game/network/updates/Updates';
+} from '../../game/network/Updates';
 import {GetRandomAnswer} from '../../game/Words';
 import {GameActions} from '../../network/GameNetworkTypes';
 import {PlayerId} from '../../structs/PlayerId';
