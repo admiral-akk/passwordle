@@ -3,8 +3,8 @@ import {Subview} from '../../Subview';
 
 export enum LetterColor {
   White = 'white',
-  Yellow = 'yellow',
-  Green = 'forestgreen',
+  Yellow = '#c9b458',
+  Green = '#2e7d32',
   Grey = 'grey',
   LightGrey = 'lightgrey',
   Red = 'crimson',
@@ -47,6 +47,18 @@ export class LetterView extends Subview {
         break;
       case LetterColor.LightGrey:
         AnimateCSS(this.root, AnimationType.BounceIn, 0.5);
+        break;
+    }
+    switch (color) {
+      case LetterColor.Green:
+      case LetterColor.LightGrey:
+      case LetterColor.Red:
+      case LetterColor.Yellow:
+      case LetterColor.Grey:
+        this.root.style.borderColor = color;
+        break;
+      case LetterColor.White:
+        this.root.style.borderColor = LetterColor.Grey;
         break;
     }
   }

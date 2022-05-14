@@ -1,8 +1,8 @@
 import { Subview } from '../../Subview';
 export declare enum LetterColor {
     White = "white",
-    Yellow = "yellow",
-    Green = "forestgreen",
+    Yellow = "#c9b458",
+    Green = "#2e7d32",
     Grey = "grey",
     LightGrey = "lightgrey",
     Red = "crimson"

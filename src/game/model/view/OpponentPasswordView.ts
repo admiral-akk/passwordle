@@ -59,6 +59,15 @@ export class OpponentPasswordView extends Subview {
 }
 
 class TargetWordView extends BaseWordView {
+  constructor(root: HTMLElement) {
+    super(root);
+  }
+
+  Reset(): void {
+    super.Reset();
+    this.letters.forEach(letter => letter.SetChar('?'));
+  }
+
   public UpdateProgress(charIndex: number, char: string): (() => void) | null {
     const letter = this.letters[charIndex];
     if (letter.Color() !== LetterColor.Green) {

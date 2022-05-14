@@ -6,8 +6,8 @@ const Subview_1 = require("../../Subview");
 var LetterColor;
 (function (LetterColor) {
     LetterColor["White"] = "white";
-    LetterColor["Yellow"] = "yellow";
-    LetterColor["Green"] = "forestgreen";
+    LetterColor["Yellow"] = "#c9b458";
+    LetterColor["Green"] = "#2e7d32";
     LetterColor["Grey"] = "grey";
     LetterColor["LightGrey"] = "lightgrey";
     LetterColor["Red"] = "crimson";
@@ -44,6 +44,18 @@ class LetterView extends Subview_1.Subview {
                 break;
             case LetterColor.LightGrey:
                 (0, Animate_1.AnimateCSS)(this.root, Animate_1.AnimationType.BounceIn, 0.5);
+                break;
+        }
+        switch (color) {
+            case LetterColor.Green:
+            case LetterColor.LightGrey:
+            case LetterColor.Red:
+            case LetterColor.Yellow:
+            case LetterColor.Grey:
+                this.root.style.borderColor = color;
+                break;
+            case LetterColor.White:
+                this.root.style.borderColor = LetterColor.Grey;
                 break;
         }
     }
