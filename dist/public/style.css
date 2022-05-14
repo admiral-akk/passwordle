@@ -56,49 +56,6 @@
     font-weight: 700;
 }
 
-/* Rematch Styles */
-
-.match-answers > div { 
-    margin: 5px;
-}
-.match-outcome {
-    margin:  10px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    font-weight: 700;
-}
-.rematch-text {
-    margin:  5px;
-    height: 20px;
-    font-size: 1.5rem;
-    font-weight: 700;
-    align-items: center;
-    justify-content: center;
-}
-.request-rematch {
-    width:  40%;
-    height: 70px;
-    margin:  10px;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    background-color: lightgreen;
-}
-
-.to-menu {
-    width:  40%;
-    height: 70px;
-    margin:  10px;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    font-weight: 700;
-    background-color: crimson;
-}
-
 
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup */
 .popup {
@@ -215,9 +172,74 @@ body {
     box-shadow: 0px 0px 20px 20px rgb(0 0 0 / 20%);
     transform: translate(-50%, -50%);
     border-radius: 10px;
-    width: 300px; 
+    min-width: 300px; 
     height: fit-content; 
+    width: fit-content; 
     background-color: rgb(255, 255, 255); /* Fallback color */
+}
+
+
+/* Rematch Styles */
+.rematch-container {
+    display: flex;
+    flex-direction: column;
+}
+.match-outcome {
+    margin:  10px;
+    text-align: left;
+    font-size: 2rem;
+    padding: 6px;
+    font-weight: 700;
+}
+.rematch-text {
+    margin:  5px;
+    height: 20px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    align-items: center;
+    justify-content: center;
+}
+.request-rematch {
+    width:  40%;
+    height: 70px;
+    margin:  10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background-color: lightgreen;
+}
+
+.to-menu {
+    width:  40%;
+    height: 70px;
+    margin:  10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background-color: crimson;
+}
+.match-answers {
+    display: flex;
+    flex-direction: column
+}
+.rematch-answer {
+    display: flex;
+    flex-direction: row;
+}
+.rematch-password-text {
+    display: flex;
+    text-align: center;
+    justify-content: right;
+    align-items: center;
+    font-size: 1.5em;
+    width: 15%;
+    padding: 10px;
+}
+.rematch-password-container {
+    display: flex;
+    width: 60%;
 }
 
 /* Menu  */

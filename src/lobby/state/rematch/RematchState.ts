@@ -86,6 +86,7 @@ class RematchModal extends Modal {
 
   private rematchDiv: HTMLDivElement;
   private rematchButton: HTMLButtonElement;
+  private container: HTMLElement;
 
   constructor(
     requestRematch: () => void,
@@ -93,20 +94,10 @@ class RematchModal extends Modal {
     endState: EndGameSummary
   ) {
     super();
-    // this.AddDiv(
-    //   'explain-game',
-    //   `In Passwordle, each player has a different password.
-
-    // The winner is the first to figure out their opponent's password.
-
-    // However, each guess gives clues to both players. For example:
-
-    // If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`
-    // );
-    this.AddDiv('menu-seperator');
+    this.container = this.AddDiv('rematch-container');
     this.AddMatchOutcome(endState);
-    this.rematchDiv = this.AddDiv('rematch-text');
-    const buttons = this.AddDiv('menu-buttons');
+    this.rematchDiv = this.AddRootDiv(this.container, 'rematch-text');
+    const buttons = this.AddRootDiv(this.container, 'menu-buttons');
     this.AddButton(buttons, 'to-menu', 'Return to Menu', () => {
       this.rematchButton.disabled = true;
       returnToMenu();
@@ -124,7 +115,7 @@ class RematchModal extends Modal {
   }
 
   private AddMatchOutcome(endState: EndGameSummary) {
-    const answerDiv = this.AddDiv('match-answers');
+    const answerDiv = this.AddRootDiv(this.container, 'match-answers');
 
     let text: string;
     switch (GetEndGameState(endState)) {
@@ -143,13 +134,37 @@ class RematchModal extends Modal {
     }
     this.AddRootDiv(answerDiv, 'match-outcome', text);
 
-    const yourPassword = new RematchWordView(answerDiv);
+    const yourPasswordContainer = this.AddRootDiv(answerDiv, 'rematch-answer');
+    const yourPasswordText = this.AddRootDiv(
+      yourPasswordContainer,
+      'rematch-password-text',
+      ''
+    );
+    const yourContainer = this.AddRootDiv(
+      yourPasswordContainer,
+      'rematch-password-container'
+    );
+    const yourPassword = new RematchWordView(yourContainer);
     yourPassword.SetState(
       endState.yourPassword,
       endState.opponentProgress,
       LetterColor.Red
     );
-    const opponentPassword = new RematchWordView(answerDiv);
+
+    const opponentPasswordContainer = this.AddRootDiv(
+      answerDiv,
+      'rematch-answer'
+    );
+    const opponentPasswordText = this.AddRootDiv(
+      opponentPasswordContainer,
+      'rematch-password-text',
+      ''
+    );
+    const opponentContainer = this.AddRootDiv(
+      opponentPasswordContainer,
+      'rematch-password-container'
+    );
+    const opponentPassword = new RematchWordView(opponentContainer);
     opponentPassword.SetState(
       endState.opponentPassword,
       endState.yourProgress,
