@@ -54,12 +54,12 @@ class RematchModal extends Modal_1.Modal {
         this.container = this.AddDiv('rematch-container');
         this.AddMatchOutcome(endState);
         this.rematchDiv = this.AddRootDiv(this.container, 'rematch-text');
-        const buttons = this.AddRootDiv(this.container, 'menu-buttons');
-        this.AddButton(buttons, 'to-menu', 'Return to Menu', () => {
+        const buttons = this.AddRootDiv(this.container, 'menu-button-container');
+        this.AddButton(buttons, 'menu-button', 'Return to Menu', () => {
             this.rematchButton.disabled = true;
             returnToMenu();
         });
-        this.rematchButton = this.AddButton(buttons, 'request-rematch', 'Request Rematch', () => {
+        this.rematchButton = this.AddButton(buttons, 'menu-button', 'Request Rematch', () => {
             requestRematch();
             this.RematchRequested();
             this.rematchButton.disabled = true;
@@ -105,12 +105,10 @@ class RematchModal extends Modal_1.Modal {
         }
         this.AddRootDiv(answerDiv, 'match-outcome', text);
         const yourPasswordContainer = this.AddRootDiv(answerDiv, 'rematch-answer');
-        const yourPasswordText = this.AddRootDiv(yourPasswordContainer, 'rematch-password-text', '');
         const yourContainer = this.AddRootDiv(yourPasswordContainer, 'rematch-password-container');
         const yourPassword = new RematchWordView(yourContainer);
         yourPassword.SetState(endState.yourPassword, endState.opponentProgress, LetterView_1.LetterColor.Red);
         const opponentPasswordContainer = this.AddRootDiv(answerDiv, 'rematch-answer');
-        const opponentPasswordText = this.AddRootDiv(opponentPasswordContainer, 'rematch-password-text', '');
         const opponentContainer = this.AddRootDiv(opponentPasswordContainer, 'rematch-password-container');
         const opponentPassword = new RematchWordView(opponentContainer);
         opponentPassword.SetState(endState.opponentPassword, endState.yourProgress, LetterView_1.LetterColor.Green);

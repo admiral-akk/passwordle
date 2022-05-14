@@ -226,7 +226,6 @@ body {
 }
 .rematch-answer {
     display: flex;
-    flex-direction: row;
 }
 .rematch-password-text {
     display: flex;
@@ -239,7 +238,7 @@ body {
 }
 .rematch-password-container {
     display: flex;
-    width: 60%;
+    margin: 0 70px;
 }
 
 /* Menu  */
