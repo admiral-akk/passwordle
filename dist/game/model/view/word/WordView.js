@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseWordView = void 0;
 const LetterView_1 = require("./letter/LetterView");
 const Subview_1 = require("../Subview");
-const Updates_1 = require("../../../network/updates/Updates");
+const Updates_1 = require("../../../network/Updates");
 const Animate_1 = require("../Animate");
 const WORD_LENGTH = 5;
 class BaseWordView extends Subview_1.Subview {

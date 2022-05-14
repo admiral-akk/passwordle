@@ -3,7 +3,7 @@ import {
   AddedChar,
   LockedGuess,
   UpdatedAnswerKnowledge,
-} from '../../game/network/updates/Updates';
+} from '../../game/network/Updates';
 import {GameUpdateEmitter, GameUpdates} from '../../network/GameNetworkTypes';
 import {Word} from '../../structs/Word';
 

@@ -2,10 +2,10 @@ import {
   EndGameState,
   EndGameSummary,
   GetEndGameState,
-} from '../../../structs/EndGameState';
-import {Complete, TargetProgress} from '../../../structs/TargetProgress';
-import {ToWord, Word} from '../../../structs/Word';
-import {WordKnowledge} from '../../../structs/WordKnowledge';
+} from '../../structs/EndGameState';
+import {Complete, TargetProgress} from '../../structs/TargetProgress';
+import {ToWord, Word} from '../../structs/Word';
+import {WordKnowledge} from '../../structs/WordKnowledge';
 
 export class AddedChar {
   constructor(public char: string) {}

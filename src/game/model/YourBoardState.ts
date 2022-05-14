@@ -3,11 +3,7 @@ import {CharUpdate} from './CharUpdate';
 import {YourBoardView} from './view/YourBoardView';
 import {ToWord, Word} from '../../structs/Word';
 import {IsValidWord} from '../Words';
-import {
-  ErrorType,
-  GuessLocked,
-  LockedGuessError,
-} from '../network/updates/Updates';
+import {ErrorType, GuessLocked, LockedGuessError} from '../network/Updates';
 import {LetterAnimation} from './view/struct/Animation';
 import {ModelState} from './ModelState';
 

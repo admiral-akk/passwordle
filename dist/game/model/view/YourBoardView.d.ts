@@ -1,4 +1,4 @@
-import { GuessLocked, LockedGuessError } from '../../network/updates/Updates';
+import { GuessLocked, LockedGuessError } from '../../network/Updates';
 import { LetterState } from '../../../structs/LetterState';
 import { CharUpdate } from '../CharUpdate';
 import { Subview } from './Subview';

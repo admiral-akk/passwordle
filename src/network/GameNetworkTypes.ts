@@ -6,7 +6,7 @@ import {
   AddedChar,
   LockedGuess,
   UpdatedAnswerKnowledge,
-} from '../game/network/updates/Updates';
+} from '../game/network/Updates';
 import {PlayerId} from '../structs/PlayerId';
 
 export type GameClientSocket = ClientSocket<GameUpdates, GameActions>;
