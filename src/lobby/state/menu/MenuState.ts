@@ -110,7 +110,7 @@ class MenuModal extends Modal {
   }
 
   CopyLinkPopup() {
-    AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 1.5);
+    AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 200, 'white');
   }
 
   EnterMatchmaking() {

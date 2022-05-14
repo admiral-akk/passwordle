@@ -31,10 +31,12 @@ function AnimateCSS(element, animation, duration = 0.5) {
     });
 }
 exports.AnimateCSS = AnimateCSS;
-function AddPopup(target, text, durationSeconds = 1.5) {
+function AddPopup(target, text, yPos, background, durationSeconds = 1.5) {
     const popup = document.createElement('div');
     popup.className = 'popup';
     popup.innerText = text;
+    popup.style.top = `${yPos}px`;
+    popup.style.backgroundColor = background;
     target.appendChild(popup);
     AnimateCSS(popup, AnimationType.BounceIn, 0.5)
         .then(() => new Promise(resolve => setTimeout(resolve, 1000 * (durationSeconds - 1))))

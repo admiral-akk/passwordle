@@ -38,11 +38,15 @@ export function AnimateCSS(
 export function AddPopup(
   target: HTMLElement,
   text: string,
+  yPos: number,
+  background: string,
   durationSeconds = 1.5
 ) {
   const popup = document.createElement('div');
   popup.className = 'popup';
   popup.innerText = text;
+  popup.style.top = `${yPos}px`;
+  popup.style.backgroundColor = background;
   target.appendChild(popup);
   AnimateCSS(popup, AnimationType.BounceIn, 0.5)
     .then(

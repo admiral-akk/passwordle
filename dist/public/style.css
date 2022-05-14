@@ -102,21 +102,23 @@
 
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup */
 .popup {
-    background-color: #555;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     text-align: center;
-    border-radius: 6px;
+    border-radius: 16px;
     padding: 8px 0;
     position: absolute;
-    top: -70px;
-    width: fit-content;   
-    height: 30px;
-    left: 0; 
-    right: 0; 
-    margin-left: auto; 
-    margin-right: auto; 
+    top: 200px;
+    width: fit-content;
+    height: fit-content;
+    left: 0;
+    right: 0;
+    padding: 14px;
+    margin-left: auto;
+    text-transform:none;
+    margin-right: auto;
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: 700;
 }
 
 .popuptext::after {
@@ -215,7 +217,6 @@ body {
     border-radius: 10px;
     width: 300px; 
     height: fit-content; 
-    overflow: hidden; /* Disable scroll */
     background-color: rgb(255, 255, 255); /* Fallback color */
 }
 

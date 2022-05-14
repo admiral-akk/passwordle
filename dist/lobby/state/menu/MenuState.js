@@ -77,7 +77,7 @@ class MenuModal extends Modal_1.Modal {
         this.stateText.innerText = 'Entering match. Good luck!';
     }
     CopyLinkPopup() {
-        (0, Animate_1.AddPopup)(this.copyLinkButton, 'Link copied to clipboard!', 1.5);
+        (0, Animate_1.AddPopup)(this.copyLinkButton, 'Link copied to clipboard!', 200, 'white');
     }
     EnterMatchmaking() {
         this.matchmakingButton.disabled = true;

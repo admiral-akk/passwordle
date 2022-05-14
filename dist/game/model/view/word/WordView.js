@@ -19,7 +19,7 @@ class BaseWordView extends Subview_1.Subview {
     LockedGuessError(error) {
         switch (error.type) {
             case Updates_1.ErrorType.NotValidWord:
-                (0, Animate_1.AddPopup)(this.root, 'Not valid word!', 1.5);
+                (0, Animate_1.AddPopup)(this.root, 'Not valid word!', -70, 'lightgray');
                 this.letters.forEach(letter => letter.Error());
                 break;
             case Updates_1.ErrorType.TooShort:

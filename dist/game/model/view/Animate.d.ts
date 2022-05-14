@@ -10,4 +10,4 @@ export declare enum AnimationType {
     Flash = "flash"
 }
 export declare function AnimateCSS(element: HTMLElement, animation: AnimationType, duration?: Number): Promise<string>;
-export declare function AddPopup(target: HTMLElement, text: string, durationSeconds?: number): void;
+export declare function AddPopup(target: HTMLElement, text: string, yPos: number, background: string, durationSeconds?: number): void;
