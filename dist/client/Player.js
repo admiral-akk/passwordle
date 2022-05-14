@@ -10,6 +10,11 @@ class Player {
         this.lobby = new LobbyManager_1.LobbyManager(this.socket);
         this.game = new ClientGame_1.ClientGame(this.socket);
         this.socket.on('GameReady', () => this.game.StartGame());
+        this.socket.on('UpdatedAnswerKnowledge', (update) => {
+            if (update.endGameState) {
+                this.lobby.GameEnded(update.endGameState);
+            }
+        });
     }
 }
 exports.Player = Player;

@@ -1,6 +1,8 @@
 import {ClientSocket} from '../../client/ClientNetworking';
 import {LobbyState} from './LobbyState';
 import {LoadingState} from './loading/LoadingState';
+import {EndGameSummary} from '../../structs/EndGameState';
+import {RematchState} from './rematch/RematchState';
 
 export class LobbyManager {
   private state?: LobbyState;
@@ -13,15 +15,19 @@ export class LobbyManager {
 
   constructor(private socket: ClientSocket) {
     this.Register(socket);
-    this.EnterLobby(new LoadingState());
+    this.EnterState(new LoadingState());
   }
 
-  EnterLobby(state: LobbyState) {
+  private EnterState(state: LobbyState) {
     this.state = state;
     this.state.Initialize(
       this.socket!,
       (nextState: LobbyState) => (this.state = nextState)
     );
+  }
+
+  GameEnded(summary: EndGameSummary) {
+    this.EnterState(new RematchState(summary));
   }
 
   GameReady() {
