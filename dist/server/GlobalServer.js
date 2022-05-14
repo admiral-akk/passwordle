@@ -37,8 +37,6 @@ class GlobalServer {
                 console.log(`Arg: ${arg}`);
             });
         });
-        socket.on('ClientReady', () => socket.emit('ServerReady'));
-        socket.emit('ServerReady');
     }
     PlayerDisconnected(socket) {
         delete this.playerSockets[socket.data.playerId];

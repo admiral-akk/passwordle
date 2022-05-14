@@ -3,10 +3,9 @@ import { Socket as CSocket } from 'socket.io-client';
 import { GameActions, GameUpdates } from './GameNetworkTypes';
 import { LobbyUpdates, LobbyActions } from './LobbyNetworkTypes';
 import { PlayerId } from '../structs/PlayerId';
-import { StartUpdates, StartActions } from './StartNetworkTypes';
-export interface Actions extends GameActions, LobbyActions, StartActions {
+export interface Actions extends GameActions, LobbyActions {
 }
-export interface Updates extends GameUpdates, LobbyUpdates, StartUpdates {
+export interface Updates extends GameUpdates, LobbyUpdates {
 }
 export interface InterServerEvents {
 }

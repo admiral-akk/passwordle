@@ -37,8 +37,6 @@ export class GlobalServer {
         console.log(`Arg: ${arg}`);
       });
     });
-    socket.on('ClientReady', () => socket.emit('ServerReady'));
-    socket.emit('ServerReady');
   }
 
   private PlayerDisconnected(socket: ServerSocket) {

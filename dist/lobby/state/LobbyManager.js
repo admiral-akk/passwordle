@@ -7,7 +7,6 @@ class LobbyManager {
         this.socket = socket;
         this.Register(socket);
         this.EnterLobby(new LoadingState_1.LoadingState());
-        this.socket.emit('ClientReady');
     }
     Register(socket) {
         socket.on('GameReady', () => {

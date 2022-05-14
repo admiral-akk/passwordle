@@ -17,19 +17,11 @@ import {
   LobbyActions,
 } from './LobbyNetworkTypes';
 import {PlayerId} from '../structs/PlayerId';
-import {
-  DeregisterStartClient,
-  DeregisterStartServer,
-  RegisterStartClient,
-  RegisterStartServer,
-  StartUpdates,
-  StartActions,
-} from './StartNetworkTypes';
 
 // Actions are things that the client tries to do.
-export interface Actions extends GameActions, LobbyActions, StartActions {}
+export interface Actions extends GameActions, LobbyActions {}
 // Updates are state changes that the server indicates have happened.
-export interface Updates extends GameUpdates, LobbyUpdates, StartUpdates {}
+export interface Updates extends GameUpdates, LobbyUpdates {}
 
 export interface InterServerEvents {}
 export interface SocketData {
@@ -47,22 +39,18 @@ export type ServerSocket = SSocket<
 export function RegisterClient(socket: ClientSocket, client: Updates) {
   RegisterGameClient(socket, client);
   RegisterLobbyClient(socket, client);
-  RegisterStartClient(socket, client);
 }
 export function DeregisterClient(socket: ClientSocket) {
   DeregisterGameClient(socket);
   DeregisterLobbyClient(socket);
-  DeregisterStartClient(socket);
 }
 
 export function RegisterServer(socket: ServerSocket, server: Actions) {
   RegisterGameServer(socket, server);
   RegisterLobbyServer(socket, server);
-  RegisterStartServer(socket, server);
 }
 
 export function DeregisterServer(socket: ServerSocket) {
   DeregisterGameServer(socket);
   DeregisterLobbyServer(socket);
-  DeregisterStartServer(socket);
 }

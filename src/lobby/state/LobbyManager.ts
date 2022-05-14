@@ -14,7 +14,6 @@ export class LobbyManager {
   constructor(private socket: ClientSocket) {
     this.Register(socket);
     this.EnterLobby(new LoadingState());
-    this.socket.emit('ClientReady');
   }
 
   EnterLobby(state: LobbyState) {
