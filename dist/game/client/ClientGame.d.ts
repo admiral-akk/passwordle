@@ -2,14 +2,14 @@ import { Word } from '../../structs/Word';
 import { GameUpdates } from '../../network/GameNetworkTypes';
 import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/Updates';
 import { ClientSocket } from '../../client/ClientNetworking';
-import { PlayerState } from '../../client/PlayerState';
-export declare class ClientGame extends PlayerState implements GameUpdates {
+export declare class ClientGame implements GameUpdates {
+    private socket;
     Exit(): Promise<void>;
     protected Enter(): void;
     protected Register(socket: ClientSocket): void;
     protected Deregister(socket: ClientSocket): void;
     private board;
-    constructor();
+    constructor(socket: ClientSocket);
     AddedChar(update: AddedChar): void;
     Deleted(): void;
     LockedGuess(update: LockedGuess): void;

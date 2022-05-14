@@ -1,14 +1,10 @@
 import { ClientSocket } from '../../client/ClientNetworking';
-import { PlayerState } from '../../client/PlayerState';
-import { EndGameSummary } from '../../structs/EndGameState';
-export declare class LobbyManager extends PlayerState {
-    private endState;
-    Exit(): Promise<void>;
-    private state;
+export declare class LobbyManager {
+    private socket;
+    private state?;
     protected Register(socket: ClientSocket): void;
     protected Deregister(socket: ClientSocket): void;
-    constructor(endState?: EndGameSummary | null);
+    constructor(socket: ClientSocket);
     private SetState;
-    protected Enter(): void;
     GameReady(): void;
 }

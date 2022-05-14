@@ -12,8 +12,6 @@ import {
   UpdatedAnswerKnowledge,
 } from '../network/Updates';
 import {ClientSocket} from '../../client/ClientNetworking';
-import {PlayerState} from '../../client/PlayerState';
-import {LobbyManager} from '../../lobby/state/LobbyManager';
 
 enum State {
   None,
@@ -21,7 +19,7 @@ enum State {
   EnteringRandomGuess,
 }
 
-export class ClientGame extends PlayerState implements GameUpdates {
+export class ClientGame implements GameUpdates {
   public Exit(): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, 2000)).then(() =>
       this.board.Exit()
@@ -38,8 +36,7 @@ export class ClientGame extends PlayerState implements GameUpdates {
     DeregisterGameClient(socket);
   }
   private board: GameState;
-  constructor() {
-    super();
+  constructor(private socket: ClientSocket) {
     this.board = new GameState(
       document.getElementById('game-board')!,
       (key: string) => this.Input(key),
@@ -101,7 +98,7 @@ export class ClientGame extends PlayerState implements GameUpdates {
 
   OpponentDisconnected() {
     this.board.OpponentDisconnected();
-    this.SwitchState(new LobbyManager());
+    // this.SwitchState(new LobbyManager(this.socket, this.set));
   }
 
   SetSecret(secret: Word) {
@@ -122,7 +119,7 @@ export class ClientGame extends PlayerState implements GameUpdates {
 
   EndGame(): Promise<void> {
     return new Promise<void>(resolve => {
-      this.SwitchState(new LobbyManager(this.board.GameOver()));
+      //   this.SwitchState(new LobbyManager(this.board.GameOver()));
       resolve();
     });
   }

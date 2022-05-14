@@ -5,17 +5,15 @@ const InputManager_1 = require("./input/InputManager");
 const GameState_1 = require("../model/GameState");
 const GameNetworkTypes_1 = require("../../network/GameNetworkTypes");
 const Updates_1 = require("../network/Updates");
-const PlayerState_1 = require("../../client/PlayerState");
-const LobbyManager_1 = require("../../lobby/state/LobbyManager");
 var State;
 (function (State) {
     State[State["None"] = 0] = "None";
     State[State["SubmissionOpen"] = 1] = "SubmissionOpen";
     State[State["EnteringRandomGuess"] = 2] = "EnteringRandomGuess";
 })(State || (State = {}));
-class ClientGame extends PlayerState_1.PlayerState {
-    constructor() {
-        super();
+class ClientGame {
+    constructor(socket) {
+        this.socket = socket;
         this.state = State.None;
         this.board = new GameState_1.GameState(document.getElementById('game-board'), (key) => this.Input(key), (guess, currentGuessLength) => this.SubmitRandomGuess(guess, currentGuessLength));
         new InputManager_1.InputManager((char) => this.Input(char), () => this.Input('DEL'), () => this.Input('ENT'));
@@ -78,7 +76,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     }
     OpponentDisconnected() {
         this.board.OpponentDisconnected();
-        this.SwitchState(new LobbyManager_1.LobbyManager());
+        // this.SwitchState(new LobbyManager(this.socket, this.set));
     }
     SetSecret(secret) {
         this.board.SetSecret(secret);
@@ -95,7 +93,7 @@ class ClientGame extends PlayerState_1.PlayerState {
     }
     EndGame() {
         return new Promise(resolve => {
-            this.SwitchState(new LobbyManager_1.LobbyManager(this.board.GameOver()));
+            //   this.SwitchState(new LobbyManager(this.board.GameOver()));
             resolve();
         });
     }

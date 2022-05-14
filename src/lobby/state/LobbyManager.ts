@@ -1,19 +1,9 @@
 import {ClientSocket} from '../../client/ClientNetworking';
-import {LobbyState, PlayerState} from '../../client/PlayerState';
-import {ClientGame} from '../../game/client/ClientGame';
+import {LobbyState} from '../../client/PlayerState';
 import {LoadingState} from './loading/LoadingState';
-import {RematchState} from './rematch/RematchState';
-import {EndGameSummary} from '../../structs/EndGameState';
 
-export class LobbyManager extends PlayerState {
-  public Exit(): Promise<void> {
-    if (this.state) {
-      return this.state.Exit();
-    } else {
-      return Promise.resolve();
-    }
-  }
-  private state: LobbyState | null = null;
+export class LobbyManager {
+  private state?: LobbyState;
 
   protected Register(socket: ClientSocket): void {
     socket.on('GameReady', () => {
@@ -24,26 +14,20 @@ export class LobbyManager extends PlayerState {
     socket.removeAllListeners('GameReady');
   }
 
-  constructor(private endState: EndGameSummary | null = null) {
-    super();
+  constructor(private socket: ClientSocket) {
+    this.Register(socket);
+    socket.emit('ClientReady');
+    this.state = new LoadingState();
+    this.state.Initialize(this.socket!, (nextState: LobbyState) =>
+      this.SetState(nextState)
+    );
   }
 
   private SetState(nextState: LobbyState) {
     this.state = nextState;
   }
 
-  protected Enter(): void {
-    if (this.endState !== null) {
-      this.state = new RematchState(this.endState);
-    } else {
-      this.state = new LoadingState();
-    }
-    this.state.Initialize(this.socket!, (nextState: LobbyState) =>
-      this.SetState(nextState)
-    );
-  }
-
   GameReady() {
-    this.SwitchState(new ClientGame());
+    // this.SwitchState(new ClientGame());
   }
 }
