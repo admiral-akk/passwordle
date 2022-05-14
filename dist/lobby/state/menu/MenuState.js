@@ -52,13 +52,6 @@ exports.MenuState = MenuState;
 class MenuModal extends Modal_1.Modal {
     constructor(hostLobby, matchmake) {
         super();
-        this.AddDiv('explain-game', `In Passwordle, each player has a different password.
-
-    The winner is the first to figure out their opponent's password.
-    
-    However, each guess gives clues to both players. For example:
-    
-    If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`);
         this.AddDiv('menu-seperator');
         const buttons = this.AddDiv('menu-buttons');
         this.copyLinkButton = this.AddButton(buttons, 'private-game', 'Invite Friend', () => {

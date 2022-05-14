@@ -11,8 +11,8 @@ export abstract class Modal {
   protected base: HTMLElement;
   constructor() {
     const root = document.getElementById('lobby')!;
-    const background = this.AddRootDiv(root, 'background');
-    this.base = this.AddRootDiv(background, 'modal');
+    const background = this.AddRootDiv(root, 'background2');
+    this.base = this.AddRootDiv(background, 'modal2');
   }
 
   protected AddButton(
