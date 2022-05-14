@@ -6,22 +6,22 @@ class LobbyManager {
     constructor(socket) {
         this.socket = socket;
         this.Register(socket);
-        socket.emit('ClientReady');
-        this.state = new LoadingState_1.LoadingState();
-        this.state.Initialize(this.socket, (nextState) => this.SetState(nextState));
+        this.EnterLobby(new LoadingState_1.LoadingState());
+        this.socket.emit('ClientReady');
     }
     Register(socket) {
         socket.on('GameReady', () => {
             this.GameReady();
         });
     }
-    Deregister(socket) {
-        socket.removeAllListeners('GameReady');
-    }
-    SetState(nextState) {
-        this.state = nextState;
+    EnterLobby(state) {
+        this.state = state;
+        this.state.Initialize(this.socket, (nextState) => (this.state = nextState));
     }
     GameReady() {
+        var _a;
+        (_a = this.state) === null || _a === void 0 ? void 0 : _a.Exit();
+        this.state = undefined;
         // this.SwitchState(new ClientGame());
     }
 }

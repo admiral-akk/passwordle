@@ -10,24 +10,24 @@ export class LobbyManager {
       this.GameReady();
     });
   }
-  protected Deregister(socket: ClientSocket): void {
-    socket.removeAllListeners('GameReady');
-  }
 
   constructor(private socket: ClientSocket) {
     this.Register(socket);
-    socket.emit('ClientReady');
-    this.state = new LoadingState();
-    this.state.Initialize(this.socket!, (nextState: LobbyState) =>
-      this.SetState(nextState)
+    this.EnterLobby(new LoadingState());
+    this.socket.emit('ClientReady');
+  }
+
+  EnterLobby(state: LobbyState) {
+    this.state = state;
+    this.state.Initialize(
+      this.socket!,
+      (nextState: LobbyState) => (this.state = nextState)
     );
   }
 
-  private SetState(nextState: LobbyState) {
-    this.state = nextState;
-  }
-
   GameReady() {
+    this.state?.Exit();
+    this.state = undefined;
     // this.SwitchState(new ClientGame());
   }
 }
