@@ -5,13 +5,13 @@ class Subview {
     constructor(base, rootClassName, explanationText = '', longFormExplanationText = '') {
         this.elements = [];
         this.subviews = [];
+        if (explanationText !== '') {
+            this.AddExplanation(base, explanationText);
+        }
         this.root = this.AddDiv(base, rootClassName);
         if (longFormExplanationText !== '') {
             this.root.classList.add('explain-hover');
             this.AddLongExplanation(base, longFormExplanationText);
-        }
-        if (explanationText !== '') {
-            this.AddExplanation(base, explanationText);
         }
     }
     Exit() {

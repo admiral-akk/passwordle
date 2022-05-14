@@ -7,7 +7,7 @@ const LetterView_1 = require("./word/letter/LetterView");
 const WordView_1 = require("./word/WordView");
 class YourBoardView extends Subview_1.Subview {
     constructor(base) {
-        super(base, 'board', 'Your Guesses');
+        super(base, 'board', 'You');
         this.words = [];
         for (let i = 0; i < 6; i++) {
             const word = new PlayerWordView(this.root);

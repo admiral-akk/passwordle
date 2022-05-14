@@ -8,13 +8,13 @@ export abstract class Subview {
     explanationText = '',
     longFormExplanationText = ''
   ) {
+    if (explanationText !== '') {
+      this.AddExplanation(base, explanationText);
+    }
     this.root = this.AddDiv(base, rootClassName);
     if (longFormExplanationText !== '') {
       this.root.classList.add('explain-hover');
       this.AddLongExplanation(base, longFormExplanationText);
-    }
-    if (explanationText !== '') {
-      this.AddExplanation(base, explanationText);
     }
   }
 

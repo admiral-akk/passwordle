@@ -8,7 +8,7 @@ import {BaseWordView} from './word/WordView';
 export class YourBoardView extends Subview {
   protected words: PlayerWordView[];
   constructor(base: HTMLElement) {
-    super(base, 'board', 'Your Guesses');
+    super(base, 'board', 'You');
     this.words = [];
     for (let i = 0; i < 6; i++) {
       const word = new PlayerWordView(this.root);
