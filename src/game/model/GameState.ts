@@ -98,8 +98,8 @@ export class GameState implements GameActions, GameUpdates {
     const yourGuess = this.GetCurrentGuess();
     const yourPassword = this.yourPassword.GetPassword();
 
-    const yourKnowledge = GetKnowledge(yourGuess, yourPassword);
-    const opponentKnowledge = GetKnowledge(opponentGuess, yourPassword);
+    const yourKnowledge = GetKnowledge(yourGuess, opponentPassword);
+    const opponentKnowledge = GetKnowledge(opponentGuess, opponentPassword);
 
     const yourProgress = this.yourPassword.GetProgress();
     UpdateProgress(yourProgress, GetKnowledge(yourGuess, yourPassword));

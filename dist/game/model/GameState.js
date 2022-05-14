@@ -68,8 +68,8 @@ class GameState {
     GenerateKnowledgeUpdate(opponentGuess, opponentPassword) {
         const yourGuess = this.GetCurrentGuess();
         const yourPassword = this.yourPassword.GetPassword();
-        const yourKnowledge = (0, WordleLogic_1.GetKnowledge)(yourGuess, yourPassword);
-        const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(opponentGuess, yourPassword);
+        const yourKnowledge = (0, WordleLogic_1.GetKnowledge)(yourGuess, opponentPassword);
+        const opponentKnowledge = (0, WordleLogic_1.GetKnowledge)(opponentGuess, opponentPassword);
         const yourProgress = this.yourPassword.GetProgress();
         (0, TargetProgress_1.UpdateProgress)(yourProgress, (0, WordleLogic_1.GetKnowledge)(yourGuess, yourPassword));
         (0, TargetProgress_1.UpdateProgress)(yourProgress, (0, WordleLogic_1.GetKnowledge)(opponentGuess, yourPassword));
