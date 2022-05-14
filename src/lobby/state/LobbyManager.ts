@@ -1,5 +1,5 @@
 import {ClientSocket} from '../../client/ClientNetworking';
-import {LobbyState} from '../../client/PlayerState';
+import {LobbyState} from './LobbyState';
 import {LoadingState} from './loading/LoadingState';
 
 export class LobbyManager {

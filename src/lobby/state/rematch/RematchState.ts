@@ -2,7 +2,7 @@ import {TargetProgress} from '../../../structs/TargetProgress';
 import {LetterColor} from '../../../game/model/view/word/letter/LetterView';
 import {BaseWordView} from '../../../game/model/view/word/WordView';
 import {Word} from '../../../structs/Word';
-import {LobbyState} from '../../../client/PlayerState';
+import {LobbyState} from '../LobbyState';
 import {
   EndGameState,
   EndGameSummary,

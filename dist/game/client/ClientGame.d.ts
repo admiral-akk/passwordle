@@ -4,10 +4,8 @@ import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/Updat
 import { ClientSocket } from '../../client/ClientNetworking';
 export declare class ClientGame implements GameUpdates {
     private socket;
-    Exit(): Promise<void>;
-    protected Enter(): void;
     protected Register(socket: ClientSocket): void;
-    protected Deregister(socket: ClientSocket): void;
+    StartGame(): void;
     private board;
     constructor(socket: ClientSocket);
     AddedChar(update: AddedChar): void;

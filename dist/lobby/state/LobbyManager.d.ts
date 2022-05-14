@@ -1,5 +1,5 @@
 import { ClientSocket } from '../../client/ClientNetworking';
-import { LobbyState } from '../../client/PlayerState';
+import { LobbyState } from './LobbyState';
 export declare class LobbyManager {
     private socket;
     private state?;

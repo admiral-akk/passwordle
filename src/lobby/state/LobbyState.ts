@@ -1,5 +1,4 @@
-import {LobbyClientSocket} from '../network/LobbyNetworkTypes';
-import {ClientSocket} from './ClientNetworking';
+import {LobbyClientSocket} from '../../network/LobbyNetworkTypes';
 
 abstract class State<SocketType> {
   protected socket: SocketType | null = null;
@@ -26,7 +25,5 @@ abstract class State<SocketType> {
     this.Enter();
   }
 }
-
-export abstract class PlayerState extends State<ClientSocket> {}
 
 export abstract class LobbyState extends State<LobbyClientSocket> {}

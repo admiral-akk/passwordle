@@ -9,6 +9,7 @@ class Player {
         this.socket = (0, ClientNetworking_1.GetSocket)();
         this.lobby = new LobbyManager_1.LobbyManager(this.socket);
         this.game = new ClientGame_1.ClientGame(this.socket);
+        this.socket.on('GameReady', () => this.game.StartGame());
     }
 }
 exports.Player = Player;

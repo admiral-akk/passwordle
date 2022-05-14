@@ -17,18 +17,13 @@ class ClientGame {
         this.state = State.None;
         this.board = new GameState_1.GameState(document.getElementById('game-board'), (key) => this.Input(key), (guess, currentGuessLength) => this.SubmitRandomGuess(guess, currentGuessLength));
         new InputManager_1.InputManager((char) => this.Input(char), () => this.Input('DEL'), () => this.Input('ENT'));
-    }
-    Exit() {
-        return new Promise(resolve => setTimeout(resolve, 2000)).then(() => this.board.Exit());
-    }
-    Enter() {
-        this.socket.emit('GameClientReady');
+        (0, GameNetworkTypes_1.RegisterGameClient)(socket, this);
     }
     Register(socket) {
         (0, GameNetworkTypes_1.RegisterGameClient)(socket, this);
     }
-    Deregister(socket) {
-        (0, GameNetworkTypes_1.DeregisterGameClient)(socket);
+    StartGame() {
+        this.socket.emit('GameClientReady');
     }
     AddedChar(update) { }
     Deleted() { }

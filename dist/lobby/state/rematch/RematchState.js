@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RematchState = void 0;
 const LetterView_1 = require("../../../game/model/view/word/letter/LetterView");
 const WordView_1 = require("../../../game/model/view/word/WordView");
-const PlayerState_1 = require("../../../client/PlayerState");
+const LobbyState_1 = require("../LobbyState");
 const EndGameState_1 = require("../../../structs/EndGameState");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");
@@ -13,7 +13,7 @@ var State;
     State[State["RematchDeclined"] = 1] = "RematchDeclined";
     State[State["RematchRequested"] = 2] = "RematchRequested";
 })(State || (State = {}));
-class RematchState extends PlayerState_1.LobbyState {
+class RematchState extends LobbyState_1.LobbyState {
     constructor(endState) {
         super();
         this.endState = endState;

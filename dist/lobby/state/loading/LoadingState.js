@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoadingState = void 0;
-const PlayerState_1 = require("../../../client/PlayerState");
+const LobbyState_1 = require("../LobbyState");
 const LobbyId_1 = require("../../../structs/LobbyId");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");
@@ -12,7 +12,7 @@ var State;
     State[State["JoiningLobby"] = 2] = "JoiningLobby";
     State[State["LobbyNotFound"] = 3] = "LobbyNotFound";
 })(State || (State = {}));
-class LoadingState extends PlayerState_1.LobbyState {
+class LoadingState extends LobbyState_1.LobbyState {
     constructor() {
         super();
         this.modal = new LoadingModal();

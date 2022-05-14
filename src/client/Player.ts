@@ -4,7 +4,9 @@ import {ClientSocket, GetSocket} from './ClientNetworking';
 
 export class Player {
   private socket: ClientSocket = GetSocket();
-  constructor() {}
+  constructor() {
+    this.socket.on('GameReady', () => this.game.StartGame());
+  }
   private lobby: LobbyManager = new LobbyManager(this.socket);
   private game: ClientGame = new ClientGame(this.socket);
 }

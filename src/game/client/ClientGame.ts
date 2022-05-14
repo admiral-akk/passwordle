@@ -1,11 +1,7 @@
 import {InputManager} from './input/InputManager';
 import {Word} from '../../structs/Word';
 import {GameState} from '../model/GameState';
-import {
-  DeregisterGameClient,
-  RegisterGameClient,
-  GameUpdates,
-} from '../../network/GameNetworkTypes';
+import {RegisterGameClient, GameUpdates} from '../../network/GameNetworkTypes';
 import {
   AddedChar,
   LockedGuess,
@@ -20,21 +16,14 @@ enum State {
 }
 
 export class ClientGame implements GameUpdates {
-  public Exit(): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, 2000)).then(() =>
-      this.board.Exit()
-    );
-  }
-  protected Enter(): void {
-    this.socket!.emit('GameClientReady');
-  }
-
   protected Register(socket: ClientSocket): void {
     RegisterGameClient(socket, this);
   }
-  protected Deregister(socket: ClientSocket): void {
-    DeregisterGameClient(socket);
+
+  StartGame() {
+    this.socket!.emit('GameClientReady');
   }
+
   private board: GameState;
   constructor(private socket: ClientSocket) {
     this.board = new GameState(
@@ -48,7 +37,9 @@ export class ClientGame implements GameUpdates {
       () => this.Input('DEL'),
       () => this.Input('ENT')
     );
+    RegisterGameClient(socket, this);
   }
+
   AddedChar(update: AddedChar) {}
   Deleted() {}
   LockedGuess(update: LockedGuess) {}

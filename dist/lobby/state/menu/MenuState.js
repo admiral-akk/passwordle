@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MenuState = void 0;
 const Animate_1 = require("../../../game/model/view/Animate");
-const PlayerState_1 = require("../../../client/PlayerState");
+const LobbyState_1 = require("../LobbyState");
 const LobbyId_1 = require("../../../structs/LobbyId");
 const Modal_1 = require("../Modal");
-class MenuState extends PlayerState_1.LobbyState {
+class MenuState extends LobbyState_1.LobbyState {
     constructor(lobbyId) {
         super();
         this.lobbyId = lobbyId;
