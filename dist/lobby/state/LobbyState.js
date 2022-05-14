@@ -4,7 +4,6 @@ exports.LobbyState = void 0;
 class State {
     constructor() {
         this.socket = null;
-        this.setState = null;
     }
     SwitchState(nextState) {
         this.Deregister(this.socket);

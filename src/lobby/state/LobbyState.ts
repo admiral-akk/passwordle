@@ -2,7 +2,7 @@ import {LobbyClientSocket} from '../../network/LobbyNetworkTypes';
 
 abstract class State<SocketType> {
   protected socket: SocketType | null = null;
-  private setState: ((nextState: State<SocketType>) => void) | null = null;
+  private setState?: (nextState: State<SocketType>) => void;
   protected SwitchState(nextState: State<SocketType>) {
     this.Deregister(this.socket!);
     this.Exit().then(() => {

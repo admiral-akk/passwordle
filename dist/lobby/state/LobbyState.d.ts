@@ -1,7 +1,7 @@
 import { LobbyClientSocket } from '../../network/LobbyNetworkTypes';
 declare abstract class State<SocketType> {
     protected socket: SocketType | null;
-    private setState;
+    private setState?;
     protected SwitchState(nextState: State<SocketType>): void;
     protected abstract Enter(): void;
     abstract Exit(): Promise<void>;
