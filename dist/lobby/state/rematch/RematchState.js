@@ -60,7 +60,7 @@ class RematchModal extends Modal_1.Modal {
         this.AddMatchOutcome(endState);
         this.rematchDiv = this.AddRootDiv(this.container, 'rematch-text');
         const buttons = this.AddRootDiv(this.container, 'menu-button-container');
-        this.AddButton(buttons, 'menu-button', 'Return to Menu', () => {
+        this.returnToMenuButton = this.AddButton(buttons, 'menu-button', 'Return to Menu', () => {
             this.rematchButton.disabled = true;
             returnToMenu();
         });
@@ -72,6 +72,8 @@ class RematchModal extends Modal_1.Modal {
     }
     RematchExit(state) {
         return new Promise(resolve => {
+            this.rematchButton.disabled = true;
+            this.returnToMenuButton.disabled = true;
             if (state === State.RematchDeclined) {
                 resolve(this.RematchDeclined());
             }

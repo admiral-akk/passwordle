@@ -23,7 +23,16 @@ class KeyboardState extends ModelState_1.ModelState {
     }
     SetState(key, state) {
         var _a;
-        if (key in this.keyState && this.keyState[key] === LetterState_1.LetterState.Correct) {
+        console.log(`setting key state: ${key}, ${state}`);
+        if (!(key in this.keyState)) {
+            this.keyState[key] = state;
+            return;
+        }
+        if (this.keyState[key] === LetterState_1.LetterState.Correct) {
+            return;
+        }
+        if (this.keyState[key] === LetterState_1.LetterState.WrongPosition &&
+            state !== LetterState_1.LetterState.Correct) {
             return;
         }
         this.keyState[key] = state;

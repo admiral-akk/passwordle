@@ -15,7 +15,18 @@ export class KeyboardState extends ModelState<KeyboardView> {
   }
 
   private SetState(key: string, state: LetterState) {
-    if (key in this.keyState && this.keyState[key] === LetterState.Correct) {
+    console.log(`setting key state: ${key}, ${state}`);
+    if (!(key in this.keyState)) {
+      this.keyState[key] = state;
+      return;
+    }
+    if (this.keyState[key] === LetterState.Correct) {
+      return;
+    }
+    if (
+      this.keyState[key] === LetterState.WrongPosition &&
+      state !== LetterState.Correct
+    ) {
       return;
     }
     this.keyState[key] = state;

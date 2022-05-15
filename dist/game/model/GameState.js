@@ -178,7 +178,6 @@ class GameState {
         animations.push(...this.opponentBoard.Update(update.opponentKnowledge));
         animations.push(...this.yourPassword.Update(update.playerProgress, update.playerKnowledge.guess));
         animations.push(...this.opponentPassword.Update(update.opponentProgress, update.playerKnowledge.guess));
-        this.keyboard.Update([update.playerKnowledge, update.opponentKnowledge]);
         // Sequence them
         const sequence = {};
         animations.forEach(animation => {
@@ -188,8 +187,11 @@ class GameState {
             }
             sequence[index].push(animation.animationStart);
         });
+        this.keyboard.Update([update.playerKnowledge, update.opponentKnowledge]);
         // String them into a promise
-        let promise = new Promise(resolve => resolve());
+        let promise = new Promise(resolve => {
+            resolve();
+        });
         for (let i = 0; i < 10; i++) {
             if (!(i in sequence)) {
                 continue;

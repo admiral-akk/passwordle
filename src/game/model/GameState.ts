@@ -262,8 +262,6 @@ export class GameState implements GameUpdates, ImmutableGameState {
       )
     );
 
-    this.keyboard.Update([update.playerKnowledge, update.opponentKnowledge]);
-
     // Sequence them
     const sequence: Record<number, (() => void)[]> = {};
     animations.forEach(animation => {
@@ -273,9 +271,12 @@ export class GameState implements GameUpdates, ImmutableGameState {
       }
       sequence[index].push(animation.animationStart);
     });
+    this.keyboard.Update([update.playerKnowledge, update.opponentKnowledge]);
 
     // String them into a promise
-    let promise = new Promise<void>(resolve => resolve());
+    let promise = new Promise<void>(resolve => {
+      resolve();
+    });
     for (let i = 0; i < 10; i++) {
       if (!(i in sequence)) {
         continue;

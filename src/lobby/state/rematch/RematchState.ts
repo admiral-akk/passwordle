@@ -67,6 +67,8 @@ export class RematchState extends LobbyState {
 class RematchModal extends Modal {
   RematchExit(state: State): Promise<void> {
     return new Promise(resolve => {
+      this.rematchButton.disabled = true;
+      this.returnToMenuButton.disabled = true;
       if (state === State.RematchDeclined) {
         resolve(this.RematchDeclined());
       } else {
@@ -96,6 +98,7 @@ class RematchModal extends Modal {
   }
 
   private rematchDiv: HTMLDivElement;
+  private returnToMenuButton: HTMLButtonElement;
   private rematchButton: HTMLButtonElement;
   private container: HTMLElement;
 
@@ -109,10 +112,15 @@ class RematchModal extends Modal {
     this.AddMatchOutcome(endState);
     this.rematchDiv = this.AddRootDiv(this.container, 'rematch-text');
     const buttons = this.AddRootDiv(this.container, 'menu-button-container');
-    this.AddButton(buttons, 'menu-button', 'Return to Menu', () => {
-      this.rematchButton.disabled = true;
-      returnToMenu();
-    });
+    this.returnToMenuButton = this.AddButton(
+      buttons,
+      'menu-button',
+      'Return to Menu',
+      () => {
+        this.rematchButton.disabled = true;
+        returnToMenu();
+      }
+    );
     this.rematchButton = this.AddButton(
       buttons,
       'menu-button',
