@@ -33,7 +33,7 @@ class ClientGame extends GameState_1.GameState {
     SubmitRandomGuess(guess, currentGuessLength) {
         this.clientState = State.EnteringRandomGuess;
         let animations = new Promise(resolve => {
-            resolve();
+            setTimeout(resolve, 1000);
         });
         for (let i = 0; i < currentGuessLength; i++) {
             animations = animations

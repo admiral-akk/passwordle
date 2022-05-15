@@ -103,7 +103,7 @@ function ImageSrc(index) {
 const TUTORIAL_TEXT = [
     'In Passwordle, you are trying to guess their password...',
     'Before they guess your password.',
-    "If letter matches your opponent's password, it will turn green.",
+    "If a letter matches your opponent's password, it will turn green.",
     "If a letter is in your opponent's password, it will turn yellow.",
     "If a letter isn't in your opponent's password, it will turn grey.",
     'Guesses will be revealed simultanously...',
