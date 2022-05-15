@@ -74,7 +74,7 @@ class SimpleTutorialModal extends Modal {
   }
   constructor() {
     super();
-    this.container = this.AddDiv('tutorial-container2');
+    this.container = this.AddDiv('tutorial-container');
 
     const textContainer = this.AddRootDiv(
       this.container,

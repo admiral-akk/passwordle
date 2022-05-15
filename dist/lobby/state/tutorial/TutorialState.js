@@ -61,7 +61,7 @@ class SimpleTutorialModal extends Modal_1.Modal {
     constructor() {
         super();
         this.state = State.None;
-        this.container = this.AddDiv('tutorial-container2');
+        this.container = this.AddDiv('tutorial-container');
         const textContainer = this.AddRootDiv(this.container, 'tutorial-text-container');
         for (let i = 0; i < TEXT.length; i++) {
             if (i > 0 && i % 2 === 0) {
