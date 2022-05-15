@@ -88,7 +88,7 @@ class RematchModal extends Modal {
   }
 
   public RematchRequested() {
-    this.rematchDiv.innerText = 'Opponent requested rematch!';
+    this.rematchDiv.innerText = 'They requested rematch!';
     this.rematchButton.innerText = 'Accept Rematch';
   }
 
