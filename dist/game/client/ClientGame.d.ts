@@ -1,30 +1,18 @@
-import { Word } from '../../structs/Word';
-import { GameUpdates } from '../../network/GameNetworkTypes';
-import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/Updates';
+import { GameState } from '../model/GameState';
+import { UpdatedAnswerKnowledge } from '../network/Updates';
 import { ClientSocket } from '../../client/ClientNetworking';
 import { EndGameSummary } from '../../structs/EndGameState';
-export declare class ClientGame implements GameUpdates {
+export declare class ClientGame extends GameState {
     private socket;
     private gameEnd;
-    protected Register(socket: ClientSocket): void;
-    private Reset;
+    private validator;
+    private updater;
+    private clientState;
     StartGame(): void;
-    private board;
     constructor(socket: ClientSocket, gameEnd: (endGame: EndGameSummary) => void);
-    AddedChar(update: AddedChar): void;
-    Deleted(): void;
-    LockedGuess(update: LockedGuess): void;
-    private state;
     private SubmitRandomGuess;
     private Input;
     OpponentDisconnected(): void;
-    SetSecret(secret: Word): void;
-    OpponentLockedGuess(): void;
-    OpponentDeleted(): void;
-    OpponentAddedChar(): void;
     EndGame(endGameSummary: EndGameSummary): Promise<void>;
-    UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): void;
-    AddChar(char: string): void;
-    Delete(): void;
-    Submit(): void;
+    UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void>;
 }

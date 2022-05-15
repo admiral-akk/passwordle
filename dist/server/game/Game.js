@@ -9,19 +9,19 @@ class Game {
         this.players = players;
         this.gameStates = {};
         this.updaters = {};
-        this.AddedChar = (update, playerId) => {
+        this.AddChar = (update, playerId) => {
             const opponentId = this.GetOpponent(playerId);
             this.updaters[playerId].AddedChar(update);
             this.updaters[opponentId].OpponentAddedChar();
         };
-        this.Deleted = (playerId) => {
+        this.Delete = (playerId) => {
             const opponentId = this.GetOpponent(playerId);
             this.updaters[playerId].Deleted();
             this.updaters[opponentId].OpponentDeleted();
         };
-        this.LockedGuess = (update, playerId) => {
+        this.LockGuess = (playerId) => {
             const opponentId = this.GetOpponent(playerId);
-            this.updaters[playerId].LockedGuess(update);
+            this.updaters[playerId].LockedGuess();
             this.updaters[opponentId].OpponentLockedGuess();
             if (this.gameStates[playerId].GuessSubmitted() &&
                 this.gameStates[opponentId].GuessSubmitted()) {

@@ -1,14 +1,18 @@
 import {InputManager} from './input/InputManager';
 import {Word} from '../../structs/Word';
 import {GameState} from '../model/GameState';
-import {RegisterGameClient, GameUpdates} from '../../network/GameNetworkTypes';
 import {
-  AddedChar,
-  LockedGuess,
-  UpdatedAnswerKnowledge,
-} from '../network/Updates';
+  RegisterGameClient,
+  DeregisterGameClient,
+} from '../../network/GameNetworkTypes';
+import {AddedChar, UpdatedAnswerKnowledge} from '../network/Updates';
 import {ClientSocket} from '../../client/ClientNetworking';
 import {EndGameSummary} from '../../structs/EndGameState';
+import {
+  GameActionEmitter,
+  GameValidator,
+} from '../../server/game/GameValidator';
+import {GameUpdater} from '../../server/game/GameUpdater';
 
 enum State {
   None,
@@ -16,26 +20,21 @@ enum State {
   EnteringRandomGuess,
 }
 
-export class ClientGame implements GameUpdates {
-  protected Register(socket: ClientSocket): void {
-    RegisterGameClient(socket, this);
-  }
-
-  private Reset() {
-    this.board.Reset();
-  }
+export class ClientGame extends GameState {
+  private validator: GameValidator;
+  private updater: GameUpdater;
+  private clientState: State = State.None;
 
   StartGame() {
     this.Reset();
     this.socket!.emit('GameClientReady');
   }
 
-  private board: GameState;
   constructor(
     private socket: ClientSocket,
     private gameEnd: (endGame: EndGameSummary) => void
   ) {
-    this.board = new GameState(
+    super(
       document.getElementById('game-board')!,
       (key: string) => this.Input(key),
       (guess: Word, currentGuessLength: number) =>
@@ -46,24 +45,22 @@ export class ClientGame implements GameUpdates {
       () => this.Input('DEL'),
       () => this.Input('ENT')
     );
-    RegisterGameClient(socket, this);
+    this.validator = new GameValidator(this, new GameActionEmitter(socket));
+    this.updater = new GameUpdater([this]);
+    RegisterGameClient(socket, this.updater);
+    socket.on('SetSecret', () => (this.clientState = State.SubmissionOpen));
+    socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
   }
 
-  AddedChar(update: AddedChar) {}
-  Deleted() {}
-  LockedGuess(update: LockedGuess) {}
-
-  private state: State = State.None;
-
   private SubmitRandomGuess(guess: Word, currentGuessLength: number) {
-    this.state = State.EnteringRandomGuess;
+    this.clientState = State.EnteringRandomGuess;
     let animations: Promise<void> = new Promise(resolve => {
       resolve();
     });
     for (let i = 0; i < currentGuessLength; i++) {
       animations = animations
         .then(() => {
-          this.Delete();
+          this.Input('DEL', true);
           return Promise.resolve();
         })
         .then(() => new Promise(resolve => setTimeout(resolve, 300)));
@@ -71,50 +68,32 @@ export class ClientGame implements GameUpdates {
     for (let i = 0; i < guess.length; i++) {
       animations = animations
         .then(() => {
-          this.AddChar(guess[i]);
+          this.Input(guess[i], true);
           return Promise.resolve();
         })
         .then(() => new Promise(resolve => setTimeout(resolve, 300)));
     }
     animations.then(() => {
-      this.Submit();
-      this.state = State.SubmissionOpen;
+      this.Input('ENT', true);
       return Promise.resolve();
     });
   }
 
-  private Input(key: string) {
-    if (this.state !== State.SubmissionOpen) {
+  private Input(key: string, overrideState = false) {
+    if (this.clientState !== State.SubmissionOpen && !overrideState) {
       return;
     }
     if (key.length === 1) {
-      this.AddChar(key);
+      this.validator.AddChar(new AddedChar(key));
     } else if (key === 'ENT') {
-      this.Submit();
+      this.validator.LockGuess();
     } else {
-      this.Delete();
+      this.validator.Delete();
     }
   }
 
   OpponentDisconnected() {
-    this.board.OpponentDisconnected();
     // this.SwitchState(new LobbyManager(this.socket, this.set));
-  }
-
-  SetSecret(secret: Word) {
-    this.board.SetSecret(secret);
-    this.state = State.SubmissionOpen;
-  }
-  OpponentLockedGuess() {
-    this.board.OpponentLockedGuess();
-  }
-
-  OpponentDeleted() {
-    this.board.OpponentDeleted();
-  }
-
-  OpponentAddedChar() {
-    this.board.OpponentAddedChar();
   }
 
   EndGame(endGameSummary: EndGameSummary): Promise<void> {
@@ -124,42 +103,16 @@ export class ClientGame implements GameUpdates {
     });
   }
 
-  UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge) {
-    const animationPromise = this.board.UpdatedAnswerKnowledge(update);
-    Promise.resolve()
-      .then(() => animationPromise)
+  UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void> {
+    return Promise.resolve()
+      .then(() => super.UpdatedAnswerKnowledge(update))
       .then(() => {
-        const gameOver = this.board.IsGameOver();
+        const gameOver = this.IsGameOver();
         if (!gameOver) {
-          this.state = State.SubmissionOpen;
+          this.clientState = State.SubmissionOpen;
           return Promise.resolve();
         }
         return this.EndGame(update.endGameState!);
       });
-  }
-
-  AddChar(char: string) {
-    const command = new AddedChar(char);
-    const res = this.board.AddedChar(command);
-    // success: tell the server/view about it
-    if (res) {
-      this.socket!.emit('AddedChar', command);
-    }
-  }
-
-  Delete() {
-    const res = this.board.Deleted();
-    // success: tell the server/view about it
-    if (res) {
-      this.socket!.emit('Deleted');
-    }
-  }
-
-  Submit() {
-    const res = this.board.LockedGuess();
-    // success: tell the server/view about it
-    if (res) {
-      this.socket!.emit('LockedGuess', new LockedGuess(res));
-    }
   }
 }

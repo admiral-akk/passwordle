@@ -1,9 +1,15 @@
 import { Word } from '../../structs/Word';
-import { GameActions, GameUpdates } from '../../network/GameNetworkTypes';
-import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/Updates';
+import { GameUpdates } from '../../network/GameNetworkTypes';
+import { AddedChar, UpdatedAnswerKnowledge } from '../network/Updates';
 import { EndGameSummary } from '../../structs/EndGameState';
 import { TargetProgress } from '../../structs/TargetProgress';
-export declare class GameState implements GameActions, GameUpdates {
+export interface ImmutableGameState {
+    CanAddChar(update: AddedChar): boolean;
+    CanDelete(): boolean;
+    CanLockGuess(): boolean;
+    IsReadyForNewGame(): boolean;
+}
+export declare class GameState implements GameUpdates, ImmutableGameState {
     private input;
     private submitRandomGuess;
     private state;
@@ -20,20 +26,27 @@ export declare class GameState implements GameActions, GameUpdates {
     GetPassword(): Word;
     GetProgress(): TargetProgress;
     constructor(viewRoot?: HTMLElement, input?: (key: string) => void, submitRandomGuess?: (guess: Word, currentGuessLength: number) => void);
+    RandomGuess(guess: Word): void;
+    AddedChar(update: AddedChar): boolean;
+    Deleted(): boolean;
+    LockedGuess(): void;
+    CanAddChar(update: AddedChar): boolean;
+    CanDelete(): boolean;
+    CanLockGuess(): boolean;
+    IsReadyForNewGame(): boolean;
     GenerateKnowledgeUpdate(opponentGuess: Word, opponentPassword: Word): UpdatedAnswerKnowledge;
     GameClientReady(): void;
     OpponentDisconnected(): void;
     TimerExhausted(): void;
-    AddedChar(update: AddedChar): boolean;
-    Deleted(): boolean;
-    PlayerLockedGuess(update: LockedGuess): void;
-    LockedGuess(): Word | null;
+    AddChar(update: AddedChar): boolean;
+    Delete(): boolean;
+    LockGuess(): Word | null;
     IsGameOver(): boolean;
     GameOver(): EndGameSummary;
     OpponentAddedChar(): void;
     OpponentDeleted(): void;
     OpponentLockedGuess(): void;
-    private endGame;
+    private endGame?;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void>;
     SetSecret(secret: Word): void;
 }

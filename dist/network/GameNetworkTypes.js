@@ -5,13 +5,14 @@ exports.GameUpdateEmitter = exports.DeregisterGameServer = exports.RegisterGameS
 function RegisterGameClient(socket, client) {
     socket.on('AddedChar', (update) => client.AddedChar(update));
     socket.on('Deleted', () => client.Deleted());
-    socket.on('LockedGuess', (update) => client.LockedGuess(update));
+    socket.on('LockedGuess', () => client.LockedGuess());
     socket.on('OpponentAddedChar', () => client.OpponentAddedChar());
     socket.on('OpponentDeleted', () => client.OpponentDeleted());
     socket.on('OpponentLockedGuess', () => client.OpponentLockedGuess());
     socket.on('SetSecret', (secret) => client.SetSecret(secret));
     socket.on('UpdatedAnswerKnowledge', (update) => client.UpdatedAnswerKnowledge(update));
     socket.on('OpponentDisconnected', () => client.OpponentDisconnected());
+    socket.on('RandomGuess', (guess) => client.RandomGuess(guess));
 }
 exports.RegisterGameClient = RegisterGameClient;
 function DeregisterGameClient(socket) {
@@ -24,12 +25,13 @@ function DeregisterGameClient(socket) {
     socket.removeAllListeners('SetSecret');
     socket.removeAllListeners('UpdatedAnswerKnowledge');
     socket.removeAllListeners('OpponentDisconnected');
+    socket.removeAllListeners('RandomGuess');
 }
 exports.DeregisterGameClient = DeregisterGameClient;
 function RegisterGameServer(socket, server) {
-    socket.on('AddedChar', (update) => server.AddedChar(update));
-    socket.on('Deleted', () => server.Deleted());
-    socket.on('LockedGuess', (update) => server.LockedGuess(update));
+    socket.on('AddChar', (update) => server.AddChar(update));
+    socket.on('Delete', () => server.Delete());
+    socket.on('LockGuess', () => server.LockGuess());
     socket.on('GameClientReady', () => server.GameClientReady());
 }
 exports.RegisterGameServer = RegisterGameServer;
@@ -45,13 +47,14 @@ class GameUpdateEmitter {
         this.socket = socket;
         this.AddedChar = (update) => this.socket.emit('AddedChar', update);
         this.Deleted = () => this.socket.emit('Deleted');
-        this.LockedGuess = (update) => this.socket.emit('LockedGuess', update);
+        this.LockedGuess = () => this.socket.emit('LockedGuess');
         this.OpponentAddedChar = () => this.socket.emit('OpponentAddedChar');
         this.OpponentDeleted = () => this.socket.emit('OpponentDeleted');
         this.OpponentLockedGuess = () => this.socket.emit('OpponentLockedGuess');
         this.SetSecret = (secret) => this.socket.emit('SetSecret', secret);
         this.UpdatedAnswerKnowledge = (update) => this.socket.emit('UpdatedAnswerKnowledge', update);
         this.OpponentDisconnected = () => this.socket.emit('OpponentDisconnected');
+        this.RandomGuess = (update) => this.socket.emit('RandomGuess', update);
     }
 }
 exports.GameUpdateEmitter = GameUpdateEmitter;

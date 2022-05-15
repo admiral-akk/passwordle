@@ -1,18 +1,17 @@
-import { GameState } from '../../game/model/GameState';
-import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../../game/network/Updates';
-import { GameUpdateEmitter, GameUpdates } from '../../network/GameNetworkTypes';
+import { AddedChar, UpdatedAnswerKnowledge } from '../../game/network/Updates';
+import { GameUpdates } from '../../network/GameNetworkTypes';
 import { Word } from '../../structs/Word';
 export declare class GameUpdater implements GameUpdates {
-    private state;
-    private emitter?;
-    constructor(state: GameState, emitter?: GameUpdateEmitter | undefined);
+    private consumers;
+    constructor(consumers: GameUpdates[]);
     AddedChar: (update: AddedChar) => void;
     Deleted: () => void;
-    LockedGuess: (update: LockedGuess) => void;
+    LockedGuess: () => void;
     OpponentAddedChar: () => void;
     OpponentDeleted: () => void;
     OpponentLockedGuess: () => void;
     SetSecret: (secret: Word) => void;
     UpdatedAnswerKnowledge: (update: UpdatedAnswerKnowledge) => void;
     OpponentDisconnected: () => void;
+    RandomGuess: (guess: Word) => void;
 }

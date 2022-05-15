@@ -8,6 +8,9 @@ export declare class YourBoardState extends ModelState<YourBoardView> {
     guesses: Word[];
     currentGuess: string;
     private state;
+    CanAddChar(): boolean;
+    CanDelete(): boolean;
+    CanSubmit(): boolean;
     AddChar(char: string): boolean;
     Delete(): boolean;
     LockedGuess(): Word | null;

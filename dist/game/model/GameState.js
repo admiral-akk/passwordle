@@ -26,7 +26,6 @@ class GameState {
         this.input = input;
         this.submitRandomGuess = submitRandomGuess;
         this.state = State.None;
-        this.endGame = null;
         if (viewRoot) {
             this.view = new GameView_1.GameView(viewRoot);
             this.yourBoard = new YourBoardState_1.YourBoardState(this.view.yourBoard);
@@ -52,7 +51,8 @@ class GameState {
         this.opponentPassword.Reset();
         this.keyboard.Reset();
         this.timer.Reset();
-        this.endGame = null;
+        this.endGame = undefined;
+        this.state = State.None;
     }
     GuessSubmitted() {
         return this.state === State.GuessSubmitted;
@@ -65,6 +65,52 @@ class GameState {
     }
     GetProgress() {
         return this.yourPassword.GetProgress();
+    }
+    RandomGuess(guess) {
+        for (let i = 0; i < guess.length; i++) {
+            this.Deleted();
+        }
+        for (let i = 0; i < guess.length; i++) {
+            this.AddChar(new Updates_1.AddedChar(guess[i]));
+        }
+        this.LockedGuess();
+    }
+    AddedChar(update) {
+        return this.yourBoard.AddChar(update.char);
+    }
+    Deleted() {
+        return this.yourBoard.Delete();
+    }
+    LockedGuess() {
+        this.state = State.GuessSubmitted;
+        this.yourBoard.LockedGuess();
+    }
+    CanAddChar(update) {
+        if (update.char.length !== 1) {
+            return false;
+        }
+        if (!/^[a-zA-Z]+$/.test(update.char)) {
+            return false;
+        }
+        if (this.state !== State.SubmissionOpen) {
+            return false;
+        }
+        return this.yourBoard.CanAddChar();
+    }
+    CanDelete() {
+        if (this.state !== State.SubmissionOpen) {
+            return false;
+        }
+        return this.yourBoard.CanDelete();
+    }
+    CanLockGuess() {
+        if (this.state !== State.SubmissionOpen) {
+            return false;
+        }
+        return this.yourBoard.CanSubmit();
+    }
+    IsReadyForNewGame() {
+        return this.state === State.None;
     }
     GenerateKnowledgeUpdate(opponentGuess, opponentPassword) {
         const yourGuess = this.GetCurrentGuess();
@@ -84,23 +130,19 @@ class GameState {
     TimerExhausted() {
         this.submitRandomGuess((0, Words_1.GetRandomGuess)(), this.yourBoard.CurrentGuessLength());
     }
-    AddedChar(update) {
+    AddChar(update) {
         if (this.state !== State.SubmissionOpen) {
             return false;
         }
         return this.yourBoard.AddChar(update.char);
     }
-    Deleted() {
+    Delete() {
         if (this.state !== State.SubmissionOpen) {
             return false;
         }
         return this.yourBoard.Delete();
     }
-    PlayerLockedGuess(update) {
-        this.state = State.GuessSubmitted;
-        this.yourBoard.LockedGuess();
-    }
-    LockedGuess() {
+    LockGuess() {
         if (this.state !== State.SubmissionOpen) {
             return null;
         }
@@ -112,7 +154,7 @@ class GameState {
         return res;
     }
     IsGameOver() {
-        return this.endGame !== null;
+        return this.endGame !== undefined;
     }
     GameOver() {
         return this.endGame;

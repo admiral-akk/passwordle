@@ -23,6 +23,54 @@ export class YourBoardState extends ModelState<YourBoardView> {
   public currentGuess = '';
   private state: State = State.CanSubmit;
 
+  CanAddChar(): boolean {
+    if (this.state !== State.CanSubmit) {
+      return false;
+    }
+    if (this.currentGuess.length === 5) {
+      return false;
+    }
+    return true;
+  }
+
+  CanDelete(): boolean {
+    if (this.state !== State.CanSubmit) {
+      return false;
+    }
+    if (this.currentGuess.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
+  CanSubmit(): boolean {
+    if (this.state !== State.CanSubmit) {
+      return false;
+    }
+    if (this.currentGuess.length !== 5) {
+      this.view?.SubmitError(
+        new LockedGuessError(
+          ErrorType.TooShort,
+          this.guesses.length,
+          this.currentGuess.length
+        )
+      );
+      return false;
+    }
+    const guess = ToWord(this.currentGuess);
+    if (!IsValidWord(guess)) {
+      this.view?.SubmitError(
+        new LockedGuessError(
+          ErrorType.NotValidWord,
+          this.guesses.length,
+          this.currentGuess.length
+        )
+      );
+      return false;
+    }
+    return true;
+  }
+
   AddChar(char: string): boolean {
     if (this.state !== State.CanSubmit) {
       return false;

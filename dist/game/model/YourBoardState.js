@@ -25,6 +25,40 @@ class YourBoardState extends ModelState_1.ModelState {
         this.currentGuess = '';
         this.state = State.CanSubmit;
     }
+    CanAddChar() {
+        if (this.state !== State.CanSubmit) {
+            return false;
+        }
+        if (this.currentGuess.length === 5) {
+            return false;
+        }
+        return true;
+    }
+    CanDelete() {
+        if (this.state !== State.CanSubmit) {
+            return false;
+        }
+        if (this.currentGuess.length === 0) {
+            return false;
+        }
+        return true;
+    }
+    CanSubmit() {
+        var _a, _b;
+        if (this.state !== State.CanSubmit) {
+            return false;
+        }
+        if (this.currentGuess.length !== 5) {
+            (_a = this.view) === null || _a === void 0 ? void 0 : _a.SubmitError(new Updates_1.LockedGuessError(Updates_1.ErrorType.TooShort, this.guesses.length, this.currentGuess.length));
+            return false;
+        }
+        const guess = (0, Word_1.ToWord)(this.currentGuess);
+        if (!(0, Words_1.IsValidWord)(guess)) {
+            (_b = this.view) === null || _b === void 0 ? void 0 : _b.SubmitError(new Updates_1.LockedGuessError(Updates_1.ErrorType.NotValidWord, this.guesses.length, this.currentGuess.length));
+            return false;
+        }
+        return true;
+    }
     AddChar(char) {
         var _a, _b;
         if (this.state !== State.CanSubmit) {

@@ -1,9 +1,5 @@
 import {GameState} from '../../game/model/GameState';
-import {
-  AddedChar,
-  LockedGuess,
-  UpdatedAnswerKnowledge,
-} from '../../game/network/Updates';
+import {AddedChar, UpdatedAnswerKnowledge} from '../../game/network/Updates';
 import {GetRandomAnswer} from '../../game/Words';
 import {GameActions} from '../../network/GameNetworkTypes';
 import {PlayerId} from '../../structs/PlayerId';
@@ -30,21 +26,21 @@ export class Game implements GameActions {
     }
   }
 
-  AddedChar = (update: AddedChar, playerId?: PlayerId) => {
+  AddChar = (update: AddedChar, playerId?: PlayerId) => {
     const opponentId = this.GetOpponent(playerId!);
     this.updaters[playerId!].AddedChar(update);
     this.updaters[opponentId].OpponentAddedChar();
   };
 
-  Deleted = (playerId?: PlayerId) => {
+  Delete = (playerId?: PlayerId) => {
     const opponentId = this.GetOpponent(playerId!);
     this.updaters[playerId!].Deleted();
     this.updaters[opponentId].OpponentDeleted();
   };
 
-  LockedGuess = (update: LockedGuess, playerId?: PlayerId) => {
+  LockGuess = (playerId?: PlayerId) => {
     const opponentId = this.GetOpponent(playerId!);
-    this.updaters[playerId!].LockedGuess(update);
+    this.updaters[playerId!].LockedGuess();
     this.updaters[opponentId].OpponentLockedGuess();
     if (
       this.gameStates[playerId!].GuessSubmitted() &&

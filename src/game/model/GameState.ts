@@ -17,7 +17,6 @@ import {GetRandomGuess} from '../Words';
 import {EndGameSummary} from '../../structs/EndGameState';
 import {GameView} from './view/GameView';
 import {TargetProgress, UpdateProgress} from '../../structs/TargetProgress';
-import {WordKnowledge} from '../../structs/WordKnowledge';
 import {GetKnowledge} from '../logic/WordleLogic';
 
 enum State {
@@ -28,7 +27,14 @@ enum State {
   GameOver,
 }
 
-export class GameState implements GameActions, GameUpdates {
+export interface ImmutableGameState {
+  CanAddChar(update: AddedChar): boolean;
+  CanDelete(): boolean;
+  CanLockGuess(): boolean;
+  IsReadyForNewGame(): boolean;
+}
+
+export class GameState implements GameUpdates, ImmutableGameState {
   private state: State = State.None;
   private view?: GameView;
 
@@ -39,7 +45,8 @@ export class GameState implements GameActions, GameUpdates {
     this.opponentPassword.Reset();
     this.keyboard.Reset();
     this.timer.Reset();
-    this.endGame = null;
+    this.endGame = undefined;
+    this.state = State.None;
   }
 
   private yourBoard: YourBoardState;
@@ -92,6 +99,60 @@ export class GameState implements GameActions, GameUpdates {
     }
   }
 
+  RandomGuess(guess: Word) {
+    for (let i = 0; i < guess.length; i++) {
+      this.Deleted();
+    }
+    for (let i = 0; i < guess.length; i++) {
+      this.AddChar(new AddedChar(guess[i]));
+    }
+    this.LockedGuess();
+  }
+
+  AddedChar(update: AddedChar) {
+    return this.yourBoard.AddChar(update.char);
+  }
+
+  Deleted() {
+    return this.yourBoard.Delete();
+  }
+
+  LockedGuess() {
+    this.state = State.GuessSubmitted;
+    this.yourBoard.LockedGuess();
+  }
+
+  CanAddChar(update: AddedChar): boolean {
+    if (update.char.length !== 1) {
+      return false;
+    }
+    if (!/^[a-zA-Z]+$/.test(update.char)) {
+      return false;
+    }
+    if (this.state !== State.SubmissionOpen) {
+      return false;
+    }
+    return this.yourBoard.CanAddChar();
+  }
+
+  CanDelete(): boolean {
+    if (this.state !== State.SubmissionOpen) {
+      return false;
+    }
+    return this.yourBoard.CanDelete();
+  }
+
+  CanLockGuess(): boolean {
+    if (this.state !== State.SubmissionOpen) {
+      return false;
+    }
+    return this.yourBoard.CanSubmit();
+  }
+
+  IsReadyForNewGame(): boolean {
+    return this.state === State.None;
+  }
+
   GenerateKnowledgeUpdate(
     opponentGuess: Word,
     opponentPassword: Word
@@ -133,26 +194,21 @@ export class GameState implements GameActions, GameUpdates {
     );
   }
 
-  AddedChar(update: AddedChar): boolean {
+  AddChar(update: AddedChar): boolean {
     if (this.state !== State.SubmissionOpen) {
       return false;
     }
     return this.yourBoard.AddChar(update.char);
   }
 
-  Deleted(): boolean {
+  Delete(): boolean {
     if (this.state !== State.SubmissionOpen) {
       return false;
     }
     return this.yourBoard.Delete();
   }
 
-  PlayerLockedGuess(update: LockedGuess) {
-    this.state = State.GuessSubmitted;
-    this.yourBoard.LockedGuess();
-  }
-
-  LockedGuess(): Word | null {
+  LockGuess(): Word | null {
     if (this.state !== State.SubmissionOpen) {
       return null;
     }
@@ -165,7 +221,7 @@ export class GameState implements GameActions, GameUpdates {
   }
 
   IsGameOver(): boolean {
-    return this.endGame !== null;
+    return this.endGame !== undefined;
   }
 
   GameOver(): EndGameSummary {
@@ -183,7 +239,7 @@ export class GameState implements GameActions, GameUpdates {
     this.timer.OpponentSubmitted();
   }
 
-  private endGame: EndGameSummary | null = null;
+  private endGame?: EndGameSummary;
 
   UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void> {
     this.state = State.RevealingHints;

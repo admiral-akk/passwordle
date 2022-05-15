@@ -25,16 +25,16 @@ export class GameServer {
       const player = socket.data.playerId!;
       this.games[player] = game;
       this.gameValidators[player] = new GameValidator(
-        player,
         game.gameStates[player],
-        game
+        game,
+        player
       );
       DeregisterGameServer(socket);
       RegisterGameServer(socket, this.gameValidators[player]);
-      this.gameUpdaters[player] = new GameUpdater(
+      this.gameUpdaters[player] = new GameUpdater([
         game.gameStates[player],
-        new GameUpdateEmitter(socket)
-      );
+        new GameUpdateEmitter(socket),
+      ]);
       game.RegisterUpdater(player, this.gameUpdaters[player]);
     });
   }

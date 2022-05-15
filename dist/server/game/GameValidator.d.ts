@@ -1,14 +1,22 @@
-import { GameState } from '../../game/model/GameState';
-import { AddedChar, LockedGuess } from '../../game/network/Updates';
-import { GameActions } from '../../network/GameNetworkTypes';
+import { ImmutableGameState } from '../../game/model/GameState';
+import { AddedChar } from '../../game/network/Updates';
+import { GameActions, GameClientSocket } from '../../network/GameNetworkTypes';
 import { PlayerId } from '../../structs/PlayerId';
 export declare class GameValidator implements GameActions {
-    private playerId;
     private state;
     private emitter;
-    constructor(playerId: PlayerId, state: GameState, emitter: GameActions);
-    AddedChar: (update: AddedChar) => void;
-    Deleted: () => void;
-    LockedGuess: (update: LockedGuess) => void;
-    GameClientReady: () => void;
+    private playerId?;
+    constructor(state: ImmutableGameState, emitter: GameActions, playerId?: PlayerId | undefined);
+    AddChar(update: AddedChar): void;
+    Delete(): void;
+    LockGuess(): void;
+    GameClientReady(): void;
+}
+export declare class GameActionEmitter implements GameActions {
+    private socket;
+    constructor(socket: GameClientSocket);
+    AddChar(update: AddedChar): void;
+    Delete(): void;
+    LockGuess(): void;
+    GameClientReady(): void;
 }
