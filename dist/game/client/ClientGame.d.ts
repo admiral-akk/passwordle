@@ -2,13 +2,15 @@ import { Word } from '../../structs/Word';
 import { GameUpdates } from '../../network/GameNetworkTypes';
 import { AddedChar, LockedGuess, UpdatedAnswerKnowledge } from '../network/Updates';
 import { ClientSocket } from '../../client/ClientNetworking';
+import { EndGameSummary } from '../../structs/EndGameState';
 export declare class ClientGame implements GameUpdates {
     private socket;
+    private gameEnd;
     protected Register(socket: ClientSocket): void;
     private Reset;
     StartGame(): void;
     private board;
-    constructor(socket: ClientSocket);
+    constructor(socket: ClientSocket, gameEnd: (endGame: EndGameSummary) => void);
     AddedChar(update: AddedChar): void;
     Deleted(): void;
     LockedGuess(update: LockedGuess): void;
@@ -20,7 +22,7 @@ export declare class ClientGame implements GameUpdates {
     OpponentLockedGuess(): void;
     OpponentDeleted(): void;
     OpponentAddedChar(): void;
-    EndGame(): Promise<void>;
+    EndGame(endGameSummary: EndGameSummary): Promise<void>;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): void;
     AddChar(char: string): void;
     Delete(): void;

@@ -8,6 +8,7 @@ import {
   UpdatedAnswerKnowledge,
 } from '../network/Updates';
 import {ClientSocket} from '../../client/ClientNetworking';
+import {EndGameSummary} from '../../structs/EndGameState';
 
 enum State {
   None,
@@ -30,7 +31,10 @@ export class ClientGame implements GameUpdates {
   }
 
   private board: GameState;
-  constructor(private socket: ClientSocket) {
+  constructor(
+    private socket: ClientSocket,
+    private gameEnd: (endGame: EndGameSummary) => void
+  ) {
     this.board = new GameState(
       document.getElementById('game-board')!,
       (key: string) => this.Input(key),
@@ -113,9 +117,9 @@ export class ClientGame implements GameUpdates {
     this.board.OpponentAddedChar();
   }
 
-  EndGame(): Promise<void> {
+  EndGame(endGameSummary: EndGameSummary): Promise<void> {
     return new Promise<void>(resolve => {
-      //   this.SwitchState(new LobbyManager(this.board.GameOver()));
+      this.gameEnd(endGameSummary);
       resolve();
     });
   }
@@ -130,7 +134,7 @@ export class ClientGame implements GameUpdates {
           this.state = State.SubmissionOpen;
           return Promise.resolve();
         }
-        return this.EndGame();
+        return this.EndGame(update.endGameState!);
       });
   }
 

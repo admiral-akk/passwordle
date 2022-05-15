@@ -46,11 +46,9 @@ class LoadingState extends LobbyState_1.LobbyState {
         });
     }
     Deregister(socket) {
-        console.log('deregsitering loading');
         socket.removeAllListeners('EnterMenu');
     }
     EnterMenu(lobbyId) {
-        console.log('entering menu from loading.');
         this.SwitchState(new MenuState_1.MenuState(lobbyId));
     }
     RequestLobbyId() {

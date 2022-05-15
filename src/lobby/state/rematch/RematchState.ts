@@ -27,7 +27,6 @@ export class RematchState extends LobbyState {
 
   private state: State = State.None;
   protected Register(socket: LobbyClientSocket): void {
-    console.log('registering rematch socket');
     socket.on('EnterMenu', (lobbyId: LobbyId) => {
       this.state = State.RematchDeclined;
       this.EnterMenu(lobbyId);
@@ -56,7 +55,6 @@ export class RematchState extends LobbyState {
   }
 
   EnterMenu(lobbyId: LobbyId) {
-    console.log('registering rematch socket');
     this.SwitchState(new MenuState(lobbyId));
   }
 }

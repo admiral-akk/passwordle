@@ -8,13 +8,8 @@ class Player {
     constructor() {
         this.socket = (0, ClientNetworking_1.GetSocket)();
         this.lobby = new LobbyManager_1.LobbyManager(this.socket);
-        this.game = new ClientGame_1.ClientGame(this.socket);
+        this.game = new ClientGame_1.ClientGame(this.socket, (endGameState) => this.lobby.GameEnded(endGameState));
         this.socket.on('GameReady', () => this.game.StartGame());
-        this.socket.on('UpdatedAnswerKnowledge', (update) => {
-            if (update.endGameState) {
-                this.lobby.GameEnded(update.endGameState);
-            }
-        });
     }
 }
 exports.Player = Player;

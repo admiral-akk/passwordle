@@ -12,8 +12,9 @@ var State;
     State[State["EnteringRandomGuess"] = 2] = "EnteringRandomGuess";
 })(State || (State = {}));
 class ClientGame {
-    constructor(socket) {
+    constructor(socket, gameEnd) {
         this.socket = socket;
+        this.gameEnd = gameEnd;
         this.state = State.None;
         this.board = new GameState_1.GameState(document.getElementById('game-board'), (key) => this.Input(key), (guess, currentGuessLength) => this.SubmitRandomGuess(guess, currentGuessLength));
         new InputManager_1.InputManager((char) => this.Input(char), () => this.Input('DEL'), () => this.Input('ENT'));
@@ -90,9 +91,9 @@ class ClientGame {
     OpponentAddedChar() {
         this.board.OpponentAddedChar();
     }
-    EndGame() {
+    EndGame(endGameSummary) {
         return new Promise(resolve => {
-            //   this.SwitchState(new LobbyManager(this.board.GameOver()));
+            this.gameEnd(endGameSummary);
             resolve();
         });
     }
@@ -106,7 +107,7 @@ class ClientGame {
                 this.state = State.SubmissionOpen;
                 return Promise.resolve();
             }
-            return this.EndGame();
+            return this.EndGame(update.endGameState);
         });
     }
     AddChar(char) {
