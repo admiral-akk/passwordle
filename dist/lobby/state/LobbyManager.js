@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyManager = void 0;
 const TutorialState_1 = require("./tutorial/TutorialState");
+const RematchState_1 = require("./rematch/RematchState");
 class LobbyManager {
     constructor(socket) {
         this.socket = socket;
@@ -18,7 +19,7 @@ class LobbyManager {
         this.state = state;
     }
     GameEnded(summary) {
-        //this.EnterState(new RematchState(summary));
+        this.EnterState(new RematchState_1.RematchState(summary));
     }
     GameReady() {
         var _a, _b;

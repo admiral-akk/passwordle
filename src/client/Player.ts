@@ -1,7 +1,6 @@
 import {ClientGame} from '../game/client/ClientGame';
-import {UpdatedAnswerKnowledge} from '../game/network/Updates';
 import {LobbyManager} from '../lobby/state/LobbyManager';
-import {EndGameState, EndGameSummary} from '../structs/EndGameState';
+import {EndGameSummary} from '../structs/EndGameState';
 import {ClientSocket, GetSocket} from './ClientNetworking';
 
 export class Player {

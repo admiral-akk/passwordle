@@ -1,15 +1,58 @@
 import {LobbyClientSocket} from '../../../network/LobbyNetworkTypes';
+import {FindLobbyIdInURL, LobbyId} from '../../../structs/LobbyId';
 import {LobbyState} from '../LobbyState';
+import {MenuState} from '../menu/MenuState';
 import {Modal} from '../Modal';
 
 export class TutorialState extends LobbyState {
   private modal: TutorialModal = new TutorialModal();
-  protected Enter(): void {}
+  protected Enter(): void {
+    const lobbyId = FindLobbyIdInURL();
+    if (lobbyId) {
+      this.modal.SetExitCallback(
+        () => this.JoinLobby(lobbyId),
+        State.JoinLobby
+      );
+    } else {
+      this.RequestLobbyId();
+    }
+  }
   public Exit(): Promise<void> {
     return this.modal.Exit();
   }
-  protected Register(socket: LobbyClientSocket): void {}
-  protected Deregister(socket: LobbyClientSocket): void {}
+
+  private lobbyId?: LobbyId;
+
+  protected Register(socket: LobbyClientSocket): void {
+    socket.on('EnterMenu', (lobbyId: LobbyId) => {
+      this.modal.SetExitCallback(
+        () => this.EnterMenu(lobbyId),
+        State.EnterMenu
+      );
+    });
+  }
+
+  EnterMenu(lobbyId: LobbyId) {
+    this.SwitchState(new MenuState(lobbyId));
+  }
+
+  RequestLobbyId() {
+    this.socket?.emit('RequestLobbyId');
+  }
+
+  JoinLobby(lobbyId: LobbyId) {
+    this.socket?.emit('JoinLobby', lobbyId);
+  }
+
+  protected Deregister(socket: LobbyClientSocket): void {
+    socket.removeAllListeners('EnterMenu');
+  }
+}
+
+enum State {
+  None,
+  JoinLobby,
+  EnterMenu,
 }
 
 class TutorialModal extends Modal {
@@ -21,12 +64,30 @@ class TutorialModal extends Modal {
   private tutorialImage: HTMLImageElement;
   private exitButton: HTMLButtonElement;
   private pageIndex = 0;
+  private state = State.None;
 
   private SetPage(index: number) {
     this.pageIndex = index;
     this.pageNumberDiv.innerText = `${this.pageIndex + 1}/${PAGE_COUNT}`;
     this.tutorialText.innerText = TUTORIAL_TEXT[this.pageIndex];
     this.tutorialImage.src = ImageSrc(this.pageIndex);
+    this.prevButton.disabled = this.pageIndex === 0;
+    this.nextButton.disabled = this.pageIndex === PAGE_COUNT - 1;
+    if (this.pageIndex === PAGE_COUNT - 1) {
+      switch (this.state) {
+        case State.JoinLobby:
+          this.exitButton.innerText = 'Enter game';
+          break;
+        case State.EnterMenu:
+          this.exitButton.innerText = 'Enter menu';
+          break;
+      }
+    }
+  }
+
+  SetExitCallback(callback: () => void, type: State) {
+    this.state = type;
+    this.exitButton.onclick = callback;
   }
 
   constructor() {
@@ -70,7 +131,7 @@ class TutorialModal extends Modal {
     this.exitButton = this.AddButton(
       exitContainer,
       'exit-button',
-      'Exit',
+      'Skip Tutorial',
       () => {}
     );
     this.SetPage(0);
@@ -84,16 +145,16 @@ function ImageSrc(index: number): string {
 const TUTORIAL_TEXT = [
   'In Passwordle, you are trying to guess their password...',
   'Before they guess your password.',
-  "If a guess matches a letter of your opponent's password in the correct position, the letter is revealed and it turns green.",
-  "If a guess shares a letter with your opponent's password, but isn't in the correct place, it will turn yellow.",
+  "If letter matches your opponent's password, it will turn green.",
+  "If a letter is in your opponent's password, it will turn yellow.",
   "If a letter isn't in your opponent's password, it will turn grey.",
-  "You and your opponent's guess will be revealed at the same time...",
+  'Guesses will be revealed simultanously...',
   'And will provide hints for you...',
   'And your opponent!',
-  'If a guess matches the position of one of your letters, it will turn red!',
-  'If every letter in your opponents passsword is revealed, you win!',
-  'If every letter of your password is marked red, you lose!',
-  "Try to guess your opponent's password while avoiding your own!",
+  'If a letter matches your password, it will turn red!',
+  'If every letter in your opponents passsword is green, you win!',
+  'If every letter of your password is red, you lose!',
+  "Find your opponent's password while trying to avoid your own!",
 ];
 
 const PAGE_COUNT = TUTORIAL_TEXT.length;

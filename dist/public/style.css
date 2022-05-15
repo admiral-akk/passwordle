@@ -158,6 +158,9 @@ body {
     display: flex;
     flex-direction: row;
 }
+.prev-button:disabled {
+    color: #2e7d3282;
+}
 .prev-button{
     border: none;
     align-self: center;
@@ -169,6 +172,10 @@ body {
     font-size: 30px;
     margin: 0 10px;
     font-weight: 700;
+}
+
+.next-button:disabled {
+    color: #2e7d3282;
 }
 .next-button{
     border: none;
@@ -191,6 +198,7 @@ body {
 .tutorial-text{
     display: flex;
     font-size: 1.5rem;
+    height: 3rem;
     font-weight: 700;
     margin: 10px;
 }
