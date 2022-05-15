@@ -144,11 +144,11 @@ function ImageSrc(index: number): string {
 
 const TUTORIAL_TEXT = [
   'In Passwordle, you are trying to guess their password...',
-  'Before they guess your password.',
+  'before they guess your password.',
   "If a letter matches your opponent's password, it will turn green.",
   "If a letter is in your opponent's password, it will turn yellow.",
   "If a letter isn't in your opponent's password, it will turn grey.",
-  'Guesses will be revealed simultanously...',
+  "You and your opponent's guess will provide hints for you.",
   'And will provide hints for you...',
   'And your opponent!',
   'If a letter matches your password, it will turn red!',
