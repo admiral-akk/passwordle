@@ -70,13 +70,15 @@ class LoadingModal extends Modal {
   private text: HTMLDivElement;
 
   LoadingExit(state: State): Promise<void> {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
       switch (state) {
         case State.LobbyNotFound:
           this.LobbyNotFound();
+          setTimeout(resolve, 1500);
           break;
+        default:
+          resolve();
       }
-      setTimeout(resolve, 1500);
     }).then(() => super.Exit());
   }
 

@@ -78,13 +78,13 @@ class RematchModal extends Modal_1.Modal {
             .then(() => super.Exit());
     }
     RematchDeclined() {
-        this.rematchDiv.innerText = 'Rematch declined, returning to menu.';
+        this.rematchDiv.innerText = 'Returning to menu.';
     }
     RematchAccepted() {
-        this.rematchDiv.innerText = 'Rematch accepted. Good luck!';
+        this.rematchDiv.innerText = 'Rematch accepted!';
     }
     RematchRequested() {
-        this.rematchDiv.innerText = 'Rematch requested. Waiting for opponent.';
+        this.rematchDiv.innerText = 'Waiting for response...';
     }
     AddMatchOutcome(endState) {
         const answerDiv = this.AddRootDiv(this.container, 'match-answers');

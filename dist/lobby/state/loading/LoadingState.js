@@ -73,9 +73,11 @@ class LoadingModal extends Modal_1.Modal {
             switch (state) {
                 case State.LobbyNotFound:
                     this.LobbyNotFound();
+                    setTimeout(resolve, 1500);
                     break;
+                default:
+                    resolve();
             }
-            setTimeout(resolve, 1500);
         }).then(() => super.Exit());
     }
     LoadingMenu() {
