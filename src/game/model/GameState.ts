@@ -39,6 +39,7 @@ export class GameState implements GameActions, GameUpdates {
     this.opponentPassword.Reset();
     this.keyboard.Reset();
     this.timer.Reset();
+    this.endGame = null;
   }
 
   private yourBoard: YourBoardState;

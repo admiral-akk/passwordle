@@ -52,6 +52,7 @@ class GameState {
         this.opponentPassword.Reset();
         this.keyboard.Reset();
         this.timer.Reset();
+        this.endGame = null;
     }
     GuessSubmitted() {
         return this.state === State.GuessSubmitted;
