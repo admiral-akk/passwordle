@@ -1,3 +1,4 @@
+import e from 'express';
 import {AnimateCSS, AnimationType} from '../../game/model/view/Animate';
 
 export abstract class Modal {
@@ -54,6 +55,22 @@ export abstract class Modal {
     }
     this.elements.push(image);
     return image;
+  }
+  protected AddParagraph(
+    className: string,
+    text = '',
+    baseElement?: HTMLElement
+  ): HTMLParagraphElement {
+    const paragraph = document.createElement('p');
+    paragraph.innerHTML = text;
+    paragraph.className = className;
+    if (baseElement) {
+      baseElement.appendChild(paragraph);
+    } else {
+      this.base.appendChild(paragraph);
+    }
+    this.elements.push(paragraph);
+    return paragraph;
   }
 
   protected AddDiv(className: string, text = ''): HTMLDivElement {

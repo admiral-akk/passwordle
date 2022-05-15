@@ -43,6 +43,19 @@ class Modal {
         this.elements.push(image);
         return image;
     }
+    AddParagraph(className, text = '', baseElement) {
+        const paragraph = document.createElement('p');
+        paragraph.innerHTML = text;
+        paragraph.className = className;
+        if (baseElement) {
+            baseElement.appendChild(paragraph);
+        }
+        else {
+            this.base.appendChild(paragraph);
+        }
+        this.elements.push(paragraph);
+        return paragraph;
+    }
     AddDiv(className, text = '') {
         return this.AddRootDiv(this.base, className, text);
     }
