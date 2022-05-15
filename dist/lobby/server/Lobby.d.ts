@@ -6,4 +6,5 @@ export declare class Lobby {
     rematchRequested: PlayerId[];
     constructor(players: PlayerId[], lobbyId: LobbyId);
     RequestRematch(playerId: PlayerId): void;
+    Opponent(playerId: PlayerId): PlayerId;
 }

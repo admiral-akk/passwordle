@@ -7,6 +7,7 @@ const LobbyState_1 = require("../LobbyState");
 const EndGameState_1 = require("../../../structs/EndGameState");
 const MenuState_1 = require("../menu/MenuState");
 const Modal_1 = require("../Modal");
+const Animate_1 = require("../../../game/model/view/Animate");
 var State;
 (function (State) {
     State[State["None"] = 0] = "None";
@@ -29,9 +30,13 @@ class RematchState extends LobbyState_1.LobbyState {
             this.state = State.RematchDeclined;
             this.EnterMenu(lobbyId);
         });
+        socket.on('RematchRequested', () => {
+            this.modal.RematchRequested();
+        });
     }
     Deregister(socket) {
         socket.removeAllListeners('EnterMenu');
+        socket.removeAllListeners('RematchRequested');
     }
     RequestRematch() {
         var _a;
@@ -61,7 +66,7 @@ class RematchModal extends Modal_1.Modal {
         });
         this.rematchButton = this.AddButton(buttons, 'menu-button', 'Request Rematch', () => {
             requestRematch();
-            this.RematchRequested();
+            this.RequestingRematch();
             this.rematchButton.disabled = true;
         });
     }
@@ -84,7 +89,12 @@ class RematchModal extends Modal_1.Modal {
         this.rematchDiv.innerText = 'Rematch accepted!';
     }
     RematchRequested() {
+        this.rematchDiv.innerText = 'Opponent requested rematch!';
+        this.rematchButton.innerText = 'Accept Rematch';
+    }
+    RequestingRematch() {
         this.rematchDiv.innerText = 'Waiting for response...';
+        (0, Animate_1.AddPopup)(this.container, 'Rematch requested!', 350, 'white');
     }
     AddMatchOutcome(endState) {
         const answerDiv = this.AddRootDiv(this.container, 'match-answers');

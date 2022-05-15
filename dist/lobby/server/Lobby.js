@@ -12,6 +12,12 @@ class Lobby {
             this.rematchRequested.push(playerId);
         }
     }
+    Opponent(playerId) {
+        if (this.players[0] === playerId && this.players.length > 1) {
+            return this.players[1];
+        }
+        return this.players[0];
+    }
 }
 exports.Lobby = Lobby;
 //# sourceMappingURL=Lobby.js.map

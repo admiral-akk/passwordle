@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyServer = void 0;
 const LobbyId_1 = require("../../structs/LobbyId");
 const Lobby_1 = require("./Lobby");
+const LobbyNetworkTypes_1 = require("../../network/LobbyNetworkTypes");
 class LobbyServer {
     constructor(EnterGame) {
         this.EnterGame = EnterGame;
@@ -18,6 +19,9 @@ class LobbyServer {
         if (lobby.rematchRequested.length === 2) {
             lobby.rematchRequested = [];
             this.StartGame(lobby);
+        }
+        else {
+            this.players[lobby.Opponent(playerId)].RematchRequested();
         }
     }
     PlayerJoins(socket) {
@@ -114,13 +118,19 @@ class LobbySocketManager {
         this.RequestRematch = RequestRematch;
         this.DeclineRematch = DeclineRematch;
         this.lobbyId = (0, LobbyId_1.GenerateLobbyId)(socket);
-        this.RegisterSocket(socket);
+        (0, LobbyNetworkTypes_1.RegisterLobbyServer)(socket, this);
+        socket.on('disconnect', () => {
+            this.PlayerDisconnect(this.GetPlayer());
+        });
     }
     DefaultLobbyId() {
         return (0, LobbyId_1.GenerateLobbyId)(this.socket);
     }
     GetPlayer() {
         return this.socket.data.playerId;
+    }
+    RematchRequested() {
+        this.socket.emit('RematchRequested');
     }
     // LobbyClientRequests
     EnterMenu() {
@@ -132,16 +142,6 @@ class LobbySocketManager {
     }
     MatchFound(lobbyId) {
         this.socket.emit('MatchFound', lobbyId);
-    }
-    RegisterSocket(socket) {
-        socket.on('FindMatch', () => this.FindMatch());
-        socket.on('JoinLobby', (lobbyId) => this.JoinLobby(lobbyId));
-        socket.on('RequestLobbyId', () => this.RequestLobbyId());
-        socket.on('RequestRematch', () => this.RequestRematch());
-        socket.on('DeclineRematch', () => this.DeclineRematch());
-        socket.on('disconnect', () => {
-            this.PlayerDisconnect(this.GetPlayer());
-        });
     }
     GameReady() {
         this.socket.emit('GameReady');

@@ -19,12 +19,14 @@ export function RegisterLobbyClient(
   socket.on('MatchFound', (lobbyId: LobbyId) => client.MatchFound(lobbyId));
   socket.on('GameReady', () => client.GameReady());
   socket.on('FindingMatch', () => client.FindingMatch());
+  socket.on('RematchRequested', () => client.RematchRequested());
 }
 export function DeregisterLobbyClient(socket: LobbyClientSocket) {
   socket.removeAllListeners('EnterMenu');
   socket.removeAllListeners('MatchFound');
   socket.removeAllListeners('GameReady');
   socket.removeAllListeners('FindingMatch');
+  socket.removeAllListeners('RematchRequested');
 }
 
 export function RegisterLobbyServer(
@@ -52,6 +54,7 @@ export interface LobbyUpdates {
   MatchFound: (lobbyId: LobbyId) => void;
   GameReady: () => void;
   FindingMatch: () => void;
+  RematchRequested: () => void;
 }
 
 // Things to ask the server/view to do

@@ -13,6 +13,7 @@ export interface LobbyUpdates {
     MatchFound: (lobbyId: LobbyId) => void;
     GameReady: () => void;
     FindingMatch: () => void;
+    RematchRequested: () => void;
 }
 export interface LobbyActions {
     RequestLobbyId: () => void;

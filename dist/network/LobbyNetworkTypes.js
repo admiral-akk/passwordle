@@ -7,6 +7,7 @@ function RegisterLobbyClient(socket, client) {
     socket.on('MatchFound', (lobbyId) => client.MatchFound(lobbyId));
     socket.on('GameReady', () => client.GameReady());
     socket.on('FindingMatch', () => client.FindingMatch());
+    socket.on('RematchRequested', () => client.RematchRequested());
 }
 exports.RegisterLobbyClient = RegisterLobbyClient;
 function DeregisterLobbyClient(socket) {
@@ -14,6 +15,7 @@ function DeregisterLobbyClient(socket) {
     socket.removeAllListeners('MatchFound');
     socket.removeAllListeners('GameReady');
     socket.removeAllListeners('FindingMatch');
+    socket.removeAllListeners('RematchRequested');
 }
 exports.DeregisterLobbyClient = DeregisterLobbyClient;
 function RegisterLobbyServer(socket, server) {

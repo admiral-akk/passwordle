@@ -5,6 +5,7 @@ import {
   LobbyUpdates,
   LobbyActions,
   LobbyServerSocket,
+  RegisterLobbyServer,
 } from '../../network/LobbyNetworkTypes';
 
 export class LobbyServer {
@@ -22,6 +23,8 @@ export class LobbyServer {
     if (lobby.rematchRequested.length === 2) {
       lobby.rematchRequested = [];
       this.StartGame(lobby);
+    } else {
+      this.players[lobby.Opponent(playerId)].RematchRequested();
     }
   }
 
@@ -138,6 +141,10 @@ class LobbySocketManager implements LobbyActions, LobbyUpdates {
     return this.socket.data.playerId!;
   }
 
+  RematchRequested() {
+    this.socket.emit('RematchRequested');
+  }
+
   constructor(
     private socket: LobbyServerSocket,
     public FindMatch: () => void,
@@ -148,7 +155,10 @@ class LobbySocketManager implements LobbyActions, LobbyUpdates {
     public DeclineRematch: () => void
   ) {
     this.lobbyId = GenerateLobbyId(socket);
-    this.RegisterSocket(socket);
+    RegisterLobbyServer(socket, this);
+    socket.on('disconnect', () => {
+      this.PlayerDisconnect(this.GetPlayer());
+    });
   }
 
   // LobbyClientRequests
@@ -163,17 +173,6 @@ class LobbySocketManager implements LobbyActions, LobbyUpdates {
 
   MatchFound(lobbyId: LobbyId) {
     this.socket.emit('MatchFound', lobbyId);
-  }
-
-  private RegisterSocket(socket: LobbyServerSocket) {
-    socket.on('FindMatch', () => this.FindMatch());
-    socket.on('JoinLobby', (lobbyId: LobbyId) => this.JoinLobby(lobbyId));
-    socket.on('RequestLobbyId', () => this.RequestLobbyId());
-    socket.on('RequestRematch', () => this.RequestRematch());
-    socket.on('DeclineRematch', () => this.DeclineRematch());
-    socket.on('disconnect', () => {
-      this.PlayerDisconnect(this.GetPlayer());
-    });
   }
 
   GameReady() {

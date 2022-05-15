@@ -12,6 +12,7 @@ import {LobbyId} from '../../../structs/LobbyId';
 import {LobbyClientSocket} from '../../../network/LobbyNetworkTypes';
 import {MenuState} from '../menu/MenuState';
 import {Modal} from '../Modal';
+import {AddPopup} from '../../../game/model/view/Animate';
 
 enum State {
   None,
@@ -31,9 +32,13 @@ export class RematchState extends LobbyState {
       this.state = State.RematchDeclined;
       this.EnterMenu(lobbyId);
     });
+    socket.on('RematchRequested', () => {
+      this.modal.RematchRequested();
+    });
   }
   protected Deregister(socket: LobbyClientSocket): void {
     socket.removeAllListeners('EnterMenu');
+    socket.removeAllListeners('RematchRequested');
   }
 
   constructor(private endState: EndGameSummary) {
@@ -80,8 +85,14 @@ class RematchModal extends Modal {
     this.rematchDiv.innerText = 'Rematch accepted!';
   }
 
-  private RematchRequested() {
+  public RematchRequested() {
+    this.rematchDiv.innerText = 'Opponent requested rematch!';
+    this.rematchButton.innerText = 'Accept Rematch';
+  }
+
+  private RequestingRematch() {
     this.rematchDiv.innerText = 'Waiting for response...';
+    AddPopup(this.container, 'Rematch requested!', 350, 'white');
   }
 
   private rematchDiv: HTMLDivElement;
@@ -108,7 +119,7 @@ class RematchModal extends Modal {
       'Request Rematch',
       () => {
         requestRematch();
-        this.RematchRequested();
+        this.RequestingRematch();
         this.rematchButton.disabled = true;
       }
     );
