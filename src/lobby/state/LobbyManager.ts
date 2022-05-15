@@ -2,7 +2,7 @@ import {ClientSocket} from '../../client/ClientNetworking';
 import {LobbyState} from './LobbyState';
 import {LoadingState} from './loading/LoadingState';
 import {EndGameSummary} from '../../structs/EndGameState';
-import {RematchState} from './rematch/RematchState';
+import {TutorialState} from './tutorial/TutorialState';
 
 export class LobbyManager {
   private state?: LobbyState;
@@ -15,7 +15,7 @@ export class LobbyManager {
 
   constructor(private socket: ClientSocket) {
     this.Register(socket);
-    this.EnterState(new LoadingState());
+    this.EnterState(new TutorialState());
   }
 
   private EnterState(state: LobbyState) {
@@ -27,7 +27,7 @@ export class LobbyManager {
   }
 
   GameEnded(summary: EndGameSummary) {
-    this.EnterState(new RematchState(summary));
+    //this.EnterState(new RematchState(summary));
   }
 
   GameReady() {

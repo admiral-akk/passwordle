@@ -43,6 +43,19 @@ export abstract class Modal {
     return div;
   }
 
+  protected AddImage(src: string, className: string, target?: HTMLElement) {
+    const image = document.createElement('img');
+    image.src = src;
+    image.className = className;
+    if (target) {
+      target.appendChild(image);
+    } else {
+      this.base.appendChild(image);
+    }
+    this.elements.push(image);
+    return image;
+  }
+
   protected AddDiv(className: string, text = ''): HTMLDivElement {
     return this.AddRootDiv(this.base, className, text);
   }

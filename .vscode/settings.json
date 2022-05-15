@@ -3,6 +3,7 @@
       "node_modules": true,
       "build": true,
       "dist": true,
+      "raw_image":true
     },
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true

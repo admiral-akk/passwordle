@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LobbyManager = void 0;
-const LoadingState_1 = require("./loading/LoadingState");
-const RematchState_1 = require("./rematch/RematchState");
+const TutorialState_1 = require("./tutorial/TutorialState");
 class LobbyManager {
     constructor(socket) {
         this.socket = socket;
         this.Register(socket);
-        this.EnterState(new LoadingState_1.LoadingState());
+        this.EnterState(new TutorialState_1.TutorialState());
     }
     Register(socket) {
         socket.on('GameReady', () => {
@@ -19,7 +18,7 @@ class LobbyManager {
         this.state = state;
     }
     GameEnded(summary) {
-        this.EnterState(new RematchState_1.RematchState(summary));
+        //this.EnterState(new RematchState(summary));
     }
     GameReady() {
         var _a, _b;
