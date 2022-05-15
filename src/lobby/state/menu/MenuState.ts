@@ -71,21 +71,11 @@ class MenuModal extends Modal {
 
   constructor(hostLobby: () => void, matchmake: () => void) {
     super();
-    // this.AddDiv(
-    //   'explain-game',
-    //   `In Passwordle, each player has a different password.
-
-    // The winner is the first to figure out their opponent's password.
-
-    // However, each guess gives clues to both players. For example:
-
-    // If your password is 'FLAME', and you guess 'FLEET', then your opponent will see that your password is 'FL___' and contains an 'E'.`
-    // );
     const menuContainer = this.AddDiv('menu-container');
     this.stateText = this.AddRootDiv(
       menuContainer,
       'menu-state',
-      'Waiting for opponent'
+      'Create Match'
     );
     const buttons = this.AddRootDiv(menuContainer, 'menu-button-container');
     this.copyLinkButton = this.AddButton(
@@ -110,7 +100,7 @@ class MenuModal extends Modal {
   }
 
   CopyLinkPopup() {
-    AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 200, 'white');
+    AddPopup(this.copyLinkButton, 'Link copied to clipboard!', 220, 'white');
   }
 
   EnterMatchmaking() {

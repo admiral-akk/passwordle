@@ -15,17 +15,17 @@ class LobbyManager {
         });
     }
     EnterState(state) {
+        state.Initialize(this.socket, (nextState) => (this.state = nextState));
         this.state = state;
-        this.state.Initialize(this.socket, (nextState) => (this.state = nextState));
     }
     GameEnded(summary) {
         this.EnterState(new RematchState_1.RematchState(summary));
     }
     GameReady() {
-        var _a;
-        (_a = this.state) === null || _a === void 0 ? void 0 : _a.Exit();
+        var _a, _b;
+        (_a = this.state) === null || _a === void 0 ? void 0 : _a.DeregisterSocket();
+        (_b = this.state) === null || _b === void 0 ? void 0 : _b.Exit();
         this.state = undefined;
-        // this.SwitchState(new ClientGame());
     }
 }
 exports.LobbyManager = LobbyManager;

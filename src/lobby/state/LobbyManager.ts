@@ -19,11 +19,11 @@ export class LobbyManager {
   }
 
   private EnterState(state: LobbyState) {
-    this.state = state;
-    this.state.Initialize(
+    state.Initialize(
       this.socket!,
       (nextState: LobbyState) => (this.state = nextState)
     );
+    this.state = state;
   }
 
   GameEnded(summary: EndGameSummary) {
@@ -31,8 +31,8 @@ export class LobbyManager {
   }
 
   GameReady() {
+    this.state?.DeregisterSocket();
     this.state?.Exit();
     this.state = undefined;
-    // this.SwitchState(new ClientGame());
   }
 }

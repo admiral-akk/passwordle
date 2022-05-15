@@ -6,11 +6,14 @@ class State {
         this.socket = null;
     }
     SwitchState(nextState) {
-        this.Deregister(this.socket);
+        this.DeregisterSocket();
         this.Exit().then(() => {
             nextState.Initialize(this.socket, this.setState);
             this.setState(nextState);
         });
+    }
+    DeregisterSocket() {
+        this.Deregister(this.socket);
     }
     Initialize(socket, setState) {
         this.socket = socket;

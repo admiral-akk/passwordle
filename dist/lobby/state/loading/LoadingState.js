@@ -11,6 +11,7 @@ var State;
     State[State["LoadingMenu"] = 1] = "LoadingMenu";
     State[State["JoiningLobby"] = 2] = "JoiningLobby";
     State[State["LobbyNotFound"] = 3] = "LobbyNotFound";
+    State[State["EnteredLobby"] = 4] = "EnteredLobby";
 })(State || (State = {}));
 class LoadingState extends LobbyState_1.LobbyState {
     constructor() {
@@ -34,16 +35,22 @@ class LoadingState extends LobbyState_1.LobbyState {
     }
     Register(socket) {
         socket.on('EnterMenu', (lobbyId) => {
+            if (this.state === State.EnteredLobby) {
+                return;
+            }
             if (this.state === State.JoiningLobby) {
                 this.state = State.LobbyNotFound;
             }
             this.EnterMenu(lobbyId);
+            this.state = State.EnteredLobby;
         });
     }
     Deregister(socket) {
+        console.log('deregsitering loading');
         socket.removeAllListeners('EnterMenu');
     }
     EnterMenu(lobbyId) {
+        console.log('entering menu from loading.');
         this.SwitchState(new MenuState_1.MenuState(lobbyId));
     }
     RequestLobbyId() {
@@ -74,13 +81,13 @@ class LoadingModal extends Modal_1.Modal {
         }).then(() => super.Exit());
     }
     LoadingMenu() {
-        this.text.innerText = 'Loading main menu...';
+        this.text.innerText = 'Loading menu...';
     }
     JoiningLobby() {
-        this.text.innerText = 'Trying to join existing lobby...';
+        this.text.innerText = 'Joining game...';
     }
     LobbyNotFound() {
-        this.text.innerText = 'Lobby not found. Entering menu...';
+        this.text.innerText = 'Lobby not found.';
     }
     LobbyFound() {
         this.text.innerText = 'Lobby found. Entering menu...';

@@ -9,6 +9,7 @@ enum State {
   LoadingMenu,
   JoiningLobby,
   LobbyNotFound,
+  EnteredLobby,
 }
 
 export class LoadingState extends LobbyState {
@@ -32,13 +33,18 @@ export class LoadingState extends LobbyState {
 
   protected Register(socket: LobbyClientSocket): void {
     socket.on('EnterMenu', (lobbyId: LobbyId) => {
+      if (this.state === State.EnteredLobby) {
+        return;
+      }
       if (this.state === State.JoiningLobby) {
         this.state = State.LobbyNotFound;
       }
       this.EnterMenu(lobbyId);
+      this.state = State.EnteredLobby;
     });
   }
   protected Deregister(socket: LobbyClientSocket): void {
+    console.log('deregsitering loading');
     socket.removeAllListeners('EnterMenu');
   }
 
@@ -47,6 +53,7 @@ export class LoadingState extends LobbyState {
   }
 
   EnterMenu(lobbyId: LobbyId) {
+    console.log('entering menu from loading.');
     this.SwitchState(new MenuState(lobbyId));
   }
 
@@ -81,15 +88,15 @@ class LoadingModal extends Modal {
   }
 
   public LoadingMenu() {
-    this.text.innerText = 'Loading main menu...';
+    this.text.innerText = 'Loading menu...';
   }
 
   public JoiningLobby() {
-    this.text.innerText = 'Trying to join existing lobby...';
+    this.text.innerText = 'Joining game...';
   }
 
   public LobbyNotFound() {
-    this.text.innerText = 'Lobby not found. Entering menu...';
+    this.text.innerText = 'Lobby not found.';
   }
 
   public LobbyFound() {

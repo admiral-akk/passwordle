@@ -7,6 +7,7 @@ declare abstract class State<SocketType> {
     abstract Exit(): Promise<void>;
     protected abstract Register(socket: SocketType): void;
     protected abstract Deregister(socket: SocketType): void;
+    DeregisterSocket(): void;
     constructor();
     Initialize(socket: SocketType, setState: (nextState: State<SocketType>) => void): void;
 }
