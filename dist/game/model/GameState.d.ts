@@ -38,9 +38,6 @@ export declare class GameState implements GameUpdates, ImmutableGameState {
     GameClientReady(): void;
     OpponentDisconnected(): void;
     TimerExhausted(): void;
-    AddChar(update: AddedChar): boolean;
-    Delete(): boolean;
-    LockGuess(): Word | null;
     IsGameOver(): boolean;
     GameOver(): EndGameSummary;
     OpponentAddedChar(): void;

@@ -5,4 +5,5 @@ export declare abstract class BaseWordView extends Subview {
     protected letters: LetterView[];
     constructor(root: HTMLElement);
     LockedGuessError(error: LockedGuessError): void;
+    WaitingForOpponent(): void;
 }

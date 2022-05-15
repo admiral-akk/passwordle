@@ -9,7 +9,7 @@ export declare class YourBoardView extends Subview {
     SetCharKnowledge(wordIndex: number, charIndex: number, char: string, knowledge: LetterState): void;
     CharUpdate(update: CharUpdate): void;
     SubmitError(error: LockedGuessError): void;
-    GuessLocked(update: GuessLocked): void;
+    GuessLocked(update: GuessLocked, opponentSubmitted: boolean): void;
 }
 declare class PlayerWordView extends BaseWordView {
     AddChar(char: string, index: number): void;

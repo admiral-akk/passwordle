@@ -23,7 +23,6 @@ class KeyboardState extends ModelState_1.ModelState {
     }
     SetState(key, state) {
         var _a;
-        console.log(`setting key state: ${key}, ${state}`);
         if (!(key in this.keyState)) {
             this.keyState[key] = state;
             return;

@@ -27,4 +27,8 @@ export abstract class BaseWordView extends Subview {
         break;
     }
   }
+
+  WaitingForOpponent() {
+    AddPopup(this.root, 'Submitted! Waiting for opponent.', -70, 'lightgray');
+  }
 }

@@ -15,7 +15,6 @@ export class KeyboardState extends ModelState<KeyboardView> {
   }
 
   private SetState(key: string, state: LetterState) {
-    console.log(`setting key state: ${key}, ${state}`);
     if (!(key in this.keyState)) {
       this.keyState[key] = state;
       return;

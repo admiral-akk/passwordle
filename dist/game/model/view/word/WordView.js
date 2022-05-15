@@ -26,6 +26,9 @@ class BaseWordView extends Subview_1.Subview {
                 break;
         }
     }
+    WaitingForOpponent() {
+        (0, Animate_1.AddPopup)(this.root, 'Submitted! Waiting for opponent.', -70, 'lightgray');
+    }
 }
 exports.BaseWordView = BaseWordView;
 //# sourceMappingURL=WordView.js.map

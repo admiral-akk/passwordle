@@ -24,7 +24,10 @@ class YourBoardView extends Subview_1.Subview {
     SubmitError(error) {
         this.words[error.wordIndex].LockedGuessError(error);
     }
-    GuessLocked(update) {
+    GuessLocked(update, opponentSubmitted) {
+        if (!opponentSubmitted) {
+            this.words[update.index].WaitingForOpponent();
+        }
         this.words[update.index].GuessLocked();
     }
 }

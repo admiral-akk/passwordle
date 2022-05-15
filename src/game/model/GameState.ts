@@ -104,7 +104,7 @@ export class GameState implements GameUpdates, ImmutableGameState {
       this.Deleted();
     }
     for (let i = 0; i < guess.length; i++) {
-      this.AddChar(new AddedChar(guess[i]));
+      this.AddedChar(new AddedChar(guess[i]));
     }
     this.LockedGuess();
   }
@@ -119,7 +119,7 @@ export class GameState implements GameUpdates, ImmutableGameState {
 
   LockedGuess() {
     this.state = State.GuessSubmitted;
-    this.yourBoard.LockedGuess();
+    this.yourBoard.LockedGuess(this.opponentBoard.Submitted());
   }
 
   CanAddChar(update: AddedChar): boolean {
@@ -192,32 +192,6 @@ export class GameState implements GameUpdates, ImmutableGameState {
       GetRandomGuess(),
       this.yourBoard.CurrentGuessLength()
     );
-  }
-
-  AddChar(update: AddedChar): boolean {
-    if (this.state !== State.SubmissionOpen) {
-      return false;
-    }
-    return this.yourBoard.AddChar(update.char);
-  }
-
-  Delete(): boolean {
-    if (this.state !== State.SubmissionOpen) {
-      return false;
-    }
-    return this.yourBoard.Delete();
-  }
-
-  LockGuess(): Word | null {
-    if (this.state !== State.SubmissionOpen) {
-      return null;
-    }
-    const res = this.yourBoard.LockedGuess();
-    if (res) {
-      this.timer.LockedGuess();
-      this.state = State.GuessSubmitted;
-    }
-    return res;
   }
 
   IsGameOver(): boolean {

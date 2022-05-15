@@ -71,7 +71,7 @@ class GameState {
             this.Deleted();
         }
         for (let i = 0; i < guess.length; i++) {
-            this.AddChar(new Updates_1.AddedChar(guess[i]));
+            this.AddedChar(new Updates_1.AddedChar(guess[i]));
         }
         this.LockedGuess();
     }
@@ -83,7 +83,7 @@ class GameState {
     }
     LockedGuess() {
         this.state = State.GuessSubmitted;
-        this.yourBoard.LockedGuess();
+        this.yourBoard.LockedGuess(this.opponentBoard.Submitted());
     }
     CanAddChar(update) {
         if (update.char.length !== 1) {
@@ -129,29 +129,6 @@ class GameState {
     OpponentDisconnected() { }
     TimerExhausted() {
         this.submitRandomGuess((0, Words_1.GetRandomGuess)(), this.yourBoard.CurrentGuessLength());
-    }
-    AddChar(update) {
-        if (this.state !== State.SubmissionOpen) {
-            return false;
-        }
-        return this.yourBoard.AddChar(update.char);
-    }
-    Delete() {
-        if (this.state !== State.SubmissionOpen) {
-            return false;
-        }
-        return this.yourBoard.Delete();
-    }
-    LockGuess() {
-        if (this.state !== State.SubmissionOpen) {
-            return null;
-        }
-        const res = this.yourBoard.LockedGuess();
-        if (res) {
-            this.timer.LockedGuess();
-            this.state = State.GuessSubmitted;
-        }
-        return res;
     }
     IsGameOver() {
         return this.endGame !== undefined;

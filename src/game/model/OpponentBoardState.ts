@@ -5,9 +5,15 @@ import {ToWord, Word} from '../../structs/Word';
 import {LetterAnimation} from './view/struct/Animation';
 import {ModelState} from './ModelState';
 
+enum State {
+  Guessing,
+  Waiting,
+}
+
 export class OpponentBoardState extends ModelState<OpponentBoardView> {
   private guesses: Word[] = [];
   private opponentCharCount = 0;
+  private state: State = State.Guessing;
 
   Reset(): void {
     super.Reset();
@@ -33,6 +39,7 @@ export class OpponentBoardState extends ModelState<OpponentBoardView> {
     this.view?.OpponentUpdate(update);
   }
   OpponentLockedGuess() {
+    this.state = State.Waiting;
     this.opponentCharCount = 0;
     const update = new OpponentUpdate(
       OpponentUpdateType.Submit,
@@ -42,7 +49,12 @@ export class OpponentBoardState extends ModelState<OpponentBoardView> {
     this.view?.OpponentUpdate(update);
   }
 
+  Submitted() {
+    return this.state === State.Waiting;
+  }
+
   Update(knowledge: WordKnowledge): LetterAnimation[] {
+    this.state = State.Guessing;
     this.guesses.push(ToWord(knowledge.guess));
     const animations: LetterAnimation[] = [];
     for (let i = 0; i < knowledge.guess.length; i++) {

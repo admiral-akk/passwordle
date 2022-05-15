@@ -91,22 +91,10 @@ class YourBoardState extends ModelState_1.ModelState {
         (_a = this.view) === null || _a === void 0 ? void 0 : _a.CharUpdate(update);
         return true;
     }
-    LockedGuess() {
-        var _a, _b, _c;
-        if (this.state !== State.CanSubmit) {
-            return null;
-        }
-        if (this.currentGuess.length !== 5) {
-            (_a = this.view) === null || _a === void 0 ? void 0 : _a.SubmitError(new Updates_1.LockedGuessError(Updates_1.ErrorType.TooShort, this.guesses.length, this.currentGuess.length));
-            return null;
-        }
-        const guess = (0, Word_1.ToWord)(this.currentGuess);
-        if (!(0, Words_1.IsValidWord)(guess)) {
-            (_b = this.view) === null || _b === void 0 ? void 0 : _b.SubmitError(new Updates_1.LockedGuessError(Updates_1.ErrorType.NotValidWord, this.guesses.length, this.currentGuess.length));
-            return null;
-        }
+    LockedGuess(opponentSubmitted) {
+        var _a;
         this.state = State.Locked;
-        (_c = this.view) === null || _c === void 0 ? void 0 : _c.GuessLocked(new Updates_1.GuessLocked(this.guesses.length));
+        (_a = this.view) === null || _a === void 0 ? void 0 : _a.GuessLocked(new Updates_1.GuessLocked(this.guesses.length), opponentSubmitted);
         return (0, Word_1.ToWord)(this.currentGuess);
     }
     Update(knowledge) {

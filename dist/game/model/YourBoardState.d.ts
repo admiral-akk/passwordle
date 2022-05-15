@@ -13,7 +13,7 @@ export declare class YourBoardState extends ModelState<YourBoardView> {
     CanSubmit(): boolean;
     AddChar(char: string): boolean;
     Delete(): boolean;
-    LockedGuess(): Word | null;
+    LockedGuess(opponentSubmitted: boolean): Word;
     Update(knowledge: WordKnowledge): LetterAnimation[];
     CurrentGuessLength(): number;
     GuessCount(): number;

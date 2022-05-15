@@ -117,33 +117,12 @@ export class YourBoardState extends ModelState<YourBoardView> {
     return true;
   }
 
-  LockedGuess(): Word | null {
-    if (this.state !== State.CanSubmit) {
-      return null;
-    }
-    if (this.currentGuess.length !== 5) {
-      this.view?.SubmitError(
-        new LockedGuessError(
-          ErrorType.TooShort,
-          this.guesses.length,
-          this.currentGuess.length
-        )
-      );
-      return null;
-    }
-    const guess = ToWord(this.currentGuess);
-    if (!IsValidWord(guess)) {
-      this.view?.SubmitError(
-        new LockedGuessError(
-          ErrorType.NotValidWord,
-          this.guesses.length,
-          this.currentGuess.length
-        )
-      );
-      return null;
-    }
+  LockedGuess(opponentSubmitted: boolean) {
     this.state = State.Locked;
-    this.view?.GuessLocked(new GuessLocked(this.guesses.length));
+    this.view?.GuessLocked(
+      new GuessLocked(this.guesses.length),
+      opponentSubmitted
+    );
     return ToWord(this.currentGuess);
   }
 
