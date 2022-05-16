@@ -31,6 +31,16 @@ class Subview {
         this.elements.push(div);
         return div;
     }
+    AddSpan(parent, className, dataIcon) {
+        const span = document.createElement('span');
+        span.className = className;
+        if (dataIcon) {
+            span.setAttribute('data-icon', dataIcon);
+        }
+        parent.appendChild(span);
+        this.elements.push(span);
+        return span;
+    }
     AddButton(parent, className, text, callback) {
         const button = document.createElement('button');
         button.className = className;

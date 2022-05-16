@@ -12,9 +12,9 @@ class GameView extends Subview_1.Subview {
     constructor(base) {
         super(base, 'game-board');
         this.base = base;
-        this.timer = new TimerView_1.TimerView(this.AddDiv(this.root, 'timer'));
-        this.yourPassword = new YourPasswordView_1.YourPasswordView(this.AddDiv(this.root, 'answer'));
-        this.opponentPassword = new OpponentPasswordView_1.OpponentPasswordView(this.AddDiv(this.root, 'target'));
+        this.timer = new TimerView_1.TimerView(this.AddDiv(this.root, 'timer-container'));
+        this.yourPassword = new YourPasswordView_1.YourPasswordView(this.AddDiv(this.root, 'password'));
+        this.opponentPassword = new OpponentPasswordView_1.OpponentPasswordView(this.AddDiv(this.root, 'password'));
         this.playArea = this.AddDiv(this.root, 'play-area');
         this.yourBoard = new YourBoardView_1.YourBoardView(this.AddDiv(this.playArea, 'player'));
         this.opponentBoard = new OpponentBoardView_1.OpponentBoardView(this.AddDiv(this.playArea, 'opponent'));

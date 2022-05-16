@@ -7,12 +7,16 @@ class TimerView extends Subview_1.Subview {
     constructor(base) {
         super(base, 'timer');
         this.currentTime = 0;
-        this.time = this.AddDiv(base, 'timer-div');
+        const title = this.AddDiv(this.root, 'title-div');
+        title.innerText = 'Passwordle';
+        const timeContainer = this.AddDiv(this.root, 'time-container');
+        this.AddSpan(timeContainer, 'iconify timer-div', 'fa-solid:stopwatch');
+        this.time = this.AddDiv(timeContainer, 'timer-div');
+        this.UpdateTime(30000);
     }
     Reset() {
         super.Reset();
-        this.time.innerText = '';
-        this.currentTime = 0;
+        this.UpdateTime(30000);
     }
     StartTimer(timeMillis) {
         this.UpdateTime(timeMillis);
@@ -29,7 +33,7 @@ class TimerView extends Subview_1.Subview {
             return;
         }
         this.currentTime = timeSeconds;
-        this.time.innerText = timeSeconds.toFixed(0) + 's left!';
+        this.time.innerText = '0:' + timeSeconds.toFixed(0).padStart(2, '0');
         switch (timeSeconds) {
             case 10:
                 (0, Animate_1.AnimateCSS)(this.time, Animate_1.AnimationType.HeartBeat);
@@ -44,7 +48,7 @@ class TimerView extends Subview_1.Subview {
         }
     }
     TimeExhausted() {
-        this.time.innerText = "Time's up!";
+        this.time.innerText = '0:00';
         (0, Animate_1.AnimateCSS)(this.time, Animate_1.AnimationType.Pulse);
     }
 }

@@ -10,12 +10,12 @@ export class GameView extends Subview {
   constructor(private base: HTMLElement) {
     super(base, 'game-board');
   }
-  timer: TimerView = new TimerView(this.AddDiv(this.root, 'timer'));
+  timer: TimerView = new TimerView(this.AddDiv(this.root, 'timer-container'));
   yourPassword: YourPasswordView = new YourPasswordView(
-    this.AddDiv(this.root, 'answer')
+    this.AddDiv(this.root, 'password')
   );
   opponentPassword: OpponentPasswordView = new OpponentPasswordView(
-    this.AddDiv(this.root, 'target')
+    this.AddDiv(this.root, 'password')
   );
   private playArea = this.AddDiv(this.root, 'play-area');
   yourBoard: YourBoardView = new YourBoardView(

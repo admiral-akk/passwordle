@@ -39,6 +39,21 @@ export abstract class Subview {
     return div;
   }
 
+  protected AddSpan(
+    parent: HTMLElement,
+    className: string,
+    dataIcon?: string
+  ): HTMLSpanElement {
+    const span = document.createElement('span');
+    span.className = className;
+    if (dataIcon) {
+      span.setAttribute('data-icon', dataIcon);
+    }
+    parent.appendChild(span);
+    this.elements.push(span);
+    return span;
+  }
+
   protected AddButton(
     parent: HTMLElement,
     className: string,
