@@ -58,8 +58,8 @@ enum State {
 const TEXT = [
   '<strong>You</strong> are trying to guess <strong>their</strong> password.',
   '<strong>They</strong> are trying to guess <strong>your</strong> password.',
-  '<em>Both</em> your and their guess will show <strong>you</strong> clues for <strong>their</strong> password.',
-  '<em>Both</em> your and their guess will show <strong>them</strong> clues for <strong>your</strong> password.',
+  '<em>Both</em> your and their guesses will show <strong>you</strong> clues for <strong>their</strong> password.',
+  '<em>Both</em> your and their guesses will show <strong>them</strong> clues for <strong>your</strong> password.',
   'If they submit a guess first, you have <em>30 seconds</em> to submit a guess.',
   '<em>Win</em> by guessing their password <em>before</em> they guess yours.',
 ];
