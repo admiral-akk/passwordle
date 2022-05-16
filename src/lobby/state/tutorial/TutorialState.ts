@@ -66,36 +66,28 @@ const TEXT = [
 
 class SimpleTutorialModal extends Modal {
   private state = State.None;
-  private container: HTMLElement;
   private exitButton: HTMLButtonElement;
   SetExitCallback(callback: () => void, type: State) {
     this.state = type;
     this.exitButton.onclick = callback;
   }
   constructor() {
-    super();
-    this.container = this.AddDiv('tutorial-container');
+    super('tutorial');
 
-    const textContainer = this.AddRootDiv(
-      this.container,
-      'tutorial-text-container'
-    );
+    const textContainer = this.AddDiv('tutorial-text-container');
 
     for (let i = 0; i < TEXT.length; i++) {
       if (i > 0 && i % 2 === 0) {
-        this.AddRootDiv(textContainer, 'tutorial-text-seperator');
+        this.AddDiv('tutorial-text-seperator', '', textContainer);
       }
       this.AddParagraph('tutorial-text-paragraph', TEXT[i], textContainer);
     }
-    const exitContainer = this.AddRootDiv(
-      this.container,
-      'tutorial-exit-container'
-    );
+    const exitContainer = this.AddDiv('tutorial-exit-container');
     this.exitButton = this.AddButton(
-      exitContainer,
       'exit-button',
       'Enter Game',
-      () => {}
+      () => {},
+      exitContainer
     );
   }
 }

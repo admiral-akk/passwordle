@@ -51,15 +51,14 @@ class MenuState extends LobbyState_1.LobbyState {
 exports.MenuState = MenuState;
 class MenuModal extends Modal_1.Modal {
     constructor(hostLobby, matchmake) {
-        super();
-        const menuContainer = this.AddDiv('menu-container');
-        this.stateText = this.AddRootDiv(menuContainer, 'menu-state', 'Create Match');
-        const buttons = this.AddRootDiv(menuContainer, 'menu-button-container');
-        this.copyLinkButton = this.AddButton(buttons, 'menu-button', 'Invite Friend', () => {
+        super('menu');
+        this.stateText = this.AddDiv('menu-state', 'Create Match');
+        const buttons = this.AddDiv('menu-button-container');
+        this.copyLinkButton = this.AddButton('menu-button', 'Invite Friend', () => {
             hostLobby();
             this.CopyLinkPopup();
-        });
-        this.matchmakingButton = this.AddButton(buttons, 'menu-button', 'Find Game', () => matchmake());
+        }, buttons);
+        this.matchmakingButton = this.AddButton('menu-button', 'Find Game', () => matchmake(), buttons);
     }
     Exit() {
         return Promise.resolve(this.EnteringMatch())

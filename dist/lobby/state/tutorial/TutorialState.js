@@ -59,18 +59,17 @@ const TEXT = [
 ];
 class SimpleTutorialModal extends Modal_1.Modal {
     constructor() {
-        super();
+        super('tutorial');
         this.state = State.None;
-        this.container = this.AddDiv('tutorial-container');
-        const textContainer = this.AddRootDiv(this.container, 'tutorial-text-container');
+        const textContainer = this.AddDiv('tutorial-text-container');
         for (let i = 0; i < TEXT.length; i++) {
             if (i > 0 && i % 2 === 0) {
-                this.AddRootDiv(textContainer, 'tutorial-text-seperator');
+                this.AddDiv('tutorial-text-seperator', '', textContainer);
             }
             this.AddParagraph('tutorial-text-paragraph', TEXT[i], textContainer);
         }
-        const exitContainer = this.AddRootDiv(this.container, 'tutorial-exit-container');
-        this.exitButton = this.AddButton(exitContainer, 'exit-button', 'Enter Game', () => { });
+        const exitContainer = this.AddDiv('tutorial-exit-container');
+        this.exitButton = this.AddButton('exit-button', 'Enter Game', () => { }, exitContainer);
     }
     SetExitCallback(callback, type) {
         this.state = type;

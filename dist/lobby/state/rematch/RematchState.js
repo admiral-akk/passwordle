@@ -55,20 +55,19 @@ class RematchState extends LobbyState_1.LobbyState {
 exports.RematchState = RematchState;
 class RematchModal extends Modal_1.Modal {
     constructor(requestRematch, returnToMenu, endState) {
-        super();
-        this.container = this.AddDiv('rematch-container');
+        super('rematch');
         this.AddMatchOutcome(endState);
-        this.rematchDiv = this.AddRootDiv(this.container, 'rematch-text');
-        const buttons = this.AddRootDiv(this.container, 'menu-button-container');
-        this.returnToMenuButton = this.AddButton(buttons, 'menu-button', 'Return to Menu', () => {
+        this.rematchDiv = this.AddDiv('rematch-text');
+        const buttons = this.AddDiv('menu-button-container');
+        this.returnToMenuButton = this.AddButton('menu-button', 'Return to Menu', () => {
             this.rematchButton.disabled = true;
             returnToMenu();
-        });
-        this.rematchButton = this.AddButton(buttons, 'menu-button', 'Request Rematch', () => {
+        }, buttons);
+        this.rematchButton = this.AddButton('menu-button', 'Request Rematch', () => {
             requestRematch();
             this.RequestingRematch();
             this.rematchButton.disabled = true;
-        });
+        }, buttons);
     }
     RematchExit(state) {
         return new Promise(resolve => {
@@ -99,7 +98,7 @@ class RematchModal extends Modal_1.Modal {
         (0, Animate_1.AddPopup)(this.container, 'Rematch requested!', 350, 'white');
     }
     AddMatchOutcome(endState) {
-        const answerDiv = this.AddRootDiv(this.container, 'match-answers');
+        const answerDiv = this.AddDiv('match-answers');
         let text;
         switch ((0, EndGameState_1.GetEndGameState)(endState)) {
             default:
@@ -115,13 +114,13 @@ class RematchModal extends Modal_1.Modal {
                 text = 'You tied!';
                 break;
         }
-        this.AddRootDiv(answerDiv, 'match-outcome', text);
-        const yourPasswordContainer = this.AddRootDiv(answerDiv, 'rematch-answer');
-        const yourContainer = this.AddRootDiv(yourPasswordContainer, 'rematch-password-container');
+        this.AddDiv('match-outcome', text, answerDiv);
+        const yourPasswordContainer = this.AddDiv('rematch-answer', '', answerDiv);
+        const yourContainer = this.AddDiv('rematch-password-container', '', yourPasswordContainer);
         const yourPassword = new RematchWordView(yourContainer);
         yourPassword.SetState(endState.yourPassword, endState.yourProgress, LetterView_1.LetterColor.Red);
-        const opponentPasswordContainer = this.AddRootDiv(answerDiv, 'rematch-answer');
-        const opponentContainer = this.AddRootDiv(opponentPasswordContainer, 'rematch-password-container');
+        const opponentPasswordContainer = this.AddDiv('rematch-answer', '', answerDiv);
+        const opponentContainer = this.AddDiv('rematch-password-container', '', opponentPasswordContainer);
         const opponentPassword = new RematchWordView(opponentContainer);
         opponentPassword.SetState(endState.opponentPassword, endState.opponentProgress, LetterView_1.LetterColor.Green);
     }

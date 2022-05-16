@@ -1,13 +1,10 @@
 export declare abstract class Modal {
     private elements;
-    private popup;
     Exit(): Promise<void>;
-    protected base: HTMLElement;
-    constructor();
-    protected AddButton(base: HTMLElement | undefined, className: string, text: string, callback: () => void): HTMLButtonElement;
-    protected AddRootDiv(root: HTMLElement, className: string, text?: string): HTMLDivElement;
-    protected AddImage(src: string, className: string, target?: HTMLElement): HTMLImageElement;
-    protected AddParagraph(className: string, text?: string, baseElement?: HTMLElement): HTMLParagraphElement;
-    protected AddDiv(className: string, text?: string): HTMLDivElement;
-    protected AddPopup(target: HTMLElement, text: string, durationSeconds?: number): void;
+    protected container: HTMLElement;
+    constructor(containerName: string);
+    protected AddButton(className: string, text: string, callback: () => void, parent?: HTMLElement): HTMLButtonElement;
+    private AppendChild;
+    protected AddDiv(className: string, text?: string, parent?: HTMLElement): HTMLDivElement;
+    protected AddParagraph(className: string, text?: string, parent?: HTMLElement): HTMLParagraphElement;
 }

@@ -100,41 +100,39 @@ class RematchModal extends Modal {
   private rematchDiv: HTMLDivElement;
   private returnToMenuButton: HTMLButtonElement;
   private rematchButton: HTMLButtonElement;
-  private container: HTMLElement;
 
   constructor(
     requestRematch: () => void,
     returnToMenu: () => void,
     endState: EndGameSummary
   ) {
-    super();
-    this.container = this.AddDiv('rematch-container');
+    super('rematch');
     this.AddMatchOutcome(endState);
-    this.rematchDiv = this.AddRootDiv(this.container, 'rematch-text');
-    const buttons = this.AddRootDiv(this.container, 'menu-button-container');
+    this.rematchDiv = this.AddDiv('rematch-text');
+    const buttons = this.AddDiv('menu-button-container');
     this.returnToMenuButton = this.AddButton(
-      buttons,
       'menu-button',
       'Return to Menu',
       () => {
         this.rematchButton.disabled = true;
         returnToMenu();
-      }
+      },
+      buttons
     );
     this.rematchButton = this.AddButton(
-      buttons,
       'menu-button',
       'Request Rematch',
       () => {
         requestRematch();
         this.RequestingRematch();
         this.rematchButton.disabled = true;
-      }
+      },
+      buttons
     );
   }
 
   private AddMatchOutcome(endState: EndGameSummary) {
-    const answerDiv = this.AddRootDiv(this.container, 'match-answers');
+    const answerDiv = this.AddDiv('match-answers');
 
     let text: string;
     switch (GetEndGameState(endState)) {
@@ -151,12 +149,13 @@ class RematchModal extends Modal {
         text = 'You tied!';
         break;
     }
-    this.AddRootDiv(answerDiv, 'match-outcome', text);
+    this.AddDiv('match-outcome', text, answerDiv);
 
-    const yourPasswordContainer = this.AddRootDiv(answerDiv, 'rematch-answer');
-    const yourContainer = this.AddRootDiv(
-      yourPasswordContainer,
-      'rematch-password-container'
+    const yourPasswordContainer = this.AddDiv('rematch-answer', '', answerDiv);
+    const yourContainer = this.AddDiv(
+      'rematch-password-container',
+      '',
+      yourPasswordContainer
     );
     const yourPassword = new RematchWordView(yourContainer);
     yourPassword.SetState(
@@ -165,13 +164,15 @@ class RematchModal extends Modal {
       LetterColor.Red
     );
 
-    const opponentPasswordContainer = this.AddRootDiv(
-      answerDiv,
-      'rematch-answer'
+    const opponentPasswordContainer = this.AddDiv(
+      'rematch-answer',
+      '',
+      answerDiv
     );
-    const opponentContainer = this.AddRootDiv(
-      opponentPasswordContainer,
-      'rematch-password-container'
+    const opponentContainer = this.AddDiv(
+      'rematch-password-container',
+      '',
+      opponentPasswordContainer
     );
     const opponentPassword = new RematchWordView(opponentContainer);
     opponentPassword.SetState(

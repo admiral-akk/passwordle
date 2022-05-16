@@ -70,28 +70,23 @@ class MenuModal extends Modal {
   }
 
   constructor(hostLobby: () => void, matchmake: () => void) {
-    super();
-    const menuContainer = this.AddDiv('menu-container');
-    this.stateText = this.AddRootDiv(
-      menuContainer,
-      'menu-state',
-      'Create Match'
-    );
-    const buttons = this.AddRootDiv(menuContainer, 'menu-button-container');
+    super('menu');
+    this.stateText = this.AddDiv('menu-state', 'Create Match');
+    const buttons = this.AddDiv('menu-button-container');
     this.copyLinkButton = this.AddButton(
-      buttons,
       'menu-button',
       'Invite Friend',
       () => {
         hostLobby();
         this.CopyLinkPopup();
-      }
+      },
+      buttons
     );
     this.matchmakingButton = this.AddButton(
-      buttons,
       'menu-button',
       'Find Game',
-      () => matchmake()
+      () => matchmake(),
+      buttons
     );
   }
 
