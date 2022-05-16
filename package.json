@@ -13,7 +13,7 @@
     "pretest": "npm run compile",
     "posttest": "npm run lint",
     "launch": "node dist/",
-    "copy-static": "rm -rf dist/public/images && cp -r src/public/images dist/public/ && cp src/public/index.html dist/public/ && cp src/public/style.css dist/public/",
+    "copy-static": "cp src/public/index.html dist/public/ && cp src/public/style.css dist/public/",
     "pack": "rm -rf ./dist && mkdir dist && cp -r ./build/* ./dist/ && webpack",
     "start": "npm run compile && npm run pack && npm run copy-static && node ./dist/"
   },
