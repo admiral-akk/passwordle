@@ -131,9 +131,14 @@
 
 body {
     overflow: hidden; /* Disable scroll */
-    min-width:600px;
-    width:600px;
-    margin: 0;
+    display: flex;
+    min-height: 100%;
+}
+html {
+    height: 100%;
+  }
+#game-board {
+    margin: auto;
 }
 
 .password {
