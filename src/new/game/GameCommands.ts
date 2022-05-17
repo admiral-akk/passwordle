@@ -1,6 +1,6 @@
-import {AnnotatedWord} from '../model/PlayerModel';
-import {Word} from '../structs/Word';
-import {Command} from './Command';
+import {Word} from '../../structs/Word';
+import {Command} from '../Command';
+import {AnnotatedWord} from '../struct/AnnotatedWord';
 
 export class AddKey extends Command {
   constructor(public key: string) {
@@ -61,5 +61,10 @@ export class GameFinished extends Command {
     public theirAnnotation: AnnotatedWord
   ) {
     super(GameFinished.name);
+  }
+}
+export class GameDesynced extends Command {
+  constructor() {
+    super(GameDesynced.name);
   }
 }

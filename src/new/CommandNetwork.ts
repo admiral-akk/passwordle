@@ -1,7 +1,7 @@
 import {Command} from './Command';
 
 export interface CommandUpdates {
-  ConfirmedAction(command: Command): void;
+  Confirm(command: Command): void;
 }
 
 export interface CommandActions {

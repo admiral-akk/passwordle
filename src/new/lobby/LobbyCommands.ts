@@ -1,6 +1,12 @@
-import {LobbyId} from '../structs/LobbyId';
-import {Command} from './Command';
+import {LobbyId} from '../../structs/LobbyId';
+import {Command} from '../Command';
+import {AnnotatedWord} from '../struct/AnnotatedWord';
 
+export class GameComplete extends Command {
+  constructor(yourAnnotation: AnnotatedWord, theirAnnotation: AnnotatedWord) {
+    super(GameComplete.name);
+  }
+}
 export class CreatedLobby extends Command {
   constructor(public lobby: LobbyId) {
     super(CreatedLobby.name);
@@ -39,5 +45,10 @@ export class TheyRequestedRematch extends Command {
 export class TheyRejectedRematch extends Command {
   constructor(public lobby: LobbyId) {
     super(TheyRejectedRematch.name);
+  }
+}
+export class LobbyDesynced extends Command {
+  constructor() {
+    super(LobbyDesynced.name);
   }
 }
