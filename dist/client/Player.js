@@ -1,15 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Player = void 0;
-const ClientGame_1 = require("../game/client/ClientGame");
-const LobbyManager_1 = require("../lobby/state/LobbyManager");
+const Command_1 = require("../new/Command");
+const CommandNetwork_1 = require("../new/CommandNetwork");
+const MenuCommands_1 = require("../new/lobby/command/MenuCommands");
+const LobbyModel_1 = require("../new/lobby/LobbyModel");
 const ClientNetworking_1 = require("./ClientNetworking");
 class Player {
     constructor() {
         this.socket = (0, ClientNetworking_1.GetSocket)();
-        this.lobby = new LobbyManager_1.LobbyManager(this.socket);
-        this.game = new ClientGame_1.ClientGame(this.socket, (endGameState) => this.lobby.GameEnded(endGameState));
-        this.socket.on('GameReady', () => this.game.StartGame());
+        this.lobbyModel = new LobbyModel_1.LobbyModel();
+        this.lobbySocket = new CommandNetwork_1.LobbyClientWrapper(this.socket, (command) => {
+            console.log(`Command type: ${command.type}`);
+            this.lobbyModel.Input(command);
+        });
+        const command = new MenuCommands_1.CreatedLobby(new Command_1.CommandData());
+        this.socket.emit('LobbyAction', command);
     }
 }
 exports.Player = Player;

@@ -17,11 +17,15 @@ import {
   LobbyActions,
 } from './LobbyNetworkTypes';
 import {PlayerId} from '../structs/PlayerId';
+import {CommandActions, CommandUpdates} from '../new/CommandNetwork';
 
 // Actions are things that the client tries to do.
-export interface Actions extends GameActions, LobbyActions {}
+export default interface Actions
+  extends GameActions,
+    LobbyActions,
+    CommandActions {}
 // Updates are state changes that the server indicates have happened.
-export interface Updates extends GameUpdates, LobbyUpdates {}
+export interface Updates extends GameUpdates, LobbyUpdates, CommandUpdates {}
 
 export interface InterServerEvents {}
 export interface SocketData {

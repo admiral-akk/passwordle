@@ -1,5 +1,5 @@
 import {io, Socket} from 'socket.io-client';
-import {Updates, Actions} from '../network/NetworkTypes';
+import Actions, {Updates} from '../network/NetworkTypes';
 
 export type ClientSocket = Socket<Updates, Actions>;
 

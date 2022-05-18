@@ -1,0 +1,1 @@
+{"version":3,"file":"LobbyView.js","sourceRoot":"","sources":["../../../src/new/lobby/LobbyView.ts"],"names":[],"mappings":";;;AAAA,6CAAwC;AAGxC,MAAa,SAAU,SAAQ,uBAAU;IAC7B,KAAK,CAAC,MAAmB;QACjC,KAAK,CAAC,KAAK,CAAC,MAAM,CAAC,CAAC;IACtB,CAAC;IACS,IAAI,CAAC,MAAmB;QAChC,KAAK,CAAC,IAAI,CAAC,MAAM,CAAC,CAAC;IACrB,CAAC;CACF;AAPD,8BAOC"}

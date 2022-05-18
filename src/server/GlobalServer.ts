@@ -1,15 +1,16 @@
 import {Server} from 'socket.io';
-import {
+import Actions, {
   InterServerEvents,
   ServerSocket,
   SocketData,
   Updates,
-  Actions,
 } from '../network/NetworkTypes';
 import {PlayerId, ToPlayerId} from '../structs/PlayerId';
 
 import {LobbyServer} from '../lobby/server/LobbyServer';
 import {GameServer} from './game/GameServer';
+import {LobbyCommand} from '../new/lobby/LobbyCommand';
+import {LobbyServerWrapper} from '../new/CommandNetwork';
 
 export class GlobalServer {
   private server: Server<Actions, Updates, InterServerEvents, SocketData>;
@@ -36,6 +37,10 @@ export class GlobalServer {
       args.forEach(arg => {
         console.log(`Arg: ${arg}`);
       });
+    });
+    const wrapper = new LobbyServerWrapper(socket, (command: LobbyCommand) => {
+      console.log(`Command type: ${command.type!}`);
+      socket.emit('LobbyConfirm', command);
     });
   }
 

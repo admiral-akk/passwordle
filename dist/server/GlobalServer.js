@@ -5,6 +5,7 @@ const socket_io_1 = require("socket.io");
 const PlayerId_1 = require("../structs/PlayerId");
 const LobbyServer_1 = require("../lobby/server/LobbyServer");
 const GameServer_1 = require("./game/GameServer");
+const CommandNetwork_1 = require("../new/CommandNetwork");
 class GlobalServer {
     constructor(app) {
         this.playerSockets = {};
@@ -36,6 +37,10 @@ class GlobalServer {
             args.forEach(arg => {
                 console.log(`Arg: ${arg}`);
             });
+        });
+        const wrapper = new CommandNetwork_1.LobbyServerWrapper(socket, (command) => {
+            console.log(`Command type: ${command.type}`);
+            socket.emit('LobbyConfirm', command);
         });
     }
     PlayerDisconnected(socket) {

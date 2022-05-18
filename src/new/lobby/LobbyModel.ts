@@ -1,58 +1,58 @@
 import {LobbyId} from '../../structs/LobbyId';
-import {AnnotatedWord} from '../struct/AnnotatedWord';
+import {Command} from '../Command';
+import {CommandHandler} from '../CommandHandler';
+import {LobbyUpdate} from './LobbyUpdate';
 
-enum LobbyState {
+export enum LobbyState {
   None,
   InLobby,
+  LookingForMatch,
+  Rematch,
   InGame,
 }
 
-export class LobbyModel {
+export class LobbyModel extends CommandHandler<LobbyModel, LobbyUpdate> {
+  protected Execute(command: Command<LobbyModel, LobbyUpdate>): void {
+    command.Execute(this);
+  }
+  protected Apply(update: LobbyUpdate): void {
+    if (update.lobbyId) {
+      this.lobbyId = update.lobbyId.after;
+    }
+    if (update.state) {
+      this.state = update.state.after;
+    }
+    if (update.playerCount) {
+      this.playerCount = update.playerCount.after;
+    }
+    if (update.rematchRequestCount) {
+      this.rematchRequestCount = update.rematchRequestCount.after;
+    }
+    if (update.requestedRematch) {
+      this.requestedRematch = update.requestedRematch.after;
+    }
+  }
+  protected Undo(update: LobbyUpdate): void {
+    if (update.lobbyId) {
+      this.lobbyId = update.lobbyId.before;
+    }
+    if (update.state) {
+      this.state = update.state.before;
+    }
+    if (update.playerCount) {
+      this.playerCount = update.playerCount.before;
+    }
+    if (update.rematchRequestCount) {
+      this.rematchRequestCount = update.rematchRequestCount.before;
+    }
+    if (update.requestedRematch) {
+      this.requestedRematch = update.requestedRematch.before;
+    }
+  }
+
   state: LobbyState = LobbyState.None;
   lobbyId?: LobbyId;
   playerCount = 0;
   rematchRequestCount = 0;
   requestedRematch = false;
-
-  CreatedLobby(lobbyId: LobbyId) {
-    this.state = LobbyState.InLobby;
-    this.lobbyId = lobbyId;
-    this.playerCount = 1;
-  }
-
-  JoinedLobby(lobbyId: LobbyId) {
-    this.state = LobbyState.InLobby;
-    this.lobbyId = lobbyId;
-    this.playerCount = 2;
-  }
-
-  TheyJoinedLobby() {
-    this.playerCount = 2;
-  }
-
-  StartedGame() {
-    this.state = LobbyState.InGame;
-  }
-
-  GameFinished(yourPassword: AnnotatedWord, theirPassword: AnnotatedWord) {
-    this.state = LobbyState.InLobby;
-    this.rematchRequestCount = 0;
-    this.requestedRematch = false;
-  }
-
-  RequestedRematch() {
-    this.requestedRematch = true;
-    this.rematchRequestCount++;
-  }
-
-  TheyRequestedRematch() {
-    this.rematchRequestCount++;
-  }
-
-  RematchRejected(lobbyId: LobbyId) {
-    this.lobbyId = lobbyId;
-    this.playerCount = 1;
-    this.rematchRequestCount = 0;
-    this.requestedRematch = false;
-  }
 }
