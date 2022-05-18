@@ -50,6 +50,16 @@ export class Game implements GameActions {
     }
   };
 
+  PlayerDisconnected(playerId: PlayerId) {
+    const disconnectPassword = this.gameStates[playerId].GetPassword();
+    const remainingPlayer = this.GetOpponent(playerId);
+    const endGameSummary =
+      this.gameStates[remainingPlayer].GenerateDisconnectedSummary(
+        disconnectPassword
+      );
+    this.updaters[remainingPlayer].OpponentDisconnected(endGameSummary);
+  }
+
   private UpdateKnowledge() {
     const updates: Record<PlayerId, UpdatedAnswerKnowledge> = {};
     this.players.forEach(player => {

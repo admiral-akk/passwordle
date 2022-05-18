@@ -4,6 +4,7 @@ import {Word} from '../structs/Word';
 import {InterServerEvents, SocketData} from './NetworkTypes';
 import {AddedChar, UpdatedAnswerKnowledge} from '../game/network/Updates';
 import {PlayerId} from '../structs/PlayerId';
+import {EndGameSummary} from '../structs/EndGameState';
 
 export type GameClientSocket = ClientSocket<GameUpdates, GameActions>;
 export type GameServerSocket = ServerSocket<
@@ -29,7 +30,9 @@ export function RegisterGameClient(
   socket.on('UpdatedAnswerKnowledge', (update: UpdatedAnswerKnowledge) =>
     client.UpdatedAnswerKnowledge(update)
   );
-  socket.on('OpponentDisconnected', () => client.OpponentDisconnected());
+  socket.on('OpponentDisconnected', (endGameState: EndGameSummary) =>
+    client.OpponentDisconnected(endGameState)
+  );
   socket.on('RandomGuess', (guess: Word) => client.RandomGuess(guess));
 }
 export function DeregisterGameClient(socket: GameClientSocket) {
@@ -71,7 +74,7 @@ export interface GameUpdates {
   OpponentLockedGuess: () => void;
   SetSecret: (secret: Word) => void;
   UpdatedAnswerKnowledge: (update: UpdatedAnswerKnowledge) => void;
-  OpponentDisconnected: () => void;
+  OpponentDisconnected: (endGameSummary: EndGameSummary) => void;
   RandomGuess: (guess: Word) => void;
 }
 
@@ -86,7 +89,8 @@ export class GameUpdateEmitter implements GameUpdates {
   SetSecret = (secret: Word) => this.socket.emit('SetSecret', secret);
   UpdatedAnswerKnowledge = (update: UpdatedAnswerKnowledge) =>
     this.socket.emit('UpdatedAnswerKnowledge', update);
-  OpponentDisconnected = () => this.socket.emit('OpponentDisconnected');
+  OpponentDisconnected = (endGameSummary: EndGameSummary) =>
+    this.socket.emit('OpponentDisconnected', endGameSummary);
   RandomGuess = (update: Word) => this.socket.emit('RandomGuess', update);
 }
 

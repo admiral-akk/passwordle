@@ -4,13 +4,14 @@ export declare enum EndGameState {
     None = 0,
     Win = 1,
     Loss = 2,
-    Tie = 3
+    Tie = 3,
+    Disconnected = 4
 }
 export declare class EndGameSummary {
     yourPassword: Word;
     opponentPassword: Word;
     yourProgress: TargetProgress;
     opponentProgress: TargetProgress;
-    constructor(yourPassword: Word, opponentPassword: Word, yourProgress: TargetProgress, opponentProgress: TargetProgress);
+    endState: EndGameState;
+    constructor(yourPassword: Word, opponentPassword: Word, yourProgress: TargetProgress, opponentProgress: TargetProgress, endState: EndGameState);
 }
-export declare function GetEndGameState(summary: EndGameSummary): EndGameState;

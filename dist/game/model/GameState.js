@@ -10,6 +10,7 @@ const OpponentPasswordState_1 = require("./OpponentPasswordState");
 const KeyboardState_1 = require("./KeyboardState");
 const TimerState_1 = require("./TimerState");
 const Words_1 = require("../Words");
+const EndGameState_1 = require("../../structs/EndGameState");
 const GameView_1 = require("./view/GameView");
 const TargetProgress_1 = require("../../structs/TargetProgress");
 const WordleLogic_1 = require("../logic/WordleLogic");
@@ -66,6 +67,7 @@ class GameState {
     GetProgress() {
         return this.yourPassword.GetProgress();
     }
+    OpponentDisconnected(endGameSummary) { }
     RandomGuess(guess) {
         for (let i = 0; i < guess.length; i++) {
             this.Deleted();
@@ -123,10 +125,12 @@ class GameState {
         const opponentProgress = this.opponentPassword.GetProgress();
         (0, TargetProgress_1.UpdateProgress)(opponentProgress, (0, WordleLogic_1.GetKnowledge)(yourGuess, opponentPassword));
         (0, TargetProgress_1.UpdateProgress)(opponentProgress, (0, WordleLogic_1.GetKnowledge)(opponentGuess, opponentPassword));
-        return new Updates_1.UpdatedAnswerKnowledge(yourKnowledge, opponentKnowledge, yourProgress, opponentProgress, yourPassword, opponentPassword);
+        return new Updates_1.UpdatedAnswerKnowledge(yourKnowledge, opponentKnowledge, yourProgress, opponentProgress, yourPassword, opponentPassword, this.yourBoard.guesses.length);
+    }
+    GenerateDisconnectedSummary(opponentPassword) {
+        return new EndGameState_1.EndGameSummary(this.yourPassword.GetPassword(), opponentPassword, this.yourPassword.GetProgress(), this.opponentPassword.GetProgress(), EndGameState_1.EndGameState.Disconnected);
     }
     GameClientReady() { }
-    OpponentDisconnected() { }
     TimerExhausted() {
         this.submitRandomGuess((0, Words_1.GetRandomGuess)(), this.yourBoard.CurrentGuessLength());
     }

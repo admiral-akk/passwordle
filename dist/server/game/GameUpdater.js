@@ -12,7 +12,7 @@ class GameUpdater {
         this.OpponentLockedGuess = () => this.consumers.forEach(consumer => consumer.OpponentLockedGuess());
         this.SetSecret = (secret) => this.consumers.forEach(consumer => consumer.SetSecret(secret));
         this.UpdatedAnswerKnowledge = (update) => this.consumers.forEach(consumer => consumer.UpdatedAnswerKnowledge(update));
-        this.OpponentDisconnected = () => this.consumers.forEach(consumer => consumer.OpponentDisconnected());
+        this.OpponentDisconnected = (endGameState) => this.consumers.forEach(consumer => consumer.OpponentDisconnected(endGameState));
         this.RandomGuess = (guess) => this.consumers.forEach(consumer => consumer.RandomGuess(guess));
     }
 }

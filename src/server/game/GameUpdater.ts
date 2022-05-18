@@ -1,5 +1,6 @@
 import {AddedChar, UpdatedAnswerKnowledge} from '../../game/network/Updates';
 import {GameUpdates} from '../../network/GameNetworkTypes';
+import {EndGameSummary} from '../../structs/EndGameState';
 import {Word} from '../../structs/Word';
 
 export class GameUpdater implements GameUpdates {
@@ -19,8 +20,10 @@ export class GameUpdater implements GameUpdates {
     this.consumers.forEach(consumer => consumer.SetSecret(secret));
   UpdatedAnswerKnowledge = (update: UpdatedAnswerKnowledge) =>
     this.consumers.forEach(consumer => consumer.UpdatedAnswerKnowledge(update));
-  OpponentDisconnected = () =>
-    this.consumers.forEach(consumer => consumer.OpponentDisconnected());
+  OpponentDisconnected = (endGameState: EndGameSummary) =>
+    this.consumers.forEach(consumer =>
+      consumer.OpponentDisconnected(endGameState)
+    );
   RandomGuess = (guess: Word) =>
     this.consumers.forEach(consumer => consumer.RandomGuess(guess));
 }

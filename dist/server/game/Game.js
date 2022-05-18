@@ -44,6 +44,12 @@ class Game {
             return this.players[0];
         }
     }
+    PlayerDisconnected(playerId) {
+        const disconnectPassword = this.gameStates[playerId].GetPassword();
+        const remainingPlayer = this.GetOpponent(playerId);
+        const endGameSummary = this.gameStates[remainingPlayer].GenerateDisconnectedSummary(disconnectPassword);
+        this.updaters[remainingPlayer].OpponentDisconnected(endGameSummary);
+    }
     UpdateKnowledge() {
         const updates = {};
         this.players.forEach(player => {

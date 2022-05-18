@@ -1,8 +1,4 @@
-import {
-  EndGameState,
-  EndGameSummary,
-  GetEndGameState,
-} from '../../structs/EndGameState';
+import {EndGameState, EndGameSummary} from '../../structs/EndGameState';
 import {Complete, TargetProgress} from '../../structs/TargetProgress';
 import {ToWord, Word} from '../../structs/Word';
 import {WordKnowledge} from '../../structs/WordKnowledge';
@@ -21,7 +17,8 @@ export class UpdatedAnswerKnowledge {
     public playerProgress: TargetProgress,
     public opponentProgress: TargetProgress,
     playerPassword: Word,
-    opponentPassword: Word
+    opponentPassword: Word,
+    guessCount: number
   ) {
     this.endGameState = GenerateSummary(
       playerKnowledge,
@@ -29,7 +26,8 @@ export class UpdatedAnswerKnowledge {
       playerProgress,
       opponentProgress,
       playerPassword,
-      opponentPassword
+      opponentPassword,
+      guessCount
     );
   }
 }
@@ -39,25 +37,34 @@ function GenerateSummary(
   playerProgress: TargetProgress,
   opponentProgress: TargetProgress,
   playerPassword: Word,
-  opponentPassword: Word
+  opponentPassword: Word,
+  guessCount: number
 ): EndGameSummary | undefined {
-  if (!Complete(playerProgress) && !Complete(opponentProgress)) {
+  if (
+    !Complete(playerProgress) &&
+    !Complete(opponentProgress) &&
+    guessCount < 6
+  ) {
     return undefined;
+  }
+  let endState = EndGameState.Tie;
+  if (Complete(playerProgress) && !Complete(opponentProgress)) {
+    endState = EndGameState.Win;
+  }
+  if (!Complete(playerProgress) && Complete(opponentProgress)) {
+    endState = EndGameState.Loss;
   }
   return new EndGameSummary(
     playerPassword,
     opponentPassword,
     playerProgress,
-    opponentProgress
+    opponentProgress,
+    endState
   );
 }
 
 export function IsGameOver(knowledge: UpdatedAnswerKnowledge): boolean {
   return knowledge.endGameState !== undefined;
-}
-
-export function GameOverState(knowledge: UpdatedAnswerKnowledge): EndGameState {
-  return GetEndGameState(knowledge.endGameState!);
 }
 
 export class GuessLocked {

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LockedGuessError = exports.ErrorType = exports.LockedGuess = exports.GuessLocked = exports.GameOverState = exports.IsGameOver = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
+exports.LockedGuessError = exports.ErrorType = exports.LockedGuess = exports.GuessLocked = exports.IsGameOver = exports.UpdatedAnswerKnowledge = exports.Deleted = exports.AddedChar = void 0;
 const EndGameState_1 = require("../../structs/EndGameState");
 const TargetProgress_1 = require("../../structs/TargetProgress");
 class AddedChar {
@@ -13,29 +13,34 @@ class Deleted {
 }
 exports.Deleted = Deleted;
 class UpdatedAnswerKnowledge {
-    constructor(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress, playerPassword, opponentPassword) {
+    constructor(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress, playerPassword, opponentPassword, guessCount) {
         this.playerKnowledge = playerKnowledge;
         this.opponentKnowledge = opponentKnowledge;
         this.playerProgress = playerProgress;
         this.opponentProgress = opponentProgress;
-        this.endGameState = GenerateSummary(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress, playerPassword, opponentPassword);
+        this.endGameState = GenerateSummary(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress, playerPassword, opponentPassword, guessCount);
     }
 }
 exports.UpdatedAnswerKnowledge = UpdatedAnswerKnowledge;
-function GenerateSummary(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress, playerPassword, opponentPassword) {
-    if (!(0, TargetProgress_1.Complete)(playerProgress) && !(0, TargetProgress_1.Complete)(opponentProgress)) {
+function GenerateSummary(playerKnowledge, opponentKnowledge, playerProgress, opponentProgress, playerPassword, opponentPassword, guessCount) {
+    if (!(0, TargetProgress_1.Complete)(playerProgress) &&
+        !(0, TargetProgress_1.Complete)(opponentProgress) &&
+        guessCount < 6) {
         return undefined;
     }
-    return new EndGameState_1.EndGameSummary(playerPassword, opponentPassword, playerProgress, opponentProgress);
+    let endState = EndGameState_1.EndGameState.Tie;
+    if ((0, TargetProgress_1.Complete)(playerProgress) && !(0, TargetProgress_1.Complete)(opponentProgress)) {
+        endState = EndGameState_1.EndGameState.Win;
+    }
+    if (!(0, TargetProgress_1.Complete)(playerProgress) && (0, TargetProgress_1.Complete)(opponentProgress)) {
+        endState = EndGameState_1.EndGameState.Loss;
+    }
+    return new EndGameState_1.EndGameSummary(playerPassword, opponentPassword, playerProgress, opponentProgress, endState);
 }
 function IsGameOver(knowledge) {
     return knowledge.endGameState !== undefined;
 }
 exports.IsGameOver = IsGameOver;
-function GameOverState(knowledge) {
-    return (0, EndGameState_1.GetEndGameState)(knowledge.endGameState);
-}
-exports.GameOverState = GameOverState;
 class GuessLocked {
     constructor(index) {
         this.index = index;

@@ -1,4 +1,4 @@
-import { EndGameState, EndGameSummary } from '../../structs/EndGameState';
+import { EndGameSummary } from '../../structs/EndGameState';
 import { TargetProgress } from '../../structs/TargetProgress';
 import { Word } from '../../structs/Word';
 import { WordKnowledge } from '../../structs/WordKnowledge';
@@ -14,10 +14,9 @@ export declare class UpdatedAnswerKnowledge {
     playerProgress: TargetProgress;
     opponentProgress: TargetProgress;
     endGameState?: EndGameSummary;
-    constructor(playerKnowledge: WordKnowledge, opponentKnowledge: WordKnowledge, playerProgress: TargetProgress, opponentProgress: TargetProgress, playerPassword: Word, opponentPassword: Word);
+    constructor(playerKnowledge: WordKnowledge, opponentKnowledge: WordKnowledge, playerProgress: TargetProgress, opponentProgress: TargetProgress, playerPassword: Word, opponentPassword: Word, guessCount: number);
 }
 export declare function IsGameOver(knowledge: UpdatedAnswerKnowledge): boolean;
-export declare function GameOverState(knowledge: UpdatedAnswerKnowledge): EndGameState;
 export declare class GuessLocked {
     index: number;
     constructor(index: number);

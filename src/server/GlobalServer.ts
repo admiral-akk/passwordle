@@ -22,13 +22,12 @@ export class GlobalServer {
     this.gameServer.StartGame(gameSockets);
   }
 
-  ExitGame(players: PlayerId[]) {
-    const lobbySockets = players.map(player => this.playerSockets[player]);
-    this.lobbyServer.EndGame(lobbySockets);
-  }
-
   private PlayerConnected(socket: ServerSocket) {
-    socket.on('disconnect', () => this.PlayerDisconnected(socket));
+    socket.on('disconnect', () => {
+      this.lobbyServer.PlayerDisconnected(socket.data.playerId!);
+      this.gameServer.PlayerDisconnected(socket.data.playerId!);
+      this.PlayerDisconnected(socket);
+    });
     this.playerSockets[socket.data.playerId!] = socket;
     this.lobbyServer.PlayerJoins(socket);
 
@@ -51,9 +50,7 @@ export class GlobalServer {
     this.lobbyServer = new LobbyServer((players: PlayerId[]) =>
       this.EnterGame(players)
     );
-    this.gameServer = new GameServer((players: PlayerId[]) =>
-      this.ExitGame(players)
-    );
+    this.gameServer = new GameServer();
     this.server.on('connection', socket => {
       socket.data.playerId = ToPlayerId(socket);
       this.PlayerConnected(socket);

@@ -7,11 +7,18 @@ const Game_1 = require("./Game");
 const GameUpdater_1 = require("./GameUpdater");
 const GameValidator_1 = require("./GameValidator");
 class GameServer {
-    constructor(ExitGame) {
-        this.ExitGame = ExitGame;
+    constructor() {
         this.gameValidators = {};
         this.gameUpdaters = {};
         this.games = {};
+    }
+    PlayerDisconnected(playerId) {
+        if (!(playerId in this.games)) {
+            return;
+        }
+        const game = this.games[playerId];
+        game.PlayerDisconnected(playerId);
+        this.ClearGame(game.players);
     }
     StartGame(playerSockets) {
         const players = playerSockets.map(socket => socket.data.playerId);
@@ -29,13 +36,12 @@ class GameServer {
             game.RegisterUpdater(player, this.gameUpdaters[player]);
         });
     }
-    EndGame(players) {
+    ClearGame(players) {
         players.forEach(player => {
             delete this.games[player];
             delete this.gameValidators[player];
             delete this.gameUpdaters[player];
         });
-        this.ExitGame(players);
     }
 }
 exports.GameServer = GameServer;

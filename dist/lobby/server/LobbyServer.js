@@ -26,7 +26,7 @@ class LobbyServer {
     }
     PlayerJoins(socket) {
         const playerId = socket.data.playerId;
-        this.players[playerId] = new LobbySocketManager(socket, () => this.FindMatch(playerId), (lobbyId) => this.JoinLobby(playerId, lobbyId), () => this.RequestLobbyId(playerId), (playerId) => this.PlayerDisconnected(playerId), () => this.RequestRematch(playerId), () => this.DeclineRematch(playerId));
+        this.players[playerId] = new LobbySocketManager(socket, () => this.FindMatch(playerId), (lobbyId) => this.JoinLobby(playerId, lobbyId), () => this.RequestLobbyId(playerId), () => this.RequestRematch(playerId), () => this.DeclineRematch(playerId));
     }
     PlayerDisconnected(playerId) {
         const lobbyId = this.players[playerId].lobbyId;
@@ -65,7 +65,6 @@ class LobbyServer {
             this.RequestLobbyId(playerId);
         });
     }
-    EndGame(sockets) { }
     FindMatch(playerId) {
         if (this.publicLobbies.length === 0) {
             const lobbyId = this.players[playerId].lobbyId;
@@ -109,25 +108,18 @@ class LobbyServer {
 }
 exports.LobbyServer = LobbyServer;
 class LobbySocketManager {
-    constructor(socket, FindMatch, JoinLobby, RequestLobbyId, PlayerDisconnect, RequestRematch, DeclineRematch) {
+    constructor(socket, FindMatch, JoinLobby, RequestLobbyId, RequestRematch, DeclineRematch) {
         this.socket = socket;
         this.FindMatch = FindMatch;
         this.JoinLobby = JoinLobby;
         this.RequestLobbyId = RequestLobbyId;
-        this.PlayerDisconnect = PlayerDisconnect;
         this.RequestRematch = RequestRematch;
         this.DeclineRematch = DeclineRematch;
         this.lobbyId = (0, LobbyId_1.GenerateLobbyId)(socket);
         (0, LobbyNetworkTypes_1.RegisterLobbyServer)(socket, this);
-        socket.on('disconnect', () => {
-            this.PlayerDisconnect(this.GetPlayer());
-        });
     }
     DefaultLobbyId() {
         return (0, LobbyId_1.GenerateLobbyId)(this.socket);
-    }
-    GetPlayer() {
-        return this.socket.data.playerId;
     }
     RematchRequested() {
         this.socket.emit('RematchRequested');

@@ -4,6 +4,7 @@ import { Word } from '../structs/Word';
 import { InterServerEvents, SocketData } from './NetworkTypes';
 import { AddedChar, UpdatedAnswerKnowledge } from '../game/network/Updates';
 import { PlayerId } from '../structs/PlayerId';
+import { EndGameSummary } from '../structs/EndGameState';
 export declare type GameClientSocket = ClientSocket<GameUpdates, GameActions>;
 export declare type GameServerSocket = ServerSocket<GameActions, GameUpdates, InterServerEvents, SocketData>;
 export declare function RegisterGameClient(socket: GameClientSocket, client: GameUpdates): void;
@@ -19,7 +20,7 @@ export interface GameUpdates {
     OpponentLockedGuess: () => void;
     SetSecret: (secret: Word) => void;
     UpdatedAnswerKnowledge: (update: UpdatedAnswerKnowledge) => void;
-    OpponentDisconnected: () => void;
+    OpponentDisconnected: (endGameSummary: EndGameSummary) => void;
     RandomGuess: (guess: Word) => void;
 }
 export declare class GameUpdateEmitter implements GameUpdates {
@@ -33,7 +34,7 @@ export declare class GameUpdateEmitter implements GameUpdates {
     OpponentLockedGuess: () => boolean;
     SetSecret: (secret: Word) => boolean;
     UpdatedAnswerKnowledge: (update: UpdatedAnswerKnowledge) => boolean;
-    OpponentDisconnected: () => boolean;
+    OpponentDisconnected: (endGameSummary: EndGameSummary) => boolean;
     RandomGuess: (update: Word) => boolean;
 }
 export interface GameActions {

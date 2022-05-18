@@ -1,4 +1,4 @@
-import {Complete, TargetProgress} from './TargetProgress';
+import {TargetProgress} from './TargetProgress';
 import {Word} from './Word';
 
 export enum EndGameState {
@@ -6,6 +6,7 @@ export enum EndGameState {
   Win,
   Loss,
   Tie,
+  Disconnected,
 }
 
 export class EndGameSummary {
@@ -13,18 +14,7 @@ export class EndGameSummary {
     public yourPassword: Word,
     public opponentPassword: Word,
     public yourProgress: TargetProgress,
-    public opponentProgress: TargetProgress
+    public opponentProgress: TargetProgress,
+    public endState: EndGameState
   ) {}
-}
-
-export function GetEndGameState(summary: EndGameSummary): EndGameState {
-  const playerComplete = Complete(summary.yourProgress);
-  const opponentComplete = Complete(summary.opponentProgress);
-  if (playerComplete === opponentComplete) {
-    return EndGameState.Tie;
-  }
-  if (playerComplete) {
-    return EndGameState.Loss;
-  }
-  return EndGameState.Win;
 }

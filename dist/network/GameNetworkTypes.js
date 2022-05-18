@@ -11,7 +11,7 @@ function RegisterGameClient(socket, client) {
     socket.on('OpponentLockedGuess', () => client.OpponentLockedGuess());
     socket.on('SetSecret', (secret) => client.SetSecret(secret));
     socket.on('UpdatedAnswerKnowledge', (update) => client.UpdatedAnswerKnowledge(update));
-    socket.on('OpponentDisconnected', () => client.OpponentDisconnected());
+    socket.on('OpponentDisconnected', (endGameState) => client.OpponentDisconnected(endGameState));
     socket.on('RandomGuess', (guess) => client.RandomGuess(guess));
 }
 exports.RegisterGameClient = RegisterGameClient;
@@ -53,7 +53,7 @@ class GameUpdateEmitter {
         this.OpponentLockedGuess = () => this.socket.emit('OpponentLockedGuess');
         this.SetSecret = (secret) => this.socket.emit('SetSecret', secret);
         this.UpdatedAnswerKnowledge = (update) => this.socket.emit('UpdatedAnswerKnowledge', update);
-        this.OpponentDisconnected = () => this.socket.emit('OpponentDisconnected');
+        this.OpponentDisconnected = (endGameSummary) => this.socket.emit('OpponentDisconnected', endGameSummary);
         this.RandomGuess = (update) => this.socket.emit('RandomGuess', update);
     }
 }

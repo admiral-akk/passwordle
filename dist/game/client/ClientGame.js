@@ -24,7 +24,7 @@ class ClientGame extends GameState_1.GameState {
         this.updater = new GameUpdater_1.GameUpdater([this]);
         (0, GameNetworkTypes_1.RegisterGameClient)(socket, this.updater);
         socket.on('SetSecret', () => (this.clientState = State.SubmissionOpen));
-        socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
+        socket.on('OpponentDisconnected', (endGameState) => this.OpponentDisconnected(endGameState));
     }
     StartGame() {
         this.Reset();
@@ -70,8 +70,8 @@ class ClientGame extends GameState_1.GameState {
             this.validator.Delete();
         }
     }
-    OpponentDisconnected() {
-        // this.SwitchState(new LobbyManager(this.socket, this.set));
+    OpponentDisconnected(endGameSummary) {
+        this.EndGame(endGameSummary);
     }
     EndGame(endGameSummary) {
         return new Promise(resolve => {

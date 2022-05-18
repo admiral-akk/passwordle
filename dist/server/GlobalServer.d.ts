@@ -6,7 +6,6 @@ export declare class GlobalServer {
     private lobbyServer;
     private gameServer;
     EnterGame(players: PlayerId[]): void;
-    ExitGame(players: PlayerId[]): void;
     private PlayerConnected;
     private PlayerDisconnected;
     constructor(app: Express.Application);

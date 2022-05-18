@@ -3,11 +3,7 @@ import {LetterColor} from '../../../game/model/view/word/letter/LetterView';
 import {BaseWordView} from '../../../game/model/view/word/WordView';
 import {Word} from '../../../structs/Word';
 import {LobbyState} from '../LobbyState';
-import {
-  EndGameState,
-  EndGameSummary,
-  GetEndGameState,
-} from '../../../structs/EndGameState';
+import {EndGameState, EndGameSummary} from '../../../structs/EndGameState';
 import {LobbyId} from '../../../structs/LobbyId';
 import {LobbyClientSocket} from '../../../network/LobbyNetworkTypes';
 import {MenuState} from '../menu/MenuState';
@@ -135,7 +131,7 @@ class RematchModal extends Modal {
     const answerDiv = this.AddDiv('match-answers');
 
     let text: string;
-    switch (GetEndGameState(endState)) {
+    switch (endState.endState) {
       default:
         text = '';
         break;
@@ -147,6 +143,9 @@ class RematchModal extends Modal {
         break;
       case EndGameState.Tie:
         text = 'You tied!';
+        break;
+      case EndGameState.Disconnected:
+        text = 'They disconnected!';
         break;
     }
     this.AddDiv('match-outcome', text, answerDiv);

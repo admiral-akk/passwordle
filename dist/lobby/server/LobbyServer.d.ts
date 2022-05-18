@@ -12,7 +12,6 @@ export declare class LobbyServer {
     PlayerDisconnected(playerId: PlayerId): void;
     private DeleteLobby;
     private DeclineRematch;
-    EndGame(sockets: LobbyServerSocket[]): void;
     private FindMatch;
     private AddToLobby;
     private StartGame;

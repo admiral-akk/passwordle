@@ -1,5 +1,6 @@
 import { AddedChar, UpdatedAnswerKnowledge } from '../../game/network/Updates';
 import { GameUpdates } from '../../network/GameNetworkTypes';
+import { EndGameSummary } from '../../structs/EndGameState';
 import { Word } from '../../structs/Word';
 export declare class GameUpdater implements GameUpdates {
     private consumers;
@@ -12,6 +13,6 @@ export declare class GameUpdater implements GameUpdates {
     OpponentLockedGuess: () => void;
     SetSecret: (secret: Word) => void;
     UpdatedAnswerKnowledge: (update: UpdatedAnswerKnowledge) => void;
-    OpponentDisconnected: () => void;
+    OpponentDisconnected: (endGameState: EndGameSummary) => void;
     RandomGuess: (guess: Word) => void;
 }

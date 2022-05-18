@@ -16,7 +16,14 @@ export class GameServer {
   private gameUpdaters: Record<PlayerId, GameUpdater> = {};
   private games: Record<PlayerId, Game> = {};
 
-  constructor(private ExitGame: (game: PlayerId[]) => void) {}
+  PlayerDisconnected(playerId: PlayerId) {
+    if (!(playerId in this.games)) {
+      return;
+    }
+    const game = this.games[playerId];
+    game.PlayerDisconnected(playerId);
+    this.ClearGame(game.players);
+  }
 
   StartGame(playerSockets: GameServerSocket[]) {
     const players = playerSockets.map(socket => socket.data.playerId!);
@@ -39,12 +46,11 @@ export class GameServer {
     });
   }
 
-  EndGame(players: PlayerId[]) {
+  ClearGame(players: PlayerId[]) {
     players.forEach(player => {
       delete this.games[player];
       delete this.gameValidators[player];
       delete this.gameUpdaters[player];
     });
-    this.ExitGame(players);
   }
 }

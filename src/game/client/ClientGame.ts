@@ -49,7 +49,9 @@ export class ClientGame extends GameState {
     this.updater = new GameUpdater([this]);
     RegisterGameClient(socket, this.updater);
     socket.on('SetSecret', () => (this.clientState = State.SubmissionOpen));
-    socket.on('OpponentDisconnected', () => this.OpponentDisconnected());
+    socket.on('OpponentDisconnected', (endGameState: EndGameSummary) =>
+      this.OpponentDisconnected(endGameState)
+    );
   }
 
   private SubmitRandomGuess(guess: Word, currentGuessLength: number) {
@@ -92,8 +94,8 @@ export class ClientGame extends GameState {
     }
   }
 
-  OpponentDisconnected() {
-    // this.SwitchState(new LobbyManager(this.socket, this.set));
+  OpponentDisconnected(endGameSummary: EndGameSummary) {
+    this.EndGame(endGameSummary);
   }
 
   EndGame(endGameSummary: EndGameSummary): Promise<void> {

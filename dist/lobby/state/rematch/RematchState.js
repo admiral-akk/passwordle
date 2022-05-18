@@ -100,7 +100,7 @@ class RematchModal extends Modal_1.Modal {
     AddMatchOutcome(endState) {
         const answerDiv = this.AddDiv('match-answers');
         let text;
-        switch ((0, EndGameState_1.GetEndGameState)(endState)) {
+        switch (endState.endState) {
             default:
                 text = '';
                 break;
@@ -112,6 +112,9 @@ class RematchModal extends Modal_1.Modal {
                 break;
             case EndGameState_1.EndGameState.Tie:
                 text = 'You tied!';
+                break;
+            case EndGameState_1.EndGameState.Disconnected:
+                text = 'They disconnected!';
                 break;
         }
         this.AddDiv('match-outcome', text, answerDiv);

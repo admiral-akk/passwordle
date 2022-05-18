@@ -14,7 +14,7 @@ import {LetterAnimation} from './view/struct/Animation';
 import {KeyboardState} from './KeyboardState';
 import {TimerState} from './TimerState';
 import {GetRandomGuess} from '../Words';
-import {EndGameSummary} from '../../structs/EndGameState';
+import {EndGameState, EndGameSummary} from '../../structs/EndGameState';
 import {GameView} from './view/GameView';
 import {TargetProgress, UpdateProgress} from '../../structs/TargetProgress';
 import {GetKnowledge} from '../logic/WordleLogic';
@@ -98,6 +98,7 @@ export class GameState implements GameUpdates, ImmutableGameState {
       this.timer = new TimerState();
     }
   }
+  OpponentDisconnected(endGameSummary: EndGameSummary) {}
 
   RandomGuess(guess: Word) {
     for (let i = 0; i < guess.length; i++) {
@@ -180,12 +181,22 @@ export class GameState implements GameUpdates, ImmutableGameState {
       yourProgress,
       opponentProgress,
       yourPassword,
-      opponentPassword
+      opponentPassword,
+      this.yourBoard.guesses.length
+    );
+  }
+
+  GenerateDisconnectedSummary(opponentPassword: Word): EndGameSummary {
+    return new EndGameSummary(
+      this.yourPassword.GetPassword(),
+      opponentPassword,
+      this.yourPassword.GetProgress(),
+      this.opponentPassword.GetProgress(),
+      EndGameState.Disconnected
     );
   }
 
   GameClientReady() {}
-  OpponentDisconnected() {}
 
   TimerExhausted() {
     this.submitRandomGuess(

@@ -13,6 +13,7 @@ export declare class Game implements GameActions {
     AddChar: (update: AddedChar, playerId?: PlayerId | undefined) => void;
     Delete: (playerId?: PlayerId | undefined) => void;
     LockGuess: (playerId?: PlayerId | undefined) => void;
+    PlayerDisconnected(playerId: PlayerId): void;
     private UpdateKnowledge;
     GameClientReady: (playerId?: PlayerId | undefined) => void;
 }

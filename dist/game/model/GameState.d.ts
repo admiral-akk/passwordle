@@ -26,6 +26,7 @@ export declare class GameState implements GameUpdates, ImmutableGameState {
     GetPassword(): Word;
     GetProgress(): TargetProgress;
     constructor(viewRoot?: HTMLElement, input?: (key: string) => void, submitRandomGuess?: (guess: Word, currentGuessLength: number) => void);
+    OpponentDisconnected(endGameSummary: EndGameSummary): void;
     RandomGuess(guess: Word): void;
     AddedChar(update: AddedChar): boolean;
     Deleted(): boolean;
@@ -35,8 +36,8 @@ export declare class GameState implements GameUpdates, ImmutableGameState {
     CanLockGuess(): boolean;
     IsReadyForNewGame(): boolean;
     GenerateKnowledgeUpdate(opponentGuess: Word, opponentPassword: Word): UpdatedAnswerKnowledge;
+    GenerateDisconnectedSummary(opponentPassword: Word): EndGameSummary;
     GameClientReady(): void;
-    OpponentDisconnected(): void;
     TimerExhausted(): void;
     IsGameOver(): boolean;
     GameOver(): EndGameSummary;
