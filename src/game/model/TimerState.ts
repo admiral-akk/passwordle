@@ -29,8 +29,10 @@ export class TimerState extends ModelState<TimerView> {
   }
 
   Stop() {
-    clearTimeout(this.timeout!);
-    this.timeout = undefined;
+    if (this.timeout) {
+      clearTimeout(this.timeout!);
+      this.timeout = undefined;
+    }
   }
 
   LockedGuess() {
@@ -60,7 +62,7 @@ export class TimerState extends ModelState<TimerView> {
   }
 
   private ResetTimer() {
-    clearInterval(this.timeout!);
+    this.Stop();
     this.timeLeft = TIME_TILL_RANDOM_MILLIS;
     this.view?.Reset();
   }
@@ -72,7 +74,7 @@ export class TimerState extends ModelState<TimerView> {
   }
 
   private TimeExhausted() {
-    clearInterval(this.timeout!);
+    this.Stop();
     this.view?.TimeExhausted();
     if (this.timeExhausted) {
       this.timeExhausted();

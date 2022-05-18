@@ -1,10 +1,7 @@
 import {InputManager} from './input/InputManager';
 import {Word} from '../../structs/Word';
 import {GameState} from '../model/GameState';
-import {
-  RegisterGameClient,
-  DeregisterGameClient,
-} from '../../network/GameNetworkTypes';
+import {RegisterGameClient} from '../../network/GameNetworkTypes';
 import {AddedChar, UpdatedAnswerKnowledge} from '../network/Updates';
 import {ClientSocket} from '../../client/ClientNetworking';
 import {EndGameSummary} from '../../structs/EndGameState';
