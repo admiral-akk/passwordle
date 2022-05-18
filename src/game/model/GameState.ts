@@ -98,7 +98,11 @@ export class GameState implements GameUpdates, ImmutableGameState {
       this.timer = new TimerState();
     }
   }
-  OpponentDisconnected(endGameSummary: EndGameSummary) {}
+
+  OpponentDisconnected(endGameSummary: EndGameSummary) {
+    this.timer.Stop();
+    this.state = State.GameOver;
+  }
 
   RandomGuess(guess: Word) {
     for (let i = 0; i < guess.length; i++) {

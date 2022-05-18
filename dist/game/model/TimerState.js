@@ -17,7 +17,6 @@ class TimerState extends ModelState_1.ModelState {
         this.timeExhausted = timeExhausted;
         this.state = State.None;
         this.timeLeft = TIME_TILL_RANDOM_MILLIS;
-        this.timeout = null;
         this.lastUpdate = 0;
         this.SetState(State.NoGuesses);
     }
@@ -27,6 +26,10 @@ class TimerState extends ModelState_1.ModelState {
     }
     Reset() {
         this.ResetTimer();
+    }
+    Stop() {
+        clearTimeout(this.timeout);
+        this.timeout = undefined;
     }
     LockedGuess() {
         switch (this.state) {

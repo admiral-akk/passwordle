@@ -36,11 +36,14 @@ class LobbyServer {
                 this.lobbies[lobbyId].players.splice(index, 1);
             }
             if (this.lobbies[lobbyId].players.length === 0) {
-                delete this.lobbies[lobbyId];
+                this.DeleteLobby(lobbyId);
             }
         }
         if (this.publicLobbies.indexOf(lobbyId) > -1) {
             this.publicLobbies.splice(this.publicLobbies.indexOf(lobbyId));
+        }
+        if (lobbyId in this.lobbies) {
+            this.DeclineRematch(playerId);
         }
         if (playerId in this.players) {
             delete this.players[playerId];

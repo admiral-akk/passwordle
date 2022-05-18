@@ -14,7 +14,7 @@ enum State {
 export class TimerState extends ModelState<TimerView> {
   private state: State = State.None;
   private timeLeft = TIME_TILL_RANDOM_MILLIS;
-  private timeout: NodeJS.Timeout | null = null;
+  private timeout?: NodeJS.Timeout;
   private lastUpdate = 0;
 
   constructor(view?: TimerView, private timeExhausted?: () => void) {
@@ -26,6 +26,11 @@ export class TimerState extends ModelState<TimerView> {
   }
   Reset(): void {
     this.ResetTimer();
+  }
+
+  Stop() {
+    clearTimeout(this.timeout!);
+    this.timeout = undefined;
   }
 
   LockedGuess() {

@@ -67,7 +67,10 @@ class GameState {
     GetProgress() {
         return this.yourPassword.GetProgress();
     }
-    OpponentDisconnected(endGameSummary) { }
+    OpponentDisconnected(endGameSummary) {
+        this.timer.Stop();
+        this.state = State.GameOver;
+    }
     RandomGuess(guess) {
         for (let i = 0; i < guess.length; i++) {
             this.Deleted();
