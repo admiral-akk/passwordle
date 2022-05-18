@@ -50,7 +50,7 @@ export class ClientGame extends GameState {
     RegisterGameClient(socket, this.updater);
     socket.on('SetSecret', () => (this.clientState = State.SubmissionOpen));
     socket.on('OpponentDisconnected', (endGameState: EndGameSummary) =>
-      this.OpponentDisconnected(endGameState)
+      this.EndGame(endGameState)
     );
   }
 
@@ -92,10 +92,6 @@ export class ClientGame extends GameState {
     } else {
       this.validator.Delete();
     }
-  }
-
-  OpponentDisconnected(endGameSummary: EndGameSummary) {
-    this.EndGame(endGameSummary);
   }
 
   EndGame(endGameSummary: EndGameSummary): Promise<void> {

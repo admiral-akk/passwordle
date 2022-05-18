@@ -125,6 +125,9 @@ class RematchModal extends Modal {
       },
       buttons
     );
+    if (endState.endState === EndGameState.Disconnected) {
+      this.rematchButton.style.display = 'none';
+    }
   }
 
   private AddMatchOutcome(endState: EndGameSummary) {
@@ -145,7 +148,7 @@ class RematchModal extends Modal {
         text = 'You tied!';
         break;
       case EndGameState.Disconnected:
-        text = 'They disconnected!';
+        text = 'They forfeit!';
         break;
     }
     this.AddDiv('match-outcome', text, answerDiv);

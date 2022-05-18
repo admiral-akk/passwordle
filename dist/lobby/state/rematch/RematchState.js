@@ -68,6 +68,9 @@ class RematchModal extends Modal_1.Modal {
             this.RequestingRematch();
             this.rematchButton.disabled = true;
         }, buttons);
+        if (endState.endState === EndGameState_1.EndGameState.Disconnected) {
+            this.rematchButton.style.display = 'none';
+        }
     }
     RematchExit(state) {
         return new Promise(resolve => {
@@ -114,7 +117,7 @@ class RematchModal extends Modal_1.Modal {
                 text = 'You tied!';
                 break;
             case EndGameState_1.EndGameState.Disconnected:
-                text = 'They disconnected!';
+                text = 'They forfeit!';
                 break;
         }
         this.AddDiv('match-outcome', text, answerDiv);

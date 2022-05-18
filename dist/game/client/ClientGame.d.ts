@@ -12,7 +12,6 @@ export declare class ClientGame extends GameState {
     constructor(socket: ClientSocket, gameEnd: (endGame: EndGameSummary) => void);
     private SubmitRandomGuess;
     private Input;
-    OpponentDisconnected(endGameSummary: EndGameSummary): void;
     EndGame(endGameSummary: EndGameSummary): Promise<void>;
     UpdatedAnswerKnowledge(update: UpdatedAnswerKnowledge): Promise<void>;
 }
