@@ -30,10 +30,10 @@ function GenerateSummary(playerKnowledge, opponentKnowledge, playerProgress, opp
     }
     let endState = EndGameState_1.EndGameState.Tie;
     if ((0, TargetProgress_1.Complete)(playerProgress) && !(0, TargetProgress_1.Complete)(opponentProgress)) {
-        endState = EndGameState_1.EndGameState.Win;
+        endState = EndGameState_1.EndGameState.Loss;
     }
     if (!(0, TargetProgress_1.Complete)(playerProgress) && (0, TargetProgress_1.Complete)(opponentProgress)) {
-        endState = EndGameState_1.EndGameState.Loss;
+        endState = EndGameState_1.EndGameState.Win;
     }
     return new EndGameState_1.EndGameSummary(playerPassword, opponentPassword, playerProgress, opponentProgress, endState);
 }
